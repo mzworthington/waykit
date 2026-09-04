@@ -50,7 +50,7 @@ You add or repair **PostHog** in the repo’s real stack, then prove events with
 
 ## Profile
 
-One MCP profile: `wk mcp posthog --install` (or `--project`). Official server: `https://mcp.posthog.com/mcp` (OAuth; no API key in `mcp.json`). If PostHog tools are missing, stop and tell the user to install that profile — do not stack it onto `default`. Restore `wk mcp default --install` when done.
+One MCP profile: `wk mcp posthog --install` (or `--project`). Official server: `https://mcp.posthog.com/mcp` (OAuth; no API key in `mcp.json`). If PostHog tools are missing after install, stop: write the [product-signal-intake](../../SOPs/product-signal-intake.md) findings table (`handover_posthog.md`) with live-bundle empty-events only, mark other queries **BLOCKED**, and do not create Linear issues or invent dashboard counts. `wk mcp --install` does not add tools to a Cloud Agent catalog. Do not stack PostHog onto `default`. Restore `wk mcp default --install` when done.
 
 ## Mandatory loop
 

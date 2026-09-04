@@ -45,7 +45,7 @@ Linear INVEST tickets are [agent-user-stories](../agent-user-stories/SKILL.md). 
 
 Skip for typos, one-module contracts with no uncertainty, and known defects.
 
-A [product-signal-intake](../../SOPs/product-signal-intake.md) handover row that is a bet or larger than one sitting files here after `wk mcp default` is restored — not a new specialist skill.
+A [product-signal-intake](../../SOPs/product-signal-intake.md) handover row that is a bet or larger than one sitting files here after `wk mcp default` is restored — not a new specialist skill. If Linear tools are missing after restore, write the PRD in the handover and stop; do not invent Linear URLs.
 
 ## Guardrails
 

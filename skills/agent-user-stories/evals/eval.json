@@ -185,6 +185,22 @@
           "Out of scope"
         ]
       }
+    },
+    {
+      "id": "EVAL-USERSTORIES-COLOCATED-006",
+      "name": "Missing Linear tools after restore drafts only",
+      "description": "Ensures Session B of product-signal-intake stops without inventing Linear URLs when Linear tools are missing after wk mcp default.",
+      "target_skill": "agent-user-stories",
+      "prompt": "Restore default MCP, then file this confirmed PostHog handover row. Linear tools are still missing.",
+      "context": {
+        "active_phase": "spec"
+      },
+      "assertions": {
+        "required_triggers": ["linear", "user stories"],
+        "required_patterns": ["product-signal-intake", "wk mcp default"],
+        "forbidden_patterns": ["```typescript", "ASCII art", "box-drawing"],
+        "required_output_sections": ["product-signal-intake"]
+      }
     }
   ]
 }

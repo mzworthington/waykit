@@ -1,7 +1,7 @@
 {
   "suite": "routing-matrix",
   "description": "Evaluation benchmarks for cross-skill routing accuracy and specialist role activation",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "test_cases": [
     {
       "id": "EVAL-ROUTE-001",
@@ -714,6 +714,25 @@
         ],
         "forbidden_patterns": [
           "agent-crime-scene"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-036",
+      "name": "Missing PostHog tools stays on intake",
+      "description": "Verifies a Cloud Agent session whose PostHog tools are missing after wk mcp posthog --install still routes to agent-posthog product-signal-intake, not Linear create.",
+      "target_skill": "agent-posthog",
+      "prompt": "PostHog tools are missing after wk mcp posthog --install. Run product-signal-intake anyway.",
+      "assertions": {
+        "required_triggers": [
+          "posthog"
+        ],
+        "required_patterns": [
+          "agent-posthog",
+          "product-signal-intake"
+        ],
+        "forbidden_patterns": [
+          "agent-tdd"
         ]
       }
     }

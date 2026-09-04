@@ -1049,6 +1049,60 @@
           "product-signal-intake"
         ]
       }
+    },
+    {
+      "id": "EVAL-POSTHOG-003",
+      "name": "Missing PostHog tools blocked intake",
+      "description": "Verifies Session A of product-signal-intake writes a findings handover and marks queries BLOCKED when official PostHog tools are missing after install, and does not invent Linear URLs.",
+      "target_skill": "agent-posthog",
+      "prompt": "wk mcp posthog --install ran but PostHog tools are still missing. Run product-signal-intake on the live site.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": [
+          "posthog"
+        ],
+        "required_patterns": [
+          "product-signal-intake",
+          "BLOCKED",
+          "findings"
+        ],
+        "forbidden_patterns": [
+          "ASCII art",
+          "self-driving"
+        ],
+        "required_output_sections": [
+          "product-signal-intake"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-USERSTORIES-006",
+      "name": "Missing Linear tools after restore",
+      "description": "Verifies Session B of product-signal-intake drafts INVEST text and stops when Linear tools are missing after wk mcp default, without inventing issue URLs.",
+      "target_skill": "agent-user-stories",
+      "prompt": "Restore default MCP and file the confirmed PostHog handover row. Linear tools are still missing.",
+      "context": {
+        "active_phase": "spec"
+      },
+      "assertions": {
+        "required_triggers": [
+          "linear",
+          "user stories"
+        ],
+        "required_patterns": [
+          "product-signal-intake",
+          "wk mcp default"
+        ],
+        "forbidden_patterns": [
+          "```typescript",
+          "ASCII art"
+        ],
+        "required_output_sections": [
+          "product-signal-intake"
+        ]
+      }
     }
   ]
 }

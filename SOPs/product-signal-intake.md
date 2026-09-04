@@ -38,11 +38,12 @@ flowchart TD
 ## Session A — `wk mcp posthog`
 
 1. Install one profile: `wk mcp posthog --install` (or `--project`). Do not stack PostHog onto `default`.
-2. Query the set below. Write a findings table into `~/.agents/handover/<project>/` using [templates/posthog-findings.md](../templates/posthog-findings.md). If `handover_posthog.md` already records SDK wiring, add a **PostHog findings** heading rather than wiping that handover.
-3. Do **not** create Linear issues in this session. Do not call Linear MCP. Stop at the handover.
-4. Restore `wk mcp default --install` (or `--project`) when Session A ends, even if filing happens later. `--install` replaces the default profile (Linear is gone until restore). The same chat can continue Session A after OAuth; do not stack PostHog onto `default`.
-5. If the nominated consumer has no dedicated PostHog project, query the org project that actually ingested events. Name **hosts** from web stats, not tokens. Classify mixed-host ingest as its own row when traffic is not one site.
-6. `projects-get` and the MCP active-environment blurb may include a project API key. Never copy it into the handover, memory, or chat tables.
+2. **List tools.** If official PostHog tools are still missing (Cloud Agent catalog, unfinished OAuth, headless host without a Bearer personal API key), do not invent project IDs or dashboard counts. `wk mcp --install` writes Cursor/Claude user files; it does not add tools to a hosted Cloud Agent session. Classify **empty-events** only from the live bundle (token present or absent; ingest host **name** only). Mark every other query blocked. Write the findings table. Stop. No Linear.
+3. If tools exist, query the set below. Write a findings table into `~/.agents/handover/<project>/` using [templates/posthog-findings.md](../templates/posthog-findings.md). If `handover_posthog.md` already records SDK wiring, add a **PostHog findings** heading rather than wiping that handover.
+4. Do **not** create Linear issues in this session. Do not call Linear MCP. Stop at the handover.
+5. Restore `wk mcp default --install` (or `--project`) when Session A ends, even if filing happens later. `--install` replaces the default profile (Linear is gone until restore). The same chat can continue Session A after OAuth; do not stack PostHog onto `default`.
+6. If the nominated consumer has no dedicated PostHog project, query the org project that actually ingested events. Name **hosts** from web stats, not tokens. Classify mixed-host ingest as its own row when traffic is not one site.
+7. `projects-get` and the MCP active-environment blurb may include a project API key. Never copy it into the handover, memory, or chat tables.
 
 ## Human gate
 
@@ -51,12 +52,13 @@ The operator marks which rows to file. Unconfirmed rows stay skip. No agent crea
 ## Session B — `wk mcp default`
 
 1. Confirm the profile is `default` (`wk mcp default --install` / `--project`) so Linear is available.
-2. File only confirmed rows:
+2. If Linear tools are still missing, stop. Do not invent issue URLs. Leave INVEST / PRD drafts in the handover. File from a host that already has Linear.
+3. File only confirmed rows:
    - **bug** → [agent-debug](../skills/agent-debug/SKILL.md) (or the empty-events checklist on the PostHog SOP if events never arrived).
    - **contract** and size **sitting** → [agent-user-stories](../skills/agent-user-stories/SKILL.md).
    - **bet** or size **epic** → [agent-prd](../skills/agent-prd/SKILL.md), then INVEST children.
    - **skip** → leave the row, no ticket.
-3. Play one Linear issue after it exists. Do not invent a product-insights specialist.
+4. Play one Linear issue after it exists. Do not invent a product-insights specialist.
 
 ## Query set (Session A)
 
@@ -69,6 +71,8 @@ The operator marks which rows to file. Unconfirmed rows stay skip. No agent crea
 | Timeboxed bets due | confirm or kill via stories + prune, not a new skill |
 
 Evidence window: date range and event *names*. Never paste `phc_` keys, project API secrets, or person identifiers into the handover.
+
+Live-bundle empty-events (token present/absent in production JS) is allowed when MCP queries cannot run. That is the empty-events checklist, not a guessed funnel or error rate.
 
 ## Findings columns
 
@@ -94,4 +98,10 @@ Session B: wk mcp default --install. File only operator-confirmed rows from the 
 
 ```text
 Play one confirmed Linear issue from the filed rows. Claim it In Progress, stay on main, leave the tree uncommitted.
+```
+
+### Missing PostHog tools (Session A stop)
+
+```text
+Session A: wk mcp posthog --install. Official PostHog tools are still missing. Write product-signal-intake findings with live-bundle empty-events only. Mark other queries blocked. Do not invent dashboard counts or Linear URLs. Restore wk mcp default when done.
 ```
