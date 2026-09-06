@@ -47,6 +47,16 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Conventional Commits/i);
   });
 
+  it("returns product-signal-intake with the missing-tools stop", () => {
+    const sop = getSop(kitRoot, "product-signal-intake");
+    assert.ok(sop);
+    assert.equal(sop!.id, "product-signal-intake");
+    assert.match(sop!.body, /human gate/i);
+    assert.match(sop!.body, /Cloud Agent/);
+    assert.match(sop!.body, /BLOCKED|blocked/);
+    assert.match(sop!.body, /Do not invent issue URLs/);
+  });
+
   it("search returns excerpts not full philosophy", () => {
     const hits = searchKit(kitRoot, "hexagonal ports adapters", 5);
     assert.ok(hits.length >= 1);

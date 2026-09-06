@@ -42,7 +42,7 @@ disable-model-invocation: false
 
 Turn product gaps into **small, valuable tickets** a human can play. Bet cards and PRDs are [agent-prd](../agent-prd/SKILL.md). Hand Gherkin, bounded contexts, and XFN matrices to [agent-spec](../agent-spec/SKILL.md) after the story is settled.
 
-Product bets and flags: [SOPs/hypothesis-driven-development.md](../../SOPs/hypothesis-driven-development.md). Confirmed PostHog rows: [product-signal-intake](../../SOPs/product-signal-intake.md) after restore `wk mcp default`. Confirmed crime-scene rows: [complexity-hotspots](../../SOPs/complexity-hotspots.md) §8. Start from operator-confirmed findings, deduplicate the board, and send bets without a card to [agent-prd](../agent-prd/SKILL.md) first.
+Product bets and flags: [SOPs/hypothesis-driven-development.md](../../SOPs/hypothesis-driven-development.md). Confirmed PostHog rows: [product-signal-intake](../../SOPs/product-signal-intake.md) after restore `wk mcp default`. Confirmed crime-scene rows: [complexity-hotspots](../../SOPs/complexity-hotspots.md) §8. Start from operator-confirmed findings, deduplicate the board, and send bets without a card to [agent-prd](../agent-prd/SKILL.md) first. If Linear tools are missing after restore, draft INVEST text in the handover and stop — do not invent issue URLs.
 
 ## When
 

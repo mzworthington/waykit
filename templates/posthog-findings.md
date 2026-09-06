@@ -7,7 +7,7 @@ Phase handover for **product-signal-intake**. Fill in Session A (`wk mcp posthog
 | **Project** | `<project-name>` |
 | **Date** | YYYY-MM-DD |
 | **Evidence window** | dates only — no `phc_` keys, no project API secrets |
-| **Status** | intake \| gated \| filed |
+| **Status** | intake \| gated \| filed \| blocked |
 
 ## Rows
 
@@ -34,3 +34,5 @@ Mark done or n/a (reason). No event payloads that include secrets.
 - Session A profile: `wk mcp posthog`
 - Restore: `wk mcp default` before Session B
 - Linear create: only after the Operator column is `file`
+- Missing PostHog tools: classify live-bundle empty-events only; mark other queries blocked; no invented dashboard counts
+- Missing Linear tools after restore: draft in this handover; do not invent issue URLs

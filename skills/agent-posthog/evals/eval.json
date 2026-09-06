@@ -34,6 +34,22 @@
         "forbidden_patterns": ["self-driving", "yarn add"],
         "required_output_sections": ["product-signal-intake"]
       }
+    },
+    {
+      "id": "EVAL-POSTHOG-COLOCATED-003",
+      "name": "Missing PostHog tools writes blocked findings",
+      "description": "Ensures a Cloud Agent or headless host without PostHog tools after wk mcp posthog --install writes a product-signal-intake findings handover, marks queries BLOCKED, and does not invent Linear URLs or dashboard counts.",
+      "target_skill": "agent-posthog",
+      "prompt": "Session A: wk mcp posthog --install. Official PostHog tools are still missing. Run product-signal-intake on the live site.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["posthog", "product analytics"],
+        "required_patterns": ["product-signal-intake", "BLOCKED", "findings"],
+        "forbidden_patterns": ["self-driving", "yarn add"],
+        "required_output_sections": ["product-signal-intake"]
+      }
     }
   ]
 }
