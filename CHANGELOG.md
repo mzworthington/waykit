@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-09-06
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Bump mermaid from 11.16.1 to 11.17.2 (#81)
+- *(deps-dev)* Bump tsx from 4.23.12 to 4.23.13 (#80)
+- *(deps-dev)* Bump @testing-library/react from 16.3.2 to 16.3.3 (#79)
+- *(deps)* Bump actions/deploy-pages from 4 to 5 (#73)
+- *(deps)* Bump actions/upload-pages-artifact from 3 to 5 (#72)
+- *(deps)* Bump actions/configure-pages from 5 to 6 (#71)
+
 ## 2026-09-05
 
 ### 🚀 Features
