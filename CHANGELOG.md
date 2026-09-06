@@ -6,6 +6,10 @@
 
 - Add dead-code pruning procedure and enhance complexity hotspot tracking in SOPs
 
+### 🐛 Bug Fixes
+
+- *(sops)* Stop PostHog intake when MCP tools are missing (MZW-66) (#66)
+
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Bump mermaid from 11.16.1 to 11.17.2 (#81)
@@ -14,6 +18,7 @@
 - *(deps)* Bump actions/deploy-pages from 4 to 5 (#73)
 - *(deps)* Bump actions/upload-pages-artifact from 3 to 5 (#72)
 - *(deps)* Bump actions/configure-pages from 5 to 6 (#71)
+- *(deps-dev)* Bump vitest from 4.1.10 to 4.1.11 (#76)
 
 ## 2026-09-05
 
