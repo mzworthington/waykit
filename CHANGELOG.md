@@ -5,6 +5,7 @@
 ### 🚀 Features
 
 - Add dead-code pruning procedure and enhance complexity hotspot tracking in SOPs
+- C++ skill
 
 ### 🐛 Bug Fixes
 
