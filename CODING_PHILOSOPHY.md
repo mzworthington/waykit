@@ -134,6 +134,8 @@ Depending on the active technology stack, load the appropriate skill:
 - [TypeScript / Node.js](./skills/lang-typescript/SKILL.md)
 - [Python](./skills/lang-python/SKILL.md)
 - [Go](./skills/lang-go/SKILL.md)
+- [C++](./skills/lang-cpp/SKILL.md)
+- [Rust](./skills/lang-rust/SKILL.md)
 - [Java](./skills/lang-java/SKILL.md)
 - [C#](./skills/lang-csharp/SKILL.md)
 

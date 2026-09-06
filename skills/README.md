@@ -12,7 +12,7 @@ We keep **one `skills/` tree** for playbooks. Cursor still discovers skills from
 |--------|--------|-------------|
 | `agent-*` | `role` | Lifecycle persona for a single phase (spec, TDD, audit, …) |
 | `profile-*` | `profile` | Cross-stack domain rules (IaC security, API, observability, …) |
-| `lang-*` | `profile` | Language-wide coding rules (TypeScript, Java, C#, Python, Go, HCL) |
+| `lang-*` | `profile` | Language-wide coding rules (TypeScript, Java, C#, Python, Go, C++, Rust, HCL) |
 | `framework-*` | `profile` | Framework-specific delivery rules (Next.js, FastAPI, Spring, Terraform, …) |
 
 **Roles vs profiles:** Roles define *who you are* and *what phase output* to produce. Profiles define *how to write code* for a stack. The orchestrator (`agent-orchestrator`) routes between roles; stack detection activates profiles.
@@ -71,6 +71,7 @@ Related SOPs: [behavior catalog & XFN](../SOPs/behavior-catalog-and-xfn.md), [co
 | [lang-python](./lang-python/SKILL.md) | [framework-fastapi](./framework-fastapi/SKILL.md) |
 | [lang-rust](./lang-rust/SKILL.md) | - |
 | [lang-go](./lang-go/SKILL.md) | - |
+| [lang-cpp](./lang-cpp/SKILL.md) | - |
 | [lang-java](./lang-java/SKILL.md) | [framework-springboot](./framework-springboot/SKILL.md), [framework-quarkus](./framework-quarkus/SKILL.md) |
 | [lang-csharp](./lang-csharp/SKILL.md) | [framework-dotnet](./framework-dotnet/SKILL.md) |
 

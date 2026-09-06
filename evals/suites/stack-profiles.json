@@ -1,7 +1,7 @@
 {
   "suite": "stack-profiles",
   "description": "Evaluation benchmarks for lang-* and framework-* stack profiles",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "test_cases": [
     {
       "id": "EVAL-LANG-TS-001",
@@ -566,6 +566,38 @@
         ],
         "required_output_sections": [
           "Domain Types"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-LANG-CPP-001",
+      "name": "C++ RAII, typed interfaces, and domain purity",
+      "description": "Verifies modern C++ with RAII ownership, Core Guidelines safety, and HAL kept out of domain.",
+      "target_skill": "lang-cpp",
+      "prompt": "Write a C++20 domain policy with RAII, std::span, clang-tidy cppcoreguidelines, and keep Arduino out of the domain header. Use CMake or PlatformIO tests.",
+      "context": {
+        "detected_stack": [
+          "C++",
+          "CMake"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "cpp",
+          "cmake",
+          "clang-tidy",
+          "raii"
+        ],
+        "required_patterns": [
+          "RAII",
+          "unique_ptr"
+        ],
+        "forbidden_patterns": [
+          "malloc",
+          "ASCII art"
+        ],
+        "required_output_sections": [
+          "RAII"
         ]
       }
     },

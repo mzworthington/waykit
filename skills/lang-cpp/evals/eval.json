@@ -1,0 +1,24 @@
+{
+  "suite": "lang-cpp-evals",
+  "description": "Co-located evaluation tests for C++ language profile trigger resolution",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "id": "EVAL-LANG-CPP-COLOCATED-001",
+      "name": "C++ RAII and Core Guidelines profile trigger",
+      "target_skill": "lang-cpp",
+      "prompt": "Refactor this CMake C++ firmware module to use RAII, clang-tidy cppcoreguidelines, and keep Arduino out of domain.",
+      "assertions": {
+        "required_triggers": [
+          "cpp",
+          "cmake",
+          "clang-tidy",
+          "raii"
+        ],
+        "required_patterns": [
+          "lang-cpp"
+        ]
+      }
+    }
+  ]
+}
