@@ -35,14 +35,21 @@ describe('docs mermaid fences', () => {
   it('parses the host-subagent launch diagram as a sequence diagram', async () => {
     const markdown = fs.readFileSync(path.join(kitRoot, 'SOPs/subagent-launch.md'), 'utf8');
     const mermaidBlocks = splitFenceSegments(markdown).filter((segment) => segment.kind === 'mermaid');
-    expect(mermaidBlocks).toHaveLength(1);
-    const code = mermaidBlocks[0]!.code;
-    expect(code).toMatch(/^sequenceDiagram/);
+    expect(mermaidBlocks.length).toBeGreaterThanOrEqual(1);
     mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    const launch = mermaidBlocks.find((block) =>
+      block.code.includes('Parent->>Child: Task prompt from wk agents launch-prompt')
+    );
+    expect(launch).toBeDefined();
+    const code = launch!.code;
+    expect(code).toMatch(/^sequenceDiagram/);
     const parsed = await mermaid.parse(code);
     expect(parsed).toMatchObject({ diagramType: 'sequence' });
-    expect(code).toMatch(/Parent->>Child: Task prompt from wk agents launch-prompt/);
     expect(code).not.toMatch(/Parent->>Child:.*?;/);
+    for (const block of mermaidBlocks) {
+      const result = await mermaid.parse(block.code);
+      expect(result).toMatchObject({ diagramType: 'sequence' });
+    }
   });
 
   it('rejects sequence messages that contain a semicolon, even when quoted', async () => {

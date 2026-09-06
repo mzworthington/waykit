@@ -3,11 +3,7 @@ import path from 'path';
 
 export const ROLE_SKILL_BODY_LINE_BUDGET = 150;
 
-export const ROLE_SKILL_LINE_BUDGET_ALLOWLIST = [
-  'agent-prune',
-  'agent-orchestrator',
-  'agent-debug'
-] as const;
+export const ROLE_SKILL_LINE_BUDGET_ALLOWLIST = [] as const;
 
 export interface RoleSkillLineCount {
   skill: string;
@@ -87,6 +83,10 @@ export function printRoleSkillLineBudgetResult(result: RoleSkillLineBudgetResult
     );
   }
   if (!result.ok) return;
+  if (result.allowed.length === 0) {
+    console.log(`OK: role skill bodies within ${result.budget}-line budget`);
+    return;
+  }
   console.log(
     `OK: role skill bodies within ${result.budget}-line budget (allowlisted overages reported)`
   );

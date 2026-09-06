@@ -76,11 +76,19 @@ Route execution to `agent-prune` when rows are `ready`.
 
 [agent-prune](../skills/agent-prune/SKILL.md) complexity track:
 
-1. Load `complexity-backlog.md`; process only `ready` rows (confirm with user if backlog was auto-generated).
+1. Load `complexity-backlog.md`; process only `ready` rows (confirm with user if backlog was auto-generated). If none, stop or ask the user to triage `candidate` rows.
 2. One **batch** = one hotspot cluster (one function family or one slice folder).
-3. Prefer **behavior-preserving** refactors: extract function, guard clauses, move code into owning slice, consolidate duplicates.
-4. Run tests for touched slices; run [agent-pre-commit](../skills/agent-pre-commit/SKILL.md) before marking `done`.
+3. Prefer **behavior-preserving** refactors: extract function, guard clauses, move code into owning slice, consolidate duplicates. New modules from an extract go in a **capability folder** with `index.ts`.
+4. Run tests for touched slices; re-check metrics when the repo has a complexity command; run [agent-pre-commit](../skills/agent-pre-commit/SKILL.md) before marking `done`.
 5. If simplification needs a lasting boundary change, route to [agent-adr](../skills/agent-adr/SKILL.md) and set row `blocked`.
+
+| Class | Meaning | Action |
+|-------|---------|--------|
+| **extract** | Long function or nested block | Extract named function; guard clauses |
+| **inline** | Abstraction with one call site | Inline per minimal change |
+| **split-slice** | File mixes unrelated capabilities | Move into owning vertical slice |
+| **consolidate** | Duplicate logic in 2+ places | Single shared domain/helper (must have 2+ consumers) |
+| **defer** | Needs ADR or product decision | Set `blocked`; route to `agent-adr` if boundary change |
 
 **Reject during prune:**
 

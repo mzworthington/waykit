@@ -41,7 +41,7 @@ Rough inventory (as of this refresh): ~45 skills, SOPs, dual eval layers (`evals
 | Default CI is scripted keyword driver | **Still true:** intentional merge gate; docs now say so clearly |
 | Skill-trigger evals are theater | **Still true:** `kit/src/edd/run_evals.ts` does not invoke a model or assert `required_patterns` / `required_output_sections` |
 | Multi-IDE peer-depth oversold | **Improved:** MCP/model/rules writers for Cursor, Claude, Copilot, Antigravity; Windsurf is rules-only forever |
-| Skill length budget slipping | **Still true:** `agent-prune` / `agent-orchestrator` / `agent-debug` / `agent-copy` over ~150 lines |
+| Skill length budget slipping | **Improved:** role `SKILL.md` bodies gated at 150 lines. `agent-copy`, `agent-debug`, `agent-prune`, and `agent-orchestrator` thinned via SOPs and skill-local `references/` |
 | Thin stack profiles | **Still true:** several `framework-*` / `lang-*` skills ~38–48 lines |
 | Process weight | **Still true:** shortcuts exist; default narrative is multi-phase |
 

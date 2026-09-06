@@ -60,7 +60,7 @@ Incomplete DoD ⇒ Status must be **BLOCKED**, not COMPLETE.
 | **debug** | Root cause stated; debug board updated; reproduce + proof gates passed for the symptom class; regression test added when domain logic changed. See [SOPs/hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md) |
 | **telemetry** | Instrumentation added; XFN load SLOs (if any) mapped to metrics/alerts or explicit N/A; bet leading indicator + flag evaluation mapped or N/A. Cloudflare RUM/beacon diagnosis (`agent-cloudflare-ops`) inventories live vs IaC and proves HTTP/MCP evidence. PostHog SDK / empty events (`agent-posthog`) uses the official MCP, cookieless defaults, and a privacy notice. When product-signal-intake ran, the findings table is in the handover |
 | **release** | Prior phase DoDs satisfied; conventional PR title; catalog + matrix summary reported; flags include expiry and rollback ([SOPs/release.md](../SOPs/release.md)); open bets have a confirm/kill next step |
-| **maintenance** | Prune/complexity/migration batch complete; expired flags / killed slices handled when in scope; backlog rows updated; pre-commit green |
+| **maintenance** | Prune/complexity/migration batch complete; expired flags / killed slices handled when in scope; backlog rows updated; pre-commit green. See [SOPs/dead-code.md](../SOPs/dead-code.md), [SOPs/complexity-hotspots.md](../SOPs/complexity-hotspots.md) |
 
 ## Memory (required for spec / xfn when durable facts exist)
 

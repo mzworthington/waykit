@@ -23,7 +23,7 @@ We keep **one `skills/` tree** for playbooks. Cursor still discovers skills from
 
 | Skill | Phase | Loads when |
 |-------|-------|------------|
-| [agent-orchestrator](./agent-orchestrator/SKILL.md) | orchestration | Multi-phase feature work, handovers |
+| [agent-orchestrator](./agent-orchestrator/SKILL.md) | orchestration | Multi-phase feature work, handovers; on-demand `references/scope-gate.md` |
 | [agent-grilling](./agent-grilling/SKILL.md) | spec | Design-tree interview primitive, decision frontier, fact/decision separation |
 | [agent-grill-me](./agent-grill-me/SKILL.md) | spec | Stateless user-invoked idea stress-testing, active dialogue, ungrillable boundary check |
 | [agent-prd](./agent-prd/SKILL.md) | spec | PRD / bet card: belief, leading indicator, kill criteria, experiment, flag plan |
@@ -43,15 +43,15 @@ We keep **one `skills/` tree** for playbooks. Cursor still discovers skills from
 | [agent-security](./agent-security/SKILL.md) | audit | OWASP, validation, secrets; verify XFN security suites |
 | [agent-arch-drift](./agent-arch-drift/SKILL.md) | audit | Hexagonal boundaries, SOLID, catalog/XFN completeness, git crime-scene ranking |
 | [agent-adr](./agent-adr/SKILL.md) | audit | Sparse MADR ADRs in `docs/ADRs/` (hard to reverse / off-norm only) |
-| [agent-prune](./agent-prune/SKILL.md) | maintenance | Dead-code removal and complexity hotspot reduction in safe batches |
-| [agent-debug](./agent-debug/SKILL.md) | debug | Hypothesis-driven RCA for bugs, CI failures, live-site symptoms |
+| [agent-prune](./agent-prune/SKILL.md) | maintenance | Dead-code + hotspot reduction; procedure in SOPs |
+| [agent-debug](./agent-debug/SKILL.md) | debug | Hypothesis-driven RCA; procedure in SOP; on-demand `references/tooling.md` |
 | [agent-telemetry](./agent-telemetry/SKILL.md) | telemetry | Logging, tracing, metrics; XFN SLO mapping |
 | [agent-cloudflare-ops](./agent-cloudflare-ops/SKILL.md) | telemetry | Live Web Analytics / RUM / beacon diagnosis via Cloudflare MCP |
 | [agent-posthog](./agent-posthog/SKILL.md) | telemetry | Cookieless PostHog SDK, privacy notice, official PostHog MCP |
 | [agent-perf-opt](./agent-perf-opt/SKILL.md) | maintenance | Profiling memory leaks, CPU bottlenecks, SQL EXPLAIN ANALYZE |
 | [agent-pre-commit](./agent-pre-commit/SKILL.md) | quality | Pre-commit hook discovery, run checks, fix failures |
 
-Related SOPs: [behavior catalog & XFN](../SOPs/behavior-catalog-and-xfn.md), [complexity hotspots](../SOPs/complexity-hotspots.md), [hypothesis-driven development](../SOPs/hypothesis-driven-development.md), [hypothesis-driven debug](../SOPs/hypothesis-driven-debug.md), [conventional commits](../SOPs/conventional-commits.md), [Linear ticket execution](../SOPs/linear-ticket-workflow.md), [API contracts](../SOPs/api-contracts.md), [release](../SOPs/release.md), [db migration](../SOPs/db-migration.md), [Cloudflare analytics ops](../SOPs/cloudflare-analytics-ops.md), [PostHog product analytics](../SOPs/posthog-product-analytics.md), [product signal intake](../SOPs/product-signal-intake.md), [model routing](../SOPs/model-routing.md).
+Related SOPs: [behavior catalog & XFN](../SOPs/behavior-catalog-and-xfn.md), [complexity hotspots](../SOPs/complexity-hotspots.md), [dead code](../SOPs/dead-code.md), [hypothesis-driven development](../SOPs/hypothesis-driven-development.md), [hypothesis-driven debug](../SOPs/hypothesis-driven-debug.md), [conventional commits](../SOPs/conventional-commits.md), [Linear ticket execution](../SOPs/linear-ticket-workflow.md), [API contracts](../SOPs/api-contracts.md), [release](../SOPs/release.md), [db migration](../SOPs/db-migration.md), [Cloudflare analytics ops](../SOPs/cloudflare-analytics-ops.md), [PostHog product analytics](../SOPs/posthog-product-analytics.md), [product signal intake](../SOPs/product-signal-intake.md), [model routing](../SOPs/model-routing.md), [subagent launch](../SOPs/subagent-launch.md).
 
 ### TDD short loop (important)
 
@@ -92,7 +92,7 @@ tools: []                     # optional CLI/tool hints for the agent
 ---
 ```
 
-**Skill length budget:** Role `SKILL.md` bodies must stay under 150 lines (`wk verify` fails otherwise). Known R5 overages are allowlisted and printed as `ALLOWED`, not skipped. Put long procedures in [SOPs/](../SOPs/) or a skill-local `references/` folder (see [agent-copy](./agent-copy/SKILL.md)).
+**Skill length budget:** Role `SKILL.md` bodies must stay under 150 lines (`wk verify` fails otherwise). Put long procedures in [SOPs/](../SOPs/) or a skill-local `references/` folder (see [agent-copy](./agent-copy/SKILL.md), [agent-debug](./agent-debug/SKILL.md), [agent-orchestrator](./agent-orchestrator/SKILL.md), [agent-prune](./agent-prune/SKILL.md)).
 
 **Context budget:** Always-on bootstrap stays thin ([AGENTS.md](../AGENTS.md)); load SOPs/philosophy via file read or **kit-knowledge** MCP. See [SOPs/context-budget.md](../SOPs/context-budget.md). Match installed MCP profile to skill `mcp:` frontmatter - one profile per session.
 

@@ -40,14 +40,22 @@ Fill before the first product-code edit (board: [templates/debug-board.md](../te
 
 If the user omitted env or action, ask **once** with a tight list, or infer from artifacts and mark **inferred**.
 
+Scaffold a board before deep walks:
+
+```bash
+kit debug-board <project> "<short title>"
+```
+
+Normalize vocabulary once (“packages” vs “plugins”). If live data contradicts the user’s label, **ask once** immediately.
+
 ## 2. Triage classes
 
 | Class | Cheap first experiment |
 |-------|------------------------|
-| UI / layout | Reproduce load path; measure boxes/coords or capture screenshot |
-| Published data | `curl`/fetch live catalog revision; compare named entity vs peers |
-| CI / media / sync | Failed-step log; diff failing suite config vs a green suite (viewport, workers, webServer) |
-| Fetch / bulk load | Single-URL probe → concurrency/SW → CORS last |
+| UI / layout | Label before/after screenshots; reproduce load path; measure boxes/coords |
+| Published data | `curl`/fetch live catalog revision; count nodes in the **named** entity vs peers |
+| CI / media / sync | `kit debug-ci` class from the failing **step log** (`flake` vs `config-drift` vs tool/auth); diff vs a green suite |
+| Fetch / bulk load | One failing URL + status vs `TypeError`; then concurrency/SW; CORS last |
 | Naming mismatch | Search peer entities when the named one looks fine in artifacts |
 | Already on main? | Search merged PRs / `git log -S` for the feature before implementing |
 
@@ -65,6 +73,13 @@ If the user omitted env or action, ask **once** with a tight list, or infer from
 - “Maybe CORS” before a single failing URL is identified
 - UI-filter theories when the source YAML is empty or wiped
 - Product deep-dives after a viewport/config mismatch already fits
+- Opening `agent-orchestrator` ceremony for a forensic bug
+- Declaring done from unit tests while live/UI still broken
+- Treating a green sibling workflow (CodeQL, Lighthouse) as the CI prove gate
+- Treating every red `pnpm/setup` as an npm 504 without reading the failing step (`ERR_PNPM_NO_PKG_MANIFEST` is config-drift)
+- Combining resilience patch, UX redesign, and CI policy in one PR
+- Shipping workflow/release policy the user did not ask for
+- ASCII/box-drawing **diagrams** for RCA (use Mermaid; CLI TTY chrome may use ASCII)
 
 ## 4. Reproduce ladder
 
@@ -78,7 +93,7 @@ Live / CI evidence  →  Local fixture or failing test  →  UI path (if UI symp
 | Fixture / test | Automated red that names the bug |
 | UI | Same diagram/route shows the break on demand |
 
-Never invert TDD: do not land green production code then “add tests later” for domain fixes.
+Never invert TDD: do not land green production code then “add tests later” for domain fixes. Write a failing regression closest to the bug ([agent-tdd](../skills/agent-tdd/SKILL.md) for the regression only), then the smallest fix. When the miss is agent routing, prompts, tool schemas, or MCP args, promote an EDD case in the same loop (§11). Split PRs when symptoms diverge (layout ≠ catalog wipe ≠ pipeline policy).
 
 ## 5. Split the work
 
@@ -98,7 +113,7 @@ Separate PRs (or ask before combining) when any two differ:
 |-------|-------|
 | “Layout fixed” | Before/after visual of **initial load** (not only unit packing tests) |
 | “Empty system fixed” | Named entity non-empty in **published** artifact or explicit republish TODO |
-| “Job fixed” | Failing step green locally or in Actions |
+| “Job fixed” | Named verify workflow green (`ci.yml`, not a sibling CodeQL/Lighthouse run); or BLOCKED with a permission/tool gap |
 | “On main” | Working tree on default branch, **uncommitted**; proposed conventional commit subject (with ticket id) |
 | “Agent/tool miss fixed” | New or existing EDD case red→green; `kit eval run` (or `ci`) evidence |
 
@@ -137,17 +152,32 @@ Prefer learning the prior RCA over rediscovering it.
 
 ## 9. Handover & lessons
 
-- `handover_debug.md` - phase `debug`, status COMPLETE only when proof gates pass
-- Append a lesson when the user corrected framing or the same anti-pattern repeated ([lessons/README.md](../lessons/README.md))
-- For agent/tool/prompt misses: record the EDD case id/path in the handover (or N/A with reason)
+Write `handover_debug.md` using [templates/handover.md](../templates/handover.md) with **Phase = debug**. Attach or link the debug board. COMPLETE only when proof gates pass. Include:
+
+- Root cause (one sentence)
+- Hypotheses killed
+- Proof of fix (paths, screenshots, job URL)
+- Ops follow-ups (republish, workflow_dispatch, tool install)
+- Whether a feature slice is still needed
+- Proposed conventional commit subject (with Linear id when in play)
+- EDD case path / id when the miss was agent/tool/prompt related (or N/A)
+
+Stay uncommitted on main unless the user asked to commit.
+
+Append a lesson when the user corrected framing or the same anti-pattern repeated ([lessons/README.md](../lessons/README.md)). For agent/tool/prompt misses, set **Promote to** an `evals/edd/*.jsonl` when the lesson is routing/prompt/tool ([templates/lesson.md](../templates/lesson.md)).
 
 ## 10. Orchestration routes
 
 | Request | Route |
 |---------|-------|
 | Bug, failed job, live symptom | `agent-debug` → `agent-pre-commit` |
+| Live Cloudflare Web Analytics / RUM / beacon | `agent-cloudflare-ops` (this SOP only if RCA is app code) |
+| PostHog empty events / cookieless / wizard | `agent-posthog` (this SOP only if RCA is app code) |
+| PostHog error cluster on [product-signal-intake](./product-signal-intake.md) (kind bug) | `agent-debug` - not grill → spec |
 | UI/auth/SLO touched | + light XFN floor ([agent-orchestrator](../skills/agent-orchestrator/SKILL.md)) |
+| “Is this already shipped?” / how-does-X-work | Triage only (§1–2); no impl |
 | RCA needs new capability | `agent-debug` (COMPLETE with RCA) → `agent-orchestrator` |
+| New feature / new bounded context | `agent-orchestrator` |
 | Complexity-only cleanup | `agent-arch-drift` → `agent-prune` (not debug) |
 
 ## 11. Promote agent misses to EDD (mandatory when applicable)

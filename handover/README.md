@@ -23,4 +23,4 @@ Use the project directory name, or the `project` field in `system/config.json` w
 
 ## Template
 
-See [templates/handover.md](../templates/handover.md). Mark a phase **COMPLETE** only when that phase's Definition of Done in the template is met. Catalog/XFN procedure: [SOPs/behavior-catalog-and-xfn.md](../SOPs/behavior-catalog-and-xfn.md). Complexity hotspots: [SOPs/complexity-hotspots.md](../SOPs/complexity-hotspots.md). Debugging: [SOPs/hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md).
+See [templates/handover.md](../templates/handover.md). Mark a phase **COMPLETE** only when that phase's Definition of Done in the template is met. Catalog/XFN procedure: [SOPs/behavior-catalog-and-xfn.md](../SOPs/behavior-catalog-and-xfn.md). Dead code: [SOPs/dead-code.md](../SOPs/dead-code.md). Complexity hotspots: [SOPs/complexity-hotspots.md](../SOPs/complexity-hotspots.md). Debugging: [SOPs/hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md).

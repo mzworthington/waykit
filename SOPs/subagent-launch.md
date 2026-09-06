@@ -69,6 +69,60 @@ Do not generate or launch `lang-*` / `framework-*` / `profile-*` as agents. Load
 
 Do not split TDD across two agents. `agent-adapter` stays a skill when gear 2 is too large.
 
+## Full lifecycle (when the scope gate says so)
+
+Applies when [agent-orchestrator](../skills/agent-orchestrator/SKILL.md) selects **new feature / new bounded context**. Adapt with the light XFN floor on smaller routes ([behavior-catalog-and-xfn.md](./behavior-catalog-and-xfn.md)).
+
+```mermaid
+sequenceDiagram
+  participant O as Orchestrator parent
+  participant G as agent-grilling
+  participant P as agent-prd
+  participant U as agent-user-stories
+  participant S as agent-spec
+  participant T as agent-tdd
+  participant X as agent-xfn
+  participant A as agent-adapter
+  participant Rev as agent-review
+  participant Sec as agent-security
+  participant Arch as agent-arch-drift
+  participant R as agent-release
+  O->>G: Stress-test idea, contract vs bet
+  opt Bet
+    O->>P: PRD / bet card
+  end
+  O->>U: INVEST stories (hypothesis + flag notes)
+  O->>S: Launch spec subagent
+  O->>T: Launch tdd subagent, gear1+gear2
+  O->>X: Launch xfn subagent
+  opt Large adapter
+    O->>A: Deep-dive skill only
+  end
+  O->>X: XFN green apply rows
+  O->>Rev: Launch readonly review
+  O->>Sec: Launch readonly security
+  O->>Arch: Launch readonly arch-drift
+  O->>O: Pre-commit
+  O->>O: Telemetry (SLO + leading indicator)
+  O->>R: Release (flag expiry / rollback)
+  opt Timebox elapsed
+    O->>O: Measure leading indicator in PostHog
+    O->>U: Confirm or kill story
+    O->>O: Prune flag or slice
+  end
+```
+
+1. **Intake** - Claim a Linear id before routing. Grill if unsettled. Route **bets** to `agent-prd`, then `agent-user-stories`, then `agent-spec`. Tiny contracts may skip PRD.
+2. **Design (functional)** - Launch `agent-tdd`: inventory functional catalog, align impact, first failing unit/slice tests. Next agent is `agent-xfn` (plan).
+3. **Design (XFN plan)** - Launch `agent-xfn`: complete apply/skip matrix. All-skip only with reasons.
+4. **Short loop** - Launch **`agent-tdd` again in one child**: gear 1 and gear 2 in the same session when ports are new/changed. Only if gear 2 is too large, load **`agent-adapter`** as a skill, then return.
+5. **XFN green** - Launch `agent-xfn` (own window, not TDD) to green every **apply** row.
+6. **Audit** - Launch readonly `agent-review` / `agent-security` / `agent-arch-drift`. Catalog or XFN honesty failures are `BLOCKED`. Hard-to-reverse choice without a record: load `agent-adr`.
+7. **Pre-commit** - [agent-pre-commit](../skills/agent-pre-commit/SKILL.md) until green.
+8. **Telemetry** - `agent-telemetry` for load SLOs from `handover_xfn.md`. Bet leading indicator: `agent-posthog`. Do not invent extra dashboards.
+9. **Docs / Release** - `agent-docs` when public surfaces changed; load `agent-copy` for narrative. Then `agent-release`.
+10. **Close the bet** - After the timebox: measure in PostHog, confirm or kill via `agent-user-stories`, then `agent-prune` for the flag or slice. Agent/tool/prompt misses need an EDD case ([hypothesis-driven-debug.md](./hypothesis-driven-debug.md) §11).
+
 ## Skills-only mode
 
 Default is **launch**. Set `WK_SUBAGENTS=0` for this session (also `off` / `false` / `skills`) in the shell that starts the host, then run `wk agents status`. Stay in the parent and load the matching `SKILL.md`. Set `WK_SUBAGENTS=1` (also `on` / `launch`) to force launch even if `skills/subagents.yaml` has `skillsOnly: true`. Unset follows that YAML flag (`false` in the kit). Handovers still go to disk. Do not uninstall `~/.cursor/agents` for this mode.
