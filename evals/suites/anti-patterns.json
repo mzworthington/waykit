@@ -1,7 +1,7 @@
 {
   "suite": "anti-patterns",
   "description": "Evaluation benchmarks testing strict enforcement of negative guardrails and architectural anti-patterns",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "test_cases": [
     {
       "id": "EVAL-ANTI-001",
@@ -180,6 +180,28 @@
         "forbidden_patterns": [
           "docs: update",
           "docs: add"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ANTI-009",
+      "name": "Until Complete Does Not Skip Red",
+      "description": "Verifies agent-tdd treats finish-the-ticket as repeating one failing catalog case then the smallest green, never batching production ahead of red.",
+      "target_skill": "agent-tdd",
+      "prompt": "Start the TDD loop and continue until complete.",
+      "assertions": {
+        "required_triggers": [
+          "tdd",
+          "red green refactor"
+        ],
+        "required_patterns": [
+          "Micro-loop",
+          "Until complete repeats",
+          "Do not batch production",
+          "confirm failure"
+        ],
+        "forbidden_patterns": [
+          "ASCII art"
         ]
       }
     }

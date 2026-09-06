@@ -1,7 +1,7 @@
 {
   "suite": "agent-tdd-co-located",
   "description": "Co-located evaluation benchmark for agent-tdd test-driven design skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "test_cases": [
     {
       "id": "EVAL-TDD-COLOCATED-001",
@@ -52,6 +52,30 @@
           "git commit",
           "ASCII art",
           "PASS (targeted)"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-TDD-COLOCATED-003",
+      "name": "Until complete is the micro-loop not a waterfall",
+      "description": "Finish-the-ticket still requires one failing catalog case, a confirmed red run, then the smallest production change.",
+      "target_skill": "agent-tdd",
+      "prompt": "Start the TDD loop and continue until complete.",
+      "context": {
+        "active_phase": "tdd"
+      },
+      "assertions": {
+        "required_triggers": [
+          "tdd",
+          "red green refactor"
+        ],
+        "required_patterns": [
+          "Micro-loop",
+          "Until complete repeats",
+          "Do not batch production"
+        ],
+        "forbidden_patterns": [
+          "ASCII art"
         ]
       }
     }

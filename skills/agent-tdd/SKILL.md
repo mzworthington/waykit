@@ -86,6 +86,15 @@ When sketching slice boundaries or request flows in docs, use Mermaid - not ASCI
 
 ## Guardrails
 
+**Micro-loop** (one catalog case at a time):
+
+1. Write or extend **one** failing functional test for the next agreed impact-map row.
+2. **Run that test** and confirm it fails for the intended reason (missing behavior, not a fixture typo).
+3. Write the **smallest** production change that makes that test pass.
+4. Refactor only while that case stays green. Then take the next row.
+
+**Until complete repeats** this micro-loop until the agreed impact map is green. "Start the loop and continue until complete", "finish the ticket", and "just implement it" do **not** authorize a production waterfall. **Do not batch production** across modules, then sprinkle tests. Do not edit production in the same turn as a pile of new tests without a red run in between.
+
 1. **Red** - Write failing tests first: domain unit tests for invariants; handler/slice tests for the use case. **Run tests and confirm failure** before implementation.
 2. **Green (gear 1)** - Minimal implementation to pass tests. Ports are interfaces only; mock them in slice tests.
 3. **Green (gear 2)** - If a new/changed outbound port is required, implement one thin adapter + integration test in the **same session**. Prefer extending an existing adapter.

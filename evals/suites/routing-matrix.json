@@ -1,7 +1,7 @@
 {
   "suite": "routing-matrix",
   "description": "Evaluation benchmarks for cross-skill routing accuracy and specialist role activation",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "test_cases": [
     {
       "id": "EVAL-ROUTE-001",
@@ -733,6 +733,26 @@
         ],
         "forbidden_patterns": [
           "agent-tdd"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-037",
+      "name": "Finish The Ticket Still Routes To TDD Micro-Loop",
+      "description": "Verifies that 'start the loop and continue until complete' after spec still activates agent-tdd, not a production waterfall.",
+      "target_skill": "agent-tdd",
+      "prompt": "Spec handover is COMPLETE. Start the TDD loop and continue until complete.",
+      "assertions": {
+        "required_triggers": [
+          "tdd",
+          "red green refactor"
+        ],
+        "required_patterns": [
+          "Micro-loop",
+          "Until complete repeats"
+        ],
+        "forbidden_patterns": [
+          "agent-spec"
         ]
       }
     }

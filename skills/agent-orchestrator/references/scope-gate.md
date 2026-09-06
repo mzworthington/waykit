@@ -12,7 +12,7 @@ Read **before** routing. Pick the smallest valid path ([CODING_PHILOSOPHY.md](..
 | PostHog → backlog / pull suggestions into tickets | [product-signal-intake](../../../SOPs/product-signal-intake.md): Session A `agent-posthog` findings, human gate, Session B `agent-user-stories` / `agent-prd`. Do not auto-file. Do not add a product-insights skill. |
 | Crime-scene / code quality report / git hotspots | [complexity-hotspots](../../../SOPs/complexity-hotspots.md) §8: Session A readonly **`agent-arch-drift`**, human gate on `handover_crime_scene.md`, Session B `agent-user-stories` (epic + children). Do not auto-file. Do not add a crime-scene skill. Play children with `agent-prune`. |
 | Tiny typo / obvious one-liner with clear repro | Stay in the **parent**. Implement directly - no spec handover. Note functional test impact. Always run **light XFN**. |
-| Extends existing behavior in one module | Design light → launch **`agent-tdd` subagent** (gear 1+2 same child). XFN apply rows launch **`agent-xfn`**, not TDD. |
+| Extends existing behavior in one module | Design light → launch **`agent-tdd` subagent** (gear 1+2 same child). XFN apply rows launch **`agent-xfn`**, not TDD. "Until complete" still means that child's red-green micro-loop. |
 | Schema migration | `agent-migration` → `agent-pre-commit` (with light XFN / security as needed) |
 | OpenAPI / contract change | `agent-api-contract` (+ `agent-tdd` when behavior changes) |
 | Dead-code cleanup, post-migration prune | `agent-prune` → `agent-pre-commit` ([SOPs/dead-code.md](../../../SOPs/dead-code.md)) |

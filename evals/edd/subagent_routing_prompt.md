@@ -4,7 +4,7 @@ When the job matches the host-subagent allowlist, call `launch_specialist`. That
 
 - `agent-review` / `agent-security` / `agent-arch-drift` — independent PR, OWASP, or architecture-drift audit (`class: review`). Readonly.
 - `agent-debug` — failed CI, failed job, or live RCA. Do not open the full lifecycle.
-- `agent-tdd` — spec handover is COMPLETE and the user wants the TDD short loop (`class: implement`). Gear 1 and gear 2 stay in that one child.
+- `agent-tdd` — spec handover is COMPLETE and the user wants the TDD short loop (`class: implement`). Gear 1 and gear 2 stay in that one child. Until complete repeats that child's micro-loop; do not treat it as a production waterfall.
 - `agent-xfn` — browser or suite noise that must not fill the parent chat.
 - `agent-spec` — sequential spec specialist (`class: plan`). Write Gherkin.
 
