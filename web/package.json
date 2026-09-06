@@ -15,7 +15,7 @@
     "@astrojs/react": "6.0.5",
     "astro": "7.2.10",
     "d3": "7.9.0",
-    "mermaid": "11.16.1",
+    "mermaid": "11.17.2",
     "posthog-js": "1.425.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
