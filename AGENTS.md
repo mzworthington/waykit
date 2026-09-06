@@ -36,7 +36,7 @@ Do not commit or push unless the user explicitly asks.
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`; OAuth on first use) |
 | PostHog product analytics | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog --install`) |
-| PostHog → Linear backlog (two-session intake) | [product-signal-intake](./SOPs/product-signal-intake.md) (`agent-posthog` findings, then `agent-user-stories` / `agent-prd` after `wk mcp default`) |
+| PostHog → Linear backlog | [product-signal-intake](./SOPs/product-signal-intake.md) (findings, then stories/PRD after `wk mcp default`) |
 | Crime-scene report | [complexity-hotspots](./SOPs/complexity-hotspots.md) §8 (arch-drift → gate → stories) |
 
 ## Phase → skill
