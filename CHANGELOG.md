@@ -2,6 +2,10 @@
 
 ## 2026-09-06
 
+### 🚀 Features
+
+- Add dead-code pruning procedure and enhance complexity hotspot tracking in SOPs
+
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Bump mermaid from 11.16.1 to 11.17.2 (#81)
