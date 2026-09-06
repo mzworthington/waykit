@@ -11,6 +11,10 @@
 
 - *(sops)* Stop PostHog intake when MCP tools are missing (MZW-66) (#66)
 
+### ⚙️ Refactoring & Performance
+
+- Clarify TDD micro-loop and update routing for agent-tdd
+
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Bump mermaid from 11.16.1 to 11.17.2 (#81)
