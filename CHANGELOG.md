@@ -19,6 +19,7 @@
 - *(deps)* Bump actions/upload-pages-artifact from 3 to 5 (#72)
 - *(deps)* Bump actions/configure-pages from 5 to 6 (#71)
 - *(deps-dev)* Bump vitest from 4.1.10 to 4.1.11 (#76)
+- *(deps-dev)* Bump @types/react-dom from 19.2.4 to 19.2.5 (#78)
 
 ## 2026-09-05
 
