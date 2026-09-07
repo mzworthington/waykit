@@ -18,6 +18,19 @@ function unavailableFetch(): typeof fetch {
   return async () => new Response('{"error":{"status":"UNAVAILABLE"}}', { status: 503 });
 }
 
+async function assertScriptedSuite(
+  suiteRel: string,
+  presentIds: readonly string[],
+  skippedLiveIds: readonly string[] = []
+): Promise<void> {
+  const report = await new EvalRunner({ model: 'scripted' }).runSuite(path.join(repoDir, suiteRel));
+  const failDetail = report.results.filter((r) => !r.passed).map((r) => `${r.id}: ${r.failures.join(',')}`).join(' | ');
+  assert.equal(report.failed, 0, failDetail);
+  const ids = new Set(report.results.map((r) => r.id));
+  for (const id of presentIds) assert.ok(ids.has(id), id);
+  for (const id of skippedLiveIds) assert.ok(!ids.has(id), id);
+}
+
 describe('EDD EvalRunner', () => {
   it('passes architecture routing suite with scripted model', async () => {
     const runner = new EvalRunner({
@@ -448,22 +461,15 @@ metrics:
   });
 
   it('passes cloudflare-ops suite with scripted model', async () => {
-    const runner = new EvalRunner({ model: 'scripted' });
-    const report = await runner.runSuite(path.join(repoDir, 'evals/edd/cloudflare_ops.yaml'));
-    assert.equal(report.failed, 0, report.results.filter((r) => !r.passed).map((r) => `${r.id}: ${r.failures.join(',')}`).join(' | '));
-    assert.ok(report.results.some((r) => r.id === 'cf-rum-01'));
-    assert.ok(report.results.some((r) => r.id === 'cf-obs-01'));
-    assert.ok(!report.results.some((r) => r.id === 'cf-live-01'));
+    await assertScriptedSuite('evals/edd/cloudflare_ops.yaml', ['cf-rum-01', 'cf-obs-01'], ['cf-live-01']);
   });
 
   it('passes posthog-intake suite with scripted model', async () => {
-    const runner = new EvalRunner({ model: 'scripted' });
-    const report = await runner.runSuite(path.join(repoDir, 'evals/edd/posthog_intake.yaml'));
-    assert.equal(report.failed, 0, report.results.filter((r) => !r.passed).map((r) => `${r.id}: ${r.failures.join(',')}`).join(' | '));
-    assert.ok(report.results.some((r) => r.id === 'ph-intake-01'));
-    assert.ok(report.results.some((r) => r.id === 'ph-intake-nofile-01'));
-    assert.ok(report.results.some((r) => r.id === 'ph-file-01'));
-    assert.ok(!report.results.some((r) => r.id === 'ph-live-01'));
+    await assertScriptedSuite(
+      'evals/edd/posthog_intake.yaml',
+      ['ph-intake-01', 'ph-intake-nofile-01', 'ph-file-01'],
+      ['ph-live-01']
+    );
   });
 
   it('loads a prod-derived circuit-breaker case', async () => {
