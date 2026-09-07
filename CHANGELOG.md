@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-07
+
+### 🚀 Features
+
+- Sonar mcp
+
 ## 2026-09-06
 
 ### 🚀 Features
