@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DOCS_PAGES } from '../docs/pages.ts';
-import { HOME_LEDE } from '../landing/copy.ts';
+import { DOCS_PAGES } from '../docs/pages';
+import { HOME_LEDE } from '../landing/copy';
 import {
   SITE_MARK_SRC,
   SITE_NAME,
@@ -12,7 +12,7 @@ import {
   listIndexableSeoPaths,
   notFoundPageSeo,
   resolvePageSeo
-} from './siteSeo.ts';
+} from './siteSeo';
 
 const HUBS = [
   '/',

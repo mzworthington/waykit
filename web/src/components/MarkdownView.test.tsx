@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { MarkdownView } from './MarkdownView.tsx';
+import { MarkdownView } from './MarkdownView';
 
 describe('MarkdownView', () => {
   it('puts fenced commands in a code figure and tables in a scroll wrapper', () => {

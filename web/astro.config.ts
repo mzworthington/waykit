@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import { kitPages } from './src/integrations/kitPages.ts';
+import { kitPages } from './src/integrations/kitPages';
 
 const webRoot = path.dirname(fileURLToPath(import.meta.url));
 const kitRoot = path.resolve(webRoot, '..');

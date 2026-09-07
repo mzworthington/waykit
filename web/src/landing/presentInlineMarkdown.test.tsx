@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { presentInlineMarkdown } from './presentInlineMarkdown.tsx';
+import { presentInlineMarkdown } from './presentInlineMarkdown';
 
 describe('presentInlineMarkdown', () => {
   it('turns markdown links and code into elements', () => {

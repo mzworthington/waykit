@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
-import { publishedSeoRoutes } from '../seo/publishedMarkdown.ts';
-import { buildSitemapXml, listIndexableSeoPaths } from '../seo/siteSeo.ts';
+import { publishedSeoRoutes } from '../seo/publishedMarkdown';
+import { buildSitemapXml, listIndexableSeoPaths } from '../seo/siteSeo';
 
 export function kitPages(kitRoot: string): AstroIntegration {
   return {

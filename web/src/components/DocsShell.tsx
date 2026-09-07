@@ -4,9 +4,9 @@ import {
   isDocsNavActive,
   SITE_NAV,
   type DocsNavPage
-} from '../docs/nav.ts';
-import { SITE_MARK_SRC, SITE_NAME, SITE_SHORT_NAME } from '../seo/siteSeo.ts';
-import { SITE_FOOTER_NAV, SITE_GITHUB } from '../site/footerNav.ts';
+} from '../docs/nav';
+import { SITE_MARK_SRC, SITE_NAME, SITE_SHORT_NAME } from '../seo/siteSeo';
+import { SITE_FOOTER_NAV, SITE_GITHUB } from '../site/footerNav';
 
 type Props = {
   children: ReactNode;

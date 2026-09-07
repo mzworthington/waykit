@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileToRoute, shouldPublishMarkdown } from '../docs/catalog.ts';
+import { fileToRoute, shouldPublishMarkdown } from '../docs/catalog';
 
 function walkMarkdown(dir: string, acc: string[] = []): string[] {
   if (!fs.existsSync(dir)) return acc;

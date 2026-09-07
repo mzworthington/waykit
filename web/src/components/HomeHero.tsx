@@ -1,4 +1,4 @@
-import { HOME_BADGES, HOME_BRAND, HOME_EYEBROW, HOME_HEADLINE, HOME_LEDE } from '../landing/copy.ts';
+import { HOME_BADGES, HOME_BRAND, HOME_EYEBROW, HOME_HEADLINE, HOME_LEDE } from '../landing/copy';
 import { HomeCtas } from './HomeCtas';
 
 export function HomeHero() {

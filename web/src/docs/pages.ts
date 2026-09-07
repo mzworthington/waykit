@@ -1,4 +1,4 @@
-import { buildDocsCatalog, type DocsPageMeta, findDocsPage } from './catalog.ts';
+import { buildDocsCatalog, type DocsPageMeta, findDocsPage } from './catalog';
 
 const markdownModules = import.meta.glob(
   [

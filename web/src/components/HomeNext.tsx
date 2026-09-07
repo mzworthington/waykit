@@ -1,4 +1,4 @@
-import { HOME_NEXT } from '../landing/copy.ts';
+import { HOME_NEXT } from '../landing/copy';
 
 export function HomeNext() {
   return (

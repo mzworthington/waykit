@@ -1,4 +1,4 @@
-import { HOME_USED_IN, HOME_USED_IN_HEADING, HOME_USED_IN_LEAD } from '../landing/copy.ts';
+import { HOME_USED_IN, HOME_USED_IN_HEADING, HOME_USED_IN_LEAD } from '../landing/copy';
 
 export function HomeUsedIn() {
   return (

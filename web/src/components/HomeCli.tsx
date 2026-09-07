@@ -1,7 +1,7 @@
 import kitMd from '../../../docs/kit.md?raw';
-import { HOME_CLI_HEADING } from '../landing/copy.ts';
-import { parseKitCommandsMarkdown } from '../landing/kitCommands.ts';
-import { presentInlineMarkdown } from '../landing/presentInlineMarkdown.tsx';
+import { HOME_CLI_HEADING } from '../landing/copy';
+import { parseKitCommandsMarkdown } from '../landing/kitCommands';
+import { presentInlineMarkdown } from '../landing/presentInlineMarkdown';
 
 const { lead, rows } = parseKitCommandsMarkdown(kitMd);
 

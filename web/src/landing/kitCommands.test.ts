@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import kitMd from '../../../docs/kit.md?raw';
-import { parseKitCommandsMarkdown } from './kitCommands.ts';
+import { parseKitCommandsMarkdown } from './kitCommands';
 
 describe('parseKitCommandsMarkdown', () => {
   it('reads the lead and command table under ## Commands', () => {

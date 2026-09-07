@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { OntologyIndex } from '../../../kit/src/ontology/types.ts';
-import { HOMEPAGE_TYPE_FILTERS } from '../../../kit/src/ontology/graph_view.ts';
+import type { OntologyIndex } from '../../../kit/src/ontology/types';
+import { HOMEPAGE_TYPE_FILTERS } from '../../../kit/src/ontology/graph_view';
 import {
   fetchOntologyIndex,
   mountOntologyExplorer,
@@ -10,7 +10,7 @@ import {
   renderTypeFilters,
   selectedTypes,
   setOntologyFocusHash
-} from './map.ts';
+} from './map';
 
 const fixture: OntologyIndex = {
   version: 1,

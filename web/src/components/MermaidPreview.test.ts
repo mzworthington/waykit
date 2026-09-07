@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import mermaid from 'mermaid';
-import { splitFenceSegments } from '../docs/presentDocsMarkdown.ts';
+import { splitFenceSegments } from '../docs/presentDocsMarkdown';
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 

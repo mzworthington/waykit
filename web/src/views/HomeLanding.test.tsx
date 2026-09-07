@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { HomeLanding } from './HomeLanding.tsx';
+import { HomeLanding } from './HomeLanding';
 
 describe('HomeLanding', () => {
   it('uses the brand-first hero, job picker, proof, and demo', () => {

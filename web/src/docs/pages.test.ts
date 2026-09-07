@@ -3,14 +3,14 @@ import {
   DOC_PATHS,
   DOCS_PAGES,
   findPublishedPage
-} from './pages.ts';
+} from './pages';
 import {
   SITE_NAV,
   docsNeighbors,
   docsReadingOrder,
   docsSidebar,
   isDocsNavActive
-} from './nav.ts';
+} from './nav';
 
 const navPages = DOCS_PAGES.map(({ path, title }) => ({ path, title }));
 
@@ -76,7 +76,7 @@ describe('site information architecture', () => {
 
 describe('docsStaticPaths', () => {
   it('emits a rest slug for every published markdown page', async () => {
-    const { docsStaticPaths } = await import('./staticPaths.ts');
+    const { docsStaticPaths } = await import('./staticPaths');
     const paths = docsStaticPaths();
     expect(paths.some((entry) => entry.params.slug === 'docs/start')).toBe(true);
     expect(paths.some((entry) => entry.params.slug === 'ontology')).toBe(true);

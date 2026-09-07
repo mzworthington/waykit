@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import demoMd from '../../../docs/landing/demo.md?raw';
-import { presentInlineMarkdown } from '../landing/presentInlineMarkdown.tsx';
+import { presentInlineMarkdown } from '../landing/presentInlineMarkdown';
 
 export type DemoStep = {
   title: string;

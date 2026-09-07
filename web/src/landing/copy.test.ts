@@ -7,7 +7,7 @@ import {
   HOME_HEADLINE,
   HOME_NEXT,
   HOME_USED_IN
-} from './copy.ts';
+} from './copy';
 
 describe('homepage copy', () => {
   it('puts the kit name first, then the job line', () => {

@@ -1,4 +1,4 @@
-import { HOME_HEADLINE, HOME_LEDE } from '../landing/copy.ts';
+import { HOME_HEADLINE, HOME_LEDE } from '../landing/copy';
 
 export const SITE_ORIGIN = 'https://waykit.dev';
 export const SITE_NAME = 'Waykit';

@@ -18,7 +18,7 @@ import {
   toHomepageIndex,
   TYPE_COLOR,
   typeRadius
-} from '../../../kit/src/ontology/graph_view.ts';
+} from '../../../kit/src/ontology/graph_view';
 import {
   KIT_ENTITY_TYPES,
   RELATION_NAMES,
@@ -27,7 +27,7 @@ import {
   type OntologyEntity,
   type OntologyIndex,
   type RelationName
-} from '../../../kit/src/ontology/types.ts';
+} from '../../../kit/src/ontology/types';
 
 export const ONTOLOGY_INDEX_URLS = ['/assets/ontology-index.json', '/sync/ontology-index.json'] as const;
 

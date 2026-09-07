@@ -5,8 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { describe, it } from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { KnowledgeGraphManager } from './graph.ts';
-import { callTool } from './server.ts';
+import { KnowledgeGraphManager } from './graph';
+import { callTool } from './server';
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
 

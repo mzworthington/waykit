@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { HOME_LEDE } from '../landing/copy.ts';
-import { resolvePageSeo } from './siteSeo.ts';
+import { HOME_LEDE } from '../landing/copy';
+import { resolvePageSeo } from './siteSeo';
 
 const distRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../dist');
 const hasDist = fs.existsSync(path.join(distRoot, 'index.html'));

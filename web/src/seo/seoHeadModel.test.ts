@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { seoHeadModel } from './siteSeo.ts';
-import { resolvePageSeo } from './siteSeo.ts';
+import { seoHeadModel } from './siteSeo';
+import { resolvePageSeo } from './siteSeo';
 
 describe('seoHeadModel', () => {
   it('maps title, description, canonical, robots, and social tags', () => {

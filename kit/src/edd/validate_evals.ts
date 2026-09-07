@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import AjvModule, { type ValidateFunction } from 'ajv';
+import Ajv, { type ValidateFunction } from 'ajv';
 import { printCliOutcome } from '../cli/outcome.js';
-
-const Ajv = AjvModule.default ?? AjvModule;
 
 interface Assertions {
   required_triggers?: string[];

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { consumeMarkdownHeadings, docsToc, headingCountsRecord, headingId, slugifyHeading } from './outline.ts';
+import { consumeMarkdownHeadings, docsToc, headingCountsRecord, headingId, slugifyHeading } from './outline';
 
 describe('docsToc', () => {
   it('collects h2/h3 ids and skips fenced headings', () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { isDocsNavActive, SITE_NAV } from '../docs/nav.ts';
+import { isDocsNavActive, SITE_NAV } from '../docs/nav';
 
 const GITHUB = 'https://github.com/mzworthington/waykit';
 

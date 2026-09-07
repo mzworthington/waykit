@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import todayMd from '../../../docs/today-jobs.md?raw';
-import { parseTodayJobsMarkdown } from './todayJobs.ts';
+import { parseTodayJobsMarkdown } from './todayJobs';
 
 describe('parseTodayJobsMarkdown', () => {
   it('parses id, title, blurb, why, steps, command, and actions', () => {

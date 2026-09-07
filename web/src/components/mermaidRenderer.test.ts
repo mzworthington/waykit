@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { queueMermaidRender } from './mermaidRenderer.ts';
+import { queueMermaidRender } from './mermaidRenderer';
 
 describe('queueMermaidRender', () => {
   it('runs overlapping renders one at a time so mermaid does not throw', async () => {

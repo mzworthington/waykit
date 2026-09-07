@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { OntologyExplorer } from './OntologyExplorer.tsx';
+import { OntologyExplorer } from './OntologyExplorer';
 
 vi.mock('../ontology/map.ts', () => ({
   mountOntologyExplorer: vi.fn(async () => undefined)
@@ -44,7 +44,7 @@ describe('OntologyExplorer', () => {
   });
 
   it('mounts the live graph after the island hydrates', async () => {
-    const { mountOntologyExplorer } = await import('../ontology/map.ts');
+    const { mountOntologyExplorer } = await import('../ontology/map');
     vi.mocked(mountOntologyExplorer).mockClear();
     render(<OntologyExplorer />);
     expect(mountOntologyExplorer).toHaveBeenCalledTimes(1);

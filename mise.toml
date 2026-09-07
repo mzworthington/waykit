@@ -1,0 +1,25 @@
+# Waykit toolchain. `mise install` then `mise activate` (or trust this dir).
+# TypeScript `moduleResolution` is bundler + tsx; this pin is the Node runtime (24 LTS).
+[tools]
+node = "24.20.0"
+pnpm = "11.25.0"
+
+[tasks.install-tools]
+description = "Install Node and pnpm"
+run = "mise install node pnpm"
+
+[tasks.install]
+description = "Install Node dependencies"
+run = "pnpm install"
+
+[tasks.typecheck]
+description = "Typecheck kit and site"
+run = "pnpm typecheck && pnpm --dir web typecheck"
+
+[tasks.test]
+description = "Kit unit tests and site tests"
+run = "pnpm test"
+
+[tasks.dev]
+description = "Astro docs/site dev server"
+run = "pnpm --dir web dev"

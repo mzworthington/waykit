@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import todayMd from '../../../docs/today-jobs.md?raw';
-import { presentInlineMarkdown } from '../landing/presentInlineMarkdown.tsx';
-import { parseTodayJobsMarkdown, type TodayJob } from '../landing/todayJobs.ts';
+import { presentInlineMarkdown } from '../landing/presentInlineMarkdown';
+import { parseTodayJobsMarkdown, type TodayJob } from '../landing/todayJobs';
 
 export function TodayJobs({ showHeading = false }: { showHeading?: boolean }) {
   const jobs = useMemo(() => parseTodayJobsMarkdown(todayMd), []);

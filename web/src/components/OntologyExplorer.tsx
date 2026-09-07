@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { mountOntologyExplorer } from '../ontology/map.ts';
+import { mountOntologyExplorer } from '../ontology/map';
 
 export function OntologyExplorer() {
   const rootRef = useRef<HTMLElement>(null);

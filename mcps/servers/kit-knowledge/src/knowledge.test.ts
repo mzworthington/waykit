@@ -13,7 +13,7 @@ import {
   listKitIndex,
   resolveKitRoot,
   searchKit,
-} from "./knowledge.ts";
+} from "./knowledge";
 
 const kitRoot = resolveKitRoot({
   ...process["env"],

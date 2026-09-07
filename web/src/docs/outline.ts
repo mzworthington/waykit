@@ -1,4 +1,4 @@
-import { splitDocsMarkdown } from './presentDocsMarkdown.ts';
+import { splitDocsMarkdown } from './presentDocsMarkdown';
 
 export const HEADING_ALIASES: Record<string, string> = {
   'what-do-i-use-this-for-today': 'today',

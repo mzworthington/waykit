@@ -1,5 +1,5 @@
 import { useEffect, useId, useState } from 'react';
-import { queueMermaidRender } from './mermaidRenderer.ts';
+import { queueMermaidRender } from './mermaidRenderer';
 
 type MermaidApi = {
   initialize: (config: Record<string, unknown>) => void;

@@ -1,9 +1,9 @@
 import { DocsShell } from '../components/DocsShell';
 import { MarkdownView } from '../components/MarkdownView';
-import { docsNeighbors } from '../docs/nav.ts';
+import { docsNeighbors } from '../docs/nav';
 import { docsToc } from '../docs/outline';
 import { DOCS_PAGES, DOC_PATHS, findPublishedPage } from '../docs/pages';
-import { resolvePageSeo } from '../seo/siteSeo.ts';
+import { resolvePageSeo } from '../seo/siteSeo';
 
 type Props = {
   pathname: string;
