@@ -1,0 +1,10 @@
+{
+  "name": "sonar",
+  "description": "SonarQube Cloud MCP for quality gates and issues. Kit chunks, GitHub, and memory. User token + org in env. One profile — do not stack.",
+  "servers": [
+    "kit-knowledge",
+    "github",
+    "memory",
+    "sonarqube"
+  ]
+}

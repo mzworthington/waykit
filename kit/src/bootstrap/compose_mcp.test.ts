@@ -166,6 +166,22 @@ describe('composeMCP', () => {
     assert.equal(body.mcpServers.context7, undefined);
   });
 
+  it('composes the sonar profile from the kit catalog', () => {
+    const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-sonar-')), 'mcp.json');
+    composeMCP('sonar', out, false, { repoDir: kitRoot, env: {} });
+    const body = JSON.parse(fs.readFileSync(out, 'utf8')) as {
+      mcpServers: Record<string, { url?: string; headers?: Record<string, string> }>;
+    };
+    assert.equal(body.mcpServers.sonarqube?.url, 'https://api.sonarcloud.io/mcp');
+    assert.equal(body.mcpServers.sonarqube?.headers?.Authorization, 'Bearer ${env:SONARQUBE_TOKEN}');
+    assert.equal(body.mcpServers.sonarqube?.headers?.SONARQUBE_ORG, '${env:SONARQUBE_ORG}');
+    assert.ok(body.mcpServers['kit-knowledge']);
+    assert.ok(body.mcpServers.github);
+    assert.ok(body.mcpServers.memory);
+    assert.equal(body.mcpServers.linear, undefined);
+    assert.equal(body.mcpServers.context7, undefined);
+  });
+
   it('composes the posthog profile from the kit catalog', () => {
     const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-ph-')), 'mcp.json');
     composeMCP('posthog', out, false, { repoDir: kitRoot, env: {} });

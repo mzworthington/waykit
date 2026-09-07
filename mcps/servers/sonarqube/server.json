@@ -1,0 +1,19 @@
+{
+  "id": "sonarqube",
+  "name": "SonarQube",
+  "summary": "Official SonarQube Cloud-hosted MCP for issues, quality gates, projects, and security hotspots.",
+  "homepage": "https://docs.sonarsource.com/sonarqube-mcp-server/setup/sonarqube-cloud-hosted",
+  "transport": "http",
+  "phases": ["audit", "security", "impl"],
+  "triggers": ["SonarQube", "SonarCloud", "quality gate", "Sonar issues", "security hotspot"],
+  "requiredEnv": ["SONARQUBE_TOKEN", "SONARQUBE_ORG"],
+  "mcp": {
+    "sonarqube": {
+      "url": "https://api.sonarcloud.io/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:SONARQUBE_TOKEN}",
+        "SONARQUBE_ORG": "${env:SONARQUBE_ORG}"
+      }
+    }
+  }
+}

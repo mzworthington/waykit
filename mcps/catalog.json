@@ -1,5 +1,5 @@
 {
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Registry of MCP servers managed by the agent lifecycle kit.",
   "servers": [
     {
@@ -260,6 +260,16 @@
       "phases": ["telemetry", "debug", "impl"],
       "triggers": ["PostHog", "product analytics", "feature flag", "HogQL", "session replay"],
       "requiredEnv": [],
+      "enabledByDefault": false
+    },
+    {
+      "id": "sonarqube",
+      "name": "SonarQube",
+      "summary": "Official SonarQube Cloud-hosted MCP for issues, quality gates, projects, and security hotspots.",
+      "transport": "http",
+      "phases": ["audit", "security", "impl"],
+      "triggers": ["SonarQube", "SonarCloud", "quality gate", "Sonar issues", "security hotspot"],
+      "requiredEnv": ["SONARQUBE_TOKEN", "SONARQUBE_ORG"],
       "enabledByDefault": false
     }
   ]
