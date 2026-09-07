@@ -6,6 +6,10 @@
 
 - Sonar mcp
 
+### 🧰 Maintenance & Dependencies
+
+- Move from node16 to 24
+
 ## 2026-09-06
 
 ### 🚀 Features
