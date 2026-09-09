@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-09
+
+### 🚀 Features
+
+- Map on homepage and removal of kt alias
+
 ## 2026-09-07
 
 ### 🚀 Features
