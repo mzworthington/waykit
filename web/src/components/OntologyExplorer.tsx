@@ -86,7 +86,7 @@ export function OntologyExplorer() {
             {fullscreen ? 'Exit full screen' : 'Full screen'}
           </button>
         </div>
-        <aside id="ontology-inspector" aria-labelledby="ontology-inspector-heading">
+        <aside id="ontology-inspector" aria-labelledby="ontology-inspector-heading" aria-live="polite">
           <h3 id="ontology-inspector-heading">Selected entity</h3>
           <div id="ontology-inspector-body" />
         </aside>

@@ -121,7 +121,7 @@ describe('type filters and inspector', () => {
     const root = explorerRoot();
     renderInspector(root, fixture, null);
     expect(root.querySelector('#ontology-inspector-heading')?.textContent).toBe('Selected entity');
-    expect(root.querySelector('.ontology-empty')?.textContent).toMatch(/Click a node/);
+    expect(root.querySelector('.ontology-empty')?.textContent).toMatch(/Hover a node/);
 
     const skill = fixture.entities[0]!;
     renderInspector(root, fixture, skill);
@@ -194,5 +194,37 @@ describe('mountOntologyExplorer', () => {
     expect(root.querySelectorAll('[data-ontology-type]').length).toBe(HOMEPAGE_TYPE_FILTERS.length);
     expect(root.querySelector('svg.hero-d3-svg')).not.toBeNull();
     expect(root.querySelectorAll('.onto-node').length).toBeGreaterThan(0);
+  });
+
+  it('fills the inspector on node hover and restores the focused entity on leave', async () => {
+    const root = explorerRoot();
+    const fetchImpl = vi.fn(async () => ({ ok: true, status: 200, json: async () => fixture }));
+    await mountOntologyExplorer(root, { fetch: fetchImpl as unknown as typeof fetch });
+
+    const skill = [...root.querySelectorAll<SVGGElement>('.onto-node')].find((node) =>
+      (node.getAttribute('aria-label') ?? '').includes('TDD short loop')
+    );
+    const phase = [...root.querySelectorAll<SVGGElement>('.onto-node')].find((node) =>
+      (node.getAttribute('aria-label') ?? '').includes('Phase tdd')
+    );
+    expect(skill).toBeTruthy();
+    expect(phase).toBeTruthy();
+
+    skill!.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    expect(root.querySelector('#ontology-inspector-heading')?.textContent).toBe('TDD short loop');
+    expect(root.querySelector('.ontology-meta')?.textContent).toBe('Skill');
+
+    skill!.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+    expect(root.querySelector('.ontology-empty')).not.toBeNull();
+
+    skill!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(root.querySelector('#ontology-inspector-heading')?.textContent).toBe('TDD short loop');
+
+    phase!.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    expect(root.querySelector('#ontology-inspector-heading')?.textContent).toBe('tdd');
+    expect(root.querySelector('.ontology-meta')?.textContent).toBe('Phase');
+
+    phase!.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+    expect(root.querySelector('#ontology-inspector-heading')?.textContent).toBe('TDD short loop');
   });
 });

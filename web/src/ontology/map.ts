@@ -188,7 +188,7 @@ export function renderInspector(
     panel.append(
       el('p', {
         className: 'ontology-empty',
-        text: 'Click a node, or search for a name: tdd, hexagonal, playwright.'
+        text: 'Hover a node for details. Click to keep it selected, or search: tdd, hexagonal, playwright.'
       })
     );
     return;
@@ -304,6 +304,11 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
   let focusId: string | null = parseOntologyHash(window.location.hash).focusId;
   let hoverId: string | null = null;
   const byId = new Map(publicIndex.entities.map((entity) => [entity.id, entity]));
+
+  const syncInspector = () => {
+    const id = hoverId ?? focusId;
+    renderInspector(root, index, id ? (byId.get(id) ?? null) : null);
+  };
 
   const currentView = () =>
     filterOntologyGraph(publicIndex, {
@@ -425,10 +430,22 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
       .on('mouseenter', (_event, d) => {
         hoverId = d.id;
         applyLabelOpacity();
+        syncInspector();
       })
       .on('mouseleave', () => {
         hoverId = null;
         applyLabelOpacity();
+        syncInspector();
+      })
+      .on('focus', (_event, d) => {
+        hoverId = d.id;
+        applyLabelOpacity();
+        syncInspector();
+      })
+      .on('blur', () => {
+        hoverId = null;
+        applyLabelOpacity();
+        syncInspector();
       })
       .on('keydown', (event, d) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -443,8 +460,9 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
 
   function focusEntity(id: string): void {
     focusId = id;
+    hoverId = null;
     setOntologyFocusHash(id);
-    renderInspector(root, index, byId.get(id) ?? null);
+    syncInspector();
     draw();
   }
 
@@ -455,17 +473,19 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
 
   clearBtn?.addEventListener('click', () => {
     focusId = null;
+    hoverId = null;
     if (search) search.value = '';
     setOntologyFocusHash(null);
-    renderInspector(root, index, null);
+    syncInspector();
     draw();
   });
 
   svg.on('click', (event) => {
     if (event.target === svg.node()) {
       focusId = null;
+      hoverId = null;
       setOntologyFocusHash(null);
-      renderInspector(root, index, null);
+      syncInspector();
       draw();
     }
   });
@@ -487,8 +507,7 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
     box.addEventListener('change', () => draw());
   });
 
-  if (focusId && byId.has(focusId)) renderInspector(root, index, byId.get(focusId) ?? null);
-  else renderInspector(root, index, null);
+  syncInspector();
   draw();
 }
 
