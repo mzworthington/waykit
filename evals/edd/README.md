@@ -44,7 +44,7 @@ Do not extend the local keyword driver to pass `requires-live` cases. Add JSONL 
 
 ## Live goldens
 
-Architecture routing has a **CI seed** (`architecture_routing.jsonl`, unique intents, `kit check`) and a **live golden** (`goldens/`, 80 working + 20 holdout). Run goldens with `--style cli` or `--style http`. Do not add them to `EDD_CI_SUITES`. Do not grow them with `dataset synthesize`. Procedure: [goldens/README.md](./goldens/README.md).
+Architecture routing has a **CI seed** (`architecture_routing.jsonl`, unique intents, `wk check`) and a **live golden** (`goldens/`, 80 working + 20 holdout). Run goldens with `--style cli` or `--style http`. Do not add them to `EDD_CI_SUITES`. Do not grow them with `dataset synthesize`. Procedure: [goldens/README.md](./goldens/README.md).
 
 ## Quick start
 
@@ -69,8 +69,6 @@ wk eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --
 wk eval ci --suite evals/edd/safety.yaml --threshold-routing 95 --model scripted --out out/reports
 wk eval watch --suite evals/edd/architecture_routing.yaml --target evals/edd
 ```
-
-`kit` and `agent-kit` alias `wk`.
 
 ## Metrics
 
@@ -134,7 +132,7 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
 
 ## Safety suite
 
-Gateable injection / no-tool suite: `evals/edd/safety.yaml`. `kit check` runs it plus architecture routing, model routing, kit-knowledge, Cloudflare ops, self-correction, terminal-fallback, host-subagent launch, and skills-only routing via `EDD_CI_SUITES`.
+Gateable injection / no-tool suite: `evals/edd/safety.yaml`. `wk check` runs it plus architecture routing, model routing, kit-knowledge, Cloudflare ops, self-correction, terminal-fallback, host-subagent launch, and skills-only routing via `EDD_CI_SUITES`.
 
 Subagent routing misses from production go through the same closed loop as other suites (`wk eval dataset from-trace`, then `wk eval miss-rate`). Do not skip adding a golden when the orchestrator stays in the parent instead of launching the specialist (or the reverse, when `WK_SUBAGENTS=0`). `launch_specialist` is an eval adapter for the host Task (`wk agents launch-prompt`); live Cursor/Claude sessions do not call that tool.
 
@@ -157,7 +155,7 @@ wk eval dataset lint --dataset evals/edd/goldens/architecture_routing.holdout.js
 
 ## Production telemetry (closed loop)
 
-Promote production misses into the suite with the same `kit.*` fields as eval cases:
+Promote production misses into the suite with the same `wk .*` fields as eval cases:
 
 ```bash
 wk eval shadow --infile evals/edd/examples/prod-turns.jsonl --sample 1 --seed 1 --out out/shadow-fails.jsonl
@@ -192,4 +190,4 @@ Includes pass rate, tokens/latency, routing + schema adherence, and failure trac
 
 CI workflows (`.github/workflows/ci.yml` Verify, `edd-live.yml`) write a short “what this gate means” preamble plus the EDD overview into the run **Summary** tab.
 
-Live models (optional): `KIT_EVAL_API_KEY` first, then `OPENAI_API_KEY`, then `ANTHROPIC_API_KEY`. Optional `KIT_EVAL_BASE_URL` / `OPENAI_BASE_URL` (OpenAI-compatible `/chat/completions`; default `https://api.openai.com/v1`), `KIT_EVAL_MODEL`. USD on live/CLI reports defaults to `$0.003` per 1k tokens (`KIT_EVAL_TOKEN_USD_PER_1K` to override, `0` to disable). Nightly CI only reads `KIT_EVAL_API_KEY`.
+Live models (optional): `wk _EVAL_API_KEY` first, then `OPENAI_API_KEY`, then `ANTHROPIC_API_KEY`. Optional `wk _EVAL_BASE_URL` / `OPENAI_BASE_URL` (OpenAI-compatible `/chat/completions`; default `https://api.openai.com/v1`), `wk _EVAL_MODEL`. USD on live/CLI reports defaults to `$0.003` per 1k tokens (`wk _EVAL_TOKEN_USD_PER_1K` to override, `0` to disable). Nightly CI only reads `wk _EVAL_API_KEY`.

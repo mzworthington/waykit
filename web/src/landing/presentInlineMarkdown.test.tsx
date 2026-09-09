@@ -12,9 +12,9 @@ describe('presentInlineMarkdown', () => {
   });
 
   it('turns bold and code into elements without HTML injection', () => {
-    render(<p>{presentInlineMarkdown('**Run** `kit check` <script> and <SCRIPT>')}</p>);
+    render(<p>{presentInlineMarkdown('**Run** `wk check` <script> and <SCRIPT>')}</p>);
     expect(screen.getByText('Run').tagName).toBe('STRONG');
-    expect(screen.getByText('kit check').tagName).toBe('CODE');
+    expect(screen.getByText('wk check').tagName).toBe('CODE');
     expect(screen.getByText('<script>', { exact: false })).toBeTruthy();
     expect(screen.getByText('<SCRIPT>', { exact: false })).toBeTruthy();
     expect(document.querySelector('script')).toBeNull();

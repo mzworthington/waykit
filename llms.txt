@@ -5,7 +5,7 @@
 ## What this site is
 Waykit is the SDLC coding agents actually run: grilling, spec, TDD, cross-functional quality, audit, telemetry, and release, plus learning loops so the next session is better than the last. Eval-Driven Development (EDD) is **alpha**: TDD-shaped checks for prompts and tool schemas, with a scripted CI gate. It is not a full EDD framework. The harness is `wk eval run|ci|report`. The same CLI gates always-on context (`wk measure-context`), checks the live kit graph (`wk ontology check`), composes one MCP profile per host, and runs `wk check`.
 
-Cursor, Claude Code, Copilot, and Antigravity share `AGENTS.md`. MCP and model overlays are written to each host’s real config files (`wk mcp --install`, `wk model resolve --host …`). See [hosts](https://waykit.dev/docs/hosts). `wk eval` (no subcommand) is a skill-trigger / prompt-hygiene check: it does not call a model. `kit` remains an alias of `wk`.
+Cursor, Claude Code, Copilot, and Antigravity share `AGENTS.md`. MCP and model overlays are written to each host’s real config files (`wk mcp --install`, `wk model resolve --host …`). See [hosts](https://waykit.dev/docs/hosts). `wk eval` (no subcommand) is a skill-trigger / prompt-hygiene check: it does not call a model.
 
 ## What do I use this for today?
 - Starting a product feature → lifecycle (grill → spec → TDD + XFN → audit → release)

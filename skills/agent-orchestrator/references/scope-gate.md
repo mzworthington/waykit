@@ -4,7 +4,7 @@ Read **before** routing. Pick the smallest valid path ([CODING_PHILOSOPHY.md](..
 
 | Request type | Route |
 |--------------|-------|
-| Prompt, MCP tool schema, or agent routing change | **EDD default:** [SOPs/eval-driven-development.md](../../../SOPs/eval-driven-development.md) (`kit eval run\|ci`) before merge |
+| Prompt, MCP tool schema, or agent routing change | **EDD default:** [SOPs/eval-driven-development.md](../../../SOPs/eval-driven-development.md) (`wk eval run\|ci`) before merge |
 | Bug, failed job, live-site / fetch symptom, flake | Launch **`agent-debug` subagent** (parent keeps hypothesis + handover, not logs) → `agent-pre-commit`. Light XFN when UI/auth/SLO touched. |
 | Production incident / page | **`agent-incident`** skill → launch **`agent-debug` subagent** (+ Slack/Notion when configured) |
 | Live Cloudflare Web Analytics / RUM / beacon / insights host | **`agent-cloudflare-ops`** (`wk mcp cloudflare-ops --project`, then restore default) → IaC fix in owner repo |

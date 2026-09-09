@@ -36,7 +36,7 @@ export function installGitHooks(options: {
     fs.mkdirSync(hooksDir, { recursive: true });
   }
   const hookPath = path.join(hooksDir, 'pre-commit');
-  const hookScript = `#!/usr/bin/env bash\n# Pre-Commit Security & Quality Gate via Waykit\nset -e\nWK="$HOME/.agents/bin/kit"\nif [ -x "$WK" ]; then\n  "$WK" audit\nelif command -v wk >/dev/null 2>&1; then\n  wk audit\nelif command -v kit >/dev/null 2>&1; then\n  kit audit\nfi\n`;
+  const hookScript = `#!/usr/bin/env bash\n# Pre-Commit Security & Quality Gate via Waykit\nset -e\nWK="$HOME/.agents/bin/kit"\nif [ -x "$WK" ]; then\n  "$WK" audit\nelif command -v wk >/dev/null 2>&1; then\n  wk audit\nfi\n`;
   fs.writeFileSync(hookPath, hookScript, { mode: 0o755 });
   console.log(`✅ Installed pre-commit hook to ${hookPath}`);
 
@@ -48,7 +48,7 @@ export function installGitHooks(options: {
   } else {
     fs.writeFileSync(
       commitMsgPath,
-      `#!/usr/bin/env bash\nset -e\nWK="$HOME/.agents/bin/kit"\nif [ -x "$WK" ]; then\n  "$WK" commit-msg "$1"\nelif command -v wk >/dev/null 2>&1; then\n  wk commit-msg "$1"\nelif command -v kit >/dev/null 2>&1; then\n  kit commit-msg "$1"\nelse\n  echo "Waykit not found; cannot check conventional commit message." >&2\n  exit 1\nfi\n`,
+      `#!/usr/bin/env bash\nset -e\nWK="$HOME/.agents/bin/kit"\nif [ -x "$WK" ]; then\n  "$WK" commit-msg "$1"\nelif command -v wk >/dev/null 2>&1; then\n  wk commit-msg "$1"\nelse\n  echo "Waykit not found; cannot check conventional commit message." >&2\n  exit 1\nfi\n`,
       { mode: 0o755 }
     );
   }

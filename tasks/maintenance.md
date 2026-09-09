@@ -29,5 +29,5 @@ Run this routine checklist weekly to audit codebase health, security vulnerabili
   - Audit `.env.example` configurations to verify all newly added application variables are documented.
 - [ ] **MCP library health**
   - Confirm `mcps/catalog.json` ids match folders under `mcps/servers/`.
-  - Re-compose the default profile (`kit mcp default`) and ensure no secrets were committed into fragments.
+  - Re-compose the default profile (`wk mcp default`) and ensure no secrets were committed into fragments.
   - Drop or disable unused servers from profiles so agents keep a small tool surface.

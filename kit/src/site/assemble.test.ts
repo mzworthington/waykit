@@ -131,7 +131,7 @@ describe('landing page assets', () => {
   it('Pages workflow builds the web app then uploads site/', () => {
     const yml = fs.readFileSync(path.join(kitRoot, '.github/workflows/deploy-pages.yml'), 'utf8');
     assert.match(yml, /pnpm --dir web build/);
-    assert.match(yml, /pnpm kit site assemble/);
+    assert.match(yml, /pnpm wk site assemble/);
     assert.match(yml, /path: 'site'/);
     assert.doesNotMatch(yml, /path: '\.'/);
   });

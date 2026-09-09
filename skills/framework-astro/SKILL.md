@@ -28,7 +28,7 @@ disable-model-invocation: false
 
 Astro is the **delivery adapter** for content-driven sites. Domain logic stays in plain TypeScript. Pages and layouts emit HTML at build time. Interactive UI is a leaf island, not the app shell.
 
-Install current docs via `kit mcp astro --install` (Astro Docs MCP). Do not stack that profile on `default`. Prefer `astro add` for official integrations. Verify APIs with Astro Docs MCP before copying training-data snippets.
+Install current docs via `wk mcp astro --install` (Astro Docs MCP). Do not stack that profile on `default`. Prefer `astro add` for official integrations. Verify APIs with Astro Docs MCP before copying training-data snippets.
 
 ## Architecture
 
@@ -60,7 +60,7 @@ waykit.dev is the reference implementation:
 - Astro file routes in `web/src/pages`; React views in `web/src/views` or `web/src/components` (never under `pages/`).
 - Markdown catalog (`web/src/docs/pages.ts`) is **server-only**. Do not import it from islands. Pass page bodies, `docPaths`, and nav `{ path, title }` as props from `.astro` pages.
 - Chrome lives in `SiteChrome.astro`. `client:load` on `SiteNav`, landing widgets, mermaid, and the ontology map (`client:visible` is skipped after Astro view-transition swaps; mermaid’s SSR stub is empty so `client:visible` often never intersects). Never wrap a whole page as one island.
-- After `astro build`, `kit site assemble` overlays raw Markdown and writes `CNAME` / `.nojekyll`. The Astro `kitPages` hook writes `sitemap.xml` only. GitHub Actions still runs `pnpm --dir web build` then assemble.
+- After `astro build`, `wk site assemble` overlays raw Markdown and writes `CNAME` / `.nojekyll`. The Astro `wk Pages` hook writes `sitemap.xml` only. GitHub Actions still runs `pnpm --dir web build` then assemble.
 
 ## Testing
 

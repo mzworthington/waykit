@@ -127,7 +127,7 @@ Two ownership models - do not mix them in git.
 `.gitignore` blocks accidental commits of non-kit directories under `skills/`. Validate locally:
 
 ```bash
-pnpm kit verify
+pnpm wk verify
 ```
 
 ### Install upstream skills
@@ -135,8 +135,8 @@ pnpm kit verify
 Declare in [external.lock.json](./external.lock.json); install to Cursor **user** scope:
 
 ```bash
-kit sync --install   # → ~/.cursor/skills
-kit sync --update    # lockfile ids in ~/.cursor/skills only (not --all agents)
+wk sync --install   # → ~/.cursor/skills
+wk sync --update    # lockfile ids in ~/.cursor/skills only (not --all agents)
 ```
 
 Or during bootstrap: `INSTALL_EXTERNAL_SKILLS=1 ./install.sh`
@@ -149,8 +149,8 @@ Defaults include Cloudflare platform skills (`cloudflare/skills`) and Vercel `re
 
 ```bash
 rm -rf skills/cloudflare skills/wrangler   # example - only non-kit dirs
-kit sync --install
-kit verify
+wk sync --install
+wk verify
 ```
 
 Do **not** add upstream skills to git. To pin a new upstream skill, append to the lockfile and re-run `--install`.

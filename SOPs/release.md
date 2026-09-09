@@ -13,7 +13,7 @@ tools:
 
 Use with [agent-release](../skills/agent-release/SKILL.md). Pipeline shape (verify on PR and `main`, promote, changelog push-back): [profile-pipeline](../skills/profile-pipeline/SKILL.md).
 
-This kit ships as a **git checkout** (`install.sh` / `KIT_REF`), not npm. Versioned
+This kit ships as a **git checkout** (`install.sh` / `wk _REF`), not npm. Versioned
 artifacts are **GitHub Releases** (`vX.Y.Z` tags). Changelog generation uses
 **git-cliff** (same stack as ArchLens).
 
@@ -62,7 +62,7 @@ bash bin/release.sh notes v1.0.0 v1.1.0
 bash bin/release.sh sync-notes         # repair GitHub Release bodies (needs GH_TOKEN)
 ```
 
-Consumers pin installs with `KIT_REF=vX.Y.Z` (see `install.sh`).
+Consumers pin installs with `wk _REF=vX.Y.Z` (see `install.sh`).
 
 ## 3. Ops handoff
 

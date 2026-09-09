@@ -23,8 +23,8 @@ One or two sentences on what happened and why this lesson matters.
 When the friction was wrong tool, bad args, prompt/schema drift, or MCP misuse:
 
 1. Draft a case from session context (no user paste required) - tags include `prod-derived`.
-2. `kit eval dataset from-trace --trace <file> --out evals/edd/<suite>.jsonl` **or** append JSONL by hand.
-3. `kit eval run --suite evals/edd/<suite>.yaml --model scripted` (red then green with the fix).
+2. `wk eval dataset from-trace --trace <file> --out evals/edd/<suite>.jsonl` **or** append JSONL by hand.
+3. `wk eval run --suite evals/edd/<suite>.yaml --model scripted` (red then green with the fix).
 4. Record **EDD case** id/path above. See [SOPs/hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md) §11.
 
 ## Promotion notes (optional)

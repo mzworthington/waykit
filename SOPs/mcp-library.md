@@ -18,7 +18,7 @@ Use this when adding a server to the kit catalog, composing a host config, or wi
 | Need | Put it in |
 |------|-----------|
 | Useful across most projects | `mcps/profiles/default.json` (+ global install) |
-| Kit SOP / philosophy / handover chunks | `kit-knowledge` on `default` (already) |
+| Kit SOP / philosophy / handover chunks | `wk -knowledge` on `default` (already) |
 | Linear issues / projects | `default` (OAuth; already in that profile) |
 | Notion / Slack | `mcps/profiles/collab.json` |
 | Chrome / Next / Playwright | `mcps/profiles/devtools.json` or `project-example` |
@@ -41,7 +41,7 @@ Use this when adding a server to the kit catalog, composing a host config, or wi
 
 1. **One profile per session.** Compose a single named profile into `mcp.json`. Do not merge collab + devtools + ops + personal into one global file.
 2. **Match skill `mcp:` frontmatter.** If `agent-xfn` lists `playwright`, use `devtools` or a project profile that includes it - do not enable every catalog server “just in case.”
-3. **Skills ≠ MCP.** Role behavior stays in `skills/`. MCP is for live systems, vendor docs, memory, and kit chunk retrieval (`kit-knowledge`).
+3. **Skills ≠ MCP.** Role behavior stays in `skills/`. MCP is for live systems, vendor docs, memory, and kit chunk retrieval (`wk -knowledge`).
 4. Prefer a **small** enabled set. Extra MCP tools compete for attention and inflate tool-schema tokens. Never commit vault sessions or compose `personal` into shared app repos.
 
 See [SOPs/context-budget.md](./context-budget.md).
@@ -87,38 +87,38 @@ See [SOPs/context-budget.md](./context-budget.md).
 
 ```bash
 # Preview
-kit mcp default
+wk mcp default
 
 # Global Cursor config (backup written if file exists)
-kit mcp default --install
+wk mcp default --install
 
 # Collab extras (Notion OAuth, Slack env tokens; Linear is already on default)
-kit mcp collab --install
+wk mcp collab --install
 
 # Ops / incident (Sentry OAuth + Slack)
-kit mcp ops --install
+wk mcp ops --install
 
 # Security audit (Semgrep)
-kit mcp security -o .cursor/mcp.security.json
+wk mcp security -o .cursor/mcp.security.json
 
 # Design / payments (opt-in; tokens or OAuth)
-kit mcp design -o .cursor/mcp.design.json
-kit mcp payments -o .cursor/mcp.payments.json
+wk mcp design -o .cursor/mcp.design.json
+wk mcp payments -o .cursor/mcp.payments.json
 
 # Personal / sensitive (Bitwarden, LinkedIn, Polyglot, Obsidian) - machine only
-kit mcp personal --install
+wk mcp personal --install
 
 # Home lab (Raspberry Pi over SSH) - machine only
-kit mcp lab --install
+wk mcp lab --install
 
 # Warp Factory (OAuth; send/continue factory tasks)
-kit mcp warp --install
+wk mcp warp --install
 
 # PostHog (OAuth; analytics, flags, errors)
-kit mcp posthog --install
+wk mcp posthog --install
 
 # SonarQube Cloud (user token + org in env)
-kit mcp sonar --install
+wk mcp sonar --install
 
 # Project config
 wk mcp project-example --project

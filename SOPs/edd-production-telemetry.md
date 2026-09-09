@@ -18,9 +18,9 @@ Local and CI evals protect predefined intents. Production is unpredictable. Clos
 
 ## Mechanisms
 
-1. **Standardized span emitting** - `emitAgentSpan` records prompt, routing confidence, JSON tool payload, latency, and tokens (`kit.*` attributes). Sample span: [evals/edd/examples/otel-agent-loop.json](../evals/edd/examples/otel-agent-loop.json). Export to an OTLP collector with `kitSpanToOtlpJson` when you already run one.
-2. **Asynchronous shadow evals** - Do not judge every live prompt inline. Sample with `shouldShadowEval(0.05)` / `kit eval shadow --infile … --sample 0.05`. Example corpus: [evals/edd/examples/prod-turns.jsonl](../evals/edd/examples/prod-turns.jsonl).
-3. **Prod → JSONL (triage, then promote)** - On unhandled tool exceptions, circuit-breaker trips, user downvotes, or `shadow_fail`, run `productionTraceToJsonl` / `kit eval dataset from-trace`. **Do not append `--out` JSONL onto CI seeds or holdout.** Open each candidate:
+1. **Standardized span emitting** - `emitAgentSpan` records prompt, routing confidence, JSON tool payload, latency, and tokens (`wk .*` attributes). Sample span: [evals/edd/examples/otel-agent-loop.json](../evals/edd/examples/otel-agent-loop.json). Export to an OTLP collector with `wk SpanToOtlpJson` when you already run one.
+2. **Asynchronous shadow evals** - Do not judge every live prompt inline. Sample with `shouldShadowEval(0.05)` / `wk eval shadow --infile … --sample 0.05`. Example corpus: [evals/edd/examples/prod-turns.jsonl](../evals/edd/examples/prod-turns.jsonl).
+3. **Prod → JSONL (triage, then promote)** - On unhandled tool exceptions, circuit-breaker trips, user downvotes, or `shadow_fail`, run `productionTraceToJsonl` / `wk eval dataset from-trace`. **Do not append `--out` JSONL onto CI seeds or holdout.** Open each candidate:
 
    | Decision | When | Where it goes |
    |----------|------|----------------|
@@ -35,8 +35,8 @@ Local and CI evals protect predefined intents. Production is unpredictable. Clos
 ## Try the closed loop locally
 
 ```bash
-kit eval shadow --infile evals/edd/examples/prod-turns.jsonl --sample 1 --seed 1 --out out/shadow-fails.jsonl
-kit eval dataset from-trace --trace evals/edd/examples/prod-trace.json --out out/prod.jsonl
+wk eval shadow --infile evals/edd/examples/prod-turns.jsonl --sample 1 --seed 1 --out out/shadow-fails.jsonl
+wk eval dataset from-trace --trace evals/edd/examples/prod-trace.json --out out/prod.jsonl
 ```
 
 Fixtures: [examples/otel-agent-loop.json](../evals/edd/examples/otel-agent-loop.json), [examples/prod-turns.jsonl](../evals/edd/examples/prod-turns.jsonl), [examples/prod-trace.json](../evals/edd/examples/prod-trace.json).
@@ -45,27 +45,27 @@ Fixtures: [examples/otel-agent-loop.json](../evals/edd/examples/otel-agent-loop.
 
 | Signal | Alert when | Where |
 |--------|------------|--------|
-| Routing accuracy (shadow) | Below CI threshold (default 95%) | Shadow job / `kit.passed` on sampled spans |
+| Routing accuracy (shadow) | Below CI threshold (default 95%) | Shadow job / `wk .passed` on sampled spans |
 | Hallucination rate (judge) | Sustained rise vs baseline week | Shadow fails tagged `shadow_fail` |
 | Circuit-breaker trips | Spike vs 7-day baseline | Spans / cases with `circuit_breaker` |
-| Tool share drift | Absolute drop ≥ 20 pp | Aggregate `kit.tool_name` → `detectRoutingDrift` |
+| Tool share drift | Absolute drop ≥ 20 pp | Aggregate `wk .tool_name` → `detectRoutingDrift` |
 | Safety suite | Scripted gate or nightly live fails | CI |
 
-Filter production spans / turns by attributes `kit.case_id`, `kit.tool_name`, `kit.passed` (and `service.name=kit-edd` when using OTLP).
+Filter production spans / turns by attributes `wk .case_id`, `wk .tool_name`, `wk .passed` (and `service.name=kit-edd` when using OTLP).
 
 ## Closed loop
 
 ```mermaid
 flowchart LR
-  prod[Prod agent.loop spans] --> shadow[kit eval shadow]
+  prod[Prod agent.loop spans] --> shadow[wk eval shadow]
   shadow -->|shadow_fail| triage[Human triage]
   miss[Circuit breaker / downvote] --> fromTrace[from-trace]
   fromTrace --> triage
   triage -->|keep| golden[Working golden]
   triage -->|drop| discard[Discard]
-  golden --> live[kit eval run --style cli or http]
+  golden --> live[wk eval run --style cli or http]
   hold[Frozen holdout] -->|weekly / release| live
   live -->|green| ship[Ship]
 ```
 
-Yesterday's incident → triage → working golden (`prod-derived`) → live `kit eval run` → green before release. Do not auto-append onto CI seeds or holdout. Redact secrets from uploaded eval reports (harness redacts API-key-like strings in Markdown artifacts).
+Yesterday's incident → triage → working golden (`prod-derived`) → live `wk eval run` → green before release. Do not auto-append onto CI seeds or holdout. Redact secrets from uploaded eval reports (harness redacts API-key-like strings in Markdown artifacts).

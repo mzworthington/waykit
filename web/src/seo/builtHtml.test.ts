@@ -63,5 +63,8 @@ describe.skipIf(!hasDist)('built HTML contract', () => {
     expect(map).toMatch(
       /component-export="(?:OntologyExplorer|DocsWidget)"[^>]*client="load"/
     );
+    const home = readBuilt('/');
+    expect(home).toContain('Explore the graph');
+    expect(home).toMatch(/component-export="OntologyExplorer"[^>]*client="load"/);
   });
 });

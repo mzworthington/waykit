@@ -30,5 +30,5 @@
 
 ---
 
-This file is the **canonical example** of `kit eval report --format md --out out/reports` output
+This file is the **canonical example** of `wk eval report --format md --out out/reports` output
 (`out/reports/eval-report.md`, mirrored as `edd-report.md`). Live runs regenerate the same structure from suite results.

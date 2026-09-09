@@ -8,16 +8,16 @@ describe('parseTodayJobsMarkdown', () => {
 
 ## demo | Demo job
 
-> Button blurb with \`kit\`.
+> Button blurb with \`wk\`.
 
 Why this path exists.
 
 1. **Write** the case.
-2. **Run** \`kit eval run\`
+2. **Run** \`wk eval run\`
 3. Done.
 
 \`\`\`
-kit eval run
+wk eval run
 \`\`\`
 
 - [Proof](#proof)
@@ -28,10 +28,10 @@ kit eval run
       {
         id: 'demo',
         title: 'Demo job',
-        blurb: 'Button blurb with `kit`.',
+        blurb: 'Button blurb with `wk`.',
         why: 'Why this path exists.',
-        steps: ['**Write** the case.', '**Run** `kit eval run`', 'Done.'],
-        cmd: 'kit eval run',
+        steps: ['**Write** the case.', '**Run** `wk eval run`', 'Done.'],
+        cmd: 'wk eval run',
         actions: [
           { label: 'Proof', href: '#proof' },
           { label: 'Suite', href: './evals/edd/demo.yaml' }

@@ -194,7 +194,7 @@ export function getHandover(
 
 export function listKitIndex(kitRoot: string): string {
   const lines: string[] = [];
-  lines.push(`KIT_ROOT=${kitRoot}`);
+  lines.push(`wk _ROOT=${kitRoot}`);
   lines.push("");
   lines.push("## Philosophy sections");
   for (const s of listPhilosophySections(kitRoot)) {

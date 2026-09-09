@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { HOMEPAGE_TYPE_FILTERS, TYPE_COLOR } from '../../../kit/src/ontology/graph_view';
 import { mountOntologyExplorer } from '../ontology/map';
 
 export function OntologyExplorer() {
@@ -61,6 +62,21 @@ export function OntologyExplorer() {
       <div className="ontology-stage">
         <div className="ontology-canvas-frame">
           <div id="ontology-canvas" className="hero-d3-wrapper" />
+          <aside className="ontology-key" aria-labelledby="ontology-key-heading">
+            <h3 id="ontology-key-heading">Key</h3>
+            <ul className="ontology-key-nodes">
+              {HOMEPAGE_TYPE_FILTERS.map((filter) => (
+                <li key={filter.type}>
+                  <span
+                    className="ontology-key-swatch"
+                    aria-hidden="true"
+                    style={{ backgroundColor: TYPE_COLOR[filter.type] }}
+                  />
+                  {filter.label}
+                </li>
+              ))}
+            </ul>
+          </aside>
           <button
             type="button"
             className="ontology-fs-toggle"

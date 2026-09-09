@@ -35,16 +35,14 @@ tools:
 | `wk eval run --suite evals/edd/goldens/architecture_routing.yaml --style cli --cli cursor-agent --model …` | Live golden (not CI) |
 | `wk eval dataset lint\|dedupe\|synthesize\|from-trace` | Dataset hygiene (schema lint, dedupe, paraphrases, prod promote) |
 
-`kit` and `agent-kit` are aliases of `wk`.
-
 ## IDEs vs live keys
 
 Cursor, Claude Code, Copilot, and Antigravity load Kit via host pointers and MCP files ([docs/hosts.md](../docs/hosts.md)). Run evals with `--style local`; no provider key. `--style http` POSTs to an OpenAI-compatible `/chat/completions`. `--style cli` shells out to one assistant binary for agent and judge. Key order, nightly vs PR: [docs/edd.md](../docs/edd.md#cursor-claude-copilot-antigravity-and-api-keys).
 
 ## CI
 
-- **Local gate:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) **Verify** runs `kit check` / `wk eval ci` with `--style local`. Cases tagged `requires-live` are skipped so paraphrases do not fail CI. `kit check` covers architecture routing, model routing, kit-knowledge, Cloudflare ops, safety, self-correction, and terminal-fallback suites.
-- **Live nightly:** [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) runs on a schedule when `KIT_EVAL_API_KEY` is set and `KIT_EVAL_MODEL` is a real provider model. That job includes `requires-live` rows. Missing `KIT_EVAL_API_KEY` skips the job; it does not fall through to `OPENAI_API_KEY`.
+- **Local gate:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) **Verify** runs `wk check` / `wk eval ci` with `--style local`. Cases tagged `requires-live` are skipped so paraphrases do not fail CI. `wk check` covers architecture routing, model routing, kit-knowledge, Cloudflare ops, safety, self-correction, and terminal-fallback suites.
+- **Live nightly:** [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) runs on a schedule when `wk _EVAL_API_KEY` is set and `wk _EVAL_MODEL` is a real provider model. That job includes `requires-live` rows. Missing `wk _EVAL_API_KEY` skips the job; it does not fall through to `OPENAI_API_KEY`.
 - **Threshold gating:** `--threshold-routing 95` blocks merges when routing/schema extraction fails more than 5% of routing-tagged cases.
 - **Artifacts:** Reports upload with `if: always()` (`out/reports/eval-report.md`, `edd-report.md` / `.json`).
 - **Job summaries:** CI workflows publish an overview table plus the full Markdown report to `$GITHUB_STEP_SUMMARY` (via `wk eval report --github-summary`, or automatically when `GITHUB_ACTIONS=true`). Open the workflow run → Summary to read pass rate, routing/schema, and failure traces without downloading artifacts. Unit tests use `pnpm test:ci`, which also writes `out/reports/unit-test-report.md` into that Summary.

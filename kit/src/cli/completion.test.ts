@@ -70,7 +70,8 @@ describe('renderCompletion', () => {
   it('emits a thin stub that asks the live binary, not a baked verb list', () => {
     const zsh = renderZshCompletion();
     const bash = renderBashCompletion();
-    assert.match(zsh, /#compdef wk kit agent-kit/);
+    assert.match(zsh, /#compdef wk$/m);
+    assert.doesNotMatch(zsh, /agent-kit/);
     assert.match(zsh, /__complete --/);
     assert.doesNotMatch(zsh, /_values 'eval'/);
     assert.match(bash, /complete -F _wk wk/);

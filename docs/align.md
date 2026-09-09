@@ -53,7 +53,7 @@ jobs:
     uses: mzworthington/waykit/.github/workflows/align-consumer.yml@main
 ```
 
-Pin `kit_ref` (and the `uses:` ref) to a `vX.Y.Z` tag once you want a frozen installer. Optional `working_directory` is the path `wk align` runs in (default `.`).
+Pin `wk _ref` (and the `uses:` ref) to a `vX.Y.Z` tag once you want a frozen installer. Optional `working_directory` is the path `wk align` runs in (default `.`).
 
 First-party adopters (align job on pull requests): [gpio-build-monitor](https://github.com/mzworthington/gpio-build-monitor), [blueprint](https://github.com/mzworthington/blueprint) (ArchLens), [steerco](https://github.com/mzworthington/steerco), [react-cloudflare-template](https://github.com/mzworthington/react-cloudflare-template), [mzworthington](https://github.com/mzworthington/mzworthington), [edge-dns](https://github.com/mzworthington/edge-dns). Align failures fail that check.
 
@@ -67,7 +67,7 @@ First-party adopters (align job on pull requests): [gpio-build-monitor](https://
 | Kit pointer | Text names `~/.agents` |
 | Host pointers | `.cursorrules`, `CLAUDE.md`, `GEMINI.md`, `.windsurfrules`, `.github/copilot-instructions.md` |
 | `commit-msg` | Husky, `.githooks`, or `.git/hooks` (enable `.githooks` with `git config core.hooksPath .githooks`) |
-| MCP | Present project MCP files for Cursor, Claude, Copilot, and Antigravity include `kit-knowledge` (`.cursor/mcp.json`, `.mcp.json`, `.vscode/mcp.json`, `.agents/mcp_config.json`). Missing host files are skipped. An empty present file fails and is named. Windsurf has no MCP writer. |
+| MCP | Present project MCP files for Cursor, Claude, Copilot, and Antigravity include `wk -knowledge` (`.cursor/mcp.json`, `.mcp.json`, `.vscode/mcp.json`, `.agents/mcp_config.json`). Missing host files are skipped. An empty present file fails and is named. Windsurf has no MCP writer. |
 | Handover home | If handover paths appear, they use this repo’s folder name, not a stale `blueprint` |
 
 ## Related

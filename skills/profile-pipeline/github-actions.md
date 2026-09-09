@@ -29,7 +29,7 @@ Pin third-party actions by **git SHA**, not a moving tag.
 
 Registry installs of the package manager (for example `pnpm/setup` fetching `@pnpm/linux-x64` from npm) should retry once on 5xx/timeout. A 504 on that **binary download** is not a product failure. Do not retry `ERR_PNPM_NO_PKG_MANIFEST` as if it were a 504.
 
-Nested workspaces (`package.json` under `app/`): pass `working-directory` to `pnpm/setup`. Job `defaults.run.working-directory` applies only to `run:` steps, not to `uses:`. Do not set deprecated `package-json-file` hoping it changes cwd — some action versions still run `pnpm install` at `GITHUB_WORKSPACE`, which fails when the manifest is nested. Classify with `kit debug-ci` before wrapping setup in sleep+retry.
+Nested workspaces (`package.json` under `app/`): pass `working-directory` to `pnpm/setup`. Job `defaults.run.working-directory` applies only to `run:` steps, not to `uses:`. Do not set deprecated `package-json-file` hoping it changes cwd — some action versions still run `pnpm install` at `GITHUB_WORKSPACE`, which fails when the manifest is nested. Classify with `wk debug-ci` before wrapping setup in sleep+retry.
 
 Do not treat a green sibling workflow (CodeQL) as the verify graph.
 

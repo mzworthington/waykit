@@ -32,7 +32,6 @@ export const SITE_NAV: DocsNavItem[] = [
       '/docs/doctor',
       '/docs/align',
       '/docs/used-in',
-      '/docs/lifecycle',
       '/docs/subagents',
       '/docs/sops',
       '/docs/ADRs',
@@ -40,7 +39,7 @@ export const SITE_NAV: DocsNavItem[] = [
       '/docs/kit-review-backlog'
     ]
   },
-  { label: 'Map', path: '/docs/map', matchPrefixes: ['/docs/map', '/ontology'] }
+  { label: 'Lifecycle', path: '/docs/lifecycle' }
 ];
 
 export const START_ITEMS: DocsNavItem[] = [

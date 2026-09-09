@@ -2,13 +2,13 @@
 
 Kit evaluates two layers: **skill routing** (which specialist activates) and **agent tool use** (EDD alpha: how an agent calls tools in the harness). Use EDD when you change prompts, MCP schemas, or routing.
 
-1. **Eval-Driven Development (`evals/edd/`):** YAML + JSONL harness for tool routing, schema match, LLM-as-a-judge, CI gates (`kit eval run|watch|report|ci|shadow|dataset|miss-rate`). Guide: [docs/edd.md](../docs/edd.md) · Suites: [edd/README.md](./edd/README.md).
+1. **Eval-Driven Development (`evals/edd/`):** YAML + JSONL harness for tool routing, schema match, LLM-as-a-judge, CI gates (`wk eval run|watch|report|ci|shadow|dataset|miss-rate`). Guide: [docs/edd.md](../docs/edd.md) · Suites: [edd/README.md](./edd/README.md).
 2. **Co-located skill evals (`skills/<skill>/evals/eval.json`):** Single-skill output assertions next to `SKILL.md`.
-3. **Centralized routing suites (`evals/suites/*.json`):** Cross-skill routing matrix, lifecycle roles, stack profiles (`kit eval`).
+3. **Centralized routing suites (`evals/suites/*.json`):** Cross-skill routing matrix, lifecycle roles, stack profiles (`wk eval`).
 
 Together they guard: correct skill activation, architectural conformance, no prompt drift, and agent tool reliability above CI thresholds.
 
-`pnpm kit validate` also requires every `agent-*` skill to appear in `evals/suites/routing-matrix.json` and `lifecycle-roles.json`, and every `lang-*` / `framework-*` / `profile-*` skill to appear in `stack-profiles.json`. Co-located `skills/*/evals/eval.json` files are not a substitute for those cross-skill suites.
+`pnpm wk validate` also requires every `agent-*` skill to appear in `evals/suites/routing-matrix.json` and `lifecycle-roles.json`, and every `lang-*` / `framework-*` / `profile-*` skill to appear in `stack-profiles.json`. Co-located `skills/*/evals/eval.json` files are not a substitute for those cross-skill suites.
 
 ---
 
@@ -74,22 +74,22 @@ Every eval test case is defined in JSON adhering to `evals/schema.json`:
 Validate schema compliance, syntax, and skill reference integrity across both centralized suites and co-located skill evals:
 
 ```bash
-pnpm kit validate
+pnpm wk validate
 ```
 
 Ensure skill folder layout rules remain valid:
 
 ```bash
-pnpm kit verify
+pnpm wk verify
 ```
 
-Run the CLI unit tests (`kit/src/**/*.test.ts`) and the scripted routing CI gate (YAML/JSONL under `evals/edd/`):
+Run the CLI unit tests (`wk /src/**/*.test.ts`) and the scripted routing CI gate (YAML/JSONL under `evals/edd/`):
 
 ```bash
 pnpm test
-pnpm kit eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --model scripted --out out/reports
-pnpm kit eval ci --suite evals/edd/kit_knowledge.yaml --threshold-routing 95 --model scripted --out out/reports
-pnpm kit eval ci --suite evals/edd/cloudflare_ops.yaml --threshold-routing 95 --model scripted --out out/reports
+pnpm wk eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --model scripted --out out/reports
+pnpm wk eval ci --suite evals/edd/kit_knowledge.yaml --threshold-routing 95 --model scripted --out out/reports
+pnpm wk eval ci --suite evals/edd/cloudflare_ops.yaml --threshold-routing 95 --model scripted --out out/reports
 ```
 
-`kit eval ci` with the scripted driver runs architecture routing, model routing, kit-knowledge MCP, Cloudflare ops, safety, self-correction, and terminal-fallback suites in `kit check`. That path is what Cursor and Copilot users run; no provider API key. Live paraphrases live behind the `requires-live` tag and [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml). Key order and IDE vs HTTP driver: [docs/edd.md](../docs/edd.md#cursor-copilot-and-api-keys).
+`wk eval ci` with the scripted driver runs architecture routing, model routing, kit-knowledge MCP, Cloudflare ops, safety, self-correction, and terminal-fallback suites in `wk check`. That path is what Cursor and Copilot users run; no provider API key. Live paraphrases live behind the `requires-live` tag and [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml). Key order and IDE vs HTTP driver: [docs/edd.md](../docs/edd.md#cursor-copilot-and-api-keys).

@@ -21,7 +21,7 @@ If a host cannot use remote HTTP MCP, bridge with:
 - GitHub Pages / static-output questions
 - Checking whether a feature is still experimental
 
-Install with `kit mcp astro --install` for an Astro session. Do not add this server to the everyday `default` profile.
+Install with `wk mcp astro --install` for an Astro session. Do not add this server to the everyday `default` profile.
 
 ## Risks
 

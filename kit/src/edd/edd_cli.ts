@@ -34,8 +34,6 @@ function printEddHelp(): void {
 Waykit EDD (Eval-Driven Development) commands
 
 Usage: wk eval <subcommand> [options]
-       kit eval <subcommand> [options]
-       agent-kit eval <subcommand> [options]
 
 Subcommands:
   run      --suite <path> [--model <name>] [--tags a,b] [--out <dir>] [--format md|json]
@@ -76,7 +74,7 @@ Notes:
   - One style per run. Agent and judge cannot be mixed.
   - A pause after "agent"/"judges" with --style cli means the CLI is still running. --cli-stdout (or KIT_EVAL_CLI_STDOUT=1) prints stdout live.
   - --github-summary (or GITHUB_ACTIONS=true) publishes the Markdown report to $GITHUB_STEP_SUMMARY.
-  - Bare "kit eval" (no subcommand) still runs the skill trigger harness.
+  - Bare "wk eval" (no subcommand) still runs the skill trigger harness.
 `);
 }
 
@@ -88,7 +86,7 @@ export function hasEddFlag(args: string[], name: string): boolean {
   return hasFlag(args, name);
 }
 
-/** Publish job summaries from `kit eval report` under Actions (or with --github-summary). */
+/** Publish job summaries from `wk eval report` under Actions (or with --github-summary). */
 export function shouldPublishGithubSummary(
   args: string[],
   env: NodeJS.ProcessEnv = process.env
@@ -457,7 +455,7 @@ async function cmdDataset(_repoDir: string, args: string[]): Promise<number> {
 }
 
 /**
- * Handle `kit eval …` when a subcommand is present.
+ * Handle `wk eval …` when a subcommand is present.
  * Returns null when the caller should fall back to the legacy trigger harness.
  */
 export async function handleEddEvalCli(options: EddCliOptions): Promise<number | null> {

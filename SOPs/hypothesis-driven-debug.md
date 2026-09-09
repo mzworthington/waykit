@@ -43,7 +43,7 @@ If the user omitted env or action, ask **once** with a tight list, or infer from
 Scaffold a board before deep walks:
 
 ```bash
-kit debug-board <project> "<short title>"
+wk debug-board <project> "<short title>"
 ```
 
 Normalize vocabulary once (“packages” vs “plugins”). If live data contradicts the user’s label, **ask once** immediately.
@@ -54,7 +54,7 @@ Normalize vocabulary once (“packages” vs “plugins”). If live data contra
 |-------|------------------------|
 | UI / layout | Label before/after screenshots; reproduce load path; measure boxes/coords |
 | Published data | `curl`/fetch live catalog revision; count nodes in the **named** entity vs peers |
-| CI / media / sync | `kit debug-ci` class from the failing **step log** (`flake` vs `config-drift` vs tool/auth); diff vs a green suite |
+| CI / media / sync | `wk debug-ci` class from the failing **step log** (`flake` vs `config-drift` vs tool/auth); diff vs a green suite |
 | Fetch / bulk load | One failing URL + status vs `TypeError`; then concurrency/SW; CORS last |
 | Naming mismatch | Search peer entities when the named one looks fine in artifacts |
 | Already on main? | Search merged PRs / `git log -S` for the feature before implementing |
@@ -115,7 +115,7 @@ Separate PRs (or ask before combining) when any two differ:
 | “Empty system fixed” | Named entity non-empty in **published** artifact or explicit republish TODO |
 | “Job fixed” | Named verify workflow green (`ci.yml`, not a sibling CodeQL/Lighthouse run); or BLOCKED with a permission/tool gap |
 | “On main” | Working tree on default branch, **uncommitted**; proposed conventional commit subject (with ticket id) |
-| “Agent/tool miss fixed” | New or existing EDD case red→green; `kit eval run` (or `ci`) evidence |
+| “Agent/tool miss fixed” | New or existing EDD case red→green; `wk eval run` (or `ci`) evidence |
 
 Output the conventional commit subject without waiting to be asked. Do not branch or commit unless asked. Follow [conventional-commits.md](./conventional-commits.md) and [linear-ticket-workflow.md](./linear-ticket-workflow.md).
 
@@ -128,7 +128,7 @@ kit debug-ci
 kit debug-ci --run <run-id>
 ```
 
-`kit debug-ci` prints a **class** (`flake` | `config-drift` | `tool-missing` | `auth` | `product-bug`). Classify from the failing **step log**, not the commit subject. `ERR_PNPM_NO_PKG_MANIFEST` is config-drift (nested workspace / missing `working-directory` on `pnpm/setup`). An npm **504 while downloading the pnpm binary** is flake. Wrapping every setup failure in sleep+retry is an agent miss: it doubles a deterministic error.
+`wk debug-ci` prints a **class** (`flake` | `config-drift` | `tool-missing` | `auth` | `product-bug`). Classify from the failing **step log**, not the commit subject. `ERR_PNPM_NO_PKG_MANIFEST` is config-drift (nested workspace / missing `working-directory` on `pnpm/setup`). An npm **504 while downloading the pnpm binary** is flake. Wrapping every setup failure in sleep+retry is an agent miss: it doubles a deterministic error.
 
 Prove against the **named verify workflow** (`ci.yml` / “CI & Deployment”), not a green sibling (CodeQL, Dependabot, Lighthouse). Filter with `gh run list --workflow ci.yml`. Local tests plus a green sibling are not the CI prove gate. Do not mark a Linear issue done until that workflow is green (or BLOCKED with a documented gap).
 
@@ -187,9 +187,9 @@ When root cause is **wrong tool, bad args, prompt/schema drift, MCP misuse, or i
 | Step | Action |
 |------|--------|
 | 1. Capture | From conversation context (no user paste required), write a trace or JSONL row: `id`, `prompt`, `expect` / `history`, reason (`user_downvote` \| `shadow_fail` \| `unhandled_tool_exception` \| `circuit_breaker`) |
-| 2. Promote | `kit eval dataset from-trace --trace <file> --out evals/edd/<suite>.jsonl` **or** append a hand-authored case with tags `prod-derived` (+ reason tag) |
-| 3. Red | `kit eval run --suite evals/edd/<suite>.yaml --model scripted` fails on the new case (or prove an existing case already covers it) |
-| 4. Green | Fix prompt/schema/routing; re-run until green; prefer `kit eval ci --threshold-routing 95` when routing is involved |
+| 2. Promote | `wk eval dataset from-trace --trace <file> --out evals/edd/<suite>.jsonl` **or** append a hand-authored case with tags `prod-derived` (+ reason tag) |
+| 3. Red | `wk eval run --suite evals/edd/<suite>.yaml --model scripted` fails on the new case (or prove an existing case already covers it) |
+| 4. Green | Fix prompt/schema/routing; re-run until green; prefer `wk eval ci --threshold-routing 95` when routing is involved |
 | 5. Lesson (optional) | If process/rules should change too, append a lesson with **Promote to** pointing at that suite/JSONL ([templates/lesson.md](../templates/lesson.md)) |
 
 Skip only when the bug is pure app/UI/CI with **no** agent-tool contract impact - mark the debug board **EDD case: N/A**.

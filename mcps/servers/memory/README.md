@@ -14,7 +14,7 @@ Same surface as `@modelcontextprotocol/server-memory` (`create_entities`, `creat
 
 - **Writes of new entities** with unknown `entityType` are rejected.
 - **Reads** of legacy unknown types still succeed.
-- Lint orphans: `kit memory lint`.
+- Lint orphans: `wk memory lint`.
 
 ## When to use
 

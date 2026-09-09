@@ -1,9 +1,7 @@
 import pc from 'picocolors';
 import { formatCliBanner } from './cliBanner.js';
-import { CLI_ALIASES, CLI_BIN } from './name.js';
+import { CLI_BIN } from './name.js';
 import { formatUnknownCommand } from './suggest.js';
-
-const aliasLine = CLI_ALIASES.map((name) => `       ${name} <command> [options]`).join('\n');
 
 export const KIT_HELP_TOPICS = [
   'overview',
@@ -27,7 +25,6 @@ export const KIT_HELP = `
 Waykit CLI (${CLI_BIN})
 
 Usage: ${CLI_BIN} <command> [options]
-${aliasLine}
 
   Run with no arguments in a terminal for the guided menu.
   Use ${CLI_BIN} help <command> for one topic (init, mcp, eval, agents, …).

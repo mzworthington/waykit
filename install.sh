@@ -22,7 +22,6 @@ From a Waykit checkout:
   ./install.sh [options]
 
 Puts wk on PATH (~/.local/bin), links ~/.agents, and installs the default MCP profile.
-The kit binary remains as a compatibility alias.
 
 Then, in an app repo:
   wk init . --mcp default --hook
@@ -267,8 +266,12 @@ install_cli_bin() {
   fi
   mkdir -p "${_target_bin}"
   ln -sf "${_repo_dir}/bin/kit" "${_target_bin}/wk"
-  ln -sf "${_repo_dir}/bin/kit" "${_target_bin}/kit"
-  echo "Linked CLI: ${_target_bin}/wk -> ${_repo_dir}/bin/kit (alias: kit)"
+  for _alias in kit agent-kit; do
+    if [ -L "${_target_bin}/${_alias}" ]; then
+      rm -f "${_target_bin}/${_alias}"
+    fi
+  done
+  echo "Linked CLI: ${_target_bin}/wk -> ${_repo_dir}/bin/kit"
   case ":${PATH}:" in
     *":${_target_bin}:"*) ;;
     *)
@@ -306,10 +309,10 @@ bootstrap_checkout() {
 
   echo ""
   echo "Waykit is ready."
-  echo "Unified CLI: kit (or pnpm kit)"
+  echo "CLI: wk (or pnpm wk from this repo)"
   echo "In an app repo:"
-  echo "  kit init . --mcp default --hook"
-  echo "External skills: INSTALL_EXTERNAL_SKILLS=1 ./install.sh  or  kit sync --install"
+  echo "  wk init . --mcp default --hook"
+  echo "External skills: INSTALL_EXTERNAL_SKILLS=1 ./install.sh  or  wk sync --install"
 }
 
 SELF_DIR=$(resolve_self_dir || true)

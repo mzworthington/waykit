@@ -51,7 +51,7 @@ If this session plays a Linear issue, claim it before changing code ([SOPs/linea
 
 Procedure: [SOPs/hypothesis-driven-debug.md](../../SOPs/hypothesis-driven-debug.md).
 Board template: [templates/debug-board.md](../../templates/debug-board.md).
-Tooling: `kit debug-board`, `kit debug-ci`.
+Tooling: `wk debug-board`, `wk debug-ci`.
 
 ## When to run
 
@@ -82,7 +82,7 @@ Load the SOP. Keep a **Hypothesis Board** on disk. Do not skip **Reproduce** (Ev
 Triage → Reproduce → Hypothesize → Falsify (cheap first) → Fix → Prove → Handover
 ```
 
-Each live hypothesis needs a claim, Evidence that would kill it, and a cheap experiment first. Cap at 5. After **Root Cause**, write a failing regression ([agent-tdd](../agent-tdd/SKILL.md) for that test only), then a minimal fix. Agent/tool/prompt misses: promote an **EDD case** from context (do not wait for a paste) and run `kit eval` (SOP §11). Then [agent-pre-commit](../agent-pre-commit/SKILL.md). For UI/auth/SLO touches, apply the orchestrator **light XFN floor**.
+Each live hypothesis needs a claim, Evidence that would kill it, and a cheap experiment first. Cap at 5. After **Root Cause**, write a failing regression ([agent-tdd](../agent-tdd/SKILL.md) for that test only), then a minimal fix. Agent/tool/prompt misses: promote an **EDD case** from context (do not wait for a paste) and run `wk eval` (SOP §11). Then [agent-pre-commit](../agent-pre-commit/SKILL.md). For UI/auth/SLO touches, apply the orchestrator **light XFN floor**.
 
 ## Module router
 
@@ -92,7 +92,7 @@ Read only what the task needs:
 |------|-----------|
 | [SOPs/hypothesis-driven-debug.md](../../SOPs/hypothesis-driven-debug.md) | Always, before the first product-code edit |
 | [templates/debug-board.md](../../templates/debug-board.md) | Scaffolding or updating the board |
-| [references/tooling.md](./references/tooling.md) | Choosing evidence tools (`kit debug-ci`, browser, cloud transcripts) |
+| [references/tooling.md](./references/tooling.md) | Choosing evidence tools (`wk debug-ci`, browser, cloud transcripts) |
 | [SOPs/product-signal-intake.md](../../SOPs/product-signal-intake.md) | PostHog error cluster / kind-bug row |
 
 ## Handover

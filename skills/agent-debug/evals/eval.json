@@ -34,7 +34,7 @@
     {
       "id": "EVAL-DBG-COLOCATED-002",
       "name": "Promote agent miss to EDD case",
-      "description": "When RCA is wrong tool/prompt/schema in the current session, agent-debug must promote a prod-derived EDD case and run kit eval - not only a code regression or prose lesson.",
+      "description": "When RCA is wrong tool/prompt/schema in the current session, agent-debug must promote a prod-derived EDD case and run wk eval - not only a code regression or prose lesson.",
       "target_skill": "agent-debug",
       "prompt": "In this chat the agent called search_kit when the user asked for the architecture of payment-api. Debug the routing miss and make sure it cannot regress.",
       "context": {
@@ -49,7 +49,7 @@
         ],
         "required_patterns": [
           "EDD",
-          "kit eval"
+          "wk eval"
         ],
         "forbidden_patterns": [
           "ask the user to paste the prompt",

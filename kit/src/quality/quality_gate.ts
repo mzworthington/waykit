@@ -48,7 +48,7 @@ export const EDD_CI_SUITES = [
   'evals/edd/architecture_terminal.yaml'
 ] as const;
 
-/** Suites that exist on disk (so forks can drop vendor suites without breaking `kit check`). */
+/** Suites that exist on disk (so forks can drop vendor suites without breaking `wk check`). */
 export function resolveEddCiSuites(
   repoDir: string,
   candidates: readonly string[] = EDD_CI_SUITES
@@ -117,7 +117,7 @@ export async function runKitCheck(
   if (json) {
     console.log = () => undefined;
   } else {
-    console.log('=== kit check ===');
+    console.log('=== wk check ===');
     console.log('');
   }
 

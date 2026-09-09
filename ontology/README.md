@@ -57,7 +57,7 @@ ontology:
   gates: [mcp:memory, skill:agent-tdd]
 ```
 
-Ids must already exist (`mcp:…`, `skill:…`, `subagent:…`). `kit ontology check` fails dangling `depends-on`, `mcp`, and subagent→skill refs.
+Ids must already exist (`mcp:…`, `skill:…`, `subagent:…`). `wk ontology check` fails dangling `depends-on`, `mcp`, and subagent→skill refs.
 
 ## Add something to the graph
 
@@ -66,13 +66,13 @@ Ids must already exist (`mcp:…`, `skill:…`, `subagent:…`). `kit ontology c
 3. From a kit checkout:
 
 ```bash
-kit ontology check
-kit ontology generate
+wk ontology check
+wk ontology generate
 ```
 
 `check` validates the live-derived index. `generate` writes a gitignored cache to `sync/ontology-index.json` and the site copy to `web/public/assets/ontology-index.json`. Neither file is source of truth; do not commit them.
 
-`kit check` already runs the ontology gate.
+`wk check` already runs the ontology gate.
 
 ## Show it on a docs page
 
@@ -117,7 +117,7 @@ No company or cloud vendor is special-cased in the generator.
 flowchart LR
   schema[ontology/schema.yaml]
   tree[skills SOPs mcps evals docs]
-  derive[kit ontology generate or check]
+  derive[wk ontology generate or check]
   cache[gitignored sync cache]
   site[web/public/assets JSON]
   map[Kit map widget]
@@ -130,4 +130,4 @@ flowchart LR
   cache --> know
 ```
 
-Filter, labels, and ring layout: [`kit/src/ontology/graph_view.ts`](../kit/src/ontology/graph_view.ts). D3 adapter: [`web/src/ontology/map.ts`](../web/src/ontology/map.ts).
+Filter, labels, and ring layout: [`wk /src/ontology/graph_view.ts`](../kit/src/ontology/graph_view.ts). D3 adapter: [`web/src/ontology/map.ts`](../web/src/ontology/map.ts).

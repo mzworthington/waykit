@@ -11,19 +11,19 @@ describe('MarkdownView', () => {
         markdown={`# Kit
 
 \`\`\`bash
-kit check
+wk check
 \`\`\`
 
 | Command | Role |
 |---------|------|
-| \`kit check\` | gate |
+| \`wk check\` | gate |
 `}
       />
     );
 
     const figure = document.querySelector('figure.docs-code');
     expect(figure).toBeTruthy();
-    expect(figure?.querySelector('pre')?.textContent).toContain('kit check');
+    expect(figure?.querySelector('pre')?.textContent).toContain('wk check');
     expect(document.querySelector('.table-wrapper table')).toBeTruthy();
     expect(screen.getByRole('columnheader', { name: 'Command' })).toBeTruthy();
   });

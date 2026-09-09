@@ -33,7 +33,7 @@ Supersedes [0006](./0006-vite-markdown-docs-site.md).
 ### Consequences
 
 * Good, because each published path is a real HTML document with layout-owned SEO (canonical, JSON-LD, Open Graph)
-* Good, because `kit site assemble` still overlays raw `.md` URLs for agents
+* Good, because `wk site assemble` still overlays raw `.md` URLs for agents
 * Bad, because in-app navigation is multi-page (view transitions optional) instead of SPA routing
 * Good, because chrome is Astro HTML and only nav / widgets / mermaid hydrate as islands
 * Follow-up: self-host IBM Plex if Google Fonts becomes a privacy or LCP issue

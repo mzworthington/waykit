@@ -66,13 +66,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Derive ontology index for the homepage
-        run: pnpm kit ontology generate
+        run: pnpm wk ontology generate
 
       - name: Build Markdown docs site
         run: pnpm --dir web build
 
       - name: Assemble public Pages tree
-        run: pnpm kit site assemble
+        run: pnpm wk site assemble
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v6

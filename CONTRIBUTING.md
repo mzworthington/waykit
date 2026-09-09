@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve Waykit. This repo is the `.agents` kit: skills, SOPs, learning loops (including the EDD harness), and the `wk` CLI (`kit` is an alias).
+Thanks for helping improve Waykit. This repo is the `.agents` kit: skills, SOPs, learning loops (including the EDD harness), and the `wk` CLI.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Thanks for helping improve Waykit. This repo is the `.agents` kit: skills, SOPs,
 pnpm install
 pnpm typecheck
 pnpm test
-pnpm kit check
+pnpm wk check
 ```
 
 If this clone has lint wired: `pnpm lint`.
@@ -38,7 +38,7 @@ Husky `.husky/commit-msg` (and `wk commit-msg`) reject a non-conventional **comm
 |-------|--------------------|
 | Typecheck | `pnpm typecheck` |
 | Unit tests | `pnpm test` / `pnpm test:ci` |
-| Kit gate | `pnpm kit check` (audit, layout, EDD routing thresholds, context budget) |
+| Kit gate | `pnpm wk check` (audit, layout, EDD routing thresholds, context budget) |
 | Pre-commit | Husky: audit, validate, verify (skill layout + role line budget), **measure-context**, ontology, typecheck, mermaid |
 | Commit message | Husky `commit-msg` → `wk commit-msg`; PR title checked in Verify |
 

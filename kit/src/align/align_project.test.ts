@@ -40,7 +40,7 @@ function kitWithTemplates(): string {
 }
 
 function alignedApp(name = 'demoapp'): string {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), `kit-align-${name}-`));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), `wk -align-${name}-`));
   write(root, 'AGENTS.md', THIN_HANDSHAKE);
   write(root, 'GEMINI.md', 'p\n');
   write(root, 'CLAUDE.md', 'p\n');

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { OntologyIndex } from '../../../kit/src/ontology/types';
-import { HOMEPAGE_TYPE_FILTERS } from '../../../kit/src/ontology/graph_view';
+import { HOMEPAGE_TYPE_FILTERS, TYPE_COLOR } from '../../../kit/src/ontology/graph_view';
 import {
   fetchOntologyIndex,
   mountOntologyExplorer,
@@ -11,6 +11,12 @@ import {
   selectedTypes,
   setOntologyFocusHash
 } from './map';
+
+function cssColor(hex: string): string {
+  const probe = document.createElement('span');
+  probe.style.backgroundColor = hex;
+  return probe.style.backgroundColor;
+}
 
 const fixture: OntologyIndex = {
   version: 1,
@@ -105,6 +111,10 @@ describe('type filters and inspector', () => {
     );
     boxes[0]!.checked = false;
     expect(selectedTypes(root)).not.toContain(HOMEPAGE_TYPE_FILTERS[0]!.type);
+    const swatches = [...root.querySelectorAll<HTMLElement>('.ontology-key-swatch')];
+    expect(swatches.map((swatch) => swatch.style.backgroundColor)).toEqual(
+      HOMEPAGE_TYPE_FILTERS.map((filter) => cssColor(TYPE_COLOR[filter.type]))
+    );
   });
 
   it('shows empty inspector copy, then entity meta, source link, and related buttons', () => {

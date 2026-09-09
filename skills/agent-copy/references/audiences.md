@@ -8,7 +8,7 @@ Developers, operators, and people who will run the thing.
 
 - Jargon they use is fine (`idempotent`, `eval`, `port`). Define kit-specific terms once.
 - Proof they trust: a command, a failing test, a constraint, a short mechanism.
-- CTA: something they can do now (`pnpm kit eval ci`, "Read the EDD guide").
+- CTA: something they can do now (`pnpm wk eval ci`, "Read the EDD guide").
 - Distrust: magic, "seamless", executive adjectives, fear-mongering.
 
 ## Technical buyer

@@ -1,6 +1,6 @@
 # Architecture routing goldens
 
-Live catalog for ranking models and system-prompt changes. **Not** a `kit check` suite.
+Live catalog for ranking models and system-prompt changes. **Not** a `wk check` suite.
 
 | File | Role | Rows |
 |------|------|------|
@@ -13,10 +13,10 @@ CI seeds stay in `evals/edd/architecture_routing.jsonl` (~10 unique intents). De
 ## Run (live only)
 
 ```bash
-noglob kit eval run --suite evals/edd/goldens/architecture_routing.yaml \
+noglob wk eval run --suite evals/edd/goldens/architecture_routing.yaml \
   --style cli --cli cursor-agent --model cursor-grok-4.6-medium
 
-noglob kit eval run --suite evals/edd/goldens/architecture_routing.holdout.yaml \
+noglob wk eval run --suite evals/edd/goldens/architecture_routing.holdout.yaml \
   --style cli --cli cursor-agent --model cursor-grok-4.6-medium
 ```
 
@@ -26,7 +26,7 @@ Holdout is weekly or pre-release. Do not iterate the system prompt against holdo
 
 ## Coverage matrix
 
-Each working row has `intent:*`, `entity:*`, and `diff:*` tags. Fill empty cells with **new wording**, not `kit eval dataset synthesize`.
+Each working row has `intent:*`, `entity:*`, and `diff:*` tags. Fill empty cells with **new wording**, not `wk eval dataset synthesize`.
 
 | Intent | payment / billing / checkout | auth | none |
 |--------|------------------------------|------|------|
@@ -46,12 +46,12 @@ Each working row has `intent:*`, `entity:*`, and `diff:*` tags. Fill empty cells
 2. Write a prompt a person would type. If it matches an existing prompt, it is not a new case.
 3. Set `expect` yourself. A model miss is still a valid golden.
 4. Add the row to `write-cases.mjs` (working vs holdout). Holdout only when you are freezing a slice, not while debugging a prompt.
-5. Regenerate JSONL. `kit eval dataset lint --dataset evals/edd/goldens/architecture_routing.jsonl`
+5. Regenerate JSONL. `wk eval dataset lint --dataset evals/edd/goldens/architecture_routing.jsonl`
 6. Run the **working** suite live. Leave holdout alone until the batch is done.
 
 ## Shadow triage (do not auto-append)
 
-`kit eval shadow --out …` writes candidates. Each fail is a **triage** item:
+`wk eval shadow --out …` writes candidates. Each fail is a **triage** item:
 
 - **Keep** — new cell or a real miss → add to `write-cases.mjs` with `prod-derived`, regenerate.
 - **Drop** — duplicate prompt+expect, garbage user text, or unlabeled tool.

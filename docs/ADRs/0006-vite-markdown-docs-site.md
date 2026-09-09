@@ -31,7 +31,7 @@ Chosen option: "**Option C**", because it reuses the same docs pipeline as ArchL
 
 * Good, because a new SOP or ADR is a Markdown file; the sidebar is derived from the glob
 * Good, because interactive landing widgets (today jobs, eval demo, ontology) are explicit `widget` fences in `docs/home.md`
-* Bad, because `pnpm --dir web build` is required before `kit site assemble`
+* Bad, because `pnpm --dir web build` is required before `wk site assemble`
 * Site chrome lives in `web/` (`site.css`, landing widgets, `web/public/assets/` logos). Ontology generate writes gitignored `web/public/assets/ontology-index.json`.
 
 ## Architecture sketch

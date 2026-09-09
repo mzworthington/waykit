@@ -19,9 +19,9 @@ Optional local overrides (edit composed `args`): `--port=22`, `--password=...`, 
 ## Install
 
 ```bash
-kit mcp lab --install
+wk mcp lab --install
 # or merge into personal:
-# kit mcp personal --install
+# wk mcp personal --install
 ```
 
 ## When to use

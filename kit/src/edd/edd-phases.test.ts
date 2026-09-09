@@ -165,7 +165,7 @@ metrics:
     assert.ok(report.results[0]?.trajectory?.length);
   });
 
-  it('supports kit eval dataset lint via CLI', async () => {
+  it('supports wk eval dataset lint via CLI', async () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'edd-ds-'));
     const dataset = path.join(dir, 'cases.jsonl');
     fs.writeFileSync(

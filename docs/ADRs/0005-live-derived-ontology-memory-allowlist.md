@@ -12,7 +12,7 @@ Agents need a graph of skills, SOPs, MCPs, evals, and philosophy sections, plus 
 
 ## Decision Drivers
 
-* Referential integrity against the live kit tree (`kit ontology check`)
+* Referential integrity against the live kit tree (`wk ontology check`)
 * Kit-static facts vs cross-session facts must not share one store
 * Write surface for memory must be an explicit allowlist, not free-form types
 * Optional local cache must not become source of truth in git
@@ -39,7 +39,7 @@ Chosen option: "**Option C**", because the metamodel is small and owned (`schema
 flowchart LR
   Schema[ontology/schema.yaml metamodel]
   Tree[Live skills SOPs mcps evals docs]
-  Derive[kit ontology generate or check]
+  Derive[wk ontology generate or check]
   Index[Derived index optional sync cache]
   KitKnow[kit-knowledge get_entity get_related]
   Memory[memory MCP allowlisted writes]

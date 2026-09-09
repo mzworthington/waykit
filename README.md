@@ -10,7 +10,7 @@ Coding agents skip spec, test impact and a release bar. Waykit is that lifecycle
 [![License](https://img.shields.io/badge/License-Unlicense-success?style=for-the-badge)](./LICENSE)
 [![Version](https://img.shields.io/github/v/release/mzworthington/waykit?style=for-the-badge&logo=github&label=Version)](https://github.com/mzworthington/waykit/releases)
 
-The CLI is `wk`. `kit` and `agent-kit` still work as aliases.
+The CLI is `wk`.
 
 ## Install
 
@@ -133,7 +133,7 @@ wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
 | `wk site assemble` | Copy `web/dist` plus public Markdown into `site/` (after `pnpm --dir web build`) |
 | `pnpm site:dev` | Astro docs app (Markdown in `docs/`) |
 
-`pnpm wk` and `pnpm kit` both run the same CLI in this repo.
+`pnpm wk` runs the CLI in this repo.
 
 ---
 
@@ -160,8 +160,8 @@ App repos only need `wk` on PATH. This table is for people changing Waykit itsel
 | Path | Role |
 |------|------|
 | `bin/kit`, `bin/kit.ts` | CLI on PATH (parse → run); public name is `wk` |
-| `kit/src/cli/` | Argv parser, help, and command dispatch |
-| `kit/src/` | Implementation and unit tests, grouped by area (`bootstrap/`, `edd/`, `ontology/`, …) |
+| `wk /src/cli/` | Argv parser, help, and command dispatch |
+| `wk /src/` | Implementation and unit tests, grouped by area (`bootstrap/`, `edd/`, `ontology/`, …) |
 | `evals/` | Skill-trigger JSON suites and EDD YAML/JSONL |
 | `skills/`, `mcps/` | Lifecycle skills and MCP catalog |
 

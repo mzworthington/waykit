@@ -12,7 +12,7 @@ Dumping philosophy, SOPs, skill bodies, and a stacked MCP catalog into every tur
 
 ## Decision Drivers
 
-* Keep always-on bootstrap under ~2k tokens (`kit measure-context`)
+* Keep always-on bootstrap under ~2k tokens (`wk measure-context`)
 * Retrieve SOP / philosophy / handover slices instead of bulk file reads
 * Extra MCP tools compete for attention and inflate schemas
 * EDD (ADR 0003) only stays honest if always-on context stays thin
@@ -29,7 +29,7 @@ Chosen option: "**Option B**", because invariants live in the thin handshake, pr
 
 ### Consequences
 
-* Good, because default sessions stay lean (`kit-knowledge`, context7, github, memory, linear) and skills declare `mcp:` ids
+* Good, because default sessions stay lean (`wk -knowledge`, context7, github, memory, linear) and skills declare `mcp:` ids
 * Bad, because agents must look up procedures instead of having full SOP text in every prompt
 * Follow-up: do not stack `collab` + `devtools` + `ops` into one global `mcp.json`
 

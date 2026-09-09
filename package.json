@@ -5,20 +5,17 @@
   "type": "module",
   "description": "Waykit: software lifecycle, skills, and learning loops for coding agents",
   "bin": {
-    "wk": "./bin/kit",
-    "kit": "./bin/kit",
-    "agent-kit": "./bin/kit"
+    "wk": "./bin/kit"
   },
   "scripts": {
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "wk": "node --import tsx/esm bin/kit.ts",
-    "kit": "node --import tsx/esm bin/kit.ts",
     "changelog": "node bin/changelog-render.mjs",
     "release:detect": "bash bin/release.sh detect",
     "test": "node --import tsx/esm --test 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
     "test:ci": "mkdir -p out/reports && node --import tsx/esm --test --test-reporter=spec --test-reporter=./kit/src/test-report/github_test_reporter.mjs --test-reporter-destination=stdout --test-reporter-destination=out/reports/unit-test-report.md 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
-    "check": "pnpm test && pnpm kit check",
+    "check": "pnpm test && pnpm wk check",
     "site:dev": "pnpm --dir web dev"
   },
   "devDependencies": {

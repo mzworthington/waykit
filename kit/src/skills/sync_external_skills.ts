@@ -208,7 +208,7 @@ export function syncExternalSkills(
   mirrorAfterSync(runner);
   console.log('');
   console.log(`OK: external skills synced from ${lockFile}`);
-  console.log('Upgrade later with: kit sync --update');
+    console.log('Upgrade later with: wk sync --update');
   return 0;
 }
 

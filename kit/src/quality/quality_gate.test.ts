@@ -238,7 +238,7 @@ describe('runKitCheck', () => {
     try {
       const code = await runKitCheck('/kit', passingDeps({ eddSuites: () => [] }));
       assert.equal(code, 0);
-      assert.match(lines.join('\n'), /kit check/);
+      assert.match(lines.join('\n'), /wk check/);
     } finally {
       console.log = orig;
     }

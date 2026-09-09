@@ -109,7 +109,7 @@ describe('EDD CLI flag helpers', () => {
 });
 
 describe('handleEddEvalCli', () => {
-  it('returns null so bare kit eval can run the trigger harness', async () => {
+  it('returns null so bare wk eval can run the trigger harness', async () => {
     assert.equal(await handleEddEvalCli({ repoDir: '/kit', args: [] }), null);
     assert.equal(await handleEddEvalCli({ repoDir: '/kit', args: ['--model', 'scripted'] }), null);
     assert.equal(await handleEddEvalCli({ repoDir: '/kit', args: ['all'] }), null);

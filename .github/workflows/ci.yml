@@ -48,7 +48,7 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
-        run: pnpm kit commit-msg --message "$PR_TITLE"
+        run: pnpm wk commit-msg --message "$PR_TITLE"
 
       - name: TypeScript type-check
         run: pnpm typecheck && pnpm --dir web typecheck
@@ -63,16 +63,16 @@ jobs:
         run: pnpm test:ci
 
       - name: Kit quality gate
-        run: pnpm kit check
+        run: pnpm wk check
 
       - name: Repo doctor
-        run: pnpm kit doctor .
+        run: pnpm wk doctor .
 
       - name: Test MCP Profile Composition
-        run: pnpm kit mcp default
+        run: pnpm wk mcp default
 
       - name: Test kit CLI Executable
-        run: pnpm kit metrics
+        run: pnpm wk metrics
 
       - name: Publish Verify job summary
         if: always()
@@ -80,16 +80,16 @@ jobs:
           {
             echo "## Verify"
             echo ""
-            echo "Merge gate for the kit. Scripted EDD suites run inside \`kit check\`"
+            echo "Merge gate for the kit. Scripted EDD suites run inside \`wk check\`"
             echo "(no separate Agent EDD Suite workflow)."
             echo ""
             echo "| Gate | What a green check means |"
             echo "|------|--------------------------|"
             echo "| actionlint | Workflow YAML is valid and Action-safe |"
             echo "| typecheck / unit tests | TypeScript and Node harness tests pass |"
-            echo "| kit check | Skill security scan, layout, IDE rules export, skill-trigger evals, EDD routing ≥95% (architecture + model class + kit-knowledge + Cloudflare ops + safety + recovery), context budget |"
-            echo "| kit doctor | This checkout has README, license, contributing, security, and GitHub templates |"
-            echo "| MCP profile / kit metrics | Default MCP composition resolves; CLI metrics command runs |"
+            echo "| wk check | Skill security scan, layout, IDE rules export, skill-trigger evals, EDD routing ≥95% (architecture + model class + kit-knowledge + Cloudflare ops + safety + recovery), context budget |"
+            echo "| wk doctor | This checkout has README, license, contributing, security, and GitHub templates |"
+            echo "| MCP profile / wk metrics | Default MCP composition resolves; CLI metrics command runs |"
             echo ""
             echo "On \`main\`, a green Verify unlocks the **Promote** job (GitHub Release + changelog push)."
             echo ""
@@ -104,9 +104,9 @@ jobs:
           fi
 
           if [ -f out/reports/edd-report.json ]; then
-            pnpm kit eval report --format md --out out/reports --from out/reports/edd-report.json --github-summary
+            pnpm wk eval report --format md --out out/reports --from out/reports/edd-report.json --github-summary
           else
-            echo "_No EDD report artifacts were produced (kit check may have failed earlier)._" >> "$GITHUB_STEP_SUMMARY"
+            echo "_No EDD report artifacts were produced (wk check may have failed earlier)._" >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload EDD reports
@@ -195,7 +195,7 @@ jobs:
             echo "Runs only after green **Verify** on \`main\` (or \`workflow_dispatch\`)."
             echo "Cuts a GitHub Release from conventional commits, syncs version-scoped"
             echo "notes on all \`v*\` releases, then regenerates date-grouped"
-            echo "\`CHANGELOG.md\` and pushes when needed. Consumers pin with \`KIT_REF=vX.Y.Z\`."
+            echo "\`CHANGELOG.md\` and pushes when needed. Consumers pin with \`wk _REF=vX.Y.Z\`."
             echo ""
             if [ "${RELEASE}" = "true" ]; then
               echo "- **Released:** \`${TAG}\` (bump=\`${BUMP}\`)"

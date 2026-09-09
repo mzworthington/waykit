@@ -209,7 +209,7 @@ function callTool(
         if (!found) {
           return {
             ...textContent(
-              `Entity not found: ${id}. Run kit ontology generate if index is missing.`
+              `Entity not found: ${id}. Run wk ontology generate if index is missing.`
             ),
             isError: true,
           };
@@ -294,6 +294,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  process.stderr.write(`kit-knowledge fatal: ${err}\n`);
+  process.stderr.write(`wk -knowledge fatal: ${err}\n`);
   process.exit(1);
 });

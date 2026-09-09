@@ -1,6 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { HomeLanding } from './HomeLanding';
+
+vi.mock('../ontology/map.ts', () => ({
+  mountOntologyExplorer: vi.fn(async () => undefined)
+}));
 
 describe('HomeLanding', () => {
   it('uses the brand-first hero, job picker, proof, and demo', () => {
@@ -19,6 +23,13 @@ describe('HomeLanding', () => {
     );
     expect(screen.getByRole('heading', { name: /what do i use this for today/i })).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Job list' })).toBeTruthy();
+    const today = screen.getByRole('heading', { name: /what do i use this for today/i });
+    const map = screen.getByRole('region', { name: 'Kit ontology map' });
+    const cli = screen.getByRole('heading', { name: 'The wk CLI' });
+    expect(today.compareDocumentPosition(map) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(map.compareDocumentPosition(cli) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Explore the graph' })).toBeTruthy();
+    expect(screen.getByRole('complementary', { name: 'Key' })).toBeTruthy();
     expect(screen.getByRole('link', { name: /^See the CLI$/ }).getAttribute('href')).toBe('#cli');
     expect(screen.getByRole('heading', { name: 'The wk CLI' })).toBeTruthy();
     expect(screen.getByRole('heading', { name: /used on our own product repos/i })).toBeTruthy();

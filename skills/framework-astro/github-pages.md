@@ -21,7 +21,7 @@ export default defineConfig({
 
 The Pages artifact is **built HTML plus allowlisted public files**, not the git tree.
 
-This kit: `pnpm --dir web build` writes `web/dist`, then `kit site assemble` copies that dist, overlays raw Markdown (`llms.txt`, `docs/`, `SOPs/`, …), and writes `CNAME` + `.nojekyll`.
+This kit: `pnpm --dir web build` writes `web/dist`, then `wk site assemble` copies that dist, overlays raw Markdown (`llms.txt`, `docs/`, `SOPs/`, …), and writes `CNAME` + `.nojekyll`.
 
 `.nojekyll` is required so GitHub does not run Jekyll on `_astro/` asset folders.
 

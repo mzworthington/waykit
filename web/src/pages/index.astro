@@ -7,6 +7,7 @@ import { HomeUsedIn } from '../components/HomeUsedIn.tsx';
 import { HomeProof } from '../components/HomeProof.tsx';
 import { HomeNext } from '../components/HomeNext.tsx';
 import { TodayJobs } from '../components/TodayJobs.tsx';
+import { OntologyExplorer } from '../components/OntologyExplorer.tsx';
 import { EvalDemo } from '../components/EvalDemo.tsx';
 import { DOCS_PAGES } from '../docs/pages.ts';
 import { resolvePageSeo } from '../seo/siteSeo.ts';
@@ -20,6 +21,7 @@ const navPages = DOCS_PAGES.map(({ path, title }) => ({ path, title }));
     <div class="landing-page">
       <HomeHero />
       <TodayJobs client:load showHeading />
+      <OntologyExplorer client:load />
       <HomeCli />
       <HomeUsedIn />
       <HomeProof />

@@ -22,7 +22,7 @@ JSONL case that should call the tool. User asks for the payment database. Expect
 Red: routing assert fails. Fresh context, mocked tool. The model answered in prose instead of calling the tool.
 
 ```
-$ kit eval run --suite evals/edd/demo.yaml --model scripted
+$ wk eval run --suite evals/edd/demo.yaml --model scripted
 
 FAIL demo-edge  tool_selection
   expected: read_architecture_yaml
@@ -34,7 +34,7 @@ Routing accuracy: below threshold
 
 ## 3. Report
 
-`kit eval report --format md` writes the failure trace into the PR, not a vibes summary.
+`wk eval report --format md` writes the failure trace into the PR, not a vibes summary.
 
 ```
 ### Test ID: demo-edge
@@ -54,7 +54,7 @@ Update the system prompt / tool description. Same case. Same mocks. Pass when ro
 Never invent components or databases.
 If the user asks about architecture, call read_architecture_yaml.
 
-$ kit eval run --suite evals/edd/demo.yaml --model scripted
+$ wk eval run --suite evals/edd/demo.yaml --model scripted
 PASS demo-edge  tool_selection + argument_correctness
 Routing accuracy: 100% (6/6)
 ```
@@ -64,11 +64,11 @@ Routing accuracy: 100% (6/6)
 CI uses the same scripted driver offline. Live models are optional for nightly depth.
 
 ```
-$ kit eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
+$ wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
 PASS routing_accuracy 100% >= 95
 PASS schema_match 100%
 wrote out/reports/eval-report.md
 
 # Optional closed loop after a prod miss
-$ kit eval dataset from-trace --trace path/to/trace.json --out evals/edd/prod.jsonl
+$ wk eval dataset from-trace --trace path/to/trace.json --out evals/edd/prod.jsonl
 ```

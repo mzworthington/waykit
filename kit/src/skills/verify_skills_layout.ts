@@ -32,7 +32,7 @@ export function printSkillsLayoutResult(result: SkillsLayoutResult): void {
   for (const name of result.invalid) {
     console.error(`ERROR: non-kit skill directory: skills/${name}`);
     console.error('       Remove it or reinstall upstream skills to ~/.cursor/skills:');
-    console.error('       kit sync --install');
+    console.error('       wk sync --install');
   }
   if (!result.ok) {
     console.error('');

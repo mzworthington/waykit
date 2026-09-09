@@ -57,8 +57,6 @@ wk eval dataset lint --dataset evals/edd/architecture_routing.jsonl
 wk eval miss-rate
 ```
 
-`kit` and `agent-kit` are aliases of `wk`.
-
 ## Cursor, Claude, Copilot, Antigravity, and API keys
 
 Rules and MCP install across those hosts: [hosts](./hosts.md). Daily work and the merge gate use `--style local` (alias: `--model scripted`). You do **not** need a provider API key for that. The IDE chat is never the eval runner.
@@ -83,7 +81,7 @@ flowchart TD
 
 ### Cursor Agent CLI as the agent under test
 
-`cursor-agent` is not OpenAI `/chat/completions`. Kit prompts it in `--mode=ask` and expects a JSON envelope `{ "content": "…", "tool_calls": [{ "name": "<eval tool>", "arguments": {} }] }` using only registered eval tools. After a tool call, the harness fills `content` from the mock JSON (quality metrics grade that grounded text). Token totals come from the CLI JSON `usage` object when present (`inputTokens` / `input_tokens` / `prompt_tokens`); otherwise Kit estimates ~4 characters per token. Suite summaries include a rough USD line using `$0.003` per 1k tokens (`DEFAULT_TOKEN_USD_PER_1K`). Override with `KIT_EVAL_TOKEN_USD_PER_1K`, or set it to `0` to hide USD. Local/scripted models omit USD. Judge calls use the same `--cli` and `--model`.
+`cursor-agent` is not OpenAI `/chat/completions`. Kit prompts it in `--mode=ask` and expects a JSON envelope `{ "content": "…", "tool_calls": [{ "name": "<eval tool>", "arguments": {} }] }` using only registered eval tools. After a tool call, the harness fills `content` from the mock JSON (quality metrics grade that grounded text). Token totals come from the CLI JSON `usage` object when present (`inputTokens` / `input_tokens` / `prompt_tokens`); otherwise Kit estimates ~4 characters per token. Suite summaries include a rough USD line using `$0.003` per 1k tokens (`DEFAULT_TOKEN_USD_PER_1K`). Override with `wk _EVAL_TOKEN_USD_PER_1K`, or set it to `0` to hide USD. Local/scripted models omit USD. Judge calls use the same `--cli` and `--model`.
 
 ```bash
 noglob wk eval run --suite evals/edd/architecture_routing.yaml \
@@ -94,13 +92,13 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
 
 The runner takes the first non-empty value:
 
-1. `KIT_EVAL_API_KEY` (preferred; this is the secret nightly CI looks for)
+1. `wk _EVAL_API_KEY` (preferred; this is the secret nightly CI looks for)
 2. `OPENAI_API_KEY`
 3. `ANTHROPIC_API_KEY`
 
-That value is sent as `Authorization: Bearer …` to an **OpenAI-compatible** `{baseUrl}/chat/completions`. Base URL resolution: `KIT_EVAL_BASE_URL`, then `OPENAI_BASE_URL`, then `https://api.openai.com/v1`.
+That value is sent as `Authorization: Bearer …` to an **OpenAI-compatible** `{baseUrl}/chat/completions`. Base URL resolution: `wk _EVAL_BASE_URL`, then `OPENAI_BASE_URL`, then `https://api.openai.com/v1`.
 
-`ANTHROPIC_API_KEY` is only useful if `KIT_EVAL_BASE_URL` points at a gateway that accepts Anthropic keys on the OpenAI request shape. Anthropic’s native Messages API is not this client.
+`ANTHROPIC_API_KEY` is only useful if `wk _EVAL_BASE_URL` points at a gateway that accepts Anthropic keys on the OpenAI request shape. Anthropic’s native Messages API is not this client.
 
 The same key and model are reused for:
 
@@ -119,7 +117,7 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
 
 PR Verify and `wk check` stay `--style local` (no key). When you run a live model, prefer **http** for the nightly job; **cli** is for local iteration (`cursor-agent`, `claude`, or `agy`). CLI runs hit subscription rate limits and have weaker structured-output guarantees.
 
-Optional: `KIT_EVAL_MODEL`. Rough USD uses `$0.003` per 1k tokens unless `KIT_EVAL_TOKEN_USD_PER_1K` is set (`0` disables). Local OpenAI-compatible servers also work via `KIT_EVAL_BASE_URL`.
+Optional: `wk _EVAL_MODEL`. Rough USD uses `$0.003` per 1k tokens unless `wk _EVAL_TOKEN_USD_PER_1K` is set (`0` disables). Local OpenAI-compatible servers also work via `wk _EVAL_BASE_URL`.
 
 ## Metrics and suites
 
@@ -139,10 +137,10 @@ Full metric table and harness layout: [evals/edd/README.md](../evals/edd/README.
 | Job | Key | Model | Purpose |
 |-----|-----|--------|---------|
 | **Verify** in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | unused | `--style local` via `wk check` | Merge gate: harness + keyword routing + safety + recovery |
-| Nightly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `KIT_EVAL_API_KEY` | repo variable `KIT_EVAL_MODEL` | HTTP paraphrases, prompt-injection, multi-tool, safety |
+| Nightly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `wk _EVAL_API_KEY` | repo variable `wk _EVAL_MODEL` | HTTP paraphrases, prompt-injection, multi-tool, safety |
 | `pnpm check` / `wk check` | unused | `--style local` | Same as Verify, locally |
 
-Nightly **skips the whole job** if `KIT_EVAL_API_KEY` is empty. It does not fall through to `OPENAI_API_KEY`.
+Nightly **skips the whole job** if `wk _EVAL_API_KEY` is empty. It does not fall through to `OPENAI_API_KEY`.
 
 Verify and the nightly live job (plus Pages deploy) publish a **job summary**: what the gate means, then an EDD overview table and collapsible full report via `wk eval report --github-summary`.
 
@@ -163,5 +161,5 @@ You should then see `requires-live` cases execute instead of “Skipping N requi
 | [SOPs/eval-driven-development.md](../SOPs/eval-driven-development.md) | Day-to-day procedure |
 | [evals/edd/README.md](../evals/edd/README.md) | Suites, metrics, layout |
 | [evals/edd/goldens/README.md](../evals/edd/goldens/README.md) | Live golden + holdout (architecture routing) |
-| [SOPs/edd-production-telemetry.md](../SOPs/edd-production-telemetry.md) | `kit.*` spans, `wk eval shadow`, from-trace, drift |
+| [SOPs/edd-production-telemetry.md](../SOPs/edd-production-telemetry.md) | `wk .*` spans, `wk eval shadow`, from-trace, drift |
 | [skills/agent-orchestrator/SKILL.md](../skills/agent-orchestrator/SKILL.md) | Feature lifecycle around EDD |

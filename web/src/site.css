@@ -624,6 +624,58 @@ summary,
   white-space: nowrap;
 }
 
+.ontology-key {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 3;
+  max-width: min(16rem, calc(100% - 8rem));
+  margin: 0;
+  padding: 0.5rem 0.65rem 0.55rem;
+  background: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.ontology-key h3 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.4rem;
+}
+
+.ontology-key-nodes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.22rem 0.85rem;
+}
+
+.ontology-key-nodes li,
+.ontology-types label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ontology-key-nodes li {
+  font-size: 0.78rem;
+  color: var(--text);
+}
+
+.ontology-key-swatch {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: 0 0 0.7rem;
+  background: #9aa7b8;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
 .ontology-fs-toggle[aria-pressed='true'] {
   background: var(--bg);
   border: 1px solid var(--primary-light);
@@ -802,9 +854,6 @@ html.ontology-map-fullscreen body {
 .ontology-types label {
   font-size: 0.85rem;
   color: var(--text);
-  display: inline-flex;
-  gap: 0.3rem;
-  align-items: center;
 }
 
 .ontology-stats {

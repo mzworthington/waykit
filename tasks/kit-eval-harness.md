@@ -31,9 +31,9 @@ For each golden prompt: note expected route, actual route an agent took (or woul
 | 5 | “One-line typo in copy” | Direct fix + light XFN floor; no spec handover | EVAL-ROUTE-009 |
 | 6 | “Wire Stripe for a port we just greened” | Prefer **tdd gear 2** same session; `agent-adapter` only if deep-dive | EVAL-ROUTE-024 / EVAL-ROUTE-015 |
 | 7 | “Production 500s spiking” | `agent-incident` → `agent-debug` (+ Sentry/Slack when configured) | EVAL-ROUTE-011 |
-| 8 | “Web Analytics isn’t recording / RUM beacon 404” | `agent-cloudflare-ops` (`kit mcp cloudflare-ops --install`) | EVAL-ROUTE-025 |
+| 8 | “Web Analytics isn’t recording / RUM beacon 404” | `agent-cloudflare-ops` (`wk mcp cloudflare-ops --install`) | EVAL-ROUTE-025 |
 | 9 | “Add PostHog / cookieless events empty / do not run the wizard” | `agent-posthog` (`wk mcp posthog --install`) | EVAL-ROUTE-028 |
-| 10 | “Change MCP tool schema / system prompt for routing” | **EDD:** `kit eval run|ci` ([docs/edd.md](../docs/edd.md)); not vibes-only | `evals/edd/` |
+| 10 | “Change MCP tool schema / system prompt for routing” | **EDD:** `wk eval run|ci` ([docs/edd.md](../docs/edd.md)); not vibes-only | `evals/edd/` |
 
 ### Pass criteria
 
@@ -41,7 +41,7 @@ For each golden prompt: note expected route, actual route an agent took (or woul
 - [ ] TDD vs adapter deep-dive distinction held for #6
 - [ ] XFN never assigned to `agent-tdd`
 - [ ] Failures become lessons under `~/.agents/lessons/<project>/` or kit PRs
-- [ ] Agent/tool/prompt misses become `prod-derived` EDD cases (`from-trace` or hand-authored) and `kit eval run` evidence - not lessons-only ([hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md) §11)
+- [ ] Agent/tool/prompt misses become `prod-derived` EDD cases (`from-trace` or hand-authored) and `wk eval run` evidence - not lessons-only ([hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md) §11)
 
 ## B. Eval-Driven Development (agent tools / MCP)
 
@@ -49,8 +49,8 @@ After prompt or MCP tool schema changes:
 
 ```bash
 pnpm test
-pnpm kit eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --out out/reports
-pnpm kit eval report --format md --out out/reports
+pnpm wk eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --out out/reports
+pnpm wk eval report --format md --out out/reports
 ```
 
 - [ ] Routing accuracy ≥ 95% on routing-tagged cases

@@ -30,8 +30,8 @@ jobs:
             {
               echo "## Nightly live-model EDD"
               echo ""
-              echo "Skipped: \`KIT_EVAL_API_KEY\` is not configured."
-              echo "Scripted PR CI (\`kit check\` in Verify) remains the merge gate."
+              echo "Skipped: \`wk _EVAL_API_KEY\` is not configured."
+              echo "Scripted PR CI (\`wk check\` in Verify) remains the merge gate."
             } >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
@@ -70,27 +70,27 @@ jobs:
           KIT_EVAL_BASE_URL: ${{ vars.KIT_EVAL_BASE_URL }}
         run: |
           mkdir -p out/reports
-          pnpm kit eval ci \
+          pnpm wk eval ci \
             --suite evals/edd/architecture_routing.yaml \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
-          pnpm kit eval ci \
+          pnpm wk eval ci \
             --suite evals/edd/kit_knowledge.yaml \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
-          pnpm kit eval ci \
+          pnpm wk eval ci \
             --suite evals/edd/model_routing.yaml \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
-          pnpm kit eval ci \
+          pnpm wk eval ci \
             --suite evals/edd/cloudflare_ops.yaml \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
-          pnpm kit eval ci \
+          pnpm wk eval ci \
             --suite evals/edd/safety.yaml \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
@@ -105,7 +105,7 @@ jobs:
             echo "## Nightly live-model EDD"
             echo ""
             echo "Proves paraphrase / prompt-injection / multi-tool cases tagged \`requires-live\`"
-            echo "against **\`${KIT_EVAL_MODEL}\`**. This is not the PR merge gate - Verify (\`kit check\`) is."
+            echo "against **\`${KIT_EVAL_MODEL}\`**. This is not the PR merge gate - Verify (\`wk check\`) is."
             echo ""
             echo "| Suite | Live focus |"
             echo "|-------|------------|"
@@ -118,7 +118,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
           if [ -f out/reports/edd-report.json ]; then
-            pnpm kit eval report --format md --out out/reports --from out/reports/edd-report.json --github-summary
+            pnpm wk eval report --format md --out out/reports --from out/reports/edd-report.json --github-summary
           else
             echo "_No EDD report JSON was produced._" >> "$GITHUB_STEP_SUMMARY"
           fi

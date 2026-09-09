@@ -83,7 +83,7 @@ Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/C
 
 | Id | Transport | Secrets / auth |
 |----|-----------|----------------|
-| kit-knowledge | stdio | none (reads `KIT_ROOT` / `~/.agents`) |
+| kit-knowledge | stdio | none (reads `wk _ROOT` / `~/.agents`) |
 | astro-docs | http | none |
 | context7 | stdio | none |
 | github | stdio | `GITHUB_PERSONAL_ACCESS_TOKEN` |

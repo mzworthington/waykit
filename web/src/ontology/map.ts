@@ -157,7 +157,9 @@ export function renderTypeFilters(root: ParentNode): void {
       value: filter.type
     }) as HTMLInputElement;
     input.checked = filter.defaultOn;
-    fieldset.append(el('label', {}, [input, ` ${filter.label}`]));
+    const swatch = el('span', { className: 'ontology-key-swatch', 'aria-hidden': true });
+    swatch.style.backgroundColor = TYPE_COLOR[filter.type];
+    fieldset.append(el('label', {}, [input, swatch, ` ${filter.label}`]));
   }
 }
 
@@ -502,7 +504,7 @@ export async function mountOntologyExplorer(
     bindOntologyExplorer(root, index);
   } catch {
     if (stats) {
-      stats.textContent = 'Index missing. From the kit repo run pnpm kit ontology generate, then refresh.';
+      stats.textContent = 'Index missing. From the kit repo run pnpm wk ontology generate, then refresh.';
     }
     renderInspector(root, { version: 0, generatedFrom: '', entities: [], edges: [] }, null);
   }

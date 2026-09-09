@@ -79,7 +79,7 @@ describe('shadow eval', () => {
     assert.equal(skip.sampled, false);
   });
 
-  it('runs kit eval shadow on the example corpus', async () => {
+  it('runs wk eval shadow on the example corpus', async () => {
     const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'edd-shadow-')), 'fails.jsonl');
     const code = await handleEddEvalCli({
       repoDir,

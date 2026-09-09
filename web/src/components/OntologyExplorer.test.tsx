@@ -1,6 +1,13 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { HOMEPAGE_TYPE_FILTERS, TYPE_COLOR } from '../../../kit/src/ontology/graph_view';
 import { OntologyExplorer } from './OntologyExplorer';
+
+function cssColor(hex: string): string {
+  const probe = document.createElement('span');
+  probe.style.backgroundColor = hex;
+  return probe.style.backgroundColor;
+}
 
 vi.mock('../ontology/map.ts', () => ({
   mountOntologyExplorer: vi.fn(async () => undefined)
@@ -32,6 +39,19 @@ describe('OntologyExplorer', () => {
     );
     expect(map.classList.contains('ontology-explorer--fullscreen')).toBe(false);
     expect(document.documentElement.classList.contains('ontology-map-fullscreen')).toBe(false);
+  });
+
+  it('shows a node-type key that matches the graph colours', () => {
+    render(<OntologyExplorer />);
+    const key = screen.getByRole('complementary', { name: 'Key' });
+    expect(key.parentElement?.classList.contains('ontology-canvas-frame')).toBe(true);
+    const items = [...key.querySelectorAll('li')];
+    expect(items.map((item) => item.textContent?.trim())).toEqual(
+      HOMEPAGE_TYPE_FILTERS.map((filter) => filter.label)
+    );
+    expect(
+      items.map((item) => item.querySelector<HTMLElement>('.ontology-key-swatch')?.style.backgroundColor)
+    ).toEqual(HOMEPAGE_TYPE_FILTERS.map((filter) => cssColor(TYPE_COLOR[filter.type])));
   });
 
   it('keeps Full screen on the graph canvas', () => {

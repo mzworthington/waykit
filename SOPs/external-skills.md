@@ -19,7 +19,7 @@ Use this for **official / third-party** Agent Skills (Cloudflare, Vercel, etc.).
 | Kind | Location | Update path |
 |------|----------|-------------|
 | Kit lifecycle / stack skills | `skills/agent-*`, `lang-*`, `framework-*` | PRs in this repo |
-| Official upstream skills | Cursor user scope via `gh skill` | `kit sync` |
+| Official upstream skills | Cursor user scope via `gh skill` | `wk sync` |
 
 Declared list: [skills/external.lock.json](../skills/external.lock.json).
 
@@ -32,13 +32,13 @@ Declared list: [skills/external.lock.json](../skills/external.lock.json).
 
 ```bash
 # Install everything in the lockfile (Cursor --scope user)
-kit sync --install
+wk sync --install
 
 # Preview commands
-kit sync --dry-run
+wk sync --dry-run
 
 # Pull upstream changes for lockfile skills in ~/.cursor/skills only
-kit sync --update
+wk sync --update
 ```
 
 `--update` refreshes lockfile skill names with `--dir ~/.cursor/skills`. It does **not** run `gh skill update --all`, which scans every agent host and the kit tree and warns on copies that were never installed via `gh skill`.
@@ -67,11 +67,11 @@ INSTALL_EXTERNAL_SKILLS=1 ./install.sh
 
 Prefer a published version tag (`"pin": "v1.2.0"`). Use `"pin": "latest"` when the repo has no semver tags - `gh skill` then installs the latest GitHub release, else default-branch HEAD. Do not pin commit SHAs unless you are freezing a specific commit. Version tags are passed as `refs/tags/…` so they are not mistaken for SHAs. Tag pins are skipped by `gh skill update` until you change or drop them.
 
-4. Run `kit sync --install --force`.
+4. Run `wk sync --install --force`.
 
 Prefer the exact path form (`skills/<name>`) so installs skip full-repo discovery.
 
-5. Run `kit verify` to confirm no upstream dirs remain under kit `skills/`.
+5. Run `wk verify` to confirm no upstream dirs remain under kit `skills/`.
 
 ## Why not vendor into `skills/`?
 

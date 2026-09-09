@@ -14,7 +14,7 @@ LLM tool calling fails probabilistically (wrong tool, hallucinated args, retry l
 
 * Treat prompts and tool schemas as versioned contracts
 * Gate merges on measurable routing accuracy
-* Keep always-on context thin (`kit measure-context`) so evals stay meaningful
+* Keep always-on context thin (`wk measure-context`) so evals stay meaningful
 
 ## Considered Options
 
@@ -37,7 +37,7 @@ Chosen option: "**Option B**", because kit CI already gates EDD routing (≥95%)
 ```mermaid
 sequenceDiagram
   participant Dev as Author
-  participant Eval as "kit eval ci"
+  participant Eval as "wk eval ci"
   participant CI as GitHub Actions
   Dev->>Eval: failing JSONL/YAML case
   Dev->>Eval: register tool contract / prompt

@@ -40,7 +40,7 @@ For each entry, decide:
 | Agent routing / prompt / tool miss | [evals/edd/](../evals/edd/) JSONL + suite (tags `prod-derived`); see [hypothesis-driven-debug.md](../SOPs/hypothesis-driven-debug.md) §11 |
 | Project quirk | App repo only |
 
-When a lesson’s **EDD case** field is set, confirm the JSONL row exists and `kit eval run` covers it before marking `promoted`.
+When a lesson’s **EDD case** field is set, confirm the JSONL row exists and `wk eval run` covers it before marking `promoted`.
 
 ## 3. Audit the shared kit
 
@@ -49,7 +49,7 @@ When a lesson’s **EDD case** field is set, confirm the JSONL row exists and `k
 - [ ] Check [skills/README.md](../skills/README.md) taxonomy still matches actual skills
 - [ ] Confirm skill frontmatter `mcp:` ids exist in [mcps/catalog.json](../mcps/catalog.json)
 - [ ] Confirm MCP install is a **single** profile (not stacked collab+devtools+ops); default includes kit-knowledge, memory, and linear
-- [ ] Run `pnpm kit measure-context` - always-on surface within target ([SOPs/context-budget.md](../SOPs/context-budget.md))
+- [ ] Run `pnpm wk measure-context` - always-on surface within target ([SOPs/context-budget.md](../SOPs/context-budget.md))
 - [ ] Confirm [AGENTS.md](../AGENTS.md) stays a thin index (no eager “read these eight files” lists)
 - [ ] Spot-check recent `handover/<project>/` runs: was test impact aligned? Was an XFN matrix present (including skip reasons)? Were apply suites greened? Was TDD gear 2 done in-session (not a late adapter-only phase)?
 - [ ] Confirm stack profiles still list XFN tooling defaults consistent with [agent-xfn](../skills/agent-xfn/SKILL.md)

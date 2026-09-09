@@ -4,8 +4,8 @@ Read when choosing how to gather evidence. Procedure stays in [SOPs/hypothesis-d
 
 | Need | Tool |
 |------|------|
-| Init board | `kit debug-board` |
-| Failed Actions logs | `kit debug-ci` ([gh](https://cli.github.com/)) |
+| Init board | `wk debug-board` |
+| Failed Actions logs | `wk debug-ci` ([gh](https://cli.github.com/)) |
 | Prior cloud-agent context | `cursor-cloud` MCP: `list-cloud-agents` → `batch-fetch-details` (transcripts via subagents) |
 | Instrumented deep dive | Cursor **debug** subagent / Debug mode (hypothesis + runtime logs) |
 | UI verify | computerUse / browser / RecordScreen - required for visual bugs |
