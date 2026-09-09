@@ -5,6 +5,7 @@
 ### 🚀 Features
 
 - Map on homepage and removal of kt alias
+- Hover focuses node on map
 
 ## 2026-09-07
 
