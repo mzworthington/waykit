@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-11
+
+### 🚀 Features
+
+- *(skills)* Deepen lang-python for readable tests and pydantic edges
+
 ## 2026-09-09
 
 ### 🚀 Features
