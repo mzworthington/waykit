@@ -45,7 +45,7 @@ If this session plays a Linear issue, claim it ([SOPs/linear-ticket-workflow.md]
 2. No domain rules, authorization decisions, or persistence in UI components - map DTOs and invoke driving ports/actions.
 3. Prefer the project design system; do not invent parallel components.
 4. Accessibility is mandatory on touched surfaces; coordinate **apply** a11y/E2E rows with [agent-xfn](../agent-xfn/SKILL.md).
-5. Load matching `framework-*` profiles (Next, Nuxt, etc.). Use Figma MCP when designs are linked; Playwright/Chrome DevTools for verification - not for owning XFN suites.
+5. Load matching `framework-*` profiles (Alpine, Next, Nuxt, etc.). Use Figma MCP when designs are linked; Playwright/Chrome DevTools for verification - not for owning XFN suites.
 6. Landing or marketing surfaces that sound AI-written: hand wording to [agent-copy](../agent-copy/SKILL.md); keep chrome quiet (no emoji-as-heading, no fake "SYSTEM ONLINE" labels) when copy is being humanized.
 7. **Semantic HTML first** (native elements before ARIA). See below.
 8. **No `any`** in component props, event handlers, or UI test mocks ([lang-typescript](../lang-typescript/SKILL.md)).

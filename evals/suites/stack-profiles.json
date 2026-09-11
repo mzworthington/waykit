@@ -1,7 +1,7 @@
 {
   "suite": "stack-profiles",
   "description": "Evaluation benchmarks for lang-* and framework-* stack profiles",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "test_cases": [
     {
       "id": "EVAL-LANG-TS-001",
@@ -304,6 +304,41 @@
         "required_output_sections": [
           "Astro Page",
           "Island"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-FW-ALPINE-001",
+      "name": "Alpine.js HTML-first delivery profile",
+      "description": "Verifies Alpine as a markup adapter with Alpine.data factories, CSP-aware install, and no domain rules in x-data.",
+      "target_skill": "framework-alpine",
+      "prompt": "Build an Alpine.js status page with x-data, alpine.data factories, and a published JSON snapshot.",
+      "context": {
+        "detected_stack": [
+          "HTML",
+          "Alpine"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "alpine",
+          "x-data",
+          "alpine.data",
+          "alpinejs.dev"
+        ],
+        "required_patterns": [
+          "Alpine.data",
+          "x-data"
+        ],
+        "forbidden_patterns": [
+          "createRoot(",
+          "x-html",
+          "@click.away",
+          "@entangle"
+        ],
+        "required_output_sections": [
+          "Alpine.data",
+          "Snapshot"
         ]
       }
     },

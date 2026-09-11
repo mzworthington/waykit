@@ -1,0 +1,36 @@
+{
+  "suite": "framework-alpine-evals",
+  "description": "Co-located evaluation tests for Alpine.js framework profile trigger resolution",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "id": "EVAL-FW-ALPINE-COLOCATED-001",
+      "name": "Alpine HTML-first x-data and alpine.data trigger",
+      "target_skill": "framework-alpine",
+      "prompt": "Add Alpine.js x-data to a static status page with alpine.data factories.",
+      "context": {
+        "detected_stack": [
+          "HTML",
+          "Alpine"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "alpine",
+          "x-data",
+          "alpine.data"
+        ],
+        "required_patterns": [
+          "Alpine.data",
+          "x-data"
+        ],
+        "forbidden_patterns": [
+          "createRoot(",
+          "@click.away",
+          "@entangle",
+          "x-html"
+        ]
+      }
+    }
+  ]
+}

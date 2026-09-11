@@ -146,6 +146,7 @@ Depending on the active technology stack, load the appropriate skill:
 Depending on the framework used, load the appropriate skill:
 
 - [Next.js (App Router)](./skills/framework-next/SKILL.md)
+- [Alpine.js](./skills/framework-alpine/SKILL.md)
 - [Astro](./skills/framework-astro/SKILL.md)
 - [Nuxt.js](./skills/framework-nuxt/SKILL.md)
 - [FastAPI](./skills/framework-fastapi/SKILL.md)

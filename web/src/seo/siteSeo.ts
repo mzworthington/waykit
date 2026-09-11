@@ -97,7 +97,7 @@ const PAGE_SEO: Record<string, SeoOverride> = {
   '/docs/used-in': {
     headline: 'Used on our own product repos',
     description:
-      'ArchLens, SteerLens, the React Cloudflare template and GPIO build monitor run Waykit. Open those GitHub checkouts to see a thin handshake in the wild.'
+      'ArchLens, steerco, the React Cloudflare template and GPIO build monitor run Waykit. Open those GitHub checkouts to see a thin handshake in the wild.'
   },
   '/docs/lifecycle': {
     headline: 'Feature lifecycle',

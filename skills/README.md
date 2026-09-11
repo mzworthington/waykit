@@ -67,6 +67,7 @@ Related SOPs: [behavior catalog & XFN](../SOPs/behavior-catalog-and-xfn.md), [co
 | [profile-mcp](./profile-mcp/SKILL.md) | (MCP tools, stdio/SSE transports, LLM JSON schemas) |
 | [profile-observability](./profile-observability/SKILL.md) | feeds [agent-telemetry](./agent-telemetry/SKILL.md) |
 | [lang-hcl](./lang-hcl/SKILL.md) | [framework-terraform](./framework-terraform/SKILL.md) |
+| HTML-first / vanilla JS | [framework-alpine](./framework-alpine/SKILL.md) |
 | [lang-typescript](./lang-typescript/SKILL.md) | [framework-next](./framework-next/SKILL.md), [framework-react](./framework-react/SKILL.md), [framework-astro](./framework-astro/SKILL.md), [framework-express](./framework-express/SKILL.md), [framework-nuxt](./framework-nuxt/SKILL.md), [framework-pulumi](./framework-pulumi/SKILL.md) |
 | [lang-python](./lang-python/SKILL.md) | [framework-fastapi](./framework-fastapi/SKILL.md) |
 | [lang-rust](./lang-rust/SKILL.md) | - |

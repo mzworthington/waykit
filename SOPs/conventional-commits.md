@@ -69,7 +69,7 @@ A `.md` skill or SOP is still agent behavior. `docs` is for humans reading a gui
 
 Every app repo should run a **commit-msg** hook that rejects a non-conventional subject:
 
-- Husky: `.husky/commit-msg` (Waykit, ArchLens, SteerLens, react-cloudflare-template)
+- Husky: `.husky/commit-msg` (Waykit, ArchLens, steerco, react-cloudflare-template)
 - pre-commit: `stages: [commit-msg]` (gpio-build-monitor)
 - `.githooks/commit-msg` copied into `.git/hooks` on bootstrap (edge-dns, mzworthington)
 

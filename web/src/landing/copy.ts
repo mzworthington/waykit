@@ -66,10 +66,10 @@ export const HOME_USED_IN = [
     look: 'Hexagonal @archlens/core, TDD for parsers, sparse ADRs.'
   },
   {
-    name: 'SteerLens',
+    name: 'steerco',
     href: 'https://github.com/mzworthington/steerco',
     what: 'Executive steering workspace',
-    look: 'In-app docs, Cloudflare Pages, handover under steerlens/.'
+    look: 'In-app docs, Cloudflare Pages, handover under steerco/.'
   },
   {
     name: 'React Cloudflare template',
