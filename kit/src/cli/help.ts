@@ -11,7 +11,8 @@ export const KIT_HELP_TOPICS = [
   'mcp',
   'check',
   'eval',
-  'agents'
+  'agents',
+  'tdd-guard'
 ] as const;
 
 export type KitHelpTopic = (typeof KIT_HELP_TOPICS)[number];
@@ -65,6 +66,7 @@ Commands:
   model resolve        Resolve capability class + host slug (models/catalog.yaml)
   site assemble        Copy web/dist plus public Markdown into site/ (needs web build first; optional --out)
   commit-msg           Check a commit subject or PR title (conventional commits)
+  tdd-guard            Host TDD hooks (stdin JSON); install|enable|disable
   completion <shell>   Print a live tab-completion stub (zsh or bash)
   completion install   Write the stub once; verbs stay in sync with this wk
   help                 Display this help menu
@@ -195,6 +197,19 @@ ${CLI_BIN} agents generate|install|status|launch-prompt
   ${CLI_BIN} agents status
   ${CLI_BIN} agents launch-prompt --skill agent-tdd --project demo
   ${CLI_BIN} subagents status   (alias)
+`;
+    case 'tdd-guard':
+      return `
+${CLI_BIN} tdd-guard [hook|install|enable|disable] [dir]
+
+  Mechanical red-before-green gate for Cursor and Claude Code, inspired by TDD Guard.
+
+  (no args / hook)  Read hook JSON on stdin and allow or deny the tool
+  install           Write .cursor/hooks.json and .claude/settings.json
+  disable|enable    Session toggle (also WAYKIT_TDD_GUARD=0)
+
+  Claude users may still install the upstream plugin for LLM validation:
+  https://github.com/nizos/tdd-guard
 `;
     default:
       return KIT_HELP;

@@ -1,13 +1,13 @@
-name: Nightly live-model EDD
+name: Weekly live-model EDD
 
 # Scripted CI proves the harness. This job runs paraphrase / prompt-injection /
-# multi-tool cases tagged `requires-live` against a real model.
+# multi-tool cases tagged `requires-live` against Cursor Agent CLI.
 #
 # Do not use `secrets` in job-level `if:` - that context is not available there
 # and GitHub rejects the workflow file (red X on the introducing commit).
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 3 * * 0'
   workflow_dispatch:
 
 permissions:
@@ -21,25 +21,22 @@ jobs:
       - name: Check live-eval credentials
         id: creds
         env:
-          KIT_EVAL_API_KEY: ${{ secrets.KIT_EVAL_API_KEY }}
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           KIT_EVAL_MODEL: ${{ vars.KIT_EVAL_MODEL }}
         run: |
-          if [ -z "${KIT_EVAL_API_KEY}" ]; then
-            echo "KIT_EVAL_API_KEY is not set; skipping live-model EDD. Scripted CI remains the merge gate."
+          if [ -z "${CURSOR_API_KEY}" ]; then
+            echo "CURSOR_API_KEY is not set; skipping live-model EDD. Scripted CI remains the merge gate."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             {
-              echo "## Nightly live-model EDD"
+              echo "## Weekly live-model EDD"
               echo ""
-              echo "Skipped: \`wk _EVAL_API_KEY\` is not configured."
+              echo "Skipped: \`CURSOR_API_KEY\` is not configured."
               echo "Scripted PR CI (\`wk check\` in Verify) remains the merge gate."
             } >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          if [ -z "${KIT_EVAL_MODEL}" ]; then
-            echo "Set repository variable KIT_EVAL_MODEL to a provider model id."
-            exit 1
-          fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "model=${KIT_EVAL_MODEL:-cursor-grok-4.6-medium}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout Repository
         if: steps.creds.outputs.skip != 'true'
@@ -62,36 +59,47 @@ jobs:
         if: steps.creds.outputs.skip != 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Install Cursor CLI
+        if: steps.creds.outputs.skip != 'true'
+        run: |
+          curl https://cursor.com/install -fsS | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.cursor/bin" >> "$GITHUB_PATH"
+
       - name: Run live EDD suites (includes requires-live)
         if: steps.creds.outputs.skip != 'true'
         env:
-          KIT_EVAL_API_KEY: ${{ secrets.KIT_EVAL_API_KEY }}
-          KIT_EVAL_MODEL: ${{ vars.KIT_EVAL_MODEL }}
-          KIT_EVAL_BASE_URL: ${{ vars.KIT_EVAL_BASE_URL }}
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          KIT_EVAL_MODEL: ${{ steps.creds.outputs.model }}
         run: |
           mkdir -p out/reports
           pnpm wk eval ci \
             --suite evals/edd/architecture_routing.yaml \
+            --style cli --cli cursor-agent \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
           pnpm wk eval ci \
             --suite evals/edd/kit_knowledge.yaml \
+            --style cli --cli cursor-agent \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
           pnpm wk eval ci \
             --suite evals/edd/model_routing.yaml \
+            --style cli --cli cursor-agent \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
           pnpm wk eval ci \
             --suite evals/edd/cloudflare_ops.yaml \
+            --style cli --cli cursor-agent \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
           pnpm wk eval ci \
             --suite evals/edd/safety.yaml \
+            --style cli --cli cursor-agent \
             --model "${KIT_EVAL_MODEL}" \
             --threshold-routing 95 \
             --out out/reports
@@ -99,13 +107,14 @@ jobs:
       - name: Publish live EDD job summary
         if: always() && steps.creds.outputs.skip != 'true'
         env:
-          KIT_EVAL_MODEL: ${{ vars.KIT_EVAL_MODEL }}
+          KIT_EVAL_MODEL: ${{ steps.creds.outputs.model }}
         run: |
           {
-            echo "## Nightly live-model EDD"
+            echo "## Weekly live-model EDD"
             echo ""
             echo "Proves paraphrase / prompt-injection / multi-tool cases tagged \`requires-live\`"
-            echo "against **\`${KIT_EVAL_MODEL}\`**. This is not the PR merge gate - Verify (\`wk check\`) is."
+            echo "against **\`${KIT_EVAL_MODEL}\`** via \`cursor-agent\` (\`CURSOR_API_KEY\`)."
+            echo "This is not the PR merge gate - Verify (\`wk check\`) is."
             echo ""
             echo "| Suite | Live focus |"
             echo "|-------|------------|"

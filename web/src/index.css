@@ -53,11 +53,19 @@ body {
   margin-bottom: 0;
 }
 
-.landing-page .ontology-explorer {
+.landing-page .ontology-explorer,
+.landing-page .proof,
+.landing-page .demo {
   width: 100vw;
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+}
+
+.landing-page .proof,
+.landing-page .demo {
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
 }
 
 .landing-page .hero-eyebrow {

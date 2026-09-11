@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { HomeLanding } from './HomeLanding';
@@ -50,5 +53,12 @@ describe('HomeLanding', () => {
       '#demo'
     );
     expect(screen.getByRole('heading', { name: /demo: a miss becomes a failing eval/i })).toBeTruthy();
+  });
+
+  it('gives the eval proof and demo the same full-bleed width as the graph', () => {
+    const css = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8');
+    expect(css).toMatch(
+      /\.landing-page \.ontology-explorer,\s*\.landing-page \.proof,\s*\.landing-page \.demo \{[^}]*width: 100vw/s
+    );
   });
 });

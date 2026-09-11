@@ -92,9 +92,11 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
 
 The runner takes the first non-empty value:
 
-1. `wk _EVAL_API_KEY` (preferred; this is the secret nightly CI looks for)
+1. `KIT_EVAL_API_KEY` (OpenAI-compatible HTTP style)
 2. `OPENAI_API_KEY`
 3. `ANTHROPIC_API_KEY`
+
+Weekly live CI does not use that HTTP chain. It reads `CURSOR_API_KEY` and shells out to `cursor-agent`.
 
 That value is sent as `Authorization: Bearer …` to an **OpenAI-compatible** `{baseUrl}/chat/completions`. Base URL resolution: `wk _EVAL_BASE_URL`, then `OPENAI_BASE_URL`, then `https://api.openai.com/v1`.
 
@@ -115,7 +117,7 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
   --style cli --cli cursor-agent --model cursor-grok-4.6-medium
 ```
 
-PR Verify and `wk check` stay `--style local` (no key). When you run a live model, prefer **http** for the nightly job; **cli** is for local iteration (`cursor-agent`, `claude`, or `agy`). CLI runs hit subscription rate limits and have weaker structured-output guarantees.
+PR Verify and `wk check` stay `--style local` (no key). Weekly live uses **cli** (`cursor-agent` + `CURSOR_API_KEY`). Use **http** for OpenAI-compatible providers. CLI runs hit subscription rate limits and have weaker structured-output guarantees.
 
 Optional: `wk _EVAL_MODEL`. Rough USD uses `$0.003` per 1k tokens unless `wk _EVAL_TOKEN_USD_PER_1K` is set (`0` disables). Local OpenAI-compatible servers also work via `wk _EVAL_BASE_URL`.
 
@@ -137,19 +139,19 @@ Full metric table and harness layout: [evals/edd/README.md](../evals/edd/README.
 | Job | Key | Model | Purpose |
 |-----|-----|--------|---------|
 | **Verify** in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | unused | `--style local` via `wk check` | Merge gate: harness + keyword routing + safety + recovery |
-| Nightly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `wk _EVAL_API_KEY` | repo variable `wk _EVAL_MODEL` | HTTP paraphrases, prompt-injection, multi-tool, safety |
+| Weekly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `CURSOR_API_KEY` | repo variable `KIT_EVAL_MODEL` (default `cursor-grok-4.6-medium`) | `cursor-agent` paraphrases, prompt-injection, multi-tool, safety |
 | `pnpm check` / `wk check` | unused | `--style local` | Same as Verify, locally |
 
-Nightly **skips the whole job** if `wk _EVAL_API_KEY` is empty. It does not fall through to `OPENAI_API_KEY`.
+Weekly **skips the whole job** if `CURSOR_API_KEY` is empty. Set it with `gh secret set CURSOR_API_KEY --body "$CURSOR_API_KEY"`. Optional `KIT_EVAL_MODEL` overrides the default Cursor model id.
 
-Verify and the nightly live job (plus Pages deploy) publish a **job summary**: what the gate means, then an EDD overview table and collapsible full report via `wk eval report --github-summary`.
+Verify and the weekly live job (plus Pages deploy) publish a **job summary**: what the gate means, then an EDD overview table and collapsible full report via `wk eval report --github-summary`.
 
 ### Local live run
 
 ```bash
-export KIT_EVAL_API_KEY='…'   # or OPENAI_API_KEY
-# optional: export KIT_EVAL_BASE_URL='https://api.openai.com/v1'
-wk eval run --suite evals/edd/architecture_routing.yaml --style http --model gpt-4o-mini
+export CURSOR_API_KEY='…'
+noglob wk eval run --suite evals/edd/architecture_routing.yaml \
+  --style cli --cli cursor-agent --model cursor-grok-4.6-medium
 ```
 
 You should then see `requires-live` cases execute instead of “Skipping N requires-live case(s)”.

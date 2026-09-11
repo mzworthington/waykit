@@ -92,7 +92,12 @@ export type KitCommand =
     }
   | { kind: 'completion'; shell: KitCompletionShell }
   | { kind: 'completion-install'; shell: KitCompletionShell | undefined }
-  | { kind: 'complete'; words: string[] };
+  | { kind: 'complete'; words: string[] }
+  | {
+      kind: 'tdd-guard';
+      action: 'hook' | 'install' | 'enable' | 'disable';
+      targetDir: string;
+    };
 
 const COMPLETION_USAGE = cliUsage('completion <zsh|bash|install>');
 
@@ -121,6 +126,7 @@ const AGENTS_USAGE = cliUsage(
 const SUBAGENTS_USAGE = cliUsage('subagents status [--json]');
 const SITE_ASSEMBLE_USAGE = cliUsage('site assemble [--out <dir>]');
 const COMMIT_MSG_USAGE = cliUsage('commit-msg [--message <subject>] [file]');
+const TDD_GUARD_USAGE = cliUsage('tdd-guard [hook|install|enable|disable] [dir]');
 
 function helpTopicFromArgv(argv: string[]): KitHelpTopic | undefined {
   const flagged = argv.includes('--help') || argv.includes('-h');
@@ -384,6 +390,24 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
         return { kind: 'usage', message: COMMIT_MSG_USAGE };
       }
       return { kind: 'commit-msg', message: undefined, file: path.resolve(opts.cwd, file) };
+    }
+
+    case 'tdd-guard': {
+      const actionArg = rest[0] && !rest[0].startsWith('--') ? rest[0] : 'hook';
+      if (
+        actionArg !== 'hook' &&
+        actionArg !== 'install' &&
+        actionArg !== 'enable' &&
+        actionArg !== 'disable'
+      ) {
+        return { kind: 'usage', message: TDD_GUARD_USAGE };
+      }
+      const dirArg = rest[1] && !rest[1].startsWith('--') ? rest[1] : '.';
+      return {
+        kind: 'tdd-guard',
+        action: actionArg,
+        targetDir: path.resolve(opts.cwd, dirArg)
+      };
     }
 
     case 'site': {

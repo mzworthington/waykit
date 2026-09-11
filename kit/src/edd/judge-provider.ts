@@ -162,7 +162,7 @@ function jsonPromptPreset(command: string): CliJudgePresetConfig {
  */
 const cursorAgentPreset: CliJudgePresetConfig = {
   command: 'cursor-agent',
-  buildArgs: ({ prompt, model }) => [...jsonPromptArgs(prompt, model), '--mode=ask']
+  buildArgs: ({ prompt, model }) => [...jsonPromptArgs(prompt, model), '--mode=ask', '--trust']
 };
 
 const CURSOR_AGENT_COMMANDS = new Set(['cursor-agent', 'cursor', 'agent']);

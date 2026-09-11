@@ -59,6 +59,16 @@ Allowlisted specialists (debug, xfn, spec, tdd, review, security, arch-drift) ge
 
 The kit is a live graph: skills, host subagent stubs, SOPs, MCP servers, evals, and docs. You edit those files; `wk ontology check` fails dangling `depends-on`, `mcp:`, and subagent→skill links. Agents stay on the thin handshake, then kit-knowledge walks neighbors (`get_entity`, `get_related`) instead of dumping the tree. Browse it: [Waykit map](/docs/map). How to add a node: [Author the Waykit map](/ontology). Launch flow: [Host subagents](/docs/subagents).
 
+## How do I stop the agent skipping red?
+
+Install host TDD hooks in the app repo:
+
+```bash
+wk tdd-guard install
+```
+
+Cursor and Claude Code then run `wk tdd-guard` before writes. Production source is denied until a failing test run is recorded. Procedure: [TDD Guard hooks](/SOPs/tdd-guard). Upstream LLM validator (Claude plugin): [nizos/tdd-guard](https://github.com/nizos/tdd-guard).
+
 ## Where does EDD fit?
 
 Inside TDD, when the change is a prompt or a tool contract. **EDD is alpha:** you write a failing eval for the tool and arguments you expect, implement until the **scripted** harness passes, then gate the merge with `wk eval ci --threshold-routing 95`. That is not proof the live model is correct. A production miss can become a JSONL case in the same suite. How mocks, styles, and CI work: [EDD guide](/docs/edd).

@@ -21,6 +21,8 @@ triggers:
   - contract
   - vertical slice
   - use case
+  - tdd-guard
+  - tdd hook
   - implementation
   - green
 depends-on:
@@ -94,6 +96,8 @@ When sketching slice boundaries or request flows in docs, use Mermaid - not ASCI
 4. Refactor only while that case stays green. Then take the next row.
 
 **Until complete repeats** this micro-loop until the agreed impact map is green. "Start the loop and continue until complete", "finish the ticket", and "just implement it" do **not** authorize a production waterfall. **Do not batch production** across modules, then sprinkle tests. Do not edit production in the same turn as a pile of new tests without a red run in between.
+
+**Host hooks:** Cursor and Claude Code call `wk tdd-guard` on Write/Edit ([SOPs/tdd-guard.md](../../SOPs/tdd-guard.md), after [TDD Guard](https://github.com/nizos/tdd-guard)). Production source is denied until a failing test run is recorded. After a test run, **stop** reminds [agent-pre-commit](../agent-pre-commit/SKILL.md) before COMPLETE. Install with `wk tdd-guard install`. Do not patch files from the shell to skip the hook.
 
 1. **Red** - Write failing tests first: domain unit tests for invariants; handler/slice tests for the use case. **Run tests and confirm failure** before implementation.
 2. **Green (gear 1)** - Minimal implementation to pass tests. Ports are interfaces only; mock them in slice tests.

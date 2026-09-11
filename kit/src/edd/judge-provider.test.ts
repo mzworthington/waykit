@@ -138,6 +138,20 @@ describe('createCliJudgeCompletion', () => {
     assert.equal(calls[1]?.file, '/Users/me/.local/bin/cursor-agent');
   });
 
+  it('passes --trust so cursor-agent can run without a workspace prompt', async () => {
+    const calls: Array<{ args: string[] }> = [];
+    const execFile: ExecFileFn = async (_file, args) => {
+      calls.push({ args });
+      return { stdout: '{"score":"PASS","reasoning":"ok"}', stderr: '' };
+    };
+    await createCliJudgeCompletion({ cli: 'cursor-agent', execFile, exists: () => false })({
+      model: 'cursor-grok-4.6-medium',
+      prompt: 'x',
+      apiKey: 'cli'
+    });
+    assert.ok(calls[0]?.args.includes('--trust'));
+  });
+
   it('explains ENOENT with the cursor-agent install path', async () => {
     const execFile: ExecFileFn = async () => {
       const err = new Error('spawn cursor-agent ENOENT') as NodeJS.ErrnoException;

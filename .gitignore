@@ -60,6 +60,9 @@ web/node_modules/
 # EDD / eval report artifacts
 out/
 
+# TDD Guard session state (wk tdd-guard)
+.waykit/tdd-guard/
+
 # OS / editor
 .DS_Store
 *.swp

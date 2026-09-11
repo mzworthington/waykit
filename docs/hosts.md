@@ -9,6 +9,7 @@ Windsurf is **rules-only forever**. `wk export-rules` / `wk align` keep `.windsu
 | Surface | Cursor | Claude Code | GitHub Copilot / VS Code | Antigravity / Gemini CLI |
 |---------|--------|-------------|--------------------------|---------------------------|
 | Rules | `.cursorrules` | `CLAUDE.md` | `.github/copilot-instructions.md` | `GEMINI.md` |
+| TDD hooks | `.cursor/hooks.json` (`wk tdd-guard install`) | `.claude/settings.json` hooks | not installed | not installed |
 | Project MCP | `.cursor/mcp.json` | `.mcp.json` | `.vscode/mcp.json` (`servers`) and shared `.mcp.json` | `.agents/mcp_config.json` |
 | User MCP | `~/.cursor/mcp.json` | `~/.claude.json` (`mcpServers`) | `~/.copilot/mcp-config.json` | `~/.gemini/config/mcp_config.json` |
 | Model overlay | `models/hosts/cursor.yaml` | `models/hosts/claude.yaml` | `models/hosts/copilot.yaml` | `models/hosts/antigravity.yaml` |

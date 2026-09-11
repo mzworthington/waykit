@@ -265,6 +265,20 @@ describe('parseKitArgv', () => {
     );
   });
 
+  it('parses tdd-guard hook, install, and disable', () => {
+    assert.deepEqual(parseKitArgv(['tdd-guard'], opts), {
+      kind: 'tdd-guard',
+      action: 'hook',
+      targetDir: path.resolve('/work', '.')
+    });
+    assert.deepEqual(parseKitArgv(['tdd-guard', 'install', './app'], opts), {
+      kind: 'tdd-guard',
+      action: 'install',
+      targetDir: path.resolve('/work', './app')
+    });
+    assert.equal(parseKitArgv(['tdd-guard', 'nope'], opts).kind, 'usage');
+  });
+
   it('parses --json on check, doctor, and align', () => {
     assert.deepEqual(parseKitArgv(['check'], opts), { kind: 'check', json: false });
     assert.deepEqual(parseKitArgv(['check', '--json'], opts), { kind: 'check', json: true });

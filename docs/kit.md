@@ -73,6 +73,10 @@ wk sync --install
 
 `wk sync` installs upstream skills (Cloudflare, Vercel) from [skills/external.lock.json](../skills/external.lock.json) by **version tag** or `latest`, not a guessed commit SHA. [SOPs/external-skills.md](../SOPs/external-skills.md).
 
+## TDD Guard hooks
+
+`wk tdd-guard install` writes Cursor `.cursor/hooks.json` and Claude Code `.claude/settings.json` so Write/Edit cannot skip red. The command reads hook JSON on stdin. Procedure: [TDD Guard hooks](../SOPs/tdd-guard.md). Inspired by [TDD Guard](https://github.com/nizos/tdd-guard).
+
 ## Repo doctor
 
 `wk doctor` is the community-file check for **GitHub sources you admin**, not a glob over every clone. Report-only by default. `--write` fills missing README, license, contributing, security, and GitHub templates and never overwrites existing files. `--owned --scan <dir>` matches local worktrees to `gh repo list --source`. Forks are skipped. `wk init` still owns the handshake and hooks.

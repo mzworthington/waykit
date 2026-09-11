@@ -62,6 +62,54 @@ describe('EDD EvalRunner', () => {
     assert.equal(result.routingOk, true);
   });
 
+  it('starts live quality judges in parallel', async () => {
+    let inflight = 0;
+    let maxInflight = 0;
+    const complete = async () => {
+      inflight += 1;
+      maxInflight = Math.max(maxInflight, inflight);
+      await new Promise((resolve) => setTimeout(resolve, 40));
+      inflight -= 1;
+      return {
+        score: 'PASS',
+        reasoning: 'ok',
+        hallucinated: false,
+        results: [{ pass: true, reason: 'ok' }]
+      };
+    };
+    const result = await runCaseAssertions({
+      model: 'cursor-grok-4.6-medium',
+      judgeBackend: 'cli',
+      complete,
+      availableTools: ['read_architecture_yaml'],
+      suiteYamlPath: path.join(repoDir, 'evals/edd/architecture_routing.yaml'),
+      config: {
+        name: 'Routing',
+        dataset: 'x.jsonl',
+        metrics: []
+      },
+      testCase: {
+        id: 'route-01',
+        prompt: 'Can you pull up the C4 model for the payment service?',
+        expect: { tool: 'read_architecture_yaml' }
+      },
+      metrics: [
+        { type: 'task_completion' },
+        { type: 'criteria_judge', criteria: ['Response must reflect the tool output'], threshold: 1 },
+        { type: 'llm_as_judge' }
+      ],
+      response: {
+        content: 'Architecture for payment-api loaded successfully.',
+        tool_calls: [{ name: 'read_architecture_yaml', arguments: { componentId: 'payment-api' } }],
+        usage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+        consecutiveToolFailures: 0,
+        haltedAutonomousExecution: false
+      }
+    });
+    assert.equal(result.passed, true, result.failures.join('; '));
+    assert.ok(maxInflight >= 3, `expected overlapping judges, maxInflight=${maxInflight}`);
+  });
+
   it('passes first-hour demo suite with scripted model', async () => {
     const runner = new EvalRunner({
       model: 'scripted',

@@ -49,6 +49,9 @@ import {
 } from '../skills/subagent_runtime.js';
 import { resolveModel } from '../models/catalog.js';
 import { validateConventionalCommit } from '../commits/conventional.js';
+import { installTddGuardHooks } from '../tdd-guard/install_hooks.js';
+import { runTddGuardHook } from '../tdd-guard/run_hook.js';
+import { setTddGuardDisabled } from '../tdd-guard/session_store.js';
 import {
   completeKitLine,
   installCompletions,
@@ -468,6 +471,23 @@ export async function runKitCommand(command: KitCommand, ctx: RunKitContext): Pr
       }
       printCliOutcome('ok', 'commit-msg', 'conventional subject');
       return 0;
+    }
+
+    case 'tdd-guard': {
+      if (command.action === 'install') {
+        const written = installTddGuardHooks(command.targetDir);
+        printCliOutcome('ok', 'tdd-guard install', `${written.cursorHooks} + ${written.claudeSettings}`);
+        return 0;
+      }
+      if (command.action === 'disable' || command.action === 'enable') {
+        setTddGuardDisabled(command.targetDir, command.action === 'disable');
+        printCliOutcome('ok', `tdd-guard ${command.action}`, command.targetDir);
+        return 0;
+      }
+      const stdin = fs.readFileSync(0, 'utf8');
+      const result = runTddGuardHook({ stdin, cwd: command.targetDir });
+      process.stdout.write(`${result.stdout}\n`);
+      return result.exitCode;
     }
 
     case 'site-assemble': {

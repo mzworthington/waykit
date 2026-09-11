@@ -42,7 +42,7 @@ Cursor, Claude Code, Copilot, and Antigravity load Kit via host pointers and MCP
 ## CI
 
 - **Local gate:** [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) **Verify** runs `wk check` / `wk eval ci` with `--style local`. Cases tagged `requires-live` are skipped so paraphrases do not fail CI. `wk check` covers architecture routing, model routing, kit-knowledge, Cloudflare ops, safety, self-correction, and terminal-fallback suites.
-- **Live nightly:** [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) runs on a schedule when `wk _EVAL_API_KEY` is set and `wk _EVAL_MODEL` is a real provider model. That job includes `requires-live` rows. Missing `wk _EVAL_API_KEY` skips the job; it does not fall through to `OPENAI_API_KEY`.
+- **Live weekly:** [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) runs Sundays 03:00 UTC when `CURSOR_API_KEY` is set. It installs Cursor CLI and runs `--style cli --cli cursor-agent`. Optional repo variable `KIT_EVAL_MODEL` (default `cursor-grok-4.6-medium`). Missing `CURSOR_API_KEY` skips the job.
 - **Threshold gating:** `--threshold-routing 95` blocks merges when routing/schema extraction fails more than 5% of routing-tagged cases.
 - **Artifacts:** Reports upload with `if: always()` (`out/reports/eval-report.md`, `edd-report.md` / `.json`).
 - **Job summaries:** CI workflows publish an overview table plus the full Markdown report to `$GITHUB_STEP_SUMMARY` (via `wk eval report --github-summary`, or automatically when `GITHUB_ACTIONS=true`). Open the workflow run → Summary to read pass rate, routing/schema, and failure traces without downloading artifacts. Unit tests use `pnpm test:ci`, which also writes `out/reports/unit-test-report.md` into that Summary.

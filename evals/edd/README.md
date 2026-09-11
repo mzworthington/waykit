@@ -35,7 +35,7 @@ One style per run for **both** agent and judge.
 | Style | When | What it proves |
 |--------|------|----------------|
 | `local` (CI default) | `wk eval ci`, PR CI (`wk check`), `--model scripted` | Harness, schema, keyword routing. **Not** a product LLM test. No API key. |
-| `http` | `--style http --model <id>` with key or `--base-url`; nightly [`.github/workflows/edd-live.yml`](../../.github/workflows/edd-live.yml) | Same model for routing and quality metrics. Includes `requires-live` cases. |
+| `http` | `--style http --model <id>` with key or `--base-url`; weekly [`.github/workflows/edd-live.yml`](../../.github/workflows/edd-live.yml) | Same model for routing and quality metrics. Includes `requires-live` cases. |
 | `cli` | `--style cli --cli cursor-agent\|claude\|agy --model <id>` (`--cli` is required) | Same CLI binary for agent and judge. |
 
 Cursor is not the only host. MCP and model overlays are written for Cursor, Claude Code, Copilot, and Antigravity ([docs/hosts.md](../../docs/hosts.md)). None of them is the eval driver: `wk eval` never calls Cursor Chat or Copilot Chat. Env resolution, CI jobs, and examples: [docs/edd.md](../../docs/edd.md). **EDD is alpha.**
@@ -190,4 +190,4 @@ Includes pass rate, tokens/latency, routing + schema adherence, and failure trac
 
 CI workflows (`.github/workflows/ci.yml` Verify, `edd-live.yml`) write a short “what this gate means” preamble plus the EDD overview into the run **Summary** tab.
 
-Live models (optional): `wk _EVAL_API_KEY` first, then `OPENAI_API_KEY`, then `ANTHROPIC_API_KEY`. Optional `wk _EVAL_BASE_URL` / `OPENAI_BASE_URL` (OpenAI-compatible `/chat/completions`; default `https://api.openai.com/v1`), `wk _EVAL_MODEL`. USD on live/CLI reports defaults to `$0.003` per 1k tokens (`wk _EVAL_TOKEN_USD_PER_1K` to override, `0` to disable). Nightly CI only reads `wk _EVAL_API_KEY`.
+Live models (optional): `KIT_EVAL_API_KEY` first, then `OPENAI_API_KEY`, then `ANTHROPIC_API_KEY`. Optional `KIT_EVAL_BASE_URL` / `OPENAI_BASE_URL` (OpenAI-compatible `/chat/completions`; default `https://api.openai.com/v1`), `KIT_EVAL_MODEL`. USD on live/CLI reports defaults to `$0.003` per 1k tokens (`KIT_EVAL_TOKEN_USD_PER_1K` to override, `0` to disable). Weekly CI uses Cursor Agent CLI: secret `CURSOR_API_KEY`, `--style cli --cli cursor-agent`.

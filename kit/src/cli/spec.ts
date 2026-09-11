@@ -142,6 +142,14 @@ export const KIT_COMMAND_TREE: Readonly<Record<string, KitCommandNode>> = {
   },
   site: { subs: { assemble: { flags: [{ name: '--out' }] } } },
   'commit-msg': { flags: [{ name: '--message' }] },
+  'tdd-guard': {
+    subs: {
+      hook: {},
+      install: {},
+      enable: {},
+      disable: {}
+    }
+  },
   completion: {
     subs: {
       zsh: {},

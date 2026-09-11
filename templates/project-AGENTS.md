@@ -26,4 +26,4 @@ Start from `~/.agents/AGENTS.md` (thin index). **Do not** bulk-read philosophy, 
 
 For **bugs / failed jobs / live symptoms**, use `agent-debug`. Do not open the full feature lifecycle unless RCA needs a new capability.
 
-For non-trivial **feature** work: inventory tests (functional + XFN), complete an XFN apply/skip matrix, then orchestrator routing (grill if unsettled → spec → TDD short loop → XFN → audit → release).
+For non-trivial **feature** work: inventory tests (functional + XFN), complete an XFN apply/skip matrix, then orchestrator routing (grill if unsettled → spec → TDD short loop → XFN → audit → release). Host TDD hooks: `wk tdd-guard install`.

@@ -47,7 +47,7 @@ Do not commit or push unless the user explicitly asks.
 | PRD / product bet | [agent-prd](./skills/agent-prd/SKILL.md) |
 | Spec | [agent-spec](./skills/agent-spec/SKILL.md) |
 | Linear backlog / user stories | [agent-user-stories](./skills/agent-user-stories/SKILL.md) |
-| TDD short loop | [agent-tdd](./skills/agent-tdd/SKILL.md) |
+| TDD short loop | [agent-tdd](./skills/agent-tdd/SKILL.md) ([SOPs/tdd-guard.md](./SOPs/tdd-guard.md)) |
 | XFN | [agent-xfn](./skills/agent-xfn/SKILL.md) |
 | Adapter deep-dive | [agent-adapter](./skills/agent-adapter/SKILL.md) (only if gear 2 is too large) |
 | UI / copy | [agent-ui](./skills/agent-ui/SKILL.md), [agent-copy](./skills/agent-copy/SKILL.md) (human-centric / de-AI voice) |

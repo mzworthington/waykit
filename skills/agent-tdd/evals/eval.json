@@ -1,7 +1,7 @@
 {
   "suite": "agent-tdd-co-located",
   "description": "Co-located evaluation benchmark for agent-tdd test-driven design skill",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "test_cases": [
     {
       "id": "EVAL-TDD-COLOCATED-001",
@@ -73,6 +73,29 @@
           "Micro-loop",
           "Until complete repeats",
           "Do not batch production"
+        ],
+        "forbidden_patterns": [
+          "ASCII art"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-TDD-COLOCATED-004",
+      "name": "Host TDD Guard blocks skipped red",
+      "description": "agent-tdd names wk tdd-guard host hooks and does not treat them as optional when installing TDD enforcement.",
+      "target_skill": "agent-tdd",
+      "prompt": "Wire TDD Guard style hooks so the agent cannot implement before a failing test.",
+      "context": {
+        "active_phase": "tdd"
+      },
+      "assertions": {
+        "required_triggers": [
+          "tdd-guard",
+          "tdd hook"
+        ],
+        "required_patterns": [
+          "wk tdd-guard",
+          "SOPs/tdd-guard.md"
         ],
         "forbidden_patterns": [
           "ASCII art"
