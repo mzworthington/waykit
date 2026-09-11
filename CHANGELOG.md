@@ -5,6 +5,7 @@
 ### 🚀 Features
 
 - *(skills)* Deepen lang-python for readable tests and pydantic edges
+- Alpine skill
 
 ## 2026-09-09
 
