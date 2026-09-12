@@ -5,6 +5,8 @@
 ### 🧰 Maintenance & Dependencies
 
 - *(deps-dev)* Bump vite from 8.2.1 to 8.2.2 (#74)
+- *(deps-dev)* Bump @vitejs/plugin-react from 6.0.5 to 6.1.1 (#75)
+- *(deps-dev)* Bump @types/node from 26.4.0 to 26.5.0 (#77)
 
 ## 2026-09-11
 
