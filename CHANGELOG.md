@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-12
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps-dev)* Bump vite from 8.2.1 to 8.2.2 (#74)
+
 ## 2026-09-11
 
 ### 🚀 Features
