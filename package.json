@@ -19,7 +19,7 @@
     "site:dev": "pnpm --dir web dev"
   },
   "devDependencies": {
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.5.0",
     "ajv": "^8.20.0",
     "git-cliff": "^2.13.1",
     "husky": "^9.1.7",
