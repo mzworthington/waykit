@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-09-13
+
+### 🐛 Bug Fixes
+
+- *(ci)* Regenerate lockfile and land remaining npm bumps (#90)
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Bump astro from 7.2.10 to 7.3.2 (#89)
+- *(deps-dev)* Bump vitest from 4.1.11 to 5.0.0 (#82)
+- *(deps)* Bump posthog-js from 1.425.1 to 1.429.1 (#86)
+- *(deps)* Bump zod from 4.5.4 to 4.6.1 (#88)
+
 ## 2026-09-12
 
 ### 🧰 Maintenance & Dependencies
