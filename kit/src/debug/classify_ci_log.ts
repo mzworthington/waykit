@@ -20,6 +20,13 @@ const PATTERNS: Array<{
 }> = [
   {
     class: 'config-drift',
+    test: (log) => /ERR_PNPM_BROKEN_LOCKFILE|duplicated mapping key/.test(log),
+    reason:
+      'pnpm-lock.yaml has duplicate mapping keys, usually from merging overlapping Dependabot lockfile PRs.',
+    next: 'Do not retry as a registry flake. Regenerate pnpm-lock.yaml from current package.json and land remaining bumps in one lockfile rewrite.'
+  },
+  {
+    class: 'config-drift',
     test: (log) => /ERR_PNPM_NO_PKG_MANIFEST|No package\.json found in \//.test(log),
     reason:
       'pnpm install ran at the repository root while package.json lives in a nested workspace (often app/).',

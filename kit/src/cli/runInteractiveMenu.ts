@@ -2,6 +2,7 @@ import * as p from '@clack/prompts';
 import path from 'node:path';
 import { MCP_HOSTS, type McpHostId } from '../bootstrap/mcp_hosts.js';
 import { listMcpProfileNames } from './completion.js';
+import { excludeCancel } from './exclude_cancel.js';
 import {
   INTERACTIVE_MAIN_ACTIONS,
   INTERACTIVE_MORE_ACTIONS,
@@ -16,11 +17,13 @@ import type { KitCommand } from './parse.js';
 import { formatCliBanner, renderCliQuickTips } from './cliBanner.js';
 import { CLI_BIN } from './name.js';
 
-function exitOnCancel(value: unknown): asserts value is string | boolean | string[] {
-  if (p.isCancel(value)) {
+function exitOnCancel<T>(value: T): Exclude<T, symbol> {
+  const kept = excludeCancel(value, p.isCancel);
+  if (kept === null) {
     p.cancel('Cancelled.');
     process.exit(0);
   }
+  return kept;
 }
 
 const HOST_OPTIONS: Array<{ value: McpHostId; label: string }> = [
@@ -45,33 +48,37 @@ export async function promptInteractiveInit(input: {
   profiles: readonly string[];
 }): Promise<Extract<KitCommand, { kind: 'init' }>> {
   p.intro('Bootstrap this repo');
-  const targetDir = await p.text({
-    message: 'Target directory',
-    placeholder: '.',
-    defaultValue: '.'
-  });
-  exitOnCancel(targetDir);
+  const targetDir = exitOnCancel(
+    await p.text({
+      message: 'Target directory',
+      placeholder: '.',
+      defaultValue: '.'
+    })
+  );
   const profileOptions = (input.profiles.length > 0 ? input.profiles : ['default']).map((name) => ({
     value: name,
     label: name
   }));
-  const mcpProfile = await p.select({
-    message: 'MCP profile',
-    options: profileOptions
-  });
-  exitOnCancel(mcpProfile);
-  const hosts = await p.multiselect({
-    message: 'Hosts to write',
-    options: HOST_OPTIONS,
-    initialValues: [...MCP_HOSTS],
-    required: true
-  });
-  exitOnCancel(hosts);
-  const installHook = await p.confirm({
-    message: 'Install git hooks? (owned repos only)',
-    initialValue: false
-  });
-  exitOnCancel(installHook);
+  const mcpProfile = exitOnCancel(
+    await p.select({
+      message: 'MCP profile',
+      options: profileOptions
+    })
+  );
+  const hosts = exitOnCancel(
+    await p.multiselect({
+      message: 'Hosts to write',
+      options: HOST_OPTIONS,
+      initialValues: [...MCP_HOSTS],
+      required: true
+    })
+  );
+  const installHook = exitOnCancel(
+    await p.confirm({
+      message: 'Install git hooks? (owned repos only)',
+      initialValue: false
+    })
+  );
   return buildInteractiveInitCommand({
     cwd: input.cwd,
     targetDir: path.resolve(input.cwd, String(targetDir).trim() || '.'),
@@ -88,31 +95,35 @@ export async function promptInteractiveMcp(input: {
 }): Promise<Extract<KitCommand, { kind: 'mcp' }>> {
   p.intro('Compose MCP');
   const names = input.profiles.length > 0 ? [...input.profiles] : ['default'];
-  const mcpProfile = await p.select({
-    message: 'Profile',
-    options: [
-      ...names.map((name) => ({ value: name, label: name })),
-      { value: 'restore', label: 'restore', hint: 'Previous project profile' }
-    ]
-  });
-  exitOnCancel(mcpProfile);
-  const project = await p.confirm({
-    message: 'Write this checkout (project files)?',
-    initialValue: true
-  });
-  exitOnCancel(project);
-  const install = await p.confirm({
-    message: 'Also write user-scope host files?',
-    initialValue: false
-  });
-  exitOnCancel(install);
-  const hosts = await p.multiselect({
-    message: 'Hosts',
-    options: HOST_OPTIONS,
-    initialValues: [...MCP_HOSTS],
-    required: true
-  });
-  exitOnCancel(hosts);
+  const mcpProfile = exitOnCancel(
+    await p.select({
+      message: 'Profile',
+      options: [
+        ...names.map((name) => ({ value: name, label: name })),
+        { value: 'restore', label: 'restore', hint: 'Previous project profile' }
+      ]
+    })
+  );
+  const project = exitOnCancel(
+    await p.confirm({
+      message: 'Write this checkout (project files)?',
+      initialValue: true
+    })
+  );
+  const install = exitOnCancel(
+    await p.confirm({
+      message: 'Also write user-scope host files?',
+      initialValue: false
+    })
+  );
+  const hosts = exitOnCancel(
+    await p.multiselect({
+      message: 'Hosts',
+      options: HOST_OPTIONS,
+      initialValues: [...MCP_HOSTS],
+      required: true
+    })
+  );
   return buildInteractiveMcpCommand({
     profile: String(mcpProfile),
     install,
@@ -122,35 +133,29 @@ export async function promptInteractiveMcp(input: {
 }
 
 async function promptMainAction(): Promise<InteractiveMainAction> {
-  const action = await p.select({
-    message: 'What do you want to do?',
-    options: INTERACTIVE_MAIN_ACTIONS.map((item) => ({
-      value: item.value,
-      label: item.label,
-      hint: item.hint
-    }))
-  });
-  if (p.isCancel(action)) {
-    p.cancel('Cancelled.');
-    process.exit(0);
-  }
-  return action;
+  return exitOnCancel(
+    await p.select({
+      message: 'What do you want to do?',
+      options: INTERACTIVE_MAIN_ACTIONS.map((item) => ({
+        value: item.value,
+        label: item.label,
+        hint: item.hint
+      }))
+    })
+  );
 }
 
 async function promptMoreAction(): Promise<InteractiveMoreAction> {
-  const action = await p.select({
-    message: 'More commands',
-    options: INTERACTIVE_MORE_ACTIONS.map((item) => ({
-      value: item.value,
-      label: item.label,
-      hint: item.hint
-    }))
-  });
-  if (p.isCancel(action)) {
-    p.cancel('Cancelled.');
-    process.exit(0);
-  }
-  return action;
+  return exitOnCancel(
+    await p.select({
+      message: 'More commands',
+      options: INTERACTIVE_MORE_ACTIONS.map((item) => ({
+        value: item.value,
+        label: item.label,
+        hint: item.hint
+      }))
+    })
+  );
 }
 
 export async function promptInteractiveMenu(input: {
