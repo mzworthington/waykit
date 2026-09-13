@@ -76,7 +76,7 @@ Normalize vocabulary once (“packages” vs “plugins”). If live data contra
 - Opening `agent-orchestrator` ceremony for a forensic bug
 - Declaring done from unit tests while live/UI still broken
 - Treating a green sibling workflow (CodeQL, Lighthouse) as the CI prove gate
-- Treating every red `pnpm/setup` as an npm 504 without reading the failing step (`ERR_PNPM_NO_PKG_MANIFEST` is config-drift)
+- Treating every red `pnpm/setup` as an npm 504 without reading the failing step (`ERR_PNPM_NO_PKG_MANIFEST` and `ERR_PNPM_BROKEN_LOCKFILE` are config-drift)
 - Combining resilience patch, UX redesign, and CI policy in one PR
 - Shipping workflow/release policy the user did not ask for
 - ASCII/box-drawing **diagrams** for RCA (use Mermaid; CLI TTY chrome may use ASCII)

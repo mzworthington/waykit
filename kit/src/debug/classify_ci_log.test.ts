@@ -3,6 +3,19 @@ import { describe, it } from 'node:test';
 import { classifyCiLog } from './classify_ci_log.js';
 
 describe('classifyCiLog', () => {
+  it('treats ERR_PNPM_BROKEN_LOCKFILE duplicate keys as config-drift, not a registry flake', () => {
+    const log = `
+Run pnpm install --frozen-lockfile
+[ERR_PNPM_BROKEN_LOCKFILE] The lockfile at "/home/runner/work/waykit/waykit/pnpm-lock.yaml" is broken: duplicated mapping key (3175:3)
+##[error]Process completed with exit code 1
+`;
+    const result = classifyCiLog(log);
+    assert.equal(result.class, 'config-drift');
+    assert.match(result.reason, /duplicate mapping keys|Dependabot/i);
+    assert.match(result.next, /Regenerate|lockfile/i);
+    assert.doesNotMatch(result.next, /Retry the pnpm binary/i);
+  });
+
   it('treats ERR_PNPM_NO_PKG_MANIFEST as config-drift even when a retry wrapper is present', () => {
     const log = `
 Running pnpm install --no-runtime...
