@@ -30,7 +30,7 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
-    "@clack/prompts": "^1.7.0",
+    "@clack/prompts": "^1.8.0",
     "picocolors": "^1.1.1",
     "yaml": "^2.9.0",
     "zod": "^4.5.4"
