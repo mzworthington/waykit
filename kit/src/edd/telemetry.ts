@@ -295,16 +295,30 @@ export function renderGithubSummaryOverview(reports: SuiteReport[]): string {
   const lines: string[] = [
     '## EDD overview',
     '',
-    '| Suite | Pass rate | Routing | Schema | Tokens | Avg latency |',
-    '|-------|-----------|---------|--------|--------|-------------|'
+    '| Suite | Pass rate | Routing | Schema | Tokens | Avg latency | Failed cases |',
+    '|-------|-----------|---------|--------|--------|-------------|--------------|'
   ];
+  const failedCases: Array<{ suite: string; id: string; failures: string[] }> = [];
   for (const report of reports) {
     const passRate = report.total ? (report.passed / report.total) * 100 : 100;
+    const failedIds = report.results.filter((r) => !r.passed).map((r) => r.id);
+    for (const r of report.results.filter((row) => !row.passed)) {
+      failedCases.push({ suite: report.suite, id: r.id, failures: r.failures });
+    }
     lines.push(
-      `| ${report.suite} | ${passRate.toFixed(1)}% (${report.passed}/${report.total}) | ${report.routingAccuracy.toFixed(1)}% | ${report.schemaAdherence.toFixed(1)}% | ${report.totalTokens.toLocaleString()} | ${Math.round(report.avgLatencyMs)}ms |`
+      `| ${report.suite} | ${passRate.toFixed(1)}% (${report.passed}/${report.total}) | ${report.routingAccuracy.toFixed(1)}% | ${report.schemaAdherence.toFixed(1)}% | ${report.totalTokens.toLocaleString()} | ${Math.round(report.avgLatencyMs)}ms | ${failedIds.length ? failedIds.map((id) => `\`${id}\``).join(', ') : '—'} |`
     );
   }
   lines.push('');
+  if (failedCases.length) {
+    lines.push('### Failed cases');
+    lines.push('');
+    for (const f of failedCases) {
+      const reason = f.failures.length ? `: ${redactSecrets(f.failures.join('; '))}` : '';
+      lines.push(`- \`${f.suite}\` / \`${f.id}\`${reason}`);
+    }
+    lines.push('');
+  }
   return lines.join('\n');
 }
 

@@ -36,6 +36,20 @@ describe('eval judge prompts', () => {
     assert.doesNotMatch(completion, /Calling a related tool without achieving the goal is FAIL/);
   });
 
+  it('tells the live judge SOP stem and search-query aliases', () => {
+    assert.match(JUDGE_GRADING_RULES, /cloudflare-ops/);
+    assert.match(JUDGE_GRADING_RULES, /cloudflare-analytics-ops/);
+    assert.match(JUDGE_GRADING_RULES, /search query/);
+    const completion = buildTaskCompletionPrompt({
+      prompt: 'Open the kit SOP for Cloudflare analytics ops.',
+      goal: 'Use tool get_sop with {"name":"cloudflare-analytics-ops"}',
+      toolCalls: [{ name: 'get_sop', arguments: { name: 'cloudflare-ops' } }],
+      toolOutput: { id: 'conventional-commits' },
+      agentResponse: 'Opening the SOP.'
+    });
+    assert.match(completion, /cloudflare-ops/);
+  });
+
   it('requires goal tokens even when no_tool is set', () => {
     const miss = localTaskCompletion({
       prompt: 'Review the PR',

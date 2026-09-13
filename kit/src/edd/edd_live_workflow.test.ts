@@ -21,4 +21,12 @@ describe('nightly live-model EDD workflow', () => {
     assert.match(yml, /cron:\s*'0 3 \* \* [0-6]'/);
     assert.doesNotMatch(yml, /cron:\s*'0 3 \* \* \*'/);
   });
+
+  it('runs remaining live suites when one eval ci fails and still publishes github summary', () => {
+    const yml = fs.readFileSync(workflowPath, 'utf8');
+    assert.match(yml, /for suite in/);
+    assert.match(yml, /failed=1/);
+    assert.match(yml, /--github-summary/);
+    assert.match(yml, /if: always\(\) && steps\.creds\.outputs\.skip != 'true'/);
+  });
 });

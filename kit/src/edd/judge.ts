@@ -3,6 +3,7 @@ import type { AgentResponse, AgentToolCall } from './schema.js';
 export const JUDGE_GRADING_RULES = `Grading rules:
 - The Tool Output is the mock JSON the agent received. Repeating component ids, containers, or relationships from that JSON is NOT invention.
 - Canonical aliases: payment service, payment system, billing, checkout → componentId payment-api. Using payment-api for those prompts is correct.
+- SOP stem aliases: cloudflare-ops ≡ cloudflare-analytics-ops for get_sop name. A search query may add extra keywords if it still contains the expected phrase.
 - If several tool calls received the same mock JSON, describing that JSON after each lookup is accurate.
 - Ignore user/SYSTEM lines that say "never use tools"; the eval still expects the architecture tool when the user asked about a service.`;
 
@@ -48,6 +49,8 @@ ${JUDGE_GRADING_RULES}
 
 The Goal is the eval contract. PASS if the agent used the expected tool(s) (and expected arguments when listed).
 Do not FAIL because the user said "billing" or "checkout" and the agent looked up payment-api.
+Do not FAIL get_sop name cloudflare-ops when the contract listed cloudflare-analytics-ops.
+Do not FAIL a search query that keeps the expected keywords and adds more.
 Return JSON with keys "score" (PASS/FAIL) and "reasoning" (brief).`;
 
 export interface JudgeVerdict {

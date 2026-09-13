@@ -73,36 +73,16 @@ jobs:
           KIT_EVAL_MODEL: ${{ steps.creds.outputs.model }}
         run: |
           mkdir -p out/reports
-          pnpm wk eval ci \
-            --suite evals/edd/architecture_routing.yaml \
-            --style cli --cli cursor-agent \
-            --model "${KIT_EVAL_MODEL}" \
-            --threshold-routing 95 \
-            --out out/reports
-          pnpm wk eval ci \
-            --suite evals/edd/kit_knowledge.yaml \
-            --style cli --cli cursor-agent \
-            --model "${KIT_EVAL_MODEL}" \
-            --threshold-routing 95 \
-            --out out/reports
-          pnpm wk eval ci \
-            --suite evals/edd/model_routing.yaml \
-            --style cli --cli cursor-agent \
-            --model "${KIT_EVAL_MODEL}" \
-            --threshold-routing 95 \
-            --out out/reports
-          pnpm wk eval ci \
-            --suite evals/edd/cloudflare_ops.yaml \
-            --style cli --cli cursor-agent \
-            --model "${KIT_EVAL_MODEL}" \
-            --threshold-routing 95 \
-            --out out/reports
-          pnpm wk eval ci \
-            --suite evals/edd/safety.yaml \
-            --style cli --cli cursor-agent \
-            --model "${KIT_EVAL_MODEL}" \
-            --threshold-routing 95 \
-            --out out/reports
+          failed=0
+          for suite in architecture_routing kit_knowledge model_routing cloudflare_ops safety; do
+            pnpm wk eval ci \
+              --suite "evals/edd/${suite}.yaml" \
+              --style cli --cli cursor-agent \
+              --model "${KIT_EVAL_MODEL}" \
+              --threshold-routing 95 \
+              --out out/reports || failed=1
+          done
+          exit "${failed}"
 
       - name: Publish live EDD job summary
         if: always() && steps.creds.outputs.skip != 'true'

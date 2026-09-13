@@ -232,6 +232,56 @@ describe('EDD EvalRunner', () => {
     assert.match(body, /Agent Eval Report: demo/);
   });
 
+  it('lists failed case ids in the GitHub Actions overview', () => {
+    const overview = renderGithubSummaryOverview([
+      {
+        suite: 'Routing: Kit Knowledge MCP',
+        suitePath: '/tmp/kit.yaml',
+        model: 'cursor-grok-4.6-medium',
+        startedAt: '2026-09-13T08:15:00.000Z',
+        finishedAt: '2026-09-13T08:21:00.000Z',
+        total: 22,
+        passed: 19,
+        failed: 3,
+        routingAccuracy: 100,
+        schemaAdherence: 100,
+        hallucinationRate: 0,
+        totalTokens: 213459,
+        avgLatencyMs: 8633.3,
+        results: [
+          {
+            id: 'kit-sop-cf-01',
+            prompt: 'Open the kit SOP for Cloudflare analytics ops.',
+            passed: false,
+            latencyMs: 23736,
+            tokens: 1,
+            failures: ['argument: expected name="cloudflare-analytics-ops", got "cloudflare-ops"']
+          },
+          {
+            id: 'kit-search-01',
+            prompt: 'Search the kit for hexagonal architecture boundaries.',
+            passed: false,
+            latencyMs: 17271,
+            tokens: 1,
+            failures: ['argument: expected query="hexagonal architecture"']
+          },
+          {
+            id: 'kit-related-adapts-01',
+            prompt: 'Which skill does subagent:agent-tdd adapt in the ontology?',
+            passed: false,
+            latencyMs: 27650,
+            tokens: 1,
+            failures: ['argument: expected relation="adapts", got undefined']
+          }
+        ]
+      }
+    ]);
+    assert.match(overview, /Failed cases/);
+    assert.match(overview, /kit-sop-cf-01/);
+    assert.match(overview, /kit-search-01/);
+    assert.match(overview, /kit-related-adapts-01/);
+  });
+
   it('renders failure traces with diagnosis and suggested fix', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'edd-fail-'));
     const written = generateReport(

@@ -184,9 +184,9 @@ Fixtures: [examples/otel-agent-loop.json](./examples/otel-agent-loop.json), [exa
 | `out/reports/eval-report.md` | Stable alias for PR review |
 | `out/reports/edd-report.md` | Same Markdown body |
 | `out/reports/edd-report.json` | Machine-readable results |
-| GitHub Actions job summary | Overview table + collapsible full report (`wk eval report --github-summary`) |
+| GitHub Actions job summary | Overview table (including failed case ids) + collapsible full report (`wk eval report --github-summary`) |
 
-Includes pass rate, tokens/latency, routing + schema adherence, and failure traces. Example: [examples/eval-report.md](./examples/eval-report.md).
+Includes pass rate, tokens/latency, routing + schema adherence, failed case ids, and failure traces. Example: [examples/eval-report.md](./examples/eval-report.md).
 
 CI workflows (`.github/workflows/ci.yml` Verify, `edd-live.yml`) write a short “what this gate means” preamble plus the EDD overview into the run **Summary** tab.
 

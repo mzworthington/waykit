@@ -34,7 +34,7 @@ Default license for **kit** class is Unlicense. Other classes get an MIT stub. E
 
 ## What it looks for
 
-Shared: `README.md`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md`, PR template, issue templates, Dependabot.
+Shared: `README.md`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md`, PR template, issue templates, Dependabot, CodeQL workflow.
 
 Kit class also requires `.github/CODEOWNERS`.
 

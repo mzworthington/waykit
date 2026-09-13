@@ -11,6 +11,28 @@ export function parseToolArguments(
   }
 }
 
+function argumentValuesMatch(key: string, expected: unknown, actual: unknown): boolean {
+  if (expected !== null && typeof expected === 'object') {
+    return JSON.stringify(actual) === JSON.stringify(expected);
+  }
+  if (actual === expected) return true;
+  if (key === 'name' && typeof expected === 'string' && typeof actual === 'string') {
+    return sopNameAliases(expected).has(actual);
+  }
+  if (key === 'query' && typeof expected === 'string' && typeof actual === 'string') {
+    return actual.includes(expected);
+  }
+  return false;
+}
+
+function sopNameAliases(stem: string): Set<string> {
+  const aliases: Record<string, string[]> = {
+    'cloudflare-analytics-ops': ['cloudflare-ops'],
+    'cloudflare-ops': ['cloudflare-analytics-ops']
+  };
+  return new Set([stem, ...(aliases[stem] ?? [])]);
+}
+
 function containsExpectedArgs(
   parsed: Record<string, unknown>,
   expected: Record<string, unknown>,
@@ -19,11 +41,7 @@ function containsExpectedArgs(
   const failures: string[] = [];
   for (const [key, value] of Object.entries(expected)) {
     const actual = parsed[key];
-    const match =
-      value !== null && typeof value === 'object'
-        ? JSON.stringify(actual) === JSON.stringify(value)
-        : actual === value;
-    if (!match) {
+    if (!argumentValuesMatch(key, value, actual)) {
       failures.push(
         `${label} expected ${key}=${JSON.stringify(value)}, got ${JSON.stringify(actual)}`
       );

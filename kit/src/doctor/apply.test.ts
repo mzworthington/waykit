@@ -26,6 +26,8 @@ function communityKit(root: string): void {
   fs.writeFileSync(path.join(community, '.github', 'ISSUE_TEMPLATE', 'bug_report.yml'), 'bug\n', 'utf8');
   fs.writeFileSync(path.join(community, '.github', 'ISSUE_TEMPLATE', 'feature_request.yml'), 'feat\n', 'utf8');
   fs.writeFileSync(path.join(community, '.github', 'dependabot.yml'), 'dependabot\n', 'utf8');
+  fs.mkdirSync(path.join(community, '.github', 'workflows'), { recursive: true });
+  fs.writeFileSync(path.join(community, '.github', 'workflows', 'codeql.yml'), 'codeql\n', 'utf8');
 }
 
 describe('applyDoctorPlan', () => {

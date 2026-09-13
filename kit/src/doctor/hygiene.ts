@@ -32,7 +32,8 @@ const SHARED_COMMUNITY_PATHS: readonly string[] = [
   '.github/ISSUE_TEMPLATE/config.yml',
   '.github/ISSUE_TEMPLATE/bug_report.yml',
   '.github/ISSUE_TEMPLATE/feature_request.yml',
-  '.github/dependabot.yml'
+  '.github/dependabot.yml',
+  '.github/workflows/codeql.yml'
 ];
 
 export function communityRelPaths(repoClass: RepoClass): string[] {

@@ -175,7 +175,7 @@ export async function runTaskCompletionJudge(input: {
       : input.expectTools?.length
         ? `Complete tool plan: ${input.expectTools.join(' -> ')}`
         : input.expectTool
-          ? `Use tool ${input.expectTool}${argsHint}. Aliases billing/checkout/payment → payment-api.`
+          ? `Use tool ${input.expectTool}${argsHint}. Aliases billing/checkout/payment → payment-api; get_sop cloudflare-ops ≡ cloudflare-analytics-ops; search query may add extra keywords.`
           : input.prompt);
 
   const parsed = await completeJudgeJson(

@@ -30,7 +30,8 @@ describe('communityRelPaths', () => {
       '.github/ISSUE_TEMPLATE/config.yml',
       '.github/ISSUE_TEMPLATE/bug_report.yml',
       '.github/ISSUE_TEMPLATE/feature_request.yml',
-      '.github/dependabot.yml'
+      '.github/dependabot.yml',
+      '.github/workflows/codeql.yml'
     ]) {
       assert.ok(communityRelPaths('product').includes(rel), rel);
     }

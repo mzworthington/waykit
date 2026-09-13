@@ -4,11 +4,11 @@ When the user asks about kit SOPs, philosophy, skills, or docs, use the register
 
 - `list_kit_index` - names only, before a broad search.
 - `search_kit` - keyword search; pass a `query` string.
-- `get_sop` - one SOP by stem (e.g. `conventional-commits`).
+- `get_sop` - one SOP by stem (e.g. `conventional-commits`; Cloudflare analytics ops → `cloudflare-analytics-ops`, also accepted as `cloudflare-ops`).
 - `get_philosophy_section` - one section by number or title (diagrams / Mermaid → `"8"`).
 - `get_handover` - one phase handover by `project` (and optional `phase`, e.g. `spec`).
 - `get_entity` - ontology entity by id (`skill:agent-tdd`, `sop:…`, `philosophy:8`, `doc:edd`).
-- `get_related` - ontology edges from an id; pass `relation` when asking for uses/loads/implements/references.
+- `get_related` - ontology edges from an id; pass `relation` when asking for uses/loads/implements/references/adapts.
 
 Failed GitHub Actions, a red CI job, `ERR_PNPM_NO_PKG_MANIFEST`, or “debug this failed job” → `get_sop` `hypothesis-driven-debug`. Classify the log before prescribing a 504 retry. Nested `app/` workspaces need `pnpm/setup` `working-directory`, not a sleep wrapper. A green CodeQL (or other sibling) run is not the verify graph.
 
