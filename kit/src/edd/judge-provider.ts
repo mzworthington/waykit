@@ -58,7 +58,7 @@ export const spawnCapturedCli: ExecFileFn = async (file, args, options) => {
         return;
       }
       const err = new Error(`CLI exited ${code ?? 'null'}`) as NodeJS.ErrnoException;
-      if (code === null) err.code = 'ETIMEDOUT';
+      if (code === null || code === 143) err.code = 'ETIMEDOUT';
       reject(err);
     });
   });

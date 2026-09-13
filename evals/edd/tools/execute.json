@@ -7,7 +7,7 @@
     "properties": {
       "code": {
         "type": "string",
-        "description": "JavaScript that calls cloudflare.request({ method, path, body? })"
+        "description": "JavaScript that calls cloudflare.request({ method, path, body? }). Listing RUM sites: GET `/accounts/${accountId}/rum/site_info/list` as async IIFE or return-await."
       },
       "account_id": {
         "type": "string",

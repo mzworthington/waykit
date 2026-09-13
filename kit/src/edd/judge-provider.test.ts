@@ -233,4 +233,34 @@ describe('runLlmJudge backends', () => {
     });
     assert.equal(verdict.score, 'PASS');
   });
+
+  it('tells the live task-completion judge execute wrappers are allowed aliases', async () => {
+    let judgePrompt = '';
+    const verdict = await runTaskCompletionJudge({
+      prompt: 'List our Cloudflare Web Analytics / RUM sites.',
+      expectTool: 'execute',
+      expectArguments: {
+        code: 'async () => cloudflare.request({ method: "GET", path: `/accounts/${accountId}/rum/site_info/list` })'
+      },
+      toolCalls: [
+        {
+          name: 'execute',
+          arguments: {
+            code: 'return await cloudflare.request({ method: "GET", path: `/accounts/${accountId}/rum/site_info/list` });'
+          }
+        }
+      ],
+      toolOutput: { result: [{ host: 'waykit.dev' }] },
+      agentResponse: 'waykit.dev',
+      model: 'cursor-grok-4.6-medium',
+      backend: 'cli',
+      complete: async ({ prompt }) => {
+        judgePrompt = prompt;
+        return { score: 'PASS', reasoning: 'ok' };
+      }
+    });
+    assert.equal(verdict.score, 'PASS');
+    assert.match(judgePrompt, /return-await|return await/);
+    assert.match(judgePrompt, /spec\.paths/);
+  });
 });

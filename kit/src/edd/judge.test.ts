@@ -50,6 +50,27 @@ describe('eval judge prompts', () => {
     assert.match(completion, /cloudflare-ops/);
   });
 
+  it('tells the live judge execute wrappers and spec.paths search filters are aliases', () => {
+    assert.match(JUDGE_GRADING_RULES, /cloudflare\.request/);
+    assert.match(JUDGE_GRADING_RULES, /spec\.paths/);
+    const completion = buildTaskCompletionPrompt({
+      prompt: 'List our Cloudflare Web Analytics / RUM sites.',
+      goal: 'Use tool execute',
+      toolCalls: [
+        {
+          name: 'execute',
+          arguments: {
+            code: 'return await cloudflare.request({ method: "GET", path: `/accounts/${accountId}/rum/site_info/list` });'
+          }
+        }
+      ],
+      toolOutput: { result: [{ host: 'waykit.dev' }] },
+      agentResponse: 'waykit.dev'
+    });
+    assert.match(completion, /return await/);
+    assert.match(completion, /async \(\) =>/);
+  });
+
   it('requires goal tokens even when no_tool is set', () => {
     const miss = localTaskCompletion({
       prompt: 'Review the PR',

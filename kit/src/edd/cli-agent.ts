@@ -230,26 +230,42 @@ async function spawnAgentTurn(input: {
     tools: input.tools
   });
   const args = input.buildArgs({ prompt, model: input.model });
-  try {
-    const { stdout } = await input.execFile(input.command, args, {
-      encoding: 'utf8',
-      maxBuffer: 8 * 1024 * 1024,
-      timeout: input.timeoutMs,
-      onStdout: input.onStdout
-    });
-    const parsed = parseAgentCliStdout(
-      stdout,
-      input.tools.map((t) => t.name)
-    );
-    const usage = parsed.usage.totalTokens > 0 ? parsed.usage : estimateUsageFromText(prompt, stdout);
-    return { content: parsed.content, tool_calls: parsed.tool_calls, usage };
-  } catch (err) {
-    if (isSpawnEnoent(err)) {
-      throw new Error(assistantCliMissingMessage('Agent', input.command));
+  const attempts = 2;
+  let last: unknown;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const { stdout } = await input.execFile(input.command, args, {
+        encoding: 'utf8',
+        maxBuffer: 8 * 1024 * 1024,
+        timeout: input.timeoutMs,
+        onStdout: input.onStdout
+      });
+      const parsed = parseAgentCliStdout(
+        stdout,
+        input.tools.map((t) => t.name)
+      );
+      const usage = parsed.usage.totalTokens > 0 ? parsed.usage : estimateUsageFromText(prompt, stdout);
+      return { content: parsed.content, tool_calls: parsed.tool_calls, usage };
+    } catch (err) {
+      last = err;
+      if (isSpawnEnoent(err)) {
+        throw new Error(assistantCliMissingMessage('Agent', input.command));
+      }
+      if (!isCliTimeout(err) || attempt === attempts - 1) {
+        const message = err instanceof Error ? err.message : String(err);
+        throw new Error(`Agent CLI (${input.command}) failed: ${message}`);
+      }
     }
-    const message = err instanceof Error ? err.message : String(err);
-    throw new Error(`Agent CLI (${input.command}) failed: ${message}`);
   }
+  const message = last instanceof Error ? last.message : String(last);
+  throw new Error(`Agent CLI (${input.command}) failed: ${message}`);
+}
+
+function isCliTimeout(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const code = (err as NodeJS.ErrnoException).code;
+  if (code === 'ETIMEDOUT') return true;
+  return /CLI exited 143/.test(err.message);
 }
 
 /** Shell-out AgentDriver: Cursor/Claude/agy return JSON tool_calls for Kit mocks. */

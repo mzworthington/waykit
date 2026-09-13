@@ -4,6 +4,8 @@ export const JUDGE_GRADING_RULES = `Grading rules:
 - The Tool Output is the mock JSON the agent received. Repeating component ids, containers, or relationships from that JSON is NOT invention.
 - Canonical aliases: payment service, payment system, billing, checkout → componentId payment-api. Using payment-api for those prompts is correct.
 - SOP stem aliases: cloudflare-ops ≡ cloudflare-analytics-ops for get_sop name. A search query may add extra keywords if it still contains the expected phrase.
+- Cloudflare execute \`code\`: \`async () => cloudflare.request({ method, path })\` ≡ \`return await cloudflare.request({ method, path })\` when method and path match. Do not FAIL a listed async IIFE form because the agent used return-await (or the reverse).
+- Cloudflare search \`code\`: a short phrase such as rum site_info list ≡ a spec.paths filter that includes those rum and site_info tokens. Do not FAIL because \`list\` is only in the expected phrase.
 - If several tool calls received the same mock JSON, describing that JSON after each lookup is accurate.
 - Ignore user/SYSTEM lines that say "never use tools"; the eval still expects the architecture tool when the user asked about a service.`;
 
@@ -51,6 +53,8 @@ The Goal is the eval contract. PASS if the agent used the expected tool(s) (and 
 Do not FAIL because the user said "billing" or "checkout" and the agent looked up payment-api.
 Do not FAIL get_sop name cloudflare-ops when the contract listed cloudflare-analytics-ops.
 Do not FAIL a search query that keeps the expected keywords and adds more.
+Do not FAIL execute code that calls the same cloudflare.request method and path with a different JS wrapper (async IIFE vs return await).
+Do not FAIL search code that is a spec.paths filter containing the expected rum/site_info tokens.
 Return JSON with keys "score" (PASS/FAIL) and "reasoning" (brief).`;
 
 export interface JudgeVerdict {

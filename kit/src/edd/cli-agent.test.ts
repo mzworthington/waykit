@@ -198,6 +198,40 @@ describe('createCliAgentDriver', () => {
     assert.equal(result.usage.totalTokens, 120);
   });
 
+  it('retries once when the agent CLI is killed at the timeout (exit 143)', async () => {
+    let attempts = 0;
+    const execFile: ExecFileFn = async () => {
+      attempts += 1;
+      if (attempts === 1) {
+        const err = new Error('CLI exited 143') as NodeJS.ErrnoException;
+        err.code = 'ETIMEDOUT';
+        throw err;
+      }
+      return {
+        stdout: JSON.stringify({
+          content: 'Fetching architecture.',
+          tool_calls: [{ name: 'read_architecture_yaml', arguments: { componentId: 'auth-service' } }]
+        }),
+        stderr: ''
+      };
+    };
+    const driver = createCliAgentDriver({ cli: 'cursor-agent', execFile, exists: () => false });
+    const result = await driver({
+      model: 'cursor-grok-4.6-medium',
+      systemPrompt: 's',
+      messages: [
+        {
+          role: 'user',
+          content: 'Look up architecture for the auth service, then the payment API - one lookup each.'
+        }
+      ],
+      tools: [{ name: 'read_architecture_yaml' }],
+      mocks: new Map()
+    });
+    assert.equal(attempts, 2);
+    assert.equal(result.tool_calls[0]?.name, 'read_architecture_yaml');
+  });
+
   it('refuses local model ids for the CLI style', () => {
     assert.throws(
       () => resolveCliAgentDriver({ style: 'cli', model: 'scripted', cli: 'claude' }),

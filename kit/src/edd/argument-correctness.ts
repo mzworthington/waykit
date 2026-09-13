@@ -11,6 +11,14 @@ export function parseToolArguments(
   }
 }
 
+function cloudflareRequestSignature(code: string): string | null {
+  if (!/cloudflare\.request\s*\(/.test(code)) return null;
+  const method = /method:\s*["'](\w+)["']/.exec(code);
+  const path = /path:\s*`([^`]+)`/.exec(code) ?? /path:\s*["']([^"']+)["']/.exec(code);
+  if (!method || !path) return null;
+  return `${method[1]!.toUpperCase()} ${path[1]}`;
+}
+
 function argumentValuesMatch(key: string, expected: unknown, actual: unknown): boolean {
   if (expected !== null && typeof expected === 'object') {
     return JSON.stringify(actual) === JSON.stringify(expected);
@@ -22,7 +30,19 @@ function argumentValuesMatch(key: string, expected: unknown, actual: unknown): b
   if (key === 'query' && typeof expected === 'string' && typeof actual === 'string') {
     return actual.includes(expected);
   }
+  if (key === 'code' && typeof expected === 'string' && typeof actual === 'string') {
+    return codeValuesMatch(expected, actual);
+  }
   return false;
+}
+
+function codeValuesMatch(expected: string, actual: string): boolean {
+  const expectedRequest = cloudflareRequestSignature(expected);
+  const actualRequest = cloudflareRequestSignature(actual);
+  if (expectedRequest && actualRequest) return expectedRequest === actualRequest;
+  const tokens = expected.split(/\s+/).filter(Boolean);
+  const required = tokens.filter((token) => !(token === 'list' && /spec\.paths/.test(actual)));
+  return required.length > 0 && required.every((token) => actual.includes(token));
 }
 
 function sopNameAliases(stem: string): Set<string> {

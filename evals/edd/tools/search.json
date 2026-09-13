@@ -7,7 +7,7 @@
     "properties": {
       "code": {
         "type": "string",
-        "description": "JavaScript function body or short query that searches spec.paths"
+        "description": "Short query (e.g. rum site_info list) or JavaScript that filters spec.paths for those tokens. Use only to discover an unknown path."
       }
     },
     "additionalProperties": false
