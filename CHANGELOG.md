@@ -6,6 +6,7 @@
 
 - *(ci)* Regenerate lockfile and land remaining npm bumps (#90)
 - *(edd)* Keep weekly live suites running and report failed cases on Actions
+- *(edd)* Accept live Cloudflare Code Mode JS and retry CLI timeouts
 
 ### 🧰 Maintenance & Dependencies
 
