@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-14
+
+### 🚀 Features
+
+- Conclude with goal and implementation
+
 ## 2026-09-13
 
 ### 🐛 Bug Fixes
