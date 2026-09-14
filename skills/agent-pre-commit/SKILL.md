@@ -123,9 +123,13 @@ When completing a lifecycle phase, include in the handover:
 - Hook: `.husky/pre-commit` (or none)
 - Commands: `pnpm lint`, `pnpm typecheck`, …
 - Status: PASS
+
+## Goal
+- Asked: <user's question, one sentence>
+- Met by: <what we did that satisfies it, one sentence>
 ```
 
-Do not mark **COMPLETE** while hook checks are failing.
+Do not mark **COMPLETE** while hook checks are failing. Mirror the Goal table after Pre-commit in [templates/handover.md](../../templates/handover.md).
 
 ## 6. Commit messages
 

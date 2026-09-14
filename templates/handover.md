@@ -99,3 +99,10 @@ Pointers to files, decisions, constraints, and (for telemetry) load/performance 
 | **Hook** | `.husky/pre-commit` / `.pre-commit-config.yaml` / none |
 | **Commands run** | e.g. `pnpm lint`, `pnpm typecheck` |
 | **Status** | PASS \| FAIL (do not mark COMPLETE if FAIL) |
+
+## Goal (user ask)
+
+| Field | Value |
+|-------|-------|
+| **Asked** | One sentence: the user's question |
+| **Met by** | One sentence: how this phase satisfied it |

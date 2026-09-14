@@ -77,6 +77,31 @@
           "full hook not run"
         ]
       }
+    },
+    {
+      "id": "EVAL-PRE-COLOCATED-004",
+      "name": "Handover ends with Goal after Pre-commit",
+      "description": "After Pre-commit, the handover note must recap the user's question and how the goal was met.",
+      "target_skill": "agent-pre-commit",
+      "prompt": "Hooks are green. Close the phase with the handover note.",
+      "context": {
+        "active_phase": "quality"
+      },
+      "assertions": {
+        "required_triggers": [
+          "pre-commit",
+          "quality gate"
+        ],
+        "required_patterns": [
+          "## Goal",
+          "Asked:",
+          "Met by:"
+        ],
+        "required_output_sections": [
+          "Pre-commit",
+          "Goal"
+        ]
+      }
     }
   ]
 }
