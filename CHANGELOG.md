@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-15
+
+### 🚀 Features
+
+- Sonarqube skills and mcp
+
 ## 2026-09-14
 
 ### 🚀 Features
