@@ -1,7 +1,7 @@
 {
   "suite": "lifecycle-roles",
   "description": "Evaluation benchmarks for agent-* specialist lifecycle roles",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "test_cases": [
     {
       "id": "EVAL-SPEC-001",
@@ -1338,6 +1338,60 @@
         ],
         "forbidden_patterns": [
           "agent-sonarqube",
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-SECURITY-004",
+      "name": "High alert stays on one vendor PR",
+      "description": "Verifies a high or critical CodeQL or Dependabot alert with a clear file and line updates the existing vendor PR or opens one draft PR keyed to the alert number via quality-loops.",
+      "target_skill": "agent-security",
+      "prompt": "A high CodeQL alert has a clear file and line. Fix it on the vendor PR keyed to that alert number.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "codeql",
+          "security"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "vendor PR",
+          "alert number"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-SECURITY-005",
+      "name": "Noisy vendor finding comments without churn",
+      "description": "Verifies a noisy, informational, or product-decision Dependabot or CodeQL finding comments why via quality-loops and does not churn code.",
+      "target_skill": "agent-security",
+      "prompt": "A CodeQL finding is noisy and needs a product decision. Comment why. Do not churn code.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "codeql",
+          "security"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "comment why",
+          "do not churn code"
+        ],
+        "forbidden_patterns": [
           "agent-quality-loops"
         ],
         "required_output_sections": [

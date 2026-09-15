@@ -137,6 +137,32 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-006",
+      "name": "Dependabot and CodeQL stay vendor PRs",
+      "description": "When a Dependabot PR or CodeQL alert arrives, orchestrator keeps them on vendor PRs via quality-loops instead of a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate a Dependabot PR and a CodeQL alert. Keep them as vendor PRs. Do not invent a specialist.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "vendor PRs"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

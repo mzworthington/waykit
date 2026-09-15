@@ -24,6 +24,6 @@ Agent-facing procedures. Do not duplicate them in `/docs`; link here when a guid
 | [PostHog product analytics](/SOPs/posthog-product-analytics) | Cookieless SDK, privacy notice, official MCP |
 | [Product signal intake](/SOPs/product-signal-intake) | Two-session PostHog findings → human gate → Linear |
 | [SonarQube findings](/SOPs/sonarqube-findings) | Triage Sonar issues; skip kit disagreements (Actions stay `@vN`); then fix |
-| [Quality loops through Linear](/SOPs/quality-loops) | CI / RUM / scouts → typed tickets → hygiene → work picker draft PR |
+| [Quality loops through Linear](/SOPs/quality-loops) | CI / RUM / scouts → typed tickets → hygiene → work picker draft PR; Dependabot / CodeQL stay on vendor PRs |
 
 Operator narrative: [What Waykit gives you](/docs/kit).

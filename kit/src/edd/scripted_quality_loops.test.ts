@@ -22,4 +22,24 @@ describe('scriptedDriver quality-loops', () => {
       'quality-loops'
     );
   });
+
+  it('opens quality-loops for a Dependabot vendor PR prompt', async () => {
+    const response = await scriptedDriver({
+      model: 'scripted',
+      systemPrompt: '',
+      messages: [
+        {
+          role: 'user',
+          content: 'A Dependabot PR is open and a CodeQL alert has a file and line. Open the kit SOP for keeping those as vendor PRs.'
+        }
+      ],
+      tools: [{ name: 'get_sop' }],
+      mocks: new Map()
+    });
+    assert.equal(response.tool_calls?.[0]?.name, 'get_sop');
+    assert.equal(
+      (response.tool_calls?.[0]?.arguments as { name?: string } | undefined)?.name,
+      'quality-loops'
+    );
+  });
 });
