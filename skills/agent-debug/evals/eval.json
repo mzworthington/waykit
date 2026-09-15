@@ -165,6 +165,34 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-DBG-COLOCATED-007",
+      "name": "Work picker plays a Bug as a draft PR",
+      "description": "Playing an allowlisted Bug via quality-loops opens a draft PR only and runs the repo pre-commit hook before COMPLETE.",
+      "target_skill": "agent-debug",
+      "prompt": "Play one allowlisted Bug from the board as a draft PR. Do not merge.",
+      "context": {
+        "active_phase": "debug"
+      },
+      "assertions": {
+        "required_triggers": [
+          "bug",
+          "debug"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "draft PR",
+          "pre-commit",
+          "path-filtered test"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

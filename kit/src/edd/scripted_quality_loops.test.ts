@@ -101,5 +101,26 @@ describe('scriptedDriver quality-loops', () => {
       'quality-loops'
     );
   });
+
+  it('opens quality-loops for a work-picker draft PR prompt', async () => {
+    const response = await scriptedDriver({
+      model: 'scripted',
+      systemPrompt: '',
+      messages: [
+        {
+          role: 'user',
+          content:
+            'Play one allowlisted Bug from the board as a draft PR. Open the kit SOP.'
+        }
+      ],
+      tools: [{ name: 'get_sop' }],
+      mocks: new Map()
+    });
+    assert.equal(response.tool_calls?.[0]?.name, 'get_sop');
+    assert.equal(
+      (response.tool_calls?.[0]?.arguments as { name?: string } | undefined)?.name,
+      'quality-loops'
+    );
+  });
 });
 

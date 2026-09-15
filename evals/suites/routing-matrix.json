@@ -1076,6 +1076,27 @@
           "agent-quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-053",
+      "name": "Work picker plays allowlisted tickets as draft PRs",
+      "description": "Verifies the work picker reads the kit allowlist and opens a draft PR only via quality-loops, not a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Run the work picker. Read the kit allowlist. Play one allowlisted ticket as a draft PR.",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "work-picker-allowlist",
+          "draft PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }

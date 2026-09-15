@@ -192,6 +192,33 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-008",
+      "name": "Work picker plays allowlisted tickets as draft PRs",
+      "description": "When the work picker plays allowlisted Linear tickets, orchestrator reads the kit allowlist and opens a draft PR only.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Run the work picker. Read the kit allowlist. Play one allowlisted ticket as a draft PR.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "work-picker-allowlist",
+          "draft PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

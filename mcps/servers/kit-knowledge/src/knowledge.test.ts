@@ -73,6 +73,8 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /does not wake/);
     assert.match(sop!.body, /lists\/work-picker-allowlist\.yaml/);
     assert.match(sop!.body, /Draft PR only/);
+    assert.match(sop!.body, /auto_play/);
+    assert.match(sop!.body, /wait_unless_auto_work/);
     assert.match(sop!.body, /hold/);
     assert.match(sop!.body, /auto-work/);
     assert.match(sop!.body, /Lighthouse drop vs last main/);

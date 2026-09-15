@@ -46,6 +46,8 @@ You **audit** code and confirm security **tests** from Design. Authoring those s
 
 **Dependabot / CodeQL:** stay on vendor PRs ([quality-loops](../../SOPs/quality-loops.md)). Review or keep the vendor PR merge-ready. Do not rewrite the lockfile “to be helpful”. High or critical alert with a clear file and line: update that vendor PR or open one draft PR keyed to the alert number; a duplicate tick updates the same PR. Noisy, informational, or product-decision: comment why and do not churn code. No auto-merge. Do not rewrite Actions pins to SHAs.
 
+Play a claimed Security ticket via [quality-loops](../../SOPs/quality-loops.md): draft PR only. Never merge, force-push, or skip hooks. Before COMPLETE run the repo pre-commit hook.
+
 ## Focus areas
 
 - OWASP Top 10 (injection, broken auth, data exposure, SSRF).
