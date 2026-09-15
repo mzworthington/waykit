@@ -108,6 +108,34 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-SEC-COLOCATED-005",
+      "name": "Scout files a typed Sonar ticket after restore",
+      "description": "Ensures a Sonar fix finding files one typed ticket after restore wk mcp default and does not open a PR or file while the sonar profile is on.",
+      "target_skill": "agent-security",
+      "prompt": "File a Linear ticket from a SonarQube BUG finding after restore default. Do not open a PR.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "sonarqube",
+          "sonar issues"
+        ],
+        "required_patterns": [
+          "sonarqube-findings",
+          "wk mcp default",
+          "Bug for BUG",
+          "Security for vuln or hotspot",
+          "Improvement for maintainability",
+          "Do not create issues while the sonar profile is on",
+          "Do not open a PR"
+        ],
+        "forbidden_patterns": [
+          "agent-sonarqube"
+        ]
+      }
     }
   ]
 }

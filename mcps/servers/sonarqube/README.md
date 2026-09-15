@@ -22,7 +22,7 @@ Create a token in SonarQube Cloud → My Account → Security. The host that lau
 - Quality-gate and issue triage next to a local change
 - Security hotspot review during [agent-security](../../../skills/agent-security/SKILL.md) audits
 
-Procedure: [sonarqube-findings](../../../SOPs/sonarqube-findings.md). Install the `sonar` profile (`wk mcp sonar --install` or `wk mcp sonar --project`). Do not stack it onto `default`. Restore `wk mcp default --install` (or `--project`) when the session ends. GitHub Actions stay on version tags (`@vN`); do not pin by commit SHA.
+Procedure: [sonarqube-findings](../../../SOPs/sonarqube-findings.md). Install the `sonar` profile (`wk mcp sonar --install` or `wk mcp sonar --project`). Do not stack it onto `default`. Restore `wk mcp default --install` (or `--project`) before Linear create and when the session ends. GitHub Actions stay on version tags (`@vN`); do not pin by commit SHA. A scout files one typed ticket for `fix` rows and skips policy rows (no `NOSONAR`).
 
 ## Risks
 

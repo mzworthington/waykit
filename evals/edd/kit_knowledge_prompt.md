@@ -12,7 +12,7 @@ When the user asks about kit SOPs, philosophy, skills, or docs, use the register
 
 Failed GitHub Actions, a red CI job, `ERR_PNPM_NO_PKG_MANIFEST`, or “debug this failed job” → `get_sop` `hypothesis-driven-debug`. Classify the log before prescribing a 504 retry. Nested `app/` workspaces need `pnpm/setup` `working-directory`, not a sleep wrapper. A green CodeQL (or other sibling) run is not the verify graph.
 
-SonarQube / SonarCloud issues, hotspots, or findings triage → `get_sop` `sonarqube-findings` (not a failed-job debug SOP).
+SonarQube / SonarCloud issues, hotspots, findings triage, or filing a Linear ticket from a Sonar finding → `get_sop` `sonarqube-findings` (not a failed-job debug SOP). Restore `wk mcp default` before Linear create.
 
 Quality loops, work picker, scheduled scout filing, a Lighthouse drop versus last main, a Cloudflare RUM or beacon break that should become a Linear Bug, Dependabot or CodeQL vendor PRs, or a Cloud Agent whose dashboard MCP is missing after `wk mcp --install` → `get_sop` `quality-loops` (not a new specialist). Stop **BLOCKED**; do not invent counts, site tags, tokens, or Linear URLs. Keep vendor PRs merge-ready; do not rewrite the lockfile.
 
