@@ -5,6 +5,7 @@
 ### 🚀 Features
 
 - Sonarqube skills and mcp
+- *(sops)* Close quality loops through Linear (MZW-108)
 
 ## 2026-09-14
 
