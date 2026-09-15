@@ -8,7 +8,7 @@ Agent-facing procedures. Do not duplicate them in `/docs`; link here when a guid
 | [EDD production telemetry](/SOPs/edd-production-telemetry) | Turning live misses into cases |
 | [Behavior catalog and XFN](/SOPs/behavior-catalog-and-xfn) | Inventorying tests before a change |
 | [Context budget](/SOPs/context-budget) | Always-on files are too large |
-| [MCP library](/SOPs/mcp-library) | Composing one MCP profile |
+| [MCP library](/SOPs/mcp-library) | One MCP profile; Cloud Agent dashboard catalog |
 | [Hypothesis-driven development](/SOPs/hypothesis-driven-development) | Product bets, experiments, feature flags, kill criteria |
 | [Hypothesis-driven debug](/SOPs/hypothesis-driven-debug) | A failure needs RCA, not more logging |
 | [API contracts](/SOPs/api-contracts) | Published HTTP or event contracts |

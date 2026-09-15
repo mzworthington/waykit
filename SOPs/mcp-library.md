@@ -46,6 +46,18 @@ Use this when adding a server to the kit catalog, composing a host config, or wi
 
 See [SOPs/context-budget.md](./context-budget.md).
 
+### Cloud Agent and Automations
+
+Hosted Cloud Agent and Cursor Automation sessions only see MCP servers connected on the **Cursor dashboard**. `wk mcp --install` only rewrites local host files (Cursor, Claude, Copilot, Antigravity). It does not add tools to that catalog.
+
+Loops that file or play Linear work need these dashboard servers connected there: GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube. If they are missing, stop **BLOCKED**. Do not invent site lists, issue lists, or dashboard counts. A local profile already installed does not wake a Cloud session.
+
+```text
+This is a Cloud Agent or Automation session. List MCP tools first. If GitHub, Linear, PostHog, Cloudflare Observability, or SonarQube are missing from the dashboard catalog, stop BLOCKED. Do not invent site lists, issue lists, dashboard counts, or Linear URLs. A local wk mcp --install does not wake this catalog. Write coverage and stop.
+```
+
+The kit does not install servers on cursor.com.
+
 ## 2. Add a server definition
 
 1. Create `mcps/servers/<id>/server.json` with metadata and a Cursor `mcp` fragment:

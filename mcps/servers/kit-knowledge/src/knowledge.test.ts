@@ -57,6 +57,17 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Do not invent issue URLs/);
   });
 
+  it("returns mcp-library with the Cloud dashboard catalog stop", () => {
+    const sop = getSop(kitRoot, "mcp-library");
+    assert.ok(sop);
+    assert.equal(sop!.id, "mcp-library");
+    assert.match(sop!.body, /Cursor dashboard/);
+    assert.match(sop!.body, /GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube/);
+    assert.match(sop!.body, /only rewrites local/);
+    assert.match(sop!.body, /BLOCKED/);
+    assert.match(sop!.body, /does not wake a Cloud session/);
+  });
+
   it("returns sonarqube-findings with the GitHub Actions version-tag skip", () => {
     const sop = getSop(kitRoot, "sonarqube-findings");
     assert.ok(sop);

@@ -48,6 +48,14 @@ wk agents install
 
 OAuth popups differ (Cursor vs Claude vs VS Code). Stdio servers that need env vars still need those vars in the process that launches the host.
 
+## Cloud Agent and Automations
+
+A Cloud Agent or Cursor Automation does **not** read the local `~/.cursor/mcp.json` that `wk mcp --install` writes. That command only rewrites local host files.
+
+Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on the Cursor dashboard if unattended loops need them. Missing tools → stop **BLOCKED**. Do not invent site lists, issue lists, or dashboard counts. A local profile does not wake a Cloud session. [MCP library](/SOPs/mcp-library).
+
+The kit does not install servers on cursor.com.
+
 ## EDD vs hosts
 
 The eval runner is `wk`, not the IDE chat. `--style cli --cli cursor-agent|claude|agy` can drive a live host binary. That path is part of [EDD (alpha)](./edd.md), not a complete eval platform.

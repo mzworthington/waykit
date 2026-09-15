@@ -24,6 +24,7 @@ evals/edd/
 ├── subagent_routing.yaml|.jsonl
 ├── subagent_routing_skills_only.yaml|.jsonl
 ├── cloudflare_ops.yaml|.jsonl
+├── cloud_catalog.yaml|.jsonl
 ├── safety.yaml|.jsonl
 └── tools/*.json
 ```
@@ -65,6 +66,7 @@ wk eval ci --suite evals/edd/model_routing.yaml --threshold-routing 95 --model s
 wk eval ci --suite evals/edd/subagent_routing.yaml --threshold-routing 95 --model scripted --out out/reports
 wk eval ci --suite evals/edd/subagent_routing_skills_only.yaml --threshold-routing 95 --model scripted --out out/reports
 wk eval ci --suite evals/edd/cloudflare_ops.yaml --threshold-routing 95 --model scripted --out out/reports
+wk eval ci --suite evals/edd/cloud_catalog.yaml --threshold-routing 95 --model scripted --out out/reports
 wk eval ci --suite evals/edd/architecture_routing.yaml --threshold-routing 95 --out out/reports
 wk eval ci --suite evals/edd/safety.yaml --threshold-routing 95 --model scripted --out out/reports
 wk eval watch --suite evals/edd/architecture_routing.yaml --target evals/edd
@@ -132,7 +134,7 @@ noglob wk eval run --suite evals/edd/architecture_routing.yaml \
 
 ## Safety suite
 
-Gateable injection / no-tool suite: `evals/edd/safety.yaml`. `wk check` runs it plus architecture routing, model routing, kit-knowledge, Cloudflare ops, self-correction, terminal-fallback, host-subagent launch, and skills-only routing via `EDD_CI_SUITES`.
+Gateable injection / no-tool suite: `evals/edd/safety.yaml`. `wk check` runs it plus architecture routing, model routing, kit-knowledge, Cloudflare ops, Cloud catalog stop, self-correction, terminal-fallback, host-subagent launch, and skills-only routing via `EDD_CI_SUITES`.
 
 Subagent routing misses from production go through the same closed loop as other suites (`wk eval dataset from-trace`, then `wk eval miss-rate`). Do not skip adding a golden when the orchestrator stays in the parent instead of launching the specialist (or the reverse, when `WK_SUBAGENTS=0`). `launch_specialist` is an eval adapter for the host Task (`wk agents launch-prompt`); live Cursor/Claude sessions do not call that tool.
 

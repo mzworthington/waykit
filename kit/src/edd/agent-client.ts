@@ -2,6 +2,10 @@ import { resolveEvalRun } from './eval-style.js';
 import { ProviderHttpError, withProviderRetry } from './provider-retry.js';
 import type { AgentResponse, AgentToolCall, AgentUsage, EvalMock, HistoryTurn } from './schema.js';
 import {
+  CLOUD_CATALOG_STOP_CONTENT,
+  cloudCatalogShouldStop
+} from './scripted_cloud_catalog.js';
+import {
   LAUNCH_SPECIALIST_TOOL,
   launchArgsForPrompt,
   skillsOnlyContent
@@ -343,6 +347,20 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       };
     }
     if (
+      (prompt.includes('dashboard mcp') ||
+        (prompt.includes('cloud agent') && prompt.includes('mcp'))) &&
+      (prompt.includes('sop') || prompt.includes('open the kit'))
+    ) {
+      return {
+        content: 'Opening the mcp-library SOP for the Cloud dashboard catalog.',
+        tool_calls: [{ name: 'get_sop', arguments: { name: 'mcp-library' } }],
+        usage: { promptTokens: 50, completionTokens: 30, totalTokens: 85 },
+        consecutiveToolFailures: 0,
+        haltedAutonomousExecution: false,
+        routingConfidence: 0.91
+      };
+    }
+    if (
       prompt.includes('sonarqube') ||
       prompt.includes('sonarcloud') ||
       prompt.includes('sonar findings')
@@ -505,6 +523,9 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
     (names.has('search') && names.has('execute'));
 
   if (hasCf && !hasArch) {
+    if (cloudCatalogShouldStop(prompt)) {
+      return scriptedNoTool(CLOUD_CATALOG_STOP_CONTENT);
+    }
     const rumListCode =
       'async () => cloudflare.request({ method: "GET", path: `/accounts/${accountId}/rum/site_info/list` })';
     if (

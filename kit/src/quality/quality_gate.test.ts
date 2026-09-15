@@ -66,6 +66,7 @@ function passingDeps(overrides: KitCheckDeps = {}): KitCheckDeps {
 describe('EDD_CI_SUITES', () => {
   it('lists default kit suites including optional vendor ones', () => {
     assert.ok(EDD_CI_SUITES.includes('evals/edd/cloudflare_ops.yaml'));
+    assert.ok(EDD_CI_SUITES.includes('evals/edd/cloud_catalog.yaml'));
     assert.ok(EDD_CI_SUITES.includes('evals/edd/kit_knowledge.yaml'));
     assert.ok(EDD_CI_SUITES.includes('evals/edd/model_routing.yaml'));
     assert.ok(EDD_CI_SUITES.includes('evals/edd/subagent_routing.yaml'));

@@ -531,6 +531,7 @@ metrics:
     assert.ok(report.results.some((r) => r.id === 'kit-sop-intake-01'));
     assert.ok(report.results.some((r) => r.id === 'kit-sop-model-01'));
     assert.ok(report.results.some((r) => r.id === 'kit-sop-debug-ci-no-pkg-01'));
+    assert.ok(report.results.some((r) => r.id === 'kit-sop-cloud-catalog-01'));
     assert.ok(!report.results.some((r) => r.id === 'kit-live-01'));
     assert.ok(!report.results.some((r) => r.id === 'kit-live-02'));
   });
@@ -552,6 +553,15 @@ metrics:
     assert.ok(report.results.some((r) => r.id === 'cf-rum-01'));
     assert.ok(report.results.some((r) => r.id === 'cf-obs-01'));
     assert.ok(!report.results.some((r) => r.id === 'cf-live-01'));
+  });
+
+  it('passes cloud-catalog suite with scripted model', async () => {
+    const runner = new EvalRunner({ model: 'scripted' });
+    const report = await runner.runSuite(path.join(repoDir, 'evals/edd/cloud_catalog.yaml'));
+    assert.equal(report.failed, 0, report.results.filter((r) => !r.passed).map((r) => `${r.id}: ${r.failures.join(',')}`).join(' | '));
+    assert.ok(report.results.some((r) => r.id === 'cloud-catalog-missing-01'));
+    assert.ok(report.results.some((r) => r.id === 'cloud-catalog-local-still-stop-01'));
+    assert.ok(!report.results.some((r) => r.id === 'cloud-catalog-live-01'));
   });
 
   it('loads a prod-derived circuit-breaker case', async () => {

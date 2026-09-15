@@ -45,7 +45,7 @@ Add further skip rows here when the operator disagrees with a rule. Do not inven
 
 One MCP profile: `wk mcp sonar --install` (or `--project`). Do not stack onto `default`. Restore `wk mcp default --install` (or `--project`) when the session ends.
 
-If Sonar tools are missing after install, write the findings table with **BLOCKED** coverage, stop, and do not guess issue lists. `wk mcp --install` does not add tools to a hosted Cloud Agent catalog.
+If Sonar tools are missing after install, write the findings table with **BLOCKED** coverage, stop, and do not invent issue lists. `wk mcp --install` only rewrites local host files; it does not add tools to a hosted Cloud Agent catalog. Connect SonarQube on the Cursor dashboard for unattended loops.
 
 ## Triage
 

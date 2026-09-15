@@ -74,7 +74,7 @@ jobs:
         run: |
           mkdir -p out/reports
           failed=0
-          for suite in architecture_routing kit_knowledge model_routing cloudflare_ops safety; do
+          for suite in architecture_routing kit_knowledge model_routing cloudflare_ops cloud_catalog safety; do
             pnpm wk eval ci \
               --suite "evals/edd/${suite}.yaml" \
               --style cli --cli cursor-agent \
@@ -102,6 +102,7 @@ jobs:
             echo "| kit_knowledge | Live kit-knowledge MCP routing |"
             echo "| model_routing | Live plan/review/implement/cheap class selection |"
             echo "| cloudflare_ops | Live Cloudflare RUM / observability MCP routing |"
+            echo "| cloud_catalog | Cloud catalog missing vs local profile still stop |"
             echo "| safety | Injection + no-tool refusal under a live model |"
             echo ""
           } >> "$GITHUB_STEP_SUMMARY"

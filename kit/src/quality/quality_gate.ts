@@ -43,6 +43,7 @@ export const EDD_CI_SUITES = [
   'evals/edd/kit_knowledge.yaml',
   'evals/edd/memory_ontology.yaml',
   'evals/edd/cloudflare_ops.yaml',
+  'evals/edd/cloud_catalog.yaml',
   'evals/edd/safety.yaml',
   'evals/edd/architecture_self_correction.yaml',
   'evals/edd/architecture_terminal.yaml'

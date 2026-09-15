@@ -73,6 +73,10 @@ Cursor and Claude Code then run `wk tdd-guard` before writes. Production source 
 
 Inside TDD, when the change is a prompt or a tool contract. **EDD is alpha:** you write a failing eval for the tool and arguments you expect, implement until the **scripted** harness passes, then gate the merge with `wk eval ci --threshold-routing 95`. That is not proof the live model is correct. A production miss can become a JSONL case in the same suite. How mocks, styles, and CI work: [EDD guide](/docs/edd).
 
+## Why didn’t `wk mcp --install` wake my Cloud Agent?
+
+Cloud Agent and Automation sessions only see MCP servers connected on the **Cursor dashboard**. `wk mcp --install` rewrites local host files. It does not add GitHub, Linear, PostHog, Cloudflare Observability, or SonarQube to that catalog. If those tools are missing, the loop stops **BLOCKED** and does not invent site lists, issue lists, or dashboard counts. [Hosts](/docs/hosts#cloud-agent-and-automations). [MCP library](/SOPs/mcp-library).
+
 ## Is the Waykit map my product architecture?
 
 No. The [Waykit map](/docs/map) is **this kit**: skills, host subagents, SOPs, MCP servers, evals, and docs. It does not draw your system. Add a skill, stub, or SOP in the kit checkout, then `wk ontology check` and `wk ontology generate`. Step-by-step: [Author the Waykit map](/ontology).

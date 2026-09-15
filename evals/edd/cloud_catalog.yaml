@@ -1,0 +1,32 @@
+name: "Routing: Cloud catalog stop"
+dataset: "cloud_catalog.jsonl"
+system_prompt: "cloud_catalog_prompt.md"
+mcp_tools:
+  - "tools/execute.json"
+  - "tools/search.json"
+  - "tools/query_worker_observability.json"
+metrics:
+  - type: "tool_selection"
+  - type: "schema_match"
+    strict: true
+  - type: "argument_correctness"
+  - type: "mcp_use"
+  - type: "task_completion"
+  - type: "criteria_judge"
+    threshold: 1.0
+    criteria:
+      - "Response must say BLOCKED when the Cloud catalog is missing or only a local profile is present"
+      - "No tool call when the Cloud catalog cannot serve the loop"
+mocks:
+  - tool: "execute"
+    response:
+      result:
+        - site_tag: "ea7ffeb012004862add795dccbb3c211"
+          host: "waykit.dev"
+  - tool: "search"
+    response:
+      paths:
+        - "/accounts/{account_id}/rum/site_info/list"
+  - tool: "query_worker_observability"
+    response:
+      events: []

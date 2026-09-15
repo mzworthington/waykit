@@ -36,9 +36,8 @@ Do not commit or push unless the user explicitly asks.
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`) |
 | PostHog product analytics | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog --install`) |
-| PostHog → Linear backlog | [product-signal-intake](./SOPs/product-signal-intake.md) (findings, then stories after `wk mcp default`) |
+| Cloud / intake loops | Dashboard MCP ([mcp-library](./SOPs/mcp-library.md)). PostHog bets [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
 | Crime-scene report | [complexity-hotspots](./SOPs/complexity-hotspots.md) §8 (arch-drift → gate → stories) |
-| SonarQube | [sonarqube-findings](./SOPs/sonarqube-findings.md) (`wk mcp sonar`) |
 
 ## Phase → skill
 

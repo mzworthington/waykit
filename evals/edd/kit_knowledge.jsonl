@@ -4,6 +4,7 @@
 {"id": "kit-sop-cf-01", "prompt": "Open the kit SOP for Cloudflare analytics ops.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "cloudflare-analytics-ops"}}}
 {"id": "kit-sop-intake-01", "prompt": "Open the kit SOP for two-session PostHog product-signal-intake.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "product-signal-intake"}}}
 {"id": "kit-sop-sonar-01", "prompt": "Open the kit SOP for SonarQube findings triage.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "sonarqube-findings"}}}
+{"id": "kit-sop-cloud-catalog-01", "prompt": "Open the kit SOP for Cloud Agent dashboard MCP servers.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "mcp-library"}}}
 {"id": "kit-sop-model-01", "prompt": "Open the kit SOP for model routing.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "model-routing"}}}
 {"id": "kit-sop-subagent-01", "prompt": "Open the kit SOP for launching a host subagent.", "tags": ["happy-path", "routing"], "expect": {"tool": "get_sop", "arguments_contains": {"name": "subagent-launch"}}}
 {"id": "kit-search-01", "prompt": "Search the kit for hexagonal architecture boundaries.", "tags": ["happy-path", "routing"], "expect": {"tool": "search_kit", "arguments_contains": {"query": "hexagonal architecture"}}}
