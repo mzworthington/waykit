@@ -56,9 +56,9 @@
     {
       "id": "EVAL-SEC-COLOCATED-003",
       "name": "Dependabot stays a vendor PR",
-      "description": "Ensures Dependabot and CodeQL stay on vendor PRs via quality-loops and are not rewritten as a helpful lockfile change.",
+      "description": "Ensures Dependabot and CodeQL stay on vendor PRs via quality-loops: hygiene without a lockfile rewrite, alert-number keys, and comments on noisy findings.",
       "target_skill": "agent-security",
-      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile.",
+      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile. Key a high alert to that alert number. Comment why on noisy findings and do not churn code.",
       "context": {
         "active_phase": "audit"
       },
@@ -68,7 +68,10 @@
         ],
         "required_patterns": [
           "quality-loops",
-          "vendor PR"
+          "vendor PR",
+          "alert number",
+          "comment why",
+          "do not churn code"
         ],
         "forbidden_patterns": [
           "agent-quality-loops"
@@ -99,60 +102,6 @@
         ],
         "forbidden_patterns": [
           "agent-sonarqube",
-          "agent-quality-loops"
-        ],
-        "required_output_sections": [
-          "quality-loops"
-        ]
-      }
-    },
-    {
-      "id": "EVAL-SEC-COLOCATED-005",
-      "name": "High alert updates one vendor PR by number",
-      "description": "Ensures a high or critical CodeQL or Dependabot alert with a clear file and line updates the existing vendor PR or opens one draft PR keyed to the alert number.",
-      "target_skill": "agent-security",
-      "prompt": "A high CodeQL alert has a clear file and line. Fix it on the vendor PR keyed to that alert number.",
-      "context": {
-        "active_phase": "audit"
-      },
-      "assertions": {
-        "required_triggers": [
-          "codeql",
-          "security"
-        ],
-        "required_patterns": [
-          "quality-loops",
-          "vendor PR",
-          "alert number"
-        ],
-        "forbidden_patterns": [
-          "agent-quality-loops"
-        ],
-        "required_output_sections": [
-          "quality-loops"
-        ]
-      }
-    },
-    {
-      "id": "EVAL-SEC-COLOCATED-006",
-      "name": "Noisy finding comments without code churn",
-      "description": "Ensures a noisy, informational, or product-decision Dependabot or CodeQL finding comments why and does not churn code.",
-      "target_skill": "agent-security",
-      "prompt": "A CodeQL finding is noisy and needs a product decision. Comment why. Do not churn code.",
-      "context": {
-        "active_phase": "audit"
-      },
-      "assertions": {
-        "required_triggers": [
-          "codeql",
-          "security"
-        ],
-        "required_patterns": [
-          "quality-loops",
-          "comment why",
-          "do not churn code"
-        ],
-        "forbidden_patterns": [
           "agent-quality-loops"
         ],
         "required_output_sections": [

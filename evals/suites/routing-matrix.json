@@ -926,37 +926,20 @@
     },
     {
       "id": "EVAL-ROUTE-046",
-      "name": "Dependabot stays a vendor PR",
-      "description": "Verifies an open Dependabot PR stays on quality-loops vendor hygiene and is not rewritten as a helpful lockfile change.",
+      "name": "Dependabot and CodeQL stay vendor PRs",
+      "description": "Verifies Dependabot and CodeQL stay on quality-loops vendor PRs: hygiene without a lockfile rewrite, alert-number keys, and comments on noisy findings.",
       "target_skill": "agent-security",
-      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile.",
+      "prompt": "A Dependabot PR is open and a CodeQL alert has a file and line. Keep vendor PRs merge-ready. Do not rewrite the lockfile. Comment why on noisy findings and do not churn code.",
       "assertions": {
         "required_triggers": [
           "dependabot",
-          "security"
-        ],
-        "required_patterns": [
-          "quality-loops",
-          "vendor PR"
-        ],
-        "forbidden_patterns": [
-          "agent-quality-loops"
-        ]
-      }
-    },
-    {
-      "id": "EVAL-ROUTE-047",
-      "name": "Noisy CodeQL finding does not churn code",
-      "description": "Verifies a noisy or product-decision CodeQL finding routes to quality-loops, comments why, and does not churn code.",
-      "target_skill": "agent-security",
-      "prompt": "A CodeQL finding is noisy and needs a product decision. Comment why. Do not churn code.",
-      "assertions": {
-        "required_triggers": [
           "codeql",
           "security"
         ],
         "required_patterns": [
           "quality-loops",
+          "vendor PR",
+          "alert number",
           "comment why",
           "do not churn code"
         ],
