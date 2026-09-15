@@ -75,6 +75,11 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Draft PR only/);
     assert.match(sop!.body, /hold/);
     assert.match(sop!.body, /auto-work/);
+    assert.match(sop!.body, /fingerprint/i);
+    assert.match(sop!.body, /Duplicate/);
+    assert.match(sop!.body, /INVEST/);
+    assert.match(sop!.body, /Done/);
+    assert.match(sop!.body, /Canceled/);
     assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
   });
 

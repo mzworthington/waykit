@@ -13,7 +13,7 @@ Start from `~/.agents/AGENTS.md` (thin index). **Do not** bulk-read philosophy, 
 | Product bet / PRD / flags | `skills/agent-prd` (+ hypothesis-driven-development SOP) |
 | Cloudflare Web Analytics / RUM / beacon | `skills/agent-cloudflare-ops` (`wk mcp cloudflare-ops --project`) |
 | Warp Factory / PostHog | `wk mcp warp --install` / `skills/agent-posthog` (`wk mcp posthog --install`) |
-| Signals → Linear | `SOPs/quality-loops.md`; PostHog bets `SOPs/product-signal-intake.md`; Sonar `SOPs/sonarqube-findings.md` |
+| Signals → Linear | `SOPs/quality-loops.md` (intake, hygiene, work picker); PostHog bets `SOPs/product-signal-intake.md`; Sonar `SOPs/sonarqube-findings.md` |
 | Crime-scene report | `SOPs/complexity-hotspots.md` §8 (arch-drift → gate → stories) |
 | Prompt / MCP tool / routing change | `docs/edd.md` + EDD SOP (`wk eval run\|ci`) |
 | Which model / host slug | `SOPs/model-routing.md` (`wk model resolve`) |

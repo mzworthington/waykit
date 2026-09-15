@@ -923,6 +923,27 @@
           "agent-quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-046",
+      "name": "Backlog hygiene stays on quality-loops",
+      "description": "Verifies a backlog hygiene pass that groups, rewrites INVEST, and marks duplicates stays on quality-loops and does not open a PR.",
+      "target_skill": "agent-user-stories",
+      "prompt": "Run a Linear backlog hygiene pass: group similar tickets, rewrite unclear INVEST bodies, and mark duplicates. Do not open a PR.",
+      "assertions": {
+        "required_triggers": [
+          "linear",
+          "backlog",
+          "INVEST"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "Duplicate"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }

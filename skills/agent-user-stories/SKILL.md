@@ -111,7 +111,7 @@ Criteria are **observable** (copy, files on disk, who is connected, CLI stdout, 
 
 ## Review existing tickets
 
-Skip complete stories. Rewrite missing Story / Given-When-Then / Out of scope / UI wireframe. Recast `## Done when` bullets into operator AC. Split blobs. Cancel Linear product tours.
+Skip complete stories. Rewrite missing Story / Given-When-Then / Out of scope / UI wireframe. Recast `## Done when` bullets into operator AC. Split blobs. Cancel Linear product tours. Scheduled board cleanup is [quality-loops](../../SOPs/quality-loops.md) hygiene: group or Duplicate, rewrite INVEST, comment when unsure — do not cancel product work or open a PR.
 
 ## After Linear
 

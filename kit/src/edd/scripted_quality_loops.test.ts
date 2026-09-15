@@ -22,4 +22,24 @@ describe('scriptedDriver quality-loops', () => {
       'quality-loops'
     );
   });
+
+  it('opens quality-loops for a backlog hygiene prompt', async () => {
+    const response = await scriptedDriver({
+      model: 'scripted',
+      systemPrompt: '',
+      messages: [
+        {
+          role: 'user',
+          content: 'Open the kit SOP for a Linear backlog hygiene pass that groups, rewrites INVEST, and marks duplicates.'
+        }
+      ],
+      tools: [{ name: 'get_sop' }],
+      mocks: new Map()
+    });
+    assert.equal(response.tool_calls?.[0]?.name, 'get_sop');
+    assert.equal(
+      (response.tool_calls?.[0]?.arguments as { name?: string } | undefined)?.name,
+      'quality-loops'
+    );
+  });
 });
