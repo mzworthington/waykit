@@ -119,7 +119,7 @@ Default graph is small. Split jobs for isolation, cache locality, or wall-clock 
 
 - OIDC to cloud; no long-lived keys if the platform allows federation.
 - Default `GITHUB_TOKEN` read-only; raise per job.
-- Pin Actions by commit SHA.
+- Pin Actions by **version tag** (`uses: owner/action@vN` or `@vN.N.N`), not a commit SHA. Sonar SHA-pin findings are a kit skip ([sonarqube-findings](../../SOPs/sonarqube-findings.md)).
 - Prod deploy/apply: concurrency 1 per environment.
 - Untrusted/fork PRs: verify without secrets.
 

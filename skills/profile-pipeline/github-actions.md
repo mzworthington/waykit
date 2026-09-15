@@ -25,7 +25,7 @@ permissions:
 
 Raise per job: `id-token: write` for cloud OIDC, `pull-requests: write` for plan comments, `contents: write` only on Promote. Environment secrets live on GitHub Environments; PR jobs do not reference production secrets.
 
-Pin third-party actions by **git SHA**, not a moving tag.
+Pin third-party actions by **version tag** (`@vN` or `@vN.N.N`), not a commit SHA. Do not rewrite tags to a 40-char digest to satisfy a scanner.
 
 Registry installs of the package manager (for example `pnpm/setup` fetching `@pnpm/linux-x64` from npm) should retry once on 5xx/timeout. A 504 on that **binary download** is not a product failure. Do not retry `ERR_PNPM_NO_PKG_MANIFEST` as if it were a 504.
 

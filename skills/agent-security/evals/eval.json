@@ -27,6 +27,31 @@
           "eval("
         ]
       }
+    },
+    {
+      "id": "EVAL-SEC-COLOCATED-002",
+      "name": "SonarQube findings triage",
+      "description": "Ensures SonarQube issue passes use sonarqube-findings, the sonar MCP profile, and skip GitHub Actions SHA pins.",
+      "target_skill": "agent-security",
+      "prompt": "Fix SonarQube issues and security hotspots in this repo.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "sonarqube",
+          "sonar issues",
+          "security hotspot"
+        ],
+        "required_patterns": [
+          "sonarqube-findings",
+          "wk mcp sonar",
+          "handover_sonar"
+        ],
+        "forbidden_patterns": [
+          "agent-sonarqube"
+        ]
+      }
     }
   ]
 }

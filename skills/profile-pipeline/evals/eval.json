@@ -18,6 +18,22 @@
           "profile-pipeline"
         ]
       }
+    },
+    {
+      "id": "EVAL-PROF-PIPELINE-COLOCATED-002",
+      "name": "GitHub Actions pin by version tag",
+      "target_skill": "profile-pipeline",
+      "prompt": "Pin GitHub Actions in our CI/CD pipeline by version tag.",
+      "assertions": {
+        "required_triggers": [
+          "github actions",
+          "pipeline"
+        ],
+        "required_patterns": [
+          "version tag",
+          "@vN"
+        ]
+      }
     }
   ]
 }

@@ -16,6 +16,7 @@ handover/
     ├── handover_crime_scene.md  # git crime-scene findings; Linear only after human gate
     ├── handover_debug.md      # agent-debug phase artifact
     ├── handover_posthog.md    # agent-posthog + product-signal-intake findings
+    ├── handover_sonar.md      # sonarqube-findings triage; apply fix rows in-session
     ├── debug-board-*.md       # hypothesis boards (`wk debug-board`)
     └── ...
 ```

@@ -1,7 +1,7 @@
 {
   "suite": "stack-profiles",
   "description": "Evaluation benchmarks for lang-* and framework-* stack profiles",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "test_cases": [
     {
       "id": "EVAL-LANG-TS-001",
@@ -759,6 +759,28 @@
         "required_output_sections": [
           "Verify",
           "Deploy"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-PROF-PIPELINE-002",
+      "name": "GitHub Actions pin by version tag",
+      "description": "Verifies GitHub Actions are pinned by version tag (@vN), not a moving commit SHA.",
+      "target_skill": "profile-pipeline",
+      "prompt": "Design a GitHub Actions CI/CD pipeline and pin third-party actions by version tag.",
+      "context": {
+        "detected_stack": [
+          "GitHub Actions"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "github actions",
+          "pipeline"
+        ],
+        "required_patterns": [
+          "version tag",
+          "@vN"
         ]
       }
     }

@@ -57,6 +57,17 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Do not invent issue URLs/);
   });
 
+  it("returns sonarqube-findings with the GitHub Actions version-tag skip", () => {
+    const sop = getSop(kitRoot, "sonarqube-findings");
+    assert.ok(sop);
+    assert.equal(sop!.id, "sonarqube-findings");
+    assert.match(sop!.body, /wk mcp sonar/);
+    assert.match(sop!.body, /Do not add an `agent-sonarqube` skill/i);
+    assert.match(sop!.body, /@vN/);
+    assert.match(sop!.body, /Do not rewrite to a 40-char SHA/i);
+    assert.match(sop!.body, /Do not add `NOSONAR`/i);
+  });
+
   it("search returns excerpts not full philosophy", () => {
     const hits = searchKit(kitRoot, "hexagonal ports adapters", 5);
     assert.ok(hits.length >= 1);

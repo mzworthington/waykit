@@ -1,7 +1,7 @@
 {
   "suite": "routing-matrix",
   "description": "Evaluation benchmarks for cross-skill routing accuracy and specialist role activation",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "test_cases": [
     {
       "id": "EVAL-ROUTE-001",
@@ -753,6 +753,27 @@
         ],
         "forbidden_patterns": [
           "agent-spec"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-038",
+      "name": "Route SonarQube issues to agent-security",
+      "description": "Verifies SonarQube / SonarCloud issue and hotspot prompts route to agent-security sonarqube-findings, not a new specialist.",
+      "target_skill": "agent-security",
+      "prompt": "Fix SonarQube issues and security hotspots. Keep GitHub Actions on version tags.",
+      "assertions": {
+        "required_triggers": [
+          "sonarqube",
+          "sonar issues",
+          "security hotspot"
+        ],
+        "required_patterns": [
+          "agent-security",
+          "sonarqube-findings"
+        ],
+        "forbidden_patterns": [
+          "agent-sonarqube"
         ]
       }
     }

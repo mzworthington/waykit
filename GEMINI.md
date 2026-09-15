@@ -1,5 +1,4 @@
-# Gemini CLI entry point
+# Antigravity / Gemini CLI Bootstrap - Waykit
 
-The canonical bootstrap lives in [AGENTS.md](./AGENTS.md).
-
-Read [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.
+Standards and lifecycle agents live in `~/.agents`.
+Read `~/.agents/AGENTS.md` (thin index) before starting work. Do not bulk-load philosophy or SOPs. Prefer kit-knowledge / memory MCP for chunks and durable facts. Use EDD for prompts, MCP tools, and agent routing (`~/.agents/docs/edd.md`). Align on hexagonal boundaries, TDD short-loop execution, and XFN quality requirements.

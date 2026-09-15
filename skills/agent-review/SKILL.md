@@ -36,7 +36,7 @@ You review change sets for craft and catalog honesty - not style nitpicks.
 1. **Boundaries** - No domain imports of infrastructure; adapters stay thin ([agent-arch-drift](../agent-arch-drift/SKILL.md)).
 2. **Catalog** - Functional + XFN impact aligned; no silent assertion weakenings or deleted cases.
 3. **XFN** - Apply rows have suites or BLOCKED owners; skip rows have rationales.
-4. **Security** - Trust boundaries, validation, secrets ([agent-security](../agent-security/SKILL.md)).
+4. **Security** - Trust boundaries, validation, secrets ([agent-security](../agent-security/SKILL.md)). Sonar comments on the PR follow [sonarqube-findings](../../SOPs/sonarqube-findings.md); do not SHA-pin Actions.
 5. **Minimal change** - No speculative abstractions ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §4).
 6. **Commit message** - Conventional subject, plus Linear id when in play ([SOPs/conventional-commits.md](../../SOPs/conventional-commits.md), [SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)). Work should be on main and uncommitted unless the user asked otherwise.
 7. **Public copy / docs voice** - If landing, README lead, marketing or UI microcopy changed, check for AI-template tells (slogan stacks, "sensible default", fake systems chrome, emoji-as-heading, habitual Oxford commas) per [agent-copy](../agent-copy/SKILL.md). Diagnose 2–3 problems before rewriting; never invent metrics.

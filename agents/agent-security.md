@@ -1,6 +1,6 @@
 ---
 name: agent-security
-description: "Audits code for OWASP Top 10 risks, injection, broken auth, input validation gaps, and cryptographic weaknesses, and verifies that agreed security regression tests from the XFN plan exist. Use when reviewing security, validating boundaries, auditing PRs for vulnerabilities, or before release."
+description: "Audits code for OWASP Top 10 risks, injection, broken auth, input validation gaps, and cryptographic weaknesses, and verifies that agreed security regression tests from the XFN plan exist. Also triages SonarQube Cloud issues and security hotspots (sonarqube-findings SOP). Use when reviewing security, validating boundaries, auditing PRs for vulnerabilities, fixing SonarQube issues, or before release."
 model: inherit
 readonly: true
 ---

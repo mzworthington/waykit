@@ -343,6 +343,20 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       };
     }
     if (
+      prompt.includes('sonarqube') ||
+      prompt.includes('sonarcloud') ||
+      prompt.includes('sonar findings')
+    ) {
+      return {
+        content: 'Opening the sonarqube-findings SOP.',
+        tool_calls: [{ name: 'get_sop', arguments: { name: 'sonarqube-findings' } }],
+        usage: { promptTokens: 50, completionTokens: 30, totalTokens: 85 },
+        consecutiveToolFailures: 0,
+        haltedAutonomousExecution: false,
+        routingConfidence: 0.91
+      };
+    }
+    if (
       prompt.includes('hypothesis-driven debug') ||
       prompt.includes('hypothesis driven debug') ||
       prompt.includes('failed job') ||

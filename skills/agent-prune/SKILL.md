@@ -64,6 +64,7 @@ Read only what the task needs:
 |------|-----------|
 | [SOPs/dead-code.md](../../SOPs/dead-code.md) | Orphans, stale refs, compat shims, expired flags |
 | [SOPs/complexity-hotspots.md](../../SOPs/complexity-hotspots.md) | Hotspot reduction or crime-scene children |
+| [SOPs/sonarqube-findings.md](../../SOPs/sonarqube-findings.md) | Maintainability CODE_SMELL rows marked `fix` |
 | [SOPs/hypothesis-driven-development.md](../../SOPs/hypothesis-driven-development.md) | Flag/slice removal after confirm or kill |
 
 ## Handover
