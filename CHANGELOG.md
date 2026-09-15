@@ -18,6 +18,7 @@
 - *(quality-loops)* Play allowlisted tickets as draft PRs (MZW-117)
 - *(quality-loops)* Land work picker draft PR loop (MZW-117)
 - *(web)* Keep the light paper colour theme on the public site
+- Website ux
 
 ### 🐛 Bug Fixes
 
