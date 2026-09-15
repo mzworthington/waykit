@@ -83,6 +83,33 @@
           "product-signal-intake"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-004",
+      "name": "Quality loops use existing roles",
+      "description": "When closing CI and telemetry quality loops through Linear, orchestrator points at quality-loops and existing debug/stories roles instead of a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate quality loops so failed checks become Linear tickets a work picker can play. Do not invent a specialist.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "agent-debug",
+          "BLOCKED"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

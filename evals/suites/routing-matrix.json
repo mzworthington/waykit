@@ -1,7 +1,7 @@
 {
   "suite": "routing-matrix",
   "description": "Evaluation benchmarks for cross-skill routing accuracy and specialist role activation",
-  "version": "1.3.3",
+    "version": "1.3.4",
   "test_cases": [
     {
       "id": "EVAL-ROUTE-001",
@@ -774,6 +774,47 @@
         ],
         "forbidden_patterns": [
           "agent-sonarqube"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-039",
+      "name": "Quality loops stay on existing roles",
+      "description": "Verifies CI / telemetry quality loops through Linear route to agent-orchestrator plus quality-loops, not a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate quality loops so CI failures and RUM breaks become Linear tickets a work picker can play.",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "agent-debug"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-040",
+      "name": "Cloud catalog missing still stops quality loops",
+      "description": "Verifies a Cloud Agent quality loop whose dashboard MCP tools are missing stops BLOCKED even when a local wk mcp --install already ran.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate a Cloud Agent quality loop. GitHub and Linear tools are missing from the dashboard catalog after a local wk mcp default --install.",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "BLOCKED",
+          "dashboard"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
         ]
       }
     }

@@ -112,6 +112,31 @@
           "product-signal-intake"
         ]
       }
+    },
+    {
+      "id": "EVAL-DBG-COLOCATED-005",
+      "name": "Failed check files via quality-loops",
+      "description": "A red required check files a Linear Bug on quality-loops and does not open a PR in the intake session.",
+      "target_skill": "agent-debug",
+      "prompt": "A required check is red. File a Linear Bug ticket from the failed job. Do not open a PR.",
+      "context": {
+        "active_phase": "debug"
+      },
+      "assertions": {
+        "required_triggers": [
+          "bug",
+          "debug"
+        ],
+        "required_patterns": [
+          "quality-loops"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "suite": "lifecycle-roles",
   "description": "Evaluation benchmarks for agent-* specialist lifecycle roles",
-  "version": "1.3.2",
+    "version": "1.3.3",
   "test_cases": [
     {
       "id": "EVAL-SPEC-001",
@@ -721,6 +721,32 @@
       }
     },
     {
+      "id": "EVAL-CFOPS-002",
+      "name": "RUM break files via quality-loops",
+      "description": "Verifies a confirmed Cloudflare RUM break that should become a Linear Bug points at quality-loops after restore default.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. File a Linear Bug on the owning repo after restore default.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": [
+          "rum",
+          "beacon"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "BLOCKED"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
       "id": "EVAL-POSTHOG-001",
       "name": "PostHog cookieless MCP wiring",
       "description": "Verifies PostHog install uses cookieless SDK defaults, a privacy notice, and official MCP diagnosis rather than the Cursor wizard.",
@@ -1127,6 +1153,84 @@
         ],
         "required_output_sections": [
           "product-signal-intake"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ORCH-003",
+      "name": "Quality loops use existing roles",
+      "description": "Verifies orchestrating CI and telemetry quality loops points at quality-loops and existing debug/stories roles, not a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate quality loops so failed checks and RUM breaks become Linear tickets a work picker can play. Do not invent a specialist.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "agent-debug",
+          "BLOCKED"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-DEBUG-003",
+      "name": "Failed check files a Bug ticket via quality-loops",
+      "description": "Verifies filing a Linear Bug from a failed required check stays on agent-debug plus quality-loops and does not open a PR in the intake session.",
+      "target_skill": "agent-debug",
+      "prompt": "A required check is red. File a Linear Bug ticket from the failed job. Do not open a PR.",
+      "context": {
+        "active_phase": "debug"
+      },
+      "assertions": {
+        "required_triggers": [
+          "bug",
+          "debug"
+        ],
+        "required_patterns": [
+          "quality-loops"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-USERSTORIES-007",
+      "name": "Hygiene pass stays on user stories",
+      "description": "Verifies a backlog hygiene pass that groups, rewrites, and dedupes tickets stays on agent-user-stories plus quality-loops and does not open a PR.",
+      "target_skill": "agent-user-stories",
+      "prompt": "Run a Linear backlog hygiene pass: group similar tickets, rewrite unclear INVEST bodies, and mark duplicates. Do not open a PR.",
+      "context": {
+        "active_phase": "spec"
+      },
+      "assertions": {
+        "required_triggers": [
+          "linear",
+          "backlog",
+          "INVEST"
+        ],
+        "required_patterns": [
+          "quality-loops"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
         ]
       }
     }

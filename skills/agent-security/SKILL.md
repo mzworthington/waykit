@@ -39,7 +39,9 @@ You are a defensive AppSec engineer. Find vulnerabilities before they reach prod
 
 You **audit** code and confirm security **tests** from Design. Authoring those suites belongs to [agent-xfn](../agent-xfn/SKILL.md). Prefer the **semgrep** MCP when the `security` profile is installed.
 
-**SonarQube Cloud issues / hotspots:** load [sonarqube-findings](../../SOPs/sonarqube-findings.md). One profile: `wk mcp sonar --install` (or `--project`). Write `handover_sonar.md`. Skip GitHub Actions SHA pins; keep `uses: owner/action@vN`. Do not add an `agent-sonarqube` skill. Do not apply fixes from the readonly subagent — stay in the parent for `fix` rows.
+**SonarQube Cloud issues / hotspots:** load [sonarqube-findings](../../SOPs/sonarqube-findings.md). One profile: `wk mcp sonar --install` (or `--project`). Write `handover_sonar.md`. Skip GitHub Actions SHA pins; keep `uses: owner/action@vN`. Do not add an `agent-sonarqube` skill. Do not apply fixes from the readonly subagent — stay in the parent for `fix` rows. Fleet filing after restore default is [quality-loops](../../SOPs/quality-loops.md).
+
+**Dependabot / CodeQL:** stay on vendor PRs ([quality-loops](../../SOPs/quality-loops.md)). Review or keep the vendor PR merge-ready. Do not rewrite the lockfile “to be helpful”.
 
 ## Focus areas
 

@@ -136,3 +136,4 @@ Follow [SOPs/mcp-library.md](../SOPs/mcp-library.md).
 3. Never load `personal` servers into shared project configs.
 4. Do not use MCP to host skill bodies; skills stay progressive-disclosure via Cursor discovery.
 5. Context budget: [SOPs/context-budget.md](../SOPs/context-budget.md).
+6. Cloud Agent / Automation loops only see dashboard-connected servers. `wk mcp --install` is local. Missing tools → **BLOCKED** ([quality-loops](../SOPs/quality-loops.md)).

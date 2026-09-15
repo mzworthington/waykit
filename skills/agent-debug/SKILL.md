@@ -70,6 +70,7 @@ Tooling: `wk debug-board`, `wk debug-ci`.
 | Live Cloudflare Web Analytics / RUM / beacon | **`agent-cloudflare-ops`** (this skill only if RCA is app code) |
 | PostHog empty events / cookieless / wizard | **`agent-posthog`** (this skill only if RCA is app code) |
 | PostHog error cluster on [product-signal-intake](../../SOPs/product-signal-intake.md) (kind bug) | **`agent-debug`** - not grill → spec |
+| Failed required check / confirmed live break on [quality-loops](../../SOPs/quality-loops.md) | Intake files a Bug ticket. Play uses this skill. No PR in the file session. |
 | Bug that needs a new product capability after RCA | Debug → then `agent-orchestrator` / light feature path |
 | “Is this already shipped?” / how-does-X-work | Triage only; no impl |
 | New feature / new bounded context | `agent-orchestrator` |
@@ -94,6 +95,7 @@ Read only what the task needs:
 | [templates/debug-board.md](../../templates/debug-board.md) | Scaffolding or updating the board |
 | [references/tooling.md](./references/tooling.md) | Choosing evidence tools (`wk debug-ci`, browser, cloud transcripts) |
 | [SOPs/product-signal-intake.md](../../SOPs/product-signal-intake.md) | PostHog error cluster / kind-bug row |
+| [SOPs/quality-loops.md](../../SOPs/quality-loops.md) | File or play a Bug from CI / RUM / scout |
 
 ## Handover
 

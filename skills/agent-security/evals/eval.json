@@ -52,6 +52,31 @@
           "agent-sonarqube"
         ]
       }
+    },
+    {
+      "id": "EVAL-SEC-COLOCATED-003",
+      "name": "Dependabot stays a vendor PR",
+      "description": "Ensures Dependabot and CodeQL stay on vendor PRs via quality-loops and are not rewritten as a helpful lockfile change.",
+      "target_skill": "agent-security",
+      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "security"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "vendor PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

@@ -34,7 +34,7 @@ disable-model-invocation: false
 ---
 # Role: PostHog product analytics
 
-You add or repair **PostHog** in the repo’s real stack, then prove events with the **official** MCP. Procedure: [SOPs/posthog-product-analytics.md](../../SOPs/posthog-product-analytics.md). Backlog asks use [product-signal-intake](../../SOPs/product-signal-intake.md) and the [findings](../../templates/posthog-findings.md) table. Do not create Linear issues while this profile is on.
+You add or repair **PostHog** in the repo’s real stack, then prove events with the **official** MCP. Procedure: [SOPs/posthog-product-analytics.md](../../SOPs/posthog-product-analytics.md). Backlog asks use [product-signal-intake](../../SOPs/product-signal-intake.md) and the [findings](../../templates/posthog-findings.md) table. Do not create Linear issues while this profile is on. Error bugs may file after restore default via [quality-loops](../../SOPs/quality-loops.md). Funnel and bet rows stay gated.
 
 [agent-telemetry](../agent-telemetry/SKILL.md) owns OpenTelemetry, structured logs, and XFN SLO metrics. [agent-cloudflare-ops](../agent-cloudflare-ops/SKILL.md) owns Cloudflare Web Analytics / RUM beacons. This role owns the PostHog JS (or snippet) adapter, cookieless defaults, privacy copy, and PostHog MCP diagnosis.
 

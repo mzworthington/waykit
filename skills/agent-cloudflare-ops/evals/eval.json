@@ -18,6 +18,22 @@
         "forbidden_patterns": ["siteToken in memory", "codemode=false"],
         "required_output_sections": ["Fleet inventory", "Root Cause", "Remediations"]
       }
+    },
+    {
+      "id": "EVAL-CFOPS-COLOCATED-002",
+      "name": "RUM break files via quality-loops",
+      "description": "Ensures a confirmed RUM break that should become a Linear Bug points at quality-loops after restore default, not a new specialist.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. File a Linear Bug on the owning repo after restore default.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["rum", "beacon"],
+        "required_patterns": ["quality-loops", "BLOCKED"],
+        "forbidden_patterns": ["agent-quality-loops"],
+        "required_output_sections": ["quality-loops"]
+      }
     }
   ]
 }

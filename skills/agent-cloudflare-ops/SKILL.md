@@ -47,11 +47,11 @@ Upstream Cloudflare platform skills (`cloudflare`, `wrangler`) win on vendor API
 - User asks to diagnose or repair Cloudflare analytics with MCP
 - Live Worker errors on a RUM proxy / beacon host
 
-**Skip** for application bugs with no Cloudflare account angle (`agent-debug`), Sev-style outages (`agent-incident` first), or adding OpenTelemetry in app code (`agent-telemetry`).
+**Skip** for application bugs with no Cloudflare account angle (`agent-debug`), Sev-style outages (`agent-incident` first), or adding OpenTelemetry in app code (`agent-telemetry`). Fleet filing of a confirmed RUM break as a Linear Bug is [quality-loops](../../SOPs/quality-loops.md) after restore `wk mcp default`.
 
 ## Profile
 
-One MCP profile: `wk mcp cloudflare-ops --install` (or `--project`). If Cloudflare tools are missing, stop and tell the user to install that profile and complete OAuth - do not invent site lists. When the session ends, `wk mcp restore --project` (project scope) or `wk mcp default --install` (user scope).
+One MCP profile: `wk mcp cloudflare-ops --install` (or `--project`). If Cloudflare tools are missing, stop **BLOCKED** and tell the user to connect Cloudflare Observability on the Cursor dashboard (or install that profile locally) - do not invent site lists. `wk mcp --install` does not add tools to a Cloud Agent catalog. When the session ends, `wk mcp restore --project` (project scope) or `wk mcp default --install` (user scope).
 
 ## Mandatory loop
 

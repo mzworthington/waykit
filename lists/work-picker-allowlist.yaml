@@ -1,0 +1,21 @@
+# Work picker allowlist. Cursor Automations read this file.
+# Do not copy the type names into the prompt — change what auto-plays here.
+#
+# Linear labels: Work type (Bug, Feature, Performance, UX, Security, Improvement)
+# plus ticket labels auto-work and hold.
+
+auto_play:
+  - Bug
+  - Security
+  - Performance
+  - Improvement
+
+wait_unless_auto_work:
+  - Feature
+  - UX
+
+block:
+  - hold
+
+override:
+  - auto-work
