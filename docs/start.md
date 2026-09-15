@@ -49,6 +49,7 @@ If you skip install, `source <(wk completion zsh)` still works: that printout is
 
 - [Jobs for today](/docs/jobs) — typo/debug vs product feature, plus the other cards
 - [Feature lifecycle](/docs/lifecycle) only when the job is a new product capability
+- [Quality loops](/docs/loops) for nested loops and outside sources (CI, RUM, Lighthouse, Sonar)
 - [Host subagents](/docs/subagents) for which roles launch in a fresh window
 - [EDD guide (alpha)](/docs/edd) for suites, CI, and production misses
 - [Hosts](/docs/hosts) for Cursor, Claude Code, Copilot, and Antigravity files

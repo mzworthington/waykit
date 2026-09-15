@@ -21,3 +21,10 @@ describe('client islands stay off the markdown glob', () => {
     expect(readSrc('integrations/kitPages.ts')).not.toMatch(/overlayKitPublic/);
   });
 });
+
+describe('docs mermaid island in Vite dev', () => {
+  it('pins mermaid in optimizeDeps.include so dynamic import does not 504 on a stale hash', () => {
+    const config = fs.readFileSync(path.join(srcRoot, '../astro.config.ts'), 'utf8');
+    expect(config).toMatch(/optimizeDeps:\s*\{[^}]*include:\s*\[[^\]]*['"]mermaid['"]/);
+  });
+});

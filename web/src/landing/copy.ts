@@ -58,7 +58,7 @@ export const HOME_NEXT = [
     body: 'Grill, spec, TDD, XFN, audit, release. EDD (alpha) sits here when tools are the change.'
   },
   {
-    href: '/SOPs/quality-loops',
+    href: '/docs/loops',
     title: 'Quality loops',
     body: 'CI, RUM, Lighthouse and Sonar file Linear tickets. Hygiene then the work picker turns them into draft PRs.'
   },

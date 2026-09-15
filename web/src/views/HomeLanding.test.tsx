@@ -29,7 +29,7 @@ describe('HomeLanding', () => {
       '/docs/kit'
     );
     expect(docs.getByRole('link', { name: /quality loops/i }).getAttribute('href')).toBe(
-      '/SOPs/quality-loops'
+      '/docs/loops'
     );
     expect(docs.getByText(/ci, rum, lighthouse and sonar/i)).toBeTruthy();
     expect(docs.getByRole('link', { name: /waykit map/i }).getAttribute('href')).toBe('/docs/map');

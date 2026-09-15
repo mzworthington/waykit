@@ -23,6 +23,8 @@ describe('published markdown catalog', () => {
     expect(DOC_PATHS.has('/docs/doctor')).toBe(true);
     expect(DOC_PATHS.has('/docs/align')).toBe(true);
     expect(DOC_PATHS.has('/docs/used-in')).toBe(true);
+    expect(DOC_PATHS.has('/docs/loops')).toBe(true);
+    expect(findPublishedPage('/docs/loops')?.title).toMatch(/quality loops/i);
     expect(DOC_PATHS.has('/SOPs/context-budget')).toBe(true);
     expect(DOC_PATHS.has('/docs/ADRs/0006-vite-markdown-docs-site')).toBe(true);
     expect(DOC_PATHS.has('/docs/ADRs/0007-astro-static-docs-site')).toBe(true);
@@ -46,6 +48,7 @@ describe('site information architecture', () => {
     expect(isDocsNavActive('/docs/edd', guide)).toBe(true);
     expect(isDocsNavActive('/docs/align', guide)).toBe(true);
     expect(isDocsNavActive('/docs/used-in', guide)).toBe(true);
+    expect(isDocsNavActive('/docs/loops', guide)).toBe(true);
     expect(isDocsNavActive('/docs/ADRs/0007-astro-static-docs-site', guide)).toBe(true);
     expect(isDocsNavActive('/docs/start', guide)).toBe(false);
     expect(isDocsNavActive('/docs/start', start)).toBe(true);

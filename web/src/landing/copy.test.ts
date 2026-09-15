@@ -18,7 +18,7 @@ describe('homepage copy', () => {
     expect(HOME_NEXT.map((item) => item.href)).toEqual([
       '/docs/jobs',
       '/docs/lifecycle',
-      '/SOPs/quality-loops',
+      '/docs/loops',
       '/docs/kit',
       '/docs/map',
       '/docs/edd'

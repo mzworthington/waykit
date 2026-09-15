@@ -2,7 +2,7 @@
 
 Waykit is the SDLC for coding agents. The rest of this page is what that install actually puts on disk: a thin handshake, on-demand skills, one MCP profile per host, a quality gate, and learning loops. Eval-driven development (**alpha**) is how you prove tool routing in CI; it is not the whole product and it is not a complete EDD framework.
 
-Independent assessment (value + model-/host-agnosticism) and open follow-ups: [kit-value-and-model-agnostic-review.md](./kit-value-and-model-agnostic-review.md), [kit-review-backlog.md](./kit-review-backlog.md). Host adapters: [hosts.md](./hosts.md). Feature work: [Feature lifecycle](./lifecycle.md) (grill → stories → TDD → XFN → telemetry → confirm or kill). After a bet’s timebox, measure the leading indicator in PostHog, then stories or prune — not a separate insights role. CI, RUM, and scout alerts that should become typed Linear tickets are [quality loops](/SOPs/quality-loops).
+Independent assessment (value + model-/host-agnosticism) and open follow-ups: [kit-value-and-model-agnostic-review.md](./kit-value-and-model-agnostic-review.md), [kit-review-backlog.md](./kit-review-backlog.md). Host adapters: [hosts.md](./hosts.md). Feature work: [Feature lifecycle](./lifecycle.md) (grill → stories → TDD → XFN → telemetry → confirm or kill). After a bet’s timebox, measure the leading indicator in PostHog, then stories or prune — not a separate insights role. CI, RUM, and scout alerts that should become typed Linear tickets are [quality loops](/docs/loops).
 
 ## Always-on context
 

@@ -27,6 +27,7 @@ export const SITE_NAV: DocsNavItem[] = [
     path: '/docs',
     matchPrefixes: [
       '/docs/edd',
+      '/docs/loops',
       '/docs/hosts',
       '/docs/kit',
       '/docs/doctor',
@@ -52,6 +53,7 @@ export const START_ITEMS: DocsNavItem[] = [
 
 export const PRACTICE_ITEMS: DocsNavItem[] = [
   { label: 'Feature lifecycle', path: '/docs/lifecycle' },
+  { label: 'Quality loops', path: '/docs/loops' },
   { label: 'Host subagents', path: '/docs/subagents' },
   { label: 'What Waykit gives you', path: '/docs/kit' },
   { label: 'Repo doctor', path: '/docs/doctor' },

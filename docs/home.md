@@ -10,7 +10,7 @@ The homepage does not host the job picker, CLI table, kit map, product-repo grid
 - [Getting started](./start.md)
 - [What Waykit gives you](./kit.md) (`wk` commands)
 - [Feature lifecycle](./lifecycle.md)
-- [Quality loops](../SOPs/quality-loops.md) (CI, RUM, Lighthouse and Sonar into Linear)
+- [Quality loops](./loops.md) (nested loops; CI, RUM, Lighthouse and Sonar into Linear)
 - [EDD guide (alpha)](./edd.md)
 - [Used on our own product repos](./used-in.md)
 - [Hosts](./hosts.md)

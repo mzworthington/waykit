@@ -4,7 +4,7 @@ Need a job, not an objection? [Jobs for today](/docs/jobs). First install: [Gett
 
 ## What is Waykit?
 
-Waykit is the software lifecycle for coding agents: grill, PRD/bet when value is unproven, spec, TDD, quality, audit, release, plus learning loops so the next session is better than the last. Eval-driven development (**alpha**) is one of those loops, when the change is a prompt or a tool contract. Feature path: [lifecycle](/docs/lifecycle). Day-to-day typo or failed job: [Jobs for today](/docs/jobs) (`agent-debug`, not grill → spec). Hosts: [Cursor, Claude Code, Copilot, Antigravity](/docs/hosts).
+Waykit is the software lifecycle for coding agents: grill, PRD/bet when value is unproven, spec, TDD, quality, audit, release, plus learning loops so the next session is better than the last. Eval-driven development (**alpha**) is one of those loops, when the change is a prompt or a tool contract. After ship, CI, RUM, Lighthouse and Sonar become Linear tickets ([quality loops](/docs/loops)). Feature path: [lifecycle](/docs/lifecycle). Day-to-day typo or failed job: [Jobs for today](/docs/jobs) (`agent-debug`, not grill → spec). Hosts: [Cursor, Claude Code, Copilot, Antigravity](/docs/hosts).
 
 ## How do I install Waykit?
 
@@ -68,6 +68,10 @@ wk tdd-guard install
 ```
 
 Cursor and Claude Code then run `wk tdd-guard` before writes. Production source is denied until a failing test run is recorded. Procedure: [TDD Guard hooks](/SOPs/tdd-guard). Upstream LLM validator (Claude plugin): [nizos/tdd-guard](https://github.com/nizos/tdd-guard).
+
+## How do quality loops work?
+
+TDD sits inside the feature PDLC. After ship, CI, RUM, Lighthouse and Sonar file typed Linear tickets. Hygiene then the work picker turns allowlisted ones into draft PRs. Evals are a separate loop: a miss becomes a failing case. Map: [Quality loops](/docs/loops). Procedure: [quality loops through Linear](/SOPs/quality-loops).
 
 ## Where does EDD fit?
 

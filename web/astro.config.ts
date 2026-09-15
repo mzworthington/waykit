@@ -15,6 +15,9 @@ export default defineConfig({
   integrations: [react(), kitPages(kitRoot)],
   vite: {
     envPrefix: ['VITE_', 'POSTHOG_TOKEN', 'POSTHOG_HOST'],
+    optimizeDeps: {
+      include: ['mermaid']
+    },
     resolve: {
       alias: {
         '@kit': kitRoot,

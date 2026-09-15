@@ -73,7 +73,7 @@ const PAGE_SEO: Record<string, SeoOverride> = {
   '/docs/faq': {
     headline: 'Common questions',
     description:
-      'Waykit FAQ: install, API keys, why AGENTS.md stays small, hosts (Cursor, Claude, Copilot, Antigravity), how agents find the right SOP, where EDD alpha fits, repo doctor and what the map is not.'
+      'Waykit FAQ: install, API keys, why AGENTS.md stays small, hosts (Cursor, Claude, Copilot, Antigravity), how agents find the right SOP, how quality loops work, where EDD alpha fits, repo doctor and what the map is not.'
   },
   '/docs/edd': {
     headline: 'EDD guide (alpha)',
@@ -109,6 +109,11 @@ const PAGE_SEO: Record<string, SeoOverride> = {
     headline: 'Feature lifecycle',
     description:
       'Route product work through grill, stories, spec, TDD, XFN, telemetry and release. After a bet’s timebox, measure the leading indicator in PostHog, then confirm or kill.'
+  },
+  '/docs/loops': {
+    headline: 'Quality loops',
+    description:
+      'TDD sits inside the feature PDLC. After ship, CI, RUM, Lighthouse and Sonar become Linear tickets. Hygiene then the work picker turns allowlisted ones into draft PRs.'
   },
   '/docs/subagents': {
     headline: 'Host subagent allowlist',

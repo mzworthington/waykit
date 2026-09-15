@@ -16,6 +16,8 @@ tools:
 ---
 # Standard Operating Procedure: Quality loops through Linear
 
+Operator map: [Quality loops](../docs/loops.md). This SOP is the procedure.
+
 CI, scanners, and telemetry become **typed Linear tickets**. Hygiene keeps the board clean. A work picker plays allowlisted tickets as **draft PRs**. No new specialist.
 
 PostHog funnel/bet rows stay on [product-signal-intake](./product-signal-intake.md). Sonar skips stay on [sonarqube-findings](./sonarqube-findings.md).
