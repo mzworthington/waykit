@@ -137,6 +137,35 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-006",
+      "name": "Lighthouse drop files a Performance ticket without a PR",
+      "description": "When a Lighthouse category drops versus last main, orchestrator files Performance via quality-loops, does not chase 100, comments on a fingerprint, and does not open a PR.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "A Lighthouse category dropped versus last main. File a Performance ticket from the scout. Do not chase 100 or open a PR.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "Performance",
+          "chase 100",
+          "comment instead of cloning",
+          "no PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

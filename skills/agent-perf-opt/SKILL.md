@@ -12,6 +12,7 @@ triggers:
   - memory leak
   - explain analyze
   - latency optimization
+  - lighthouse drop
   - profiling
   - cpu bottleneck
 depends-on:
