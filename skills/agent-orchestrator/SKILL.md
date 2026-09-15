@@ -81,7 +81,7 @@ Read [references/scope-gate.md](./references/scope-gate.md) before routing. Keep
 | Bug / failed job / live symptom | `agent-debug` (not grill → spec) |
 | PostHog → Linear ([product-signal-intake](../../SOPs/product-signal-intake.md)) | Session A `agent-posthog`, Session B `agent-user-stories` / `agent-prd`. Do not invent a product-insights skill. |
 | SonarQube issues ([sonarqube-findings](../../SOPs/sonarqube-findings.md)) | `wk mcp sonar`, triage, skip Actions SHA pins (`@vN`). Do not invent an `agent-sonarqube` skill. |
-| CI / telemetry → Linear ([quality-loops](../../SOPs/quality-loops.md)) | File typed tickets, hygiene, then work picker. `agent-debug` for Bug. No new specialist. Cloud catalog missing → **BLOCKED**. |
+| CI / telemetry → Linear ([quality-loops](../../SOPs/quality-loops.md)) | File typed tickets, hygiene, then work picker. `agent-debug` for Bug. No new specialist. Cloud dashboard catalog missing → **BLOCKED**. |
 | New feature / new bounded context | Full lifecycle: `agent-spec` → `agent-tdd` (gear 1+2) → `agent-xfn`. `agent-adapter` only if gear 2 is too large. "Continue until complete" still means the TDD micro-loop. |
 
 **Light XFN floor:** [SOPs/behavior-catalog-and-xfn.md](../../SOPs/behavior-catalog-and-xfn.md) §3. Browser E2E is **never** owned by `agent-tdd`.
