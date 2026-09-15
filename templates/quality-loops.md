@@ -49,7 +49,7 @@ Dependabot and CodeQL stay on their vendor PRs. Review or keep a Dependabot PR m
 ## Hygiene
 
 ```text
-Scheduled backlog pass only. Deduplicate tickets that share a fingerprint or a near-duplicate title and body: one stays playable, the other is Duplicate or a related child. Rewrite Backlog or Todo tickets that lack Story, a Work type label, or an observable Then. Group similar tickets as parent or related — do not paste them into one blob. If unsure, comment and leave the ticket. Do not cancel product work. Do not play tickets or open PRs. Do not rewrite gated PostHog bet rows.
+Scheduled backlog pass only. Deduplicate tickets that share a fingerprint or a near-duplicate title and body: one stays playable, the other is Duplicate or a related child — never a third clone. Duplicates that disagree on acceptance criteria: relate, do not merge. Rewrite Backlog or Todo tickets that lack Story, a Work type label, or an observable Then, and set one Work type. Leave Done or Canceled unchanged. Group similar tickets as parent or related — do not paste them into one blob. If unsure, comment and leave the ticket. Do not cancel product work. Do not play tickets or open PRs. Do not rewrite gated PostHog bet rows.
 ```
 
 ## Work picker

@@ -352,7 +352,9 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       prompt.includes('dependabot') ||
       prompt.includes('vendor pr') ||
       prompt.includes('rum break') ||
-      prompt.includes('beacon break')
+      prompt.includes('beacon break') ||
+      prompt.includes('backlog hygiene') ||
+      prompt.includes('hygiene pass')
     ) {
       return {
         content: 'Opening the quality-loops SOP.',

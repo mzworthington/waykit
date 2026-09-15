@@ -84,6 +84,11 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Hostnames only/);
     assert.match(sop!.body, /site tags/);
     assert.match(sop!.body, /source:<owning-repo>:rum:<hostname>/);
+    assert.match(sop!.body, /fingerprint/i);
+    assert.match(sop!.body, /Duplicate/);
+    assert.match(sop!.body, /INVEST/);
+    assert.match(sop!.body, /Done/);
+    assert.match(sop!.body, /Canceled/);
     assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
   });
 
