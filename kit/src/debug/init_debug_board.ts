@@ -1,11 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { slugifyAscii } from '../shared/text_parse.js';
 
 export function slugifyTitle(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  return slugifyAscii(title);
 }
 
 export function initBoard(templatePath: string, outPath: string, title: string, project: string, date: string): void {

@@ -1,3 +1,5 @@
+import { extractFencedBlock, parseDashMarkdownLink } from '../../../kit/src/shared/text_parse';
+
 export type TodayJobAction = {
   label: string;
   href: string;
@@ -93,16 +95,16 @@ function extractSteps(body: string): string[] {
 }
 
 function extractCommand(body: string): string {
-  const match = body.match(/```[^\n]*\n([\s\S]*?)```/);
-  return match ? match[1].replace(/\n$/, '') : '';
+  const fence = extractFencedBlock(body);
+  if (!fence) return '';
+  return fence.code.endsWith('\n') ? fence.code.slice(0, -1) : fence.code;
 }
 
 function extractActions(body: string): TodayJobAction[] {
   const actions: TodayJobAction[] = [];
-  const re = /^\s*-\s+\[(.+?)\]\((.+?)\)\s*$/gm;
-  let match: RegExpExecArray | null;
-  while ((match = re.exec(body)) !== null) {
-    actions.push({ label: match[1], href: match[2] });
+  for (const line of body.split('\n')) {
+    const item = parseDashMarkdownLink(line);
+    if (item) actions.push(item);
   }
   return actions;
 }

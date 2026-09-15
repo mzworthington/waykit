@@ -1,3 +1,5 @@
+import { isTableDividerCell, stripSurroundingTicks } from '../../../kit/src/shared/text_parse';
+
 export type KitCommandRow = {
   command: string;
   purpose: string;
@@ -26,7 +28,7 @@ export function parseKitCommandsMarkdown(md: string): KitCommands {
         .slice(1, -1)
         .map((cell) => cell.trim());
       if (cells.length < 2) continue;
-      if (/^-{3,}/.test(cells[0] ?? '')) continue;
+      if (isTableDividerCell(cells[0] ?? '')) continue;
       if (!seenHeader) {
         seenHeader = true;
         continue;
@@ -55,5 +57,5 @@ function extractCommandsSection(md: string): string | null {
 }
 
 function stripTicks(value: string): string {
-  return value.replace(/^`+|`+$/g, '');
+  return stripSurroundingTicks(value);
 }

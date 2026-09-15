@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
+import { splitYamlFrontmatter } from '../shared/yaml_frontmatter.js';
 import {
   listGenerateSubagents,
   loadSubagentAllowlist,
@@ -24,11 +25,11 @@ function countLines(text: string): number {
 }
 
 export function parseSkillDescription(skillMd: string): string {
-  const match = skillMd.match(/^---\s*\n([\s\S]*?)\n---(?:\n|$)/);
-  if (!match) {
+  const split = splitYamlFrontmatter(skillMd);
+  if (!split) {
     throw new Error('SKILL.md is missing YAML frontmatter');
   }
-  const parsed = parseYaml(match[1]);
+  const parsed = parseYaml(split.yaml);
   if (!parsed || typeof parsed !== 'object') {
     throw new Error('SKILL.md frontmatter must be a mapping');
   }

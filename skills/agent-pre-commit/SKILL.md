@@ -79,7 +79,7 @@ git restore --staged .
 
 If the hook still skips checks, read the script and run the underlying commands directly (see §3).
 
-**Subset is not PASS.** A filtered `vitest run path/…` run is not the quality gate. Status is FAIL or BLOCKED until the commands named in the hook for those paths exit 0 (`lint-staged`, `oxlint --deny-warnings`, format, typecheck, knip, `vitest run --changed`, and so on). Do not mark a phase COMPLETE after skipping hook steps or after running only a path-filtered test command.
+**Subset is not PASS.** A filtered `vitest run path/…` run is not the quality gate. Status is FAIL or BLOCKED until the commands named in the hook for those paths exit 0 (`lint-staged`, `oxlint --deny-warnings`, format, typecheck, knip, `vitest run --changed`, and so on). Do not mark a phase COMPLETE after skipping hook steps or after running only a path-filtered test command. [quality-loops](../../SOPs/quality-loops.md) work-picker sessions use this hook, not a path-filtered test.
 
 ### No hook
 

@@ -17,7 +17,7 @@ tools:
 
 Two sessions. One MCP profile each. A human gate before any Linear create.
 
-This is the contract text for `product-signal-intake`. Skills that should load it later (pointer story, not this file): [agent-posthog](../skills/agent-posthog/SKILL.md) (Session A), [agent-user-stories](../skills/agent-user-stories/SKILL.md) and [agent-prd](../skills/agent-prd/SKILL.md) (Session B), [agent-orchestrator](../skills/agent-orchestrator/SKILL.md) (route, do not invent a product-insights skill), [agent-debug](../skills/agent-debug/SKILL.md) when the row is a bug.
+This is the contract text for `product-signal-intake`. Skills that should load it later (pointer story, not this file): [agent-posthog](../skills/agent-posthog/SKILL.md) (Session A), [agent-user-stories](../skills/agent-user-stories/SKILL.md) and [agent-prd](../skills/agent-prd/SKILL.md) (Session B), [agent-orchestrator](../skills/agent-orchestrator/SKILL.md) (route, do not invent a product-insights skill), [agent-debug](../skills/agent-debug/SKILL.md) when the row is a bug. CI / RUM / Lighthouse / scout filing is [quality-loops](./quality-loops.md). Funnel and bet rows stay here.
 
 SDK wiring and empty-events proof stay on [posthog-product-analytics](./posthog-product-analytics.md). Filing tickets stays on [linear-ticket-workflow](./linear-ticket-workflow.md) in Session B only.
 

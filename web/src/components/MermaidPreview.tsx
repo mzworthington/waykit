@@ -52,7 +52,7 @@ export function MermaidPreview({ code }: Props) {
       try {
         const mermaid = await getMermaid();
         if (cancelled || my !== gen) return;
-        const id = `${reactId}${Math.random().toString(36).slice(2, 8)}`;
+        const id = `${reactId}g${my}`;
         const { svg: rendered } = await queueMermaidRender(() => mermaid.render(id, code));
         if (!cancelled && my === gen) {
           setSvg(rendered);

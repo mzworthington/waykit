@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 import type { RepoView } from './ownership.js';
 
 export interface GitHubPort {
@@ -18,7 +19,11 @@ type GhRepoJson = {
 };
 
 function gh(args: string[], cwd?: string): { status: number; stdout: string } {
-  const result = spawnSync('gh', args, { encoding: 'utf8', cwd });
+  const result = spawnSync(trustedBin('gh'), args, {
+    encoding: 'utf8',
+    cwd,
+    env: trustedSpawnEnv()
+  });
   return { status: result.status ?? 1, stdout: result.stdout ?? '' };
 }
 

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { resolveRepoDir } from '../shared/paths.js';
+import { splitYamlFrontmatter, yamlDashedList, yamlScalar } from '../shared/yaml_frontmatter.js';
 import { printCliOutcome } from '../cli/outcome.js';
 
 const defaultRepoDir: string = resolveRepoDir(import.meta.url);
@@ -41,22 +42,11 @@ function loadSkillsMeta(skillsDir: string): Map<string, SkillMeta> {
     if (!fs.existsSync(skillPath)) continue;
 
     const content = fs.readFileSync(skillPath, 'utf8');
-    const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
-    if (!fmMatch) continue;
+    const split = splitYamlFrontmatter(content);
+    if (!split) continue;
 
-    const yamlText = fmMatch[1];
-    const nameMatch = yamlText.match(/^name:\s*(.+)$/m);
-    const name = nameMatch ? nameMatch[1].trim() : entry.name;
-
-    const triggers: string[] = [];
-    const trigBlockMatch = yamlText.match(/triggers:\s*\n((?:\s*-\s*.*\n?)+)/);
-    if (trigBlockMatch) {
-      const lines = trigBlockMatch[1].split('\n');
-      for (const line of lines) {
-        const itemMatch = line.match(/^\s*-\s*['"]?([^'"]+)['"]?\s*$/);
-        if (itemMatch) triggers.push(itemMatch[1].trim().toLowerCase());
-      }
-    }
+    const name = yamlScalar(split.yaml, 'name')?.trim() || entry.name;
+    const triggers = (yamlDashedList(split.yaml, 'triggers') ?? []).map((item) => item.toLowerCase());
 
     map.set(name, {
       name,

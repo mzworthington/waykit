@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { kitRootFrom } from '../shared/paths.js';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 
 export type CliffCommit = {
   message: string;
@@ -79,9 +80,10 @@ export function cliffCommitRange(since: string | undefined, until = 'HEAD'): str
 }
 
 function gitRevParse(ref: string, root: string): string {
-  return execFileSync('git', ['rev-parse', `${ref}^{commit}`], {
+  return execFileSync(trustedBin('git'), ['rev-parse', `${ref}^{commit}`], {
     cwd: root,
     encoding: 'utf8',
+    env: trustedSpawnEnv()
   }).trim();
 }
 

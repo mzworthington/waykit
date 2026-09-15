@@ -2,6 +2,8 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
+import { parseNumberedHeading, markdownLinkTargets } from '../shared/text_parse.js';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 import { loadOntologySchema } from './schema.js';
 import { toHomepageIndex } from './graph_view.js';
 import {
@@ -48,23 +50,17 @@ function listPhilosophySections(kitRoot: string): Array<{ id: string; title: str
     const block = parts[i];
     const nl = block.indexOf('\n');
     const titleLine = (nl >= 0 ? block.slice(0, nl) : block).trim();
-    const idMatch = titleLine.match(/^(\d+)\.\s*(.+)$/);
+    const numbered = parseNumberedHeading(titleLine);
     sections.push({
-      id: idMatch ? idMatch[1] : String(i),
-      title: idMatch ? idMatch[2] : titleLine
+      id: numbered ? numbered.id : String(i),
+      title: numbered ? numbered.title : titleLine
     });
   }
   return sections;
 }
 
 function collectMarkdownTargets(text: string): string[] {
-  const targets: string[] = [];
-  const linkRe = /\[[^\]]*\]\(([^)]+)\)/g;
-  let m: RegExpExecArray | null;
-  while ((m = linkRe.exec(text)) !== null) {
-    targets.push(m[1].split('#')[0].trim());
-  }
-  return targets;
+  return markdownLinkTargets(text);
 }
 
 function addEdge(
@@ -87,9 +83,14 @@ export interface GenerateOntologyOptions {
 
 /** True when `git check-ignore` would exclude the kit-relative path. */
 export function isGitIgnored(kitRoot: string, relPath: string): boolean {
-  const result = spawnSync('git', ['-C', kitRoot, 'check-ignore', '-q', '--', relPath], {
-    stdio: 'ignore'
-  });
+  const result = spawnSync(
+    trustedBin('git'),
+    ['-C', kitRoot, 'check-ignore', '-q', '--', relPath],
+    {
+      stdio: 'ignore',
+      env: trustedSpawnEnv()
+    }
+  );
   return result.status === 0;
 }
 

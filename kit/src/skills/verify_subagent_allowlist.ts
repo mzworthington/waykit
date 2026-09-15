@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { compareMissRates, FREEZE_GENERATE_MAX } from '../edd/miss_rate.js';
+import { compareLocale, sortedLocale, sortLocaleInPlace } from '../shared/locale_sort.js';
 import { KIT_SKILL_DIR_PREFIX } from './verify_skills_layout.js';
 
 export const SUBAGENT_ALLOWLIST_REL = 'skills/subagents.yaml';
@@ -50,7 +51,7 @@ function listSkillDirs(repoDir: string): string[] {
     .readdirSync(skillsDir)
     .filter((base) => KIT_SKILL_DIR_PREFIX.test(base))
     .filter((base) => fs.existsSync(path.join(skillsDir, base, 'SKILL.md')))
-    .sort();
+    .sort(compareLocale);
 }
 
 function asStringArray(raw: unknown, label: string): string[] {
@@ -176,10 +177,10 @@ export function deriveGenerate(
     else if (entry.bucket === 'audit') audit.push(name);
     else if (entry.bucket === 'sequential') sequential.push(name);
   }
-  isolation.sort();
-  audit.sort();
-  sequential.sort();
-  parent.sort();
+  sortLocaleInPlace(isolation);
+  sortLocaleInPlace(audit);
+  sortLocaleInPlace(sequential);
+  sortLocaleInPlace(parent);
   return { isolation, audit, sequential, parent };
 }
 
@@ -188,13 +189,13 @@ function sameGenerate(
   b: SubagentAllowlistCatalog['generate']
 ): boolean {
   const key = (g: SubagentAllowlistCatalog['generate']) =>
-    [...g.isolation].sort().join(',') +
+    [...g.isolation].sort(compareLocale).join(',') +
     '|' +
-    [...g.audit].sort().join(',') +
+    [...g.audit].sort(compareLocale).join(',') +
     '|' +
-    [...g.sequential].sort().join(',') +
+    [...g.sequential].sort(compareLocale).join(',') +
     '|' +
-    [...g.parent].sort().join(',');
+    [...g.parent].sort(compareLocale).join(',');
   return key(a) === key(b);
 }
 
@@ -291,8 +292,8 @@ export function verifySubagentAllowlist(repoDir: string): SubagentAllowlistResul
     ...catalog.generate.isolation,
     ...catalog.generate.audit,
     ...catalog.generate.sequential
-  ].sort();
-  const actualSub = listGenerateSubagents(catalog).sort();
+  ].sort(compareLocale);
+  const actualSub = sortedLocale(listGenerateSubagents(catalog));
   if (expectedSub.join(',') !== actualSub.join(',')) {
     errors.push(
       `generate isolation+audit+sequential must match roles with runtime subagent (expected ${expectedSub.join(', ')})`

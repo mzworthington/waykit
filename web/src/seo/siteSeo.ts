@@ -1,4 +1,10 @@
 import { HOME_HEADLINE, HOME_LEDE } from '../landing/copy';
+import {
+  collapseSpaces,
+  stripMarkdownDecorations,
+  stripMarkdownLinks,
+  trimIncompleteLastWord
+} from '../../../kit/src/shared/text_parse';
 
 export const SITE_ORIGIN = 'https://waykit.dev';
 export const SITE_NAME = 'Waykit';
@@ -177,7 +183,7 @@ function firstParagraph(markdown: string): string | undefined {
     ) {
       continue;
     }
-    const cleaned = row.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '');
+    const cleaned = stripMarkdownDecorations(stripMarkdownLinks(row));
     if (cleaned.length > 40) return cleaned;
   }
   return undefined;
@@ -196,14 +202,9 @@ export function markdownExcerpt(markdown: string, max = 420): string {
     if (inFence || !row || row.startsWith('#') || row.startsWith('|')) continue;
     lines.push(row);
   }
-  const text = lines
-    .join(' ')
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/[*_`>#]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  const text = collapseSpaces(stripMarkdownDecorations(stripMarkdownLinks(lines.join(' ')))).trim();
   if (text.length <= max) return text;
-  return `${text.slice(0, max).replace(/\s+\S*$/, '')}…`;
+  return `${trimIncompleteLastWord(text.slice(0, max))}…`;
 }
 
 function titleFor(headline: string, explicit?: string): string {

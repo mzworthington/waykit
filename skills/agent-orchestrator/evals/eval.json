@@ -83,6 +83,60 @@
           "product-signal-intake"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-004",
+      "name": "Quality loops use existing roles",
+      "description": "When closing CI and telemetry quality loops through Linear, orchestrator points at quality-loops and existing debug/stories roles instead of a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate quality loops so failed checks become Linear tickets a work picker can play. Do not invent a specialist.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "agent-debug",
+          "BLOCKED"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-005",
+      "name": "Scheduled scout files typed tickets without a PR",
+      "description": "When a scheduled scout files typed Linear tickets, orchestrator keeps one source, quality-loops, and no PR from that session.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Orchestrate a scheduled scout for one source and file typed Linear tickets. Do not open a PR.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": [
+          "lifecycle",
+          "orchestrate"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "one source",
+          "no PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

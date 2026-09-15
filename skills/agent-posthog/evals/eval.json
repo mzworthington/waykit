@@ -50,6 +50,22 @@
         "forbidden_patterns": ["self-driving", "yarn add"],
         "required_output_sections": ["product-signal-intake"]
       }
+    },
+    {
+      "id": "EVAL-POSTHOG-COLOCATED-004",
+      "name": "Scout files PostHog errors after restore, not funnels",
+      "description": "Ensures a scheduled scout that files PostHog errors restores default via quality-loops, leaves funnel and bet rows on product-signal-intake, and does not open a PR.",
+      "target_skill": "agent-posthog",
+      "prompt": "Scheduled scout: file typed Linear tickets from PostHog errors after restore default. Do not auto-file funnels or open a PR.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["posthog", "product analytics"],
+        "required_patterns": ["quality-loops", "wk mcp default", "product-signal-intake", "no PR"],
+        "forbidden_patterns": ["self-driving", "yarn add"],
+        "required_output_sections": ["quality-loops"]
+      }
     }
   ]
 }

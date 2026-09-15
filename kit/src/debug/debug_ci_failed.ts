@@ -1,4 +1,6 @@
 import { spawnSync } from 'child_process';
+import fs from 'fs';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 import { classifyCiLog, formatCiClassification } from './classify_ci_log.js';
 
 export interface DebugCiOptions {
@@ -49,7 +51,7 @@ export function parseDebugCiArgs(args: string[]): DebugCiOptions {
 
 function gh(repo: string, args: string[]): { status: number; stdout: string } {
   const full = repo ? ['--repo', repo, ...args] : args;
-  const result = spawnSync('gh', full, { encoding: 'utf8' });
+  const result = spawnSync(trustedBin('gh'), full, { encoding: 'utf8', env: trustedSpawnEnv() });
   if (result.stdout) process.stdout.write(result.stdout);
   if (result.stderr) process.stderr.write(result.stderr);
   return { status: result.status ?? 1, stdout: result.stdout ?? '' };
@@ -57,7 +59,7 @@ function gh(repo: string, args: string[]): { status: number; stdout: string } {
 
 function ghCapture(repo: string, args: string[]): { status: number; stdout: string; stderr: string } {
   const full = repo ? ['--repo', repo, ...args] : args;
-  const result = spawnSync('gh', full, { encoding: 'utf8' });
+  const result = spawnSync(trustedBin('gh'), full, { encoding: 'utf8', env: trustedSpawnEnv() });
   return { status: result.status ?? 1, stdout: result.stdout ?? '', stderr: result.stderr ?? '' };
 }
 
@@ -81,8 +83,7 @@ Usage:
     return 0;
   }
 
-  const which = spawnSync('sh', ['-c', 'command -v gh'], { encoding: 'utf8' });
-  if (which.status !== 0) {
+  if (!fs.existsSync(trustedBin('gh'))) {
     console.error('ERROR: gh CLI required (https://cli.github.com/)');
     return 1;
   }

@@ -9,6 +9,7 @@ import {
   missRateOutcome,
   type MissRateCompare
 } from '../edd/miss_rate.js';
+import { sortedLocale } from '../shared/locale_sort.js';
 import {
   listGenerateSubagents,
   loadSubagentAllowlist,
@@ -51,7 +52,7 @@ export function subagentStatus(opts: {
     catalogSkillsOnly: catalog.skillsOnly,
     skillsOnly: resolveSkillsOnlyMode({ catalogSkillsOnly: catalog.skillsOnly, env }),
     envRaw: raw,
-    generate: listGenerateSubagents(catalog).sort(),
+    generate: sortedLocale(listGenerateSubagents(catalog)),
     installDirs: userSubagentInstallDirs(opts.homedir ?? os.homedir()),
     expandKill: freezeExpandKillLine(missRate, catalog.expandKill.trim()),
     expandKillIndicator: catalog.expandKillIndicator.trim(),

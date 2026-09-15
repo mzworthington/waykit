@@ -15,6 +15,7 @@ import {
   type OntologyIndex,
   type RelationName,
 } from "../../../../kit/src/ontology/index.js";
+import { parseNumberedHeading } from "../../../../kit/src/shared/text_parse.js";
 
 export type KitDocKind = "philosophy" | "sop" | "skill" | "handover" | "docs";
 
@@ -101,9 +102,9 @@ export function listPhilosophySections(kitRoot: string): PhilosophySection[] {
     const nl = block.indexOf("\n");
     const titleLine = (nl >= 0 ? block.slice(0, nl) : block).trim();
     const body = (nl >= 0 ? block.slice(nl + 1) : "").trim();
-    const idMatch = titleLine.match(/^(\d+)\.\s*(.+)$/);
-    const id = idMatch ? idMatch[1] : String(i);
-    const title = idMatch ? idMatch[2] : titleLine;
+    const idMatch = parseNumberedHeading(titleLine);
+    const id = idMatch ? idMatch.id : String(i);
+    const title = idMatch ? idMatch.title : titleLine;
     sections.push({ id, title, body: `## ${titleLine}\n\n${body}` });
   }
   return sections;

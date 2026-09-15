@@ -60,7 +60,7 @@ If Sonar tools are missing after install, write the findings table with **BLOCKE
 | `skip` | Matches a policy-skip row |
 | `ask` | Disagreement not yet in this SOP, or a smell that would fight hexagonal / DDD / catalog-shaped tests |
 
-5. Do **not** create Linear issues unless the operator asks. Do not launch readonly `agent-security` to apply code changes.
+5. Do **not** create Linear issues unless the operator asks, or a [quality-loops](./quality-loops.md) scout is filing after restore `wk mcp default`. Do not launch readonly `agent-security` to apply code changes.
 
 ## Apply (`fix` rows)
 

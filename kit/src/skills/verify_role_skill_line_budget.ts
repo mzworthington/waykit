@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { splitYamlFrontmatter, yamlScalar } from '../shared/yaml_frontmatter.js';
 
 export const ROLE_SKILL_BODY_LINE_BUDGET = 150;
 
@@ -30,13 +31,12 @@ function countLines(text: string): number {
 }
 
 function parseSkillMarkdown(content: string): { kind: string | null; body: string } {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---(?:\n|$)/);
-  if (!match) {
+  const split = splitYamlFrontmatter(content);
+  if (!split) {
     return { kind: null, body: content };
   }
-  const kindMatch = match[1].match(/^kind:\s*(.+)$/m);
-  const kind = kindMatch ? kindMatch[1].trim() : null;
-  return { kind, body: content.slice(match[0].length) };
+  const kind = yamlScalar(split.yaml, 'kind');
+  return { kind, body: split.body };
 }
 
 export function verifyRoleSkillLineBudget(

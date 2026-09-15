@@ -42,13 +42,21 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Checkout Waykit installer
+        uses: actions/checkout@v7
+        with:
+          repository: mzworthington/waykit
+          ref: ${{ inputs.kit_ref }}
+          path: .waykit-src
+          persist-credentials: false
+
       - name: Install Waykit
         env:
-          KIT_REF: ${{ inputs.kit_ref }}
           INSTALL_MCP: '0'
           INSTALL_EXTERNAL_SKILLS: '0'
         run: |
-          curl -fsSL "https://raw.githubusercontent.com/mzworthington/waykit/${KIT_REF}/install.sh" | sh
+          sh "${GITHUB_WORKSPACE}/.waykit-src/install.sh"
+          rm -rf "${GITHUB_WORKSPACE}/.waykit-src"
           echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
 
       - name: Run wk align

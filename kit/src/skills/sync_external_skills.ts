@@ -1,5 +1,6 @@
 import { spawnSync } from 'child_process';
 import fs from 'fs';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 import os from 'os';
 import path from 'path';
 import { parseExternalLockFile } from './parse_external_lock.js';
@@ -41,15 +42,17 @@ export function mirrorUserSkills(sourceDir: string, destDirs: string[]): string[
 
 export const defaultCommandRunner: CommandRunner = {
   exists(bin: string): boolean {
-    const result = spawnSync('sh', ['-c', `command -v ${JSON.stringify(bin)}`], { encoding: 'utf8' });
-    return result.status === 0 && Boolean(result.stdout?.trim());
+    return fs.existsSync(trustedBin(bin));
   },
   skillAvailable(): boolean {
-    const result = spawnSync('gh', ['skill', '--help'], { stdio: 'pipe' });
+    const result = spawnSync(trustedBin('gh'), ['skill', '--help'], {
+      stdio: 'pipe',
+      env: trustedSpawnEnv()
+    });
     return result.status === 0;
   },
   run(bin: string, args: string[]): { status: number } {
-    const result = spawnSync(bin, args, { stdio: 'inherit' });
+    const result = spawnSync(trustedBin(bin), args, { stdio: 'inherit', env: trustedSpawnEnv() });
     return { status: result.status ?? 1 };
   },
   userSkillsDir: cursorUserSkillsDir,

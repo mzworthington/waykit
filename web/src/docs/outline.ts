@@ -1,4 +1,5 @@
 import { splitDocsMarkdown } from './presentDocsMarkdown';
+import { parseAtxHeading, slugifyHeading as slugifyHeadingText } from '../../../kit/src/shared/text_parse';
 
 export const HEADING_ALIASES: Record<string, string> = {
   'what-do-i-use-this-for-today': 'today',
@@ -21,11 +22,7 @@ export type DocsTocItem = {
 };
 
 export function slugifyHeading(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
+  return slugifyHeadingText(text);
 }
 
 export function headingId(text: string, used: Map<string, number>): string {
@@ -46,9 +43,9 @@ export function consumeMarkdownHeadings(markdown: string, used: Map<string, numb
       continue;
     }
     if (inFence) continue;
-    const match = /^(#{1,3})\s+(.+)$/.exec(line);
+    const match = parseAtxHeading(line, 1, 3);
     if (!match) continue;
-    headingId(match[2]!.trim(), used);
+    headingId(match.text, used);
   }
 }
 
@@ -68,10 +65,10 @@ export function docsToc(markdown: string): DocsTocItem[] {
       continue;
     }
     if (inFence) continue;
-    const match = /^(#{2,3})\s+(.+)$/.exec(line);
+    const match = parseAtxHeading(line, 2, 3);
     if (!match) continue;
-    const level = match[1]!.length as 2 | 3;
-    const label = match[2]!.trim();
+    const level = match.level as 2 | 3;
+    const label = match.text;
     items.push({ id: headingId(label, used), label, level });
   }
   return items;

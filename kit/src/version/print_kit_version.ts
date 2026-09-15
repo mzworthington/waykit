@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { cliOutcomeShouldColor, formatCliOutcome, type CliOutcome } from '../cli/outcome.js';
+import { trustedBin, trustedSpawnEnv } from '../shared/trusted_bin.js';
 import {
   formatKitVersion,
   isOriginWeeksAhead,
@@ -12,7 +13,11 @@ import {
 } from './kit_version.js';
 
 function git(repoDir: string, args: string[]): string | undefined {
-  const result = spawnSync('git', args, { encoding: 'utf8', cwd: repoDir });
+  const result = spawnSync(trustedBin('git'), args, {
+    encoding: 'utf8',
+    cwd: repoDir,
+    env: trustedSpawnEnv()
+  });
   if (result.status !== 0) return undefined;
   const out = (result.stdout ?? '').trim();
   return out || undefined;

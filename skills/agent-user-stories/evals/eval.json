@@ -201,6 +201,22 @@
         "forbidden_patterns": ["```typescript", "ASCII art", "box-drawing"],
         "required_output_sections": ["product-signal-intake"]
       }
+    },
+    {
+      "id": "EVAL-USERSTORIES-COLOCATED-007",
+      "name": "Hygiene pass uses quality-loops",
+      "description": "Ensures a backlog hygiene pass that groups, rewrites, and dedupes tickets stays on quality-loops and does not open a PR.",
+      "target_skill": "agent-user-stories",
+      "prompt": "Run a Linear backlog hygiene pass: group similar tickets, rewrite unclear INVEST bodies, and mark duplicates. Do not open a PR.",
+      "context": {
+        "active_phase": "spec"
+      },
+      "assertions": {
+        "required_triggers": ["linear", "backlog", "INVEST"],
+        "required_patterns": ["quality-loops"],
+        "forbidden_patterns": ["agent-quality-loops"],
+        "required_output_sections": ["quality-loops"]
+      }
     }
   ]
 }

@@ -1,3 +1,5 @@
+import { firstBraceSlice } from '../shared/text_parse.js';
+
 /** First JSON object in `text`, including when it is wrapped in prose. */
 export function tryParseJsonObject(text: string): Record<string, unknown> | undefined {
   const trimmed = text.trim();
@@ -10,10 +12,10 @@ export function tryParseJsonObject(text: string): Record<string, unknown> | unde
   } catch {
     /* fall through */
   }
-  const match = trimmed.match(/\{[\s\S]*\}/);
-  if (!match) return undefined;
+  const slice = firstBraceSlice(trimmed);
+  if (!slice) return undefined;
   try {
-    const parsed = JSON.parse(match[0]) as unknown;
+    const parsed = JSON.parse(slice) as unknown;
     if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
       return parsed as Record<string, unknown>;
     }

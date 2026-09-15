@@ -343,6 +343,21 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       };
     }
     if (
+      prompt.includes('quality-loops') ||
+      prompt.includes('quality loop') ||
+      prompt.includes('work picker') ||
+      prompt.includes('scheduled scout')
+    ) {
+      return {
+        content: 'Opening the quality-loops SOP.',
+        tool_calls: [{ name: 'get_sop', arguments: { name: 'quality-loops' } }],
+        usage: { promptTokens: 50, completionTokens: 30, totalTokens: 85 },
+        consecutiveToolFailures: 0,
+        haltedAutonomousExecution: false,
+        routingConfidence: 0.91
+      };
+    }
+    if (
       prompt.includes('sonarqube') ||
       prompt.includes('sonarcloud') ||
       prompt.includes('sonar findings')

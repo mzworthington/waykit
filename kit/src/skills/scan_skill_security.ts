@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { KIT_SKILL_DIR_PREFIX } from './verify_skills_layout.js';
 import { printCliOutcome } from '../cli/outcome.js';
+import { splitYamlFrontmatter, yamlDashedList, yamlHasKey, yamlScalar } from '../shared/yaml_frontmatter.js';
 
 interface SecurityViolation {
   file: string;
@@ -15,26 +16,151 @@ const SCAN_DIRECTORIES: string[] = ['skills', 'kit', 'bin', 'SOPs', 'templates',
 const SKIP_DIRS = new Set(['.git', 'node_modules', '.pnpm-store', '.pnpm', '.husky']);
 const SKIP_FILES = new Set(['scan_skill_security.ts']);
 
+function hasPromptInjection(line: string): boolean {
+  const lower = line.toLowerCase();
+  return (
+    lower.includes('ignore previous instructions') ||
+    lower.includes('ignore all previous instructions') ||
+    lower.includes('system prompt override') ||
+    lower.includes('bypass safety') ||
+    lower.includes('bypass all safety') ||
+    lower.includes('ignore guardrails') ||
+    lower.includes('jailbreak')
+  );
+}
+
+function hasDotEnvLeak(line: string): boolean {
+  let from = 0;
+  while (from < line.length) {
+    const at = line.indexOf('.env', from);
+    if (at < 0) return false;
+    const prev = at === 0 ? '' : line[at - 1]!;
+    const prevLetter = (prev >= 'A' && prev <= 'Z') || (prev >= 'a' && prev <= 'z');
+    const rest = line.slice(at + 4);
+    if (rest.startsWith('.example')) {
+      from = at + 4;
+      continue;
+    }
+    const next = rest[0];
+    const nextWord =
+      next !== undefined &&
+      ((next >= 'A' && next <= 'Z') ||
+        (next >= 'a' && next <= 'z') ||
+        (next >= '0' && next <= '9') ||
+        next === '_');
+    if (!prevLetter && !nextWord) return true;
+    from = at + 4;
+  }
+  return false;
+}
+
+function hasExfilRisk(line: string): boolean {
+  if (line.includes('~/.ssh') || line.includes('~/.aws') || line.includes('id_rsa')) return true;
+  if (line.includes('AWS_SECRET_ACCESS_KEY') || line.includes('SLACK_TOKEN')) return true;
+  if (hasDotEnvLeak(line)) return true;
+  const lower = line.toLowerCase();
+  return (
+    (lower.includes('curl -x ') || lower.includes('curl -d ')) &&
+    (lower.includes(' post http') || lower.includes(' put http'))
+  );
+}
+
+function pipedToShell(line: string): boolean {
+  const lower = line.toLowerCase();
+  let search = 0;
+  while (search < lower.length) {
+    const pipe = lower.indexOf('|', search);
+    if (pipe < 0) return false;
+    let i = pipe + 1;
+    while (i < lower.length && (lower[i] === ' ' || lower[i] === '\t')) i += 1;
+    const rest = lower.slice(i);
+    const shell =
+      rest.startsWith('bash') || rest.startsWith('zsh') || rest === 'sh' || rest.startsWith('sh ') || rest.startsWith('sh\t');
+    if (shell) {
+      const left = lower.slice(0, pipe);
+      if (left.includes('curl ') || left.includes('wget ')) return true;
+    }
+    search = pipe + 1;
+  }
+  return false;
+}
+
+function hasObfuscatedExec(line: string): boolean {
+  const lower = line.toLowerCase();
+  if (lower.includes('base64 -d |') || lower.includes('base64 -d|')) return true;
+  if (lower.includes('nc -e')) return true;
+  if (lower.includes('eval(') && lower.includes('buffer.from')) return true;
+  if (lower.includes('sudo rm -rf')) return true;
+  return pipedToShell(line);
+}
+
+function isAlnum(ch: string | undefined): boolean {
+  if (!ch) return false;
+  return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+}
+
+function isAlnumUnderscore(ch: string | undefined): boolean {
+  return isAlnum(ch) || ch === '_';
+}
+
+function countPrefixed(line: string, prefix: string, pred: (ch: string | undefined) => boolean): number {
+  let from = 0;
+  let max = 0;
+  while (from < line.length) {
+    const at = line.indexOf(prefix, from);
+    if (at < 0) return max;
+    let n = 0;
+    let i = at + prefix.length;
+    while (pred(line[i])) {
+      n += 1;
+      i += 1;
+    }
+    if (n > max) max = n;
+    from = at + 1;
+  }
+  return max;
+}
+
+function hasPrivateKeyHeader(line: string): boolean {
+  const begin = line.indexOf('-----BEGIN ');
+  if (begin < 0) return false;
+  return line.includes('PRIVATE KEY-----', begin);
+}
+
+function hasHardcodedSecret(line: string): boolean {
+  if (countPrefixed(line, 'AKIA', (ch) => Boolean(ch && ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z')))) === 16) {
+    return true;
+  }
+  if (countPrefixed(line, 'ghp_', isAlnumUnderscore) === 36) return true;
+  if (countPrefixed(line, 'github_pat_', isAlnumUnderscore) === 82) return true;
+  if (hasPrivateKeyHeader(line)) return true;
+  for (const prefix of ['xoxb-', 'xoxa-', 'xoxp-', 'xoxr-', 'xoxs-'] as const) {
+    const n = countPrefixed(line, prefix, isAlnum);
+    if (n >= 10 && n <= 48) return true;
+  }
+  return false;
+}
+
 const SECURITY_RULES = [
   {
     category: 'PROMPT_INJECTION' as const,
     rule: 'System prompt override or instruction ignore attempt',
-    pattern: /(ignore\s+(all\s+)?previous\s+instructions|system\s+prompt\s+override|bypass\s+(all\s+)?safety|ignore\s+guardrails|jailbreak)/i
+    test: hasPromptInjection
   },
   {
     category: 'EXFILTRATION_RISK' as const,
     rule: 'Credential store access or exfiltration request',
-    pattern: /(~\/\.ssh|~\/\.aws|(?<![A-Za-z])\.env\b(?!\.example)|id_rsa|AWS_SECRET_ACCESS_KEY|SLACK_TOKEN|curl\s+-[Xd]\s+(POST|PUT)\s+http)/i
+    test: hasExfilRisk
   },
   {
     category: 'OBFUSCATED_EXEC' as const,
     rule: 'Hazardous shell execution, pipe to shell, or obfuscation',
-    pattern: /(base64\s+-d\s*\||curl\s+[^|\n]+\|\s*(bash|sh|zsh)|wget\s+[^|\n]+\|\s*(bash|sh)|nc\s+-[eE]|eval\s*\(\s*Buffer\.from|sudo\s+rm\s+-rf)/i
+    test: hasObfuscatedExec
   },
   {
     category: 'HARDCODED_SECRET' as const,
     rule: 'Hardcoded API key, private key header, or secret token',
-    pattern: /(AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9_]{36}|github_pat_[A-Za-z0-9_]{82}|-----BEGIN (RSA|OPENSSH|EC|PGP)? PRIVATE KEY-----|xox[baprs]-[0-9a-zA-Z]{10,48})/i
+    test: hasHardcodedSecret
   }
 ];
 
@@ -74,8 +200,8 @@ function calculateEntropy(str: string): number {
 }
 
 function scanFrontmatter(violations: SecurityViolation[], relPath: string, content: string): void {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
-  if (!match) {
+  const split = splitYamlFrontmatter(content);
+  if (!split) {
     violations.push({
       file: relPath,
       line: 1,
@@ -86,14 +212,13 @@ function scanFrontmatter(violations: SecurityViolation[], relPath: string, conte
     return;
   }
 
-  const yamlText = match[1];
-  const nameMatch = yamlText.match(/^name:\s*(.+)$/m);
-  const descMatch = yamlText.match(/^description:\s*/m);
-  const kindMatch = yamlText.match(/^kind:\s*(.+)$/m);
-  const phaseMatch = yamlText.match(/^phase:\s*(.+)$/m);
-  const triggersMatch = yamlText.match(/triggers:\s*\n((?:\s*-\s*.*\n?)+)/);
+  const yamlText = split.yaml;
+  const name = yamlScalar(yamlText, 'name');
+  const kind = yamlScalar(yamlText, 'kind');
+  const phase = yamlScalar(yamlText, 'phase');
+  const triggers = yamlDashedList(yamlText, 'triggers');
 
-  if (!nameMatch) {
+  if (!name) {
     violations.push({
       file: relPath,
       line: 1,
@@ -103,7 +228,7 @@ function scanFrontmatter(violations: SecurityViolation[], relPath: string, conte
     });
   }
 
-  if (!descMatch) {
+  if (!yamlHasKey(yamlText, 'description')) {
     violations.push({
       file: relPath,
       line: 1,
@@ -113,33 +238,31 @@ function scanFrontmatter(violations: SecurityViolation[], relPath: string, conte
     });
   }
 
-  if (kindMatch) {
-    const kind = kindMatch[1].trim();
+  if (kind) {
     if (!VALID_KINDS.includes(kind)) {
       violations.push({
         file: relPath,
         line: 1,
         category: 'FRONTMATTER_SCHEMA',
         rule: `Invalid frontmatter kind "${kind}". Allowed: [${VALID_KINDS.join(', ')}]`,
-        snippet: kindMatch[0]
+        snippet: kind
       });
     }
 
-    if (kind === 'role' && phaseMatch) {
-      const phase = phaseMatch[1].trim();
+    if (kind === 'role' && phase) {
       if (!VALID_PHASES.includes(phase)) {
         violations.push({
           file: relPath,
           line: 1,
           category: 'FRONTMATTER_SCHEMA',
           rule: `Invalid role phase "${phase}". Allowed: [${VALID_PHASES.join(', ')}]`,
-          snippet: phaseMatch[0]
+          snippet: phase
         });
       }
     }
   }
 
-  if (!triggersMatch) {
+  if (!triggers) {
     violations.push({
       file: relPath,
       line: 1,
@@ -160,7 +283,7 @@ function scanFile(violations: SecurityViolation[], filePath: string, relPath: st
 
   lines.forEach((line: string, index: number) => {
     SECURITY_RULES.forEach((rule) => {
-      if (!rule.pattern.test(line)) return;
+      if (!rule.test(line)) return;
       if (rule.category === 'OBFUSCATED_EXEC' && isOfficialKitInstallerLine(line)) return;
       violations.push({
         file: relPath,

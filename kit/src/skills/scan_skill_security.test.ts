@@ -162,6 +162,17 @@ Install: \`curl -LsSf https://hf.co/cli/install.sh | bash -s\`.
     assert.equal(scanSkillSecurity(root).ok, true);
   });
 
+  it('does not treat truncated token placeholders in docs as secrets', () => {
+    const root = scanRoot();
+    writeSkill(root, 'agent-tdd', VALID_SKILL);
+    fs.writeFileSync(
+      path.join(root, 'mcps', 'readme.md'),
+      "export GITHUB_PERSONAL_ACCESS_TOKEN=ghp_...\nexport SLACK_BOT_TOKEN='xoxb-...'\n",
+      'utf8'
+    );
+    assert.equal(scanSkillSecurity(root).ok, true);
+  });
+
   it('does not scan its own rule file or *.test.ts', () => {
     const root = scanRoot();
     writeSkill(root, 'agent-tdd', VALID_SKILL);

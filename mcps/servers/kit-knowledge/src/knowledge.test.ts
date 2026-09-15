@@ -57,6 +57,40 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Do not invent issue URLs/);
   });
 
+  it("returns quality-loops with the Cloud dashboard catalog stop", () => {
+    const sop = getSop(kitRoot, "quality-loops");
+    assert.ok(sop);
+    assert.equal(sop!.id, "quality-loops");
+    assert.match(sop!.body, /Cursor dashboard/);
+    assert.match(sop!.body, /GitHub/);
+    assert.match(sop!.body, /Linear/);
+    assert.match(sop!.body, /PostHog/);
+    assert.match(sop!.body, /Cloudflare Observability/);
+    assert.match(sop!.body, /SonarQube/);
+    assert.match(sop!.body, /wk mcp --install/);
+    assert.match(sop!.body, /BLOCKED/);
+    assert.match(sop!.body, /Do not invent/);
+    assert.match(sop!.body, /does not wake/);
+    assert.match(sop!.body, /lists\/work-picker-allowlist\.yaml/);
+    assert.match(sop!.body, /Draft PR only/);
+    assert.match(sop!.body, /hold/);
+    assert.match(sop!.body, /auto-work/);
+    assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
+  });
+
+  it("returns mcp-library with the Cloud Agent dashboard catalog stop", () => {
+    const sop = getSop(kitRoot, "mcp-library");
+    assert.ok(sop);
+    assert.match(sop!.body, /Cursor dashboard/);
+    assert.match(sop!.body, /GitHub/);
+    assert.match(sop!.body, /Linear/);
+    assert.match(sop!.body, /PostHog/);
+    assert.match(sop!.body, /Cloudflare Observability/);
+    assert.match(sop!.body, /SonarQube/);
+    assert.match(sop!.body, /wk mcp --install/);
+    assert.match(sop!.body, /BLOCKED/);
+  });
+
   it("returns sonarqube-findings with the GitHub Actions version-tag skip", () => {
     const sop = getSop(kitRoot, "sonarqube-findings");
     assert.ok(sop);

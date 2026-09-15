@@ -1,3 +1,5 @@
+import { firstMarkdownHeading } from '../../../kit/src/shared/text_parse';
+
 export type DocsPageMeta = {
   /** Repo-relative markdown path, e.g. `docs/edd.md`. */
   file: string;
@@ -34,8 +36,7 @@ export function fileToRoute(file: string): string {
 }
 
 export function titleFromMarkdown(markdown: string, fallback: string): string {
-  const heading = markdown.match(/^#\s+(.+)$/m);
-  return heading?.[1]?.trim() || fallback;
+  return firstMarkdownHeading(markdown) || fallback;
 }
 
 export function shouldPublishMarkdown(file: string): boolean {

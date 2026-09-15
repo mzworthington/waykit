@@ -1,4 +1,5 @@
 import { EvalCaseSchema, type EvalCase } from './schema.js';
+import { trimTrailingPunct } from '../shared/text_parse.js';
 
 const PARAPHRASE_TRANSFORMS: Array<(prompt: string) => string> = [
   (p) => `Please ${uncapitalize(p)}`,
@@ -11,10 +12,6 @@ const PARAPHRASE_TRANSFORMS: Array<(prompt: string) => string> = [
 function uncapitalize(s: string): string {
   if (!s) return s;
   return s.charAt(0).toLowerCase() + s.slice(1);
-}
-
-function trimTrailingPunct(s: string): string {
-  return s.replace(/[.?!]+$/u, '');
 }
 
 function stripLeadingCouldYou(s: string): string {

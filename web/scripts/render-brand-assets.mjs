@@ -8,12 +8,23 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const assets = path.join(root, 'public/assets');
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-brand-'));
 
+const TRUSTED_BIN_DIRS = ['/opt/homebrew/bin', '/usr/local/bin', '/usr/bin', '/bin'];
+const env = { ...process.env, PATH: TRUSTED_BIN_DIRS.join(':') };
+
+function bin(name) {
+  for (const dir of TRUSTED_BIN_DIRS) {
+    const candidate = path.join(dir, name);
+    if (fs.existsSync(candidate)) return candidate;
+  }
+  return path.join('/usr/bin', name);
+}
+
 function svg(name) {
   return path.join(assets, name);
 }
 
 function raster(src, dest, width) {
-  execFileSync('rsvg-convert', ['-w', String(width), '-o', dest, src]);
+  execFileSync(bin('rsvg-convert'), ['-w', String(width), '-o', dest, src], { env });
 }
 
 function icoFromPngs(images) {
@@ -64,10 +75,10 @@ raster(svg('kit-lockup.svg'), path.join(tmp, 'lockup.png'), 1024);
 
 fs.copyFileSync(logo1024, path.join(assets, 'kit_logo.png'));
 fs.copyFileSync(fav32, path.join(assets, 'favicon-32.png'));
-execFileSync('cwebp', ['-q', '92', logo1024, '-o', path.join(assets, 'kit_logo.webp')]);
-execFileSync('cwebp', ['-q', '92', logo256, '-o', path.join(assets, 'kit_logo_256.webp')]);
-execFileSync('cwebp', ['-q', '92', bannerPng, '-o', path.join(assets, 'kit_banner.webp')]);
-execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '86', ogPng, '--out', path.join(assets, 'og.jpg')]);
+execFileSync(bin('cwebp'), ['-q', '92', logo1024, '-o', path.join(assets, 'kit_logo.webp')], { env });
+execFileSync(bin('cwebp'), ['-q', '92', logo256, '-o', path.join(assets, 'kit_logo_256.webp')], { env });
+execFileSync(bin('cwebp'), ['-q', '92', bannerPng, '-o', path.join(assets, 'kit_banner.webp')], { env });
+execFileSync(bin('sips'), ['-s', 'format', 'jpeg', '-s', 'formatOptions', '86', ogPng, '--out', path.join(assets, 'og.jpg')], { env });
 fs.writeFileSync(
   path.join(root, 'public/favicon.ico'),
   icoFromPngs([

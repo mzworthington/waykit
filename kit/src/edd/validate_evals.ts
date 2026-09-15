@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Ajv, { type ValidateFunction } from 'ajv';
 import { printCliOutcome } from '../cli/outcome.js';
+import { splitYamlFrontmatter, yamlDashedList } from '../shared/yaml_frontmatter.js';
 
 interface Assertions {
   required_triggers?: string[];
@@ -69,16 +70,10 @@ function loadSchemaValidator(schemaPath: string): ValidateFunction | null {
 }
 
 function parseYamlFrontmatter(content: string): SkillFrontmatter | null {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
-  if (!match) return null;
-  const yamlText = match[1];
-  const triggersMatch = yamlText.match(/triggers:\s*\n((?:\s*-\s*.*\n?)+)/);
-  if (!triggersMatch) return { triggers: [] };
-  const triggers = triggersMatch[1]
-    .split('\n')
-    .map((line: string) => line.replace(/^\s*-\s*/, '').trim())
-    .filter(Boolean);
-  return { triggers };
+  const split = splitYamlFrontmatter(content);
+  if (!split) return null;
+  const triggers = yamlDashedList(split.yaml, 'triggers');
+  return { triggers: triggers ?? [] };
 }
 
 function findEvalFiles(repoDir: string): EvalFileInfo[] {

@@ -55,7 +55,7 @@ export function EvalDemo() {
             <h3>{step.title}</h3>
             <p>{step.body}</p>
             {step.code ? (
-              <pre className="demo-code" tabIndex={0}>
+              <pre className="demo-code">
                 <code>{step.code}</code>
               </pre>
             ) : null}
