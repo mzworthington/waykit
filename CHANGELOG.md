@@ -7,6 +7,21 @@
 - Sonarqube skills and mcp
 - *(sops)* Close quality loops through Linear (MZW-108)
 - *(sops)* File a Linear ticket from a Lighthouse drop (MZW-112) (#94)
+- *(sops)* Keep Dependabot and CodeQL on vendor PRs (MZW-113)
+- *(sops)* Land Dependabot and CodeQL vendor PR loop (MZW-113)
+- *(sops)* File Linear bugs from Cloudflare RUM breaks (MZW-114)
+- *(sops)* Land RUM break Linear ticket loop (MZW-114)
+- *(sops)* File typed Linear tickets from Sonar findings (MZW-115)
+- *(sops)* Land Sonar finding Linear ticket loop (MZW-115)
+- *(sops)* Keep the backlog grouped without cloning drafts (MZW-116)
+- *(sops)* Land backlog hygiene without cloning drafts (MZW-116)
+- *(quality-loops)* Play allowlisted tickets as draft PRs (MZW-117)
+- *(quality-loops)* Land work picker draft PR loop (MZW-117)
+- *(web)* Keep the light paper colour theme on the public site
+
+### 🐛 Bug Fixes
+
+- *(sops)* Drop duplicated vendor-PR catalog cases (MZW-113)
 
 ## 2026-09-14
 
