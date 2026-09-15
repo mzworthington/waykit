@@ -105,6 +105,32 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-SEC-COLOCATED-005",
+      "name": "Work picker plays a Security ticket as a draft PR",
+      "description": "Playing a claimed Security ticket via quality-loops opens a draft PR only and runs the repo pre-commit hook before COMPLETE.",
+      "target_skill": "agent-security",
+      "prompt": "Play the claimed Security ticket from the work picker as a draft PR. Do not merge.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": [
+          "security"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "draft PR",
+          "pre-commit"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

@@ -18,6 +18,26 @@
           "agent-perf-opt"
         ]
       }
+    },
+    {
+      "id": "EVAL-PERF-COLOCATED-002",
+      "name": "Work picker plays a Performance ticket as a draft PR",
+      "description": "Playing a claimed Performance ticket via quality-loops opens a draft PR only and runs the repo pre-commit hook before COMPLETE.",
+      "target_skill": "agent-perf-opt",
+      "prompt": "Play the claimed Performance ticket from the work picker as a draft PR. Do not merge.",
+      "assertions": {
+        "required_triggers": [
+          "performance"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "draft PR",
+          "pre-commit"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }
