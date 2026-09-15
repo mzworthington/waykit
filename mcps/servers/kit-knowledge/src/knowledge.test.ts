@@ -81,6 +81,9 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Vendor PR/);
     assert.match(sop!.body, /alert number/);
     assert.match(sop!.body, /Do not churn code/);
+    assert.match(sop!.body, /Hostnames only/);
+    assert.match(sop!.body, /site tags/);
+    assert.match(sop!.body, /source:<owning-repo>:rum:<hostname>/);
     assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
   });
 

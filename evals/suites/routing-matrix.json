@@ -970,6 +970,69 @@
           "agent-quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-048",
+      "name": "RUM break files a Bug without a PR",
+      "description": "Verifies a confirmed Cloudflare RUM or beacon break files one Bug on the owning-repo project via quality-loops with hostnames only and does not open a PR.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. File a Linear Bug on the owning-repo project. Hostnames only. Do not open a PR.",
+      "assertions": {
+        "required_triggers": [
+          "rum",
+          "beacon"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "hostnames",
+          "no PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-049",
+      "name": "Missing Cloudflare tools stop the RUM scout BLOCKED",
+      "description": "Verifies a Cloudflare RUM scout whose Cloud catalog is missing Cloudflare tools stops BLOCKED and does not invent site tags, tokens, or Linear URLs.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "Start the cloudflare-ops RUM scout. Cloudflare tools are missing from the Cloud catalog. Do not invent site tags or Linear URLs.",
+      "assertions": {
+        "required_triggers": [
+          "rum",
+          "cloudflare-ops"
+        ],
+        "required_patterns": [
+          "BLOCKED",
+          "site tags",
+          "Linear URLs"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-050",
+      "name": "RUM host fingerprint comments instead of cloning",
+      "description": "Verifies a RUM scout that finds an open ticket fingerprinting this host break comments via quality-loops instead of cloning.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. An open ticket already fingerprints this host break. Comment instead of cloning.",
+      "assertions": {
+        "required_triggers": [
+          "rum",
+          "beacon"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "fingerprint",
+          "comment"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }

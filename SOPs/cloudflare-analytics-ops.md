@@ -77,6 +77,10 @@ flowchart TD
 
 `execute` **write** calls against those resources need explicit user approval. Default path is a Pulumi/HTML patch in the owner repo, then `pulumi preview`.
 
+## Scout filing
+
+A scheduled RUM or beacon scout does **not** patch IaC. After restore `wk mcp default`, file or update one Bug on the owning-repo Linear project ([quality-loops](./quality-loops.md)). Hostnames only — never site tokens. Fingerprint `source:<owning-repo>:rum:<hostname>`. Comment on an open match. No PR. Missing Cloudflare tools → **BLOCKED**; do not invent site tags, tokens, or Linear URLs.
+
 ## Secrets
 
 Never put `siteToken`, API tokens, or OAuth codes in handovers, memory MCP, or chat summaries. Refer to Pulumi outputs by name.

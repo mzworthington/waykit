@@ -34,6 +34,54 @@
         "forbidden_patterns": ["agent-quality-loops"],
         "required_output_sections": ["quality-loops"]
       }
+    },
+    {
+      "id": "EVAL-CFOPS-COLOCATED-003",
+      "name": "RUM break files a Bug without a PR",
+      "description": "Ensures a confirmed RUM or beacon break files one Bug on the owning-repo project via quality-loops with hostnames only and does not open a PR.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. File a Linear Bug on the owning-repo project. Hostnames only. Do not open a PR.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["rum", "beacon"],
+        "required_patterns": ["quality-loops", "hostnames", "no PR"],
+        "forbidden_patterns": ["agent-quality-loops"],
+        "required_output_sections": ["quality-loops"]
+      }
+    },
+    {
+      "id": "EVAL-CFOPS-COLOCATED-004",
+      "name": "Missing Cloudflare tools stop the RUM scout BLOCKED",
+      "description": "Ensures a RUM scout whose Cloud catalog is missing Cloudflare tools stops BLOCKED and does not invent site tags, tokens, or Linear URLs.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "Start the cloudflare-ops RUM scout. Cloudflare tools are missing from the Cloud catalog. Do not invent site tags or Linear URLs.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["rum", "cloudflare-ops"],
+        "required_patterns": ["BLOCKED", "site tags", "Linear URLs"],
+        "forbidden_patterns": ["agent-quality-loops"],
+        "required_output_sections": ["quality-loops"]
+      }
+    },
+    {
+      "id": "EVAL-CFOPS-COLOCATED-005",
+      "name": "RUM host fingerprint comments instead of cloning",
+      "description": "Ensures a RUM scout that finds an open ticket fingerprinting this host break comments via quality-loops instead of cloning.",
+      "target_skill": "agent-cloudflare-ops",
+      "prompt": "A Cloudflare RUM beacon is broken. An open ticket already fingerprints this host break. Comment instead of cloning.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": ["rum", "beacon"],
+        "required_patterns": ["quality-loops", "fingerprint", "comment"],
+        "forbidden_patterns": ["agent-quality-loops"],
+        "required_output_sections": ["quality-loops"]
+      }
     }
   ]
 }
