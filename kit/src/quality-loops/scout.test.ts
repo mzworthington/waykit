@@ -16,4 +16,20 @@ describe('quality-loops scout filing', () => {
     assert.match(scout, /no tokens/i);
     assert.match(scout, /No PR/i);
   });
+
+  it('files one Performance ticket on a category drop, not a chase-100 or a PR', () => {
+    const sop = fs.readFileSync(path.join(kitRoot, 'SOPs/quality-loops.md'), 'utf8');
+    const row = sop.split('\n').find((line) => line.includes('Lighthouse drop vs last main'));
+    assert.ok(row, 'SOP must name Lighthouse drop vs last main');
+    assert.match(row, /Performance/);
+    assert.match(row, /chase 100/);
+
+    const prompt = fs.readFileSync(path.join(kitRoot, 'templates/quality-loops.md'), 'utf8');
+    const section = prompt.split('## File from a Lighthouse drop')[1]?.split('## ')[0] ?? '';
+    assert.match(section, /If a category dropped/);
+    assert.match(section, /Performance ticket/);
+    assert.match(section, /do not file a ticket to chase 100/i);
+    assert.match(section, /comment instead of cloning/);
+    assert.match(section, /Do not open a PR/);
+  });
 });
