@@ -18,6 +18,29 @@
           "agent-perf-opt"
         ]
       }
+    },
+    {
+      "id": "EVAL-PERF-COLOCATED-002",
+      "name": "Lighthouse drop play uses quality-loops",
+      "description": "A Lighthouse Performance ticket claimed by the work picker plays on agent-perf-opt via quality-loops.",
+      "target_skill": "agent-perf-opt",
+      "prompt": "Play the Lighthouse drop Performance ticket. Recover the category versus last main.",
+      "assertions": {
+        "required_triggers": [
+          "performance",
+          "lighthouse drop"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "agent-perf-opt"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ],
+        "required_output_sections": [
+          "quality-loops"
+        ]
+      }
     }
   ]
 }

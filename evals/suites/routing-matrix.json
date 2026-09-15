@@ -923,6 +923,48 @@
           "agent-quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-046",
+      "name": "Lighthouse drop files a Performance ticket without a PR",
+      "description": "Verifies a Lighthouse category drop versus last main files or updates one Performance ticket via quality-loops and does not open a PR.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "A Lighthouse category dropped versus last main. File a Performance ticket from the scout. Do not open a PR.",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "Performance",
+          "no PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-047",
+      "name": "Lighthouse drop does not chase 100 and comments on a fingerprint",
+      "description": "Verifies a Lighthouse scout that did not drop versus last main files no ticket to chase 100, and comments on an open fingerprint instead of cloning.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "A Lighthouse score did not drop versus last main. Do not file a ticket to chase 100. If an open ticket fingerprints this drop, comment instead of cloning.",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "chase 100",
+          "comment instead of cloning"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }
