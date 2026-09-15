@@ -36,7 +36,7 @@ export interface PhilosophySection {
 
 const MAX_EXCERPT = 600;
 const MAX_HITS = 8;
-const MAX_SOP_CHARS = 4000;
+const MAX_SOP_CHARS = 4500;
 
 export function resolveKitRoot(env: NodeJS.ProcessEnv = process["env"]): string {
   if (env.KIT_ROOT && env.KIT_ROOT.trim()) {
