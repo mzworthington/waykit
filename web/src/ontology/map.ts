@@ -396,13 +396,13 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
       .data(nodes, (d) => d.id)
       .join((enter) => {
         const grp = enter.append('g').attr('class', 'onto-node').style('cursor', 'pointer');
-        grp.append('path').attr('class', 'onto-shape').attr('fill', 'rgba(12, 16, 23, 0.92)');
+        grp.append('path').attr('class', 'onto-shape').attr('fill', 'rgba(255, 253, 248, 0.96)');
         grp
           .append('text')
           .attr('class', 'onto-label')
           .attr('text-anchor', 'middle')
           .attr('dy', (d) => d.r + 12)
-          .attr('fill', '#e8edf4')
+          .attr('fill', '#0c1412')
           .attr('font-size', '10px')
           .attr('font-family', 'IBM Plex Sans, sans-serif')
           .attr('pointer-events', 'none');

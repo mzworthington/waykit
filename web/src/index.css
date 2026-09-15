@@ -1,7 +1,7 @@
 @import './site.css';
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -28,7 +28,7 @@ body {
 .nav-link.is-active,
 .nav-link[aria-current='page'] {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--lift);
 }
 
 .landing-shell {
@@ -134,7 +134,7 @@ body {
 }
 
 .home-cli thead th {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--lift);
   color: var(--heading);
   font-weight: 600;
   font-size: 0.82rem;
@@ -498,8 +498,8 @@ body {
 .docs-prose code {
   font-family: var(--font-mono);
   font-size: 0.86em;
-  background: rgba(255, 255, 255, 0.06);
-  color: #e8edf4;
+  background: var(--lift);
+  color: var(--code-fg);
   padding: 0.1rem 0.32rem;
   border-radius: var(--radius-sm);
 }
@@ -517,7 +517,7 @@ body {
   margin: 0;
   overflow-x: auto;
   max-width: 100%;
-  background: #08090c;
+  background: var(--code-bg);
   padding: 0.9rem 1rem;
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -526,7 +526,7 @@ body {
 .docs-code pre code,
 .docs-prose pre code {
   background: none;
-  color: #f1f5f9;
+  color: var(--code-fg);
   padding: 0;
   font-size: 0.84rem;
   line-height: 1.55;

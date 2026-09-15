@@ -65,7 +65,7 @@ export const REL_COLOR: Record<RelationName, string> = {
   implements: '#b8956c',
   references: '#9aa7b8',
   for: '#4db6a9',
-  orders: '#e8edf4',
+  orders: '#5b6662',
   adapts: '#e07a5f'
 };
 

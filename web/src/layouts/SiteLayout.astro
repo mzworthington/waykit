@@ -22,8 +22,8 @@ const jsonLd = head.jsonLd ? JSON.stringify(head.jsonLd).replaceAll('<', '\\u003
     <meta name="description" content={head.description} />
     <meta name="author" content="mzworthington" />
     <meta name="robots" content={`${head.robots}, max-image-preview:large, max-snippet:-1, max-video-preview:-1`} />
-    <meta name="theme-color" content="#0b0d11" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#f3efe6" />
+    <meta name="color-scheme" content="light" />
     {head.canonicalUrl ? <link rel="canonical" href={head.canonicalUrl} /> : null}
     {head.markdownUrl ? <link rel="alternate" type="text/markdown" href={head.markdownUrl} /> : null}
     <link rel="alternate" type="text/plain" title="llms.txt" href={`${SITE_ORIGIN}/llms.txt`} />

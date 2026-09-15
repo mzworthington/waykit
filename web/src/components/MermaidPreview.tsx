@@ -20,7 +20,7 @@ async function getMermaid(): Promise<MermaidApi> {
     try {
       mermaid.initialize({
         startOnLoad: false,
-        theme: 'dark',
+        theme: 'neutral',
         securityLevel: 'loose',
         flowchart: { useMaxWidth: true, htmlLabels: false },
         sequence: { useMaxWidth: true }
