@@ -1,7 +1,7 @@
 {
   "suite": "agent-security-co-located",
   "description": "Co-located evaluation benchmark for agent-security security audit skill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "test_cases": [
     {
       "id": "EVAL-SEC-COLOCATED-001",
@@ -56,9 +56,9 @@
     {
       "id": "EVAL-SEC-COLOCATED-003",
       "name": "Dependabot stays a vendor PR",
-      "description": "Ensures Dependabot and CodeQL stay on vendor PRs via quality-loops and are not rewritten as a helpful lockfile change.",
+      "description": "Ensures Dependabot and CodeQL stay on vendor PRs via quality-loops: hygiene without a lockfile rewrite, alert-number keys, and comments on noisy findings.",
       "target_skill": "agent-security",
-      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile.",
+      "prompt": "A Dependabot PR is open. Keep it merge-ready. Do not rewrite the lockfile. Key a high alert to that alert number. Comment why on noisy findings and do not churn code.",
       "context": {
         "active_phase": "audit"
       },
@@ -68,7 +68,10 @@
         ],
         "required_patterns": [
           "quality-loops",
-          "vendor PR"
+          "vendor PR",
+          "alert number",
+          "comment why",
+          "do not churn code"
         ],
         "forbidden_patterns": [
           "agent-quality-loops"

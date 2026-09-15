@@ -1,7 +1,7 @@
 {
   "suite": "routing-matrix",
   "description": "Evaluation benchmarks for cross-skill routing accuracy and specialist role activation",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "test_cases": [
     {
       "id": "EVAL-ROUTE-001",
@@ -941,6 +941,30 @@
           "chase 100",
           "comment instead of cloning",
           "no PR"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-ROUTE-047",
+      "name": "Dependabot and CodeQL stay vendor PRs",
+      "description": "Verifies Dependabot and CodeQL stay on quality-loops vendor PRs: hygiene without a lockfile rewrite, alert-number keys, and comments on noisy findings.",
+      "target_skill": "agent-security",
+      "prompt": "A Dependabot PR is open and a CodeQL alert has a file and line. Keep vendor PRs merge-ready. Do not rewrite the lockfile. Comment why on noisy findings and do not churn code.",
+      "assertions": {
+        "required_triggers": [
+          "dependabot",
+          "codeql",
+          "security"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "vendor PR",
+          "alert number",
+          "comment why",
+          "do not churn code"
         ],
         "forbidden_patterns": [
           "agent-quality-loops"

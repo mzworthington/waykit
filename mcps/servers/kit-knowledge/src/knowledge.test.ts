@@ -78,6 +78,9 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Lighthouse drop vs last main/);
     assert.match(sop!.body, /Performance/);
     assert.match(sop!.body, /chase 100/);
+    assert.match(sop!.body, /Vendor PR/);
+    assert.match(sop!.body, /alert number/);
+    assert.match(sop!.body, /Do not churn code/);
     assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
   });
 

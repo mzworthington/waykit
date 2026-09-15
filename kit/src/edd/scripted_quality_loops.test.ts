@@ -30,4 +30,13 @@ describe('scriptedDriver quality-loops', () => {
       'quality-loops'
     );
   });
+
+  it('opens quality-loops for a Dependabot vendor PR prompt', async () => {
+    assert.equal(
+      await getSopName(
+        'A Dependabot PR is open and a CodeQL alert has a file and line. Open the kit SOP for keeping those as vendor PRs.'
+      ),
+      'quality-loops'
+    );
+  });
 });

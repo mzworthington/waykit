@@ -21,6 +21,9 @@ triggers:
   - sonarcloud
   - sonar issues
   - security hotspot
+  - dependabot
+  - codeql
+  - vendor PR
 depends-on:
   - agent-tdd
   - agent-xfn
@@ -41,7 +44,7 @@ You **audit** code and confirm security **tests** from Design. Authoring those s
 
 **SonarQube Cloud issues / hotspots:** load [sonarqube-findings](../../SOPs/sonarqube-findings.md). One profile: `wk mcp sonar --install` (or `--project`). Write `handover_sonar.md`. Skip GitHub Actions SHA pins; keep `uses: owner/action@vN`. Do not add an `agent-sonarqube` skill. Do not apply fixes from the readonly subagent — stay in the parent for `fix` rows. Fleet filing after restore default is [quality-loops](../../SOPs/quality-loops.md). Policy skip: no ticket, no NOSONAR.
 
-**Dependabot / CodeQL:** stay on vendor PRs ([quality-loops](../../SOPs/quality-loops.md)). Review or keep the vendor PR merge-ready. Do not rewrite the lockfile “to be helpful”.
+**Dependabot / CodeQL:** stay on vendor PRs ([quality-loops](../../SOPs/quality-loops.md)). Review or keep the vendor PR merge-ready. Do not rewrite the lockfile “to be helpful”. High or critical alert with a clear file and line: update that vendor PR or open one draft PR keyed to the alert number; a duplicate tick updates the same PR. Noisy, informational, or product-decision: comment why and do not churn code. No auto-merge. Do not rewrite Actions pins to SHAs.
 
 ## Focus areas
 

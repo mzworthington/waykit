@@ -348,7 +348,9 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       prompt.includes('work picker') ||
       prompt.includes('scheduled scout') ||
       prompt.includes('lighthouse drop') ||
-      prompt.includes('lighthouse category')
+      prompt.includes('lighthouse category') ||
+      prompt.includes('dependabot') ||
+      prompt.includes('vendor pr')
     ) {
       return {
         content: 'Opening the quality-loops SOP.',
