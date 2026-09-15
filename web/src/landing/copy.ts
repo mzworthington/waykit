@@ -48,11 +48,6 @@ export const HOME_CLI_HEADING = 'The wk CLI';
 
 export const HOME_NEXT = [
   {
-    href: '/docs/jobs',
-    title: 'Jobs for today',
-    body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
-  },
-  {
     href: '/docs/lifecycle',
     title: 'Feature lifecycle',
     body: 'Grill, spec, TDD, XFN, audit, release. EDD (alpha) sits here when tools are the change.'
@@ -71,6 +66,11 @@ export const HOME_NEXT = [
     href: '/docs/map',
     title: 'Waykit map',
     body: 'Live graph of this kit: edit files, check dangling links, load one node. Not a second catalog.'
+  },
+  {
+    href: '/docs/jobs',
+    title: 'Jobs for today',
+    body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
   },
   {
     href: '/docs/edd',
