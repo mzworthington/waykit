@@ -3,7 +3,7 @@ import { HOME_NEXT } from '../landing/copy';
 export function HomeNext() {
   return (
     <section className="home-next" aria-labelledby="next">
-      <h2 id="next">Where to go next</h2>
+      <h2 id="next">Start in the docs</h2>
       <ul className="home-next-grid">
         {HOME_NEXT.map((item) => (
           <li key={item.href}>

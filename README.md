@@ -38,7 +38,7 @@ macOS / Linux; needs git and Node 22+. Already cloned this repo? Run `./install.
 | Gate a prompt or schema change | `wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports` |
 | Promote a prod miss into the suite | `wk eval shadow --infile evals/edd/examples/prod-turns.jsonl --sample 1 --seed 1 --out out/shadow-fails.jsonl` |
 
-Tangible proof on the site: [before / after](https://waykit.dev/#proof) · [interactive demo](https://waykit.dev/#demo) · [jobs for today](https://waykit.dev/docs/jobs).
+Tangible proof on the site: [before / after](https://waykit.dev/evals/edd/examples/before-after) · [interactive demo](https://waykit.dev/docs/edd) · [jobs for today](https://waykit.dev/docs/jobs).
 
 Teaching suite: [evals/edd/demo.yaml](./evals/edd/demo.yaml) ([before-after write-up](./evals/edd/examples/before-after.md)). CI seed: [architecture_routing](./evals/edd/architecture_routing.yaml). Live golden: [evals/edd/goldens](./evals/edd/goldens/README.md).
 

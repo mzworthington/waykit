@@ -33,14 +33,15 @@ describe('published markdown catalog', () => {
 });
 
 describe('site information architecture', () => {
-  it('keeps header hubs to Start, Guide, and Lifecycle', () => {
-    expect(SITE_NAV.map((item) => item.label)).toEqual(['Start', 'Guide', 'Lifecycle']);
+  it('keeps header hubs to Start, Guide, Lifecycle, and Map', () => {
+    expect(SITE_NAV.map((item) => item.label)).toEqual(['Start', 'Guide', 'Lifecycle', 'Map']);
   });
 
   it('marks Guide for operator pages without stealing Start or Lifecycle', () => {
     const guide = SITE_NAV.find((item) => item.label === 'Guide')!;
     const start = SITE_NAV.find((item) => item.label === 'Start')!;
     const lifecycle = SITE_NAV.find((item) => item.label === 'Lifecycle')!;
+    const map = SITE_NAV.find((item) => item.label === 'Map')!;
     expect(isDocsNavActive('/docs', guide)).toBe(true);
     expect(isDocsNavActive('/docs/edd', guide)).toBe(true);
     expect(isDocsNavActive('/docs/align', guide)).toBe(true);
@@ -51,6 +52,8 @@ describe('site information architecture', () => {
     expect(lifecycle.path).toBe('/docs/lifecycle');
     expect(isDocsNavActive('/docs/lifecycle', lifecycle)).toBe(true);
     expect(isDocsNavActive('/docs/lifecycle', guide)).toBe(false);
+    expect(map.path).toBe('/docs/map');
+    expect(isDocsNavActive('/docs/map', map)).toBe(true);
     expect(isDocsNavActive('/docs/map', guide)).toBe(false);
   });
 

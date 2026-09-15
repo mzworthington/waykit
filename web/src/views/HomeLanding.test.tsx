@@ -2,63 +2,49 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { HomeLanding } from './HomeLanding';
 
-vi.mock('../ontology/map.ts', () => ({
-  mountOntologyExplorer: vi.fn(async () => undefined)
-}));
-
 describe('HomeLanding', () => {
-  it('uses the brand-first hero, job picker, proof, and demo', () => {
+  it('keeps the brand-first hero and sends jobs, map, CLI, proof and demo to docs', () => {
     render(<HomeLanding />);
     expect(screen.getByText(/software lifecycle for coding agents/i)).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1, name: 'Waykit' })).toBeTruthy();
     expect(screen.getByText(/grill, spec, tdd, ship/i)).toBeTruthy();
-    expect(screen.getByRole('link', { name: /^Install Waykit$/ }).getAttribute('href')).toBe('#today');
+    expect(screen.getByRole('link', { name: /^Install Waykit$/ }).getAttribute('href')).toBe('/docs/start');
+    expect(screen.getByRole('link', { name: /^Read the lifecycle$/ }).getAttribute('href')).toBe(
+      '/docs/lifecycle'
+    );
+    expect(screen.queryByRole('link', { name: /^See the CLI$/ })).toBeNull();
+    expect(screen.queryByRole('link', { name: /^Open the map$/ })).toBeNull();
     expect(screen.getByRole('img', { name: 'CI passing' })).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'Feature lifecycle' })).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'Docs at waykit.dev' })).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'Unlicense' })).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'Latest GitHub release' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Latest GitHub release' }).getAttribute('href')).toMatch(
-      /github\.com\/mzworthington\/waykit\/releases$/
+    const next = screen.getByRole('heading', { name: /start in the docs/i }).closest('section');
+    expect(next).toBeTruthy();
+    const docs = within(next as HTMLElement);
+    expect(docs.getByRole('link', { name: /jobs for today/i }).getAttribute('href')).toBe('/docs/jobs');
+    expect(docs.getByRole('link', { name: /feature lifecycle/i }).getAttribute('href')).toBe(
+      '/docs/lifecycle'
     );
-    expect(screen.getByRole('heading', { name: /what do i use this for today/i })).toBeTruthy();
-    expect(screen.getByRole('group', { name: 'Job list' })).toBeTruthy();
-    const today = screen.getByRole('heading', { name: /what do i use this for today/i });
-    const map = screen.getByRole('region', { name: 'Kit ontology map' });
-    const cli = screen.getByRole('heading', { name: 'The wk CLI' });
-    expect(today.compareDocumentPosition(map) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(map.compareDocumentPosition(cli) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Explore the graph' })).toBeTruthy();
-    expect(screen.getByRole('complementary', { name: 'Key' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: /^See the CLI$/ }).getAttribute('href')).toBe('#cli');
-    expect(screen.getByRole('heading', { name: 'The wk CLI' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: /used on our own product repos/i })).toBeTruthy();
-    expect(screen.getByRole('link', { name: /ArchLens/ }).getAttribute('href')).toBe(
-      'https://github.com/mzworthington/blueprint'
+    expect(docs.getByRole('link', { name: /cli and what waykit installs/i }).getAttribute('href')).toBe(
+      '/docs/kit'
     );
-    expect(screen.getByRole('columnheader', { name: 'Command' })).toBeTruthy();
-    const cliTable = screen.getByRole('table');
-    expect(within(cliTable).getByText('wk align')).toBeTruthy();
-    expect(within(cliTable).getByText('wk doctor')).toBeTruthy();
-    expect(within(cliTable).getByText('wk check')).toBeTruthy();
-    expect(
-      screen.getByRole('link', { name: 'Operator guide: context, MCP, check, doctor' }).getAttribute('href')
-    ).toBe('/docs/kit');
-    expect(screen.getByRole('heading', { name: /one loop: a miss becomes a failing eval/i })).toBeTruthy();
-    expect(screen.getByText('Typically payment systems use PostgreSQL…', { exact: false })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Walk the interactive demo' }).getAttribute('href')).toBe(
-      '#demo'
+    expect(docs.getByRole('link', { name: /quality loops/i }).getAttribute('href')).toBe(
+      '/SOPs/quality-loops'
     );
-    expect(screen.getByRole('heading', { name: /demo: a miss becomes a failing eval/i })).toBeTruthy();
+    expect(docs.getByText(/ci, rum, lighthouse and sonar/i)).toBeTruthy();
+    expect(docs.getByRole('link', { name: /waykit map/i }).getAttribute('href')).toBe('/docs/map');
+    expect(docs.getByRole('link', { name: /evals \(alpha\)/i }).getAttribute('href')).toBe('/docs/edd');
+    expect(docs.queryByRole('link', { name: /used on our repos/i })).toBeNull();
+    expect(screen.queryByRole('heading', { name: /what do i use this for today/i })).toBeNull();
+    expect(screen.queryByRole('region', { name: 'Kit ontology map' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'The wk CLI' })).toBeNull();
+    expect(screen.queryByRole('heading', { name: /used on our own product repos/i })).toBeNull();
+    expect(screen.queryByRole('heading', { name: /one loop: a miss becomes a failing eval/i })).toBeNull();
+    expect(screen.queryByRole('heading', { name: /demo: a miss becomes a failing eval/i })).toBeNull();
   });
 
-  it('gives the eval proof and demo the same full-bleed width as the graph', () => {
+  it('does not full-bleed proof, demo, or the graph on the homepage', () => {
     const css = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8');
-    expect(css).toMatch(
-      /\.landing-page \.ontology-explorer,\s*\.landing-page \.proof,\s*\.landing-page \.demo \{[^}]*width: 100vw/s
-    );
+    expect(css).not.toMatch(/\.landing-page \.ontology-explorer,\s*\.landing-page \.proof/);
   });
 });

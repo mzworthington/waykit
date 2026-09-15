@@ -45,4 +45,4 @@ wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
 wk eval report --format md --out out/reports
 ```
 
-Walk the same story in the browser: [waykit.dev/#demo](https://waykit.dev/#demo).
+Walk the same story in the browser: [waykit.dev/docs/edd](https://waykit.dev/docs/edd).

@@ -2,7 +2,7 @@ export const HOME_EYEBROW = 'Software lifecycle for coding agents';
 export const HOME_BRAND = 'Waykit';
 export const HOME_HEADLINE = 'Grill, spec, TDD, ship, then learn';
 export const HOME_LEDE =
-  'Coding agents skip spec, test impact and a release bar. Waykit is that lifecycle plus the loops that feed the next session. You run it with wk. EDD is alpha: a routing harness when the change is a prompt or a tool contract, not a complete EDD product.';
+  'Give your coding agents a release bar. Waykit provides the full SDLC, from Spec to Test to Release, plus the feedback loops that make every session better than the last.';
 
 /** Keep in sync with the README badge row. Version tracks GitHub Releases. */
 export const HOME_BADGES = [
@@ -47,10 +47,36 @@ export const HOME_BADGES = [
 export const HOME_CLI_HEADING = 'The wk CLI';
 
 export const HOME_NEXT = [
-  { href: '/docs/start', title: 'Install Waykit in 10 minutes', body: 'Handshake, wk init, then pick debug vs feature. No API key.' },
-  { href: '/docs/lifecycle', title: 'Feature lifecycle', body: 'Grill, spec, TDD, XFN, audit, release. EDD (alpha) sits here when tools are the change.' },
-  { href: '/docs/kit', title: 'CLI and what Waykit installs', body: 'wk check, doctor, measure-context, one MCP profile. The operator surface, not just skills on disk.' },
-  { href: '/docs/map', title: 'Waykit map', body: 'Live graph of this kit: edit files, check dangling links, load one node. Not a second catalog.' }
+  {
+    href: '/docs/jobs',
+    title: 'Jobs for today',
+    body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
+  },
+  {
+    href: '/docs/lifecycle',
+    title: 'Feature lifecycle',
+    body: 'Grill, spec, TDD, XFN, audit, release. EDD (alpha) sits here when tools are the change.'
+  },
+  {
+    href: '/SOPs/quality-loops',
+    title: 'Quality loops',
+    body: 'CI, RUM, Lighthouse and Sonar file Linear tickets. Hygiene then the work picker turns them into draft PRs.'
+  },
+  {
+    href: '/docs/kit',
+    title: 'CLI and what Waykit installs',
+    body: 'wk check, doctor, measure-context, one MCP profile. The operator surface, not just skills on disk.'
+  },
+  {
+    href: '/docs/map',
+    title: 'Waykit map',
+    body: 'Live graph of this kit: edit files, check dangling links, load one node. Not a second catalog.'
+  },
+  {
+    href: '/docs/edd',
+    title: 'Evals (alpha)',
+    body: 'A miss becomes a failing eval. Walk the demo and the before/after write-up.'
+  }
 ];
 
 /** First-party product checkouts that pass `wk align`. GitHub origins, not vanity domains. */

@@ -57,14 +57,15 @@ describe.skipIf(!hasDist)('built HTML contract', () => {
     expect(js).not.toContain('Always-on agent context is a budget, not a dump of every SOP');
   });
 
-  it('hydrates the kit map explorer on load so the graph is not stuck on SSR chrome', () => {
+  it('hydrates the kit map explorer on the map page, not the homepage', () => {
     const map = readBuilt('/docs/map');
     expect(map).toContain('Explore the graph');
     expect(map).toMatch(
       /component-export="(?:OntologyExplorer|DocsWidget)"[^>]*client="load"/
     );
     const home = readBuilt('/');
-    expect(home).toContain('Explore the graph');
-    expect(home).toMatch(/component-export="OntologyExplorer"[^>]*client="load"/);
+    expect(home).not.toContain('Explore the graph');
+    expect(home).not.toMatch(/component-export="OntologyExplorer"/);
+    expect(home).toContain('Start in the docs');
   });
 });

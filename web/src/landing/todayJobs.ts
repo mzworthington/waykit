@@ -15,7 +15,7 @@ export type TodayJob = {
   actions: TodayJobAction[];
 };
 
-/** Landing-page "today" jobs. Source of truth is docs/today-jobs.md. */
+/** Jobs-page picker. Source of truth is docs/today-jobs.md. */
 export function parseTodayJobsMarkdown(md: string): TodayJob[] {
   const jobs: TodayJob[] = [];
   const parts = String(md).split(/^## /m).slice(1);

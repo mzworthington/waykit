@@ -39,7 +39,8 @@ export const SITE_NAV: DocsNavItem[] = [
       '/docs/kit-review-backlog'
     ]
   },
-  { label: 'Lifecycle', path: '/docs/lifecycle' }
+  { label: 'Lifecycle', path: '/docs/lifecycle' },
+  { label: 'Map', path: '/docs/map' }
 ];
 
 export const START_ITEMS: DocsNavItem[] = [

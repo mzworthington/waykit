@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+  <title id="title">Waykit loops in loops</title>
+  <desc id="desc">
+    Outer PDLC loop from Grill to Ship with a Learn return. Nested TDD short loop on the bar.
+    Eval gate validates before Learn. Outside signals CI, RUM, Lighthouse and Sonar enter the
+    quality loop that feeds Linear and the work picker.
+  </desc>
+  <defs>
+    <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.25" />
+      <stop offset="40%" stop-color="#2dd4bf" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#5eead4" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="learn" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.25" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="48%" r="48%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.12" />
+      <stop offset="60%" stop-color="#2dd4bf" stop-opacity="0.03" />
+      <stop offset="100%" stop-color="#090a0d" stop-opacity="0" />
+    </radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1.2 L8.5 5 L0 8.8 Z" fill="#2dd4bf" />
+    </marker>
+    <marker id="arrow-warn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 1.2 L8.5 5 L0 8.8 Z" fill="#c4b5a0" />
+    </marker>
+  </defs>
+
+  <rect width="1200" height="640" fill="#090a0d" />
+  <rect width="1200" height="640" fill="url(#glow)" />
+
+  <g opacity="0.06" stroke="#e8eaee" stroke-width="1">
+    <path d="M40 80 H1160 M40 160 H1160 M40 240 H1160 M40 320 H1160 M40 400 H1160 M40 480 H1160 M40 560 H1160" />
+    <path d="M100 40 V600 M220 40 V600 M340 40 V600 M460 40 V600 M580 40 V600 M700 40 V600 M820 40 V600 M940 40 V600 M1060 40 V600" />
+  </g>
+
+  <g font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text x="250" y="48" text-anchor="middle" fill="#8e96a3" font-size="11" letter-spacing="0.16em" font-weight="500">OUTSIDE SIGNALS</text>
+    <g fill="#c4b5a0" font-size="12" font-weight="500">
+      <text x="100" y="78" text-anchor="middle">CI</text>
+      <text x="180" y="78" text-anchor="middle">RUM</text>
+      <text x="280" y="78" text-anchor="middle">Lighthouse</text>
+      <text x="390" y="78" text-anchor="middle">Sonar</text>
+    </g>
+    <path d="M100 88 C120 200, 200 420, 450 500" fill="none" stroke="#c4b5a0" stroke-width="1.5" marker-end="url(#arrow-warn)" />
+    <path d="M180 88 C200 220, 280 400, 500 510" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.75" marker-end="url(#arrow-warn)" />
+    <path d="M280 88 C300 240, 360 400, 560 515" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.75" marker-end="url(#arrow-warn)" />
+    <path d="M390 88 C420 250, 480 400, 640 515" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.7" marker-end="url(#arrow-warn)" />
+  </g>
+
+  <path
+    d="M130 250 C210 150, 990 150, 1070 250"
+    fill="none"
+    stroke="url(#rail)"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M1070 250 C1140 330, 1140 470, 980 520 C720 590, 480 590, 220 520 C60 470, 60 330, 130 250"
+    fill="none"
+    stroke="url(#learn)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-dasharray="8 10"
+  />
+
+  <g transform="translate(600 370)">
+    <circle r="70" fill="#0e1015" stroke="rgba(45,212,191,0.28)" stroke-width="1.5" />
+    <g transform="translate(-22 -36) scale(0.7)" aria-hidden="true">
+      <polygon fill="none" stroke="#2dd4bf" stroke-width="2.25" stroke-linejoin="round" points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75" />
+      <path fill="none" stroke="#2dd4bf" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2" />
+      <circle cx="32" cy="29.2" r="2.65" fill="#2dd4bf" />
+    </g>
+    <text y="32" text-anchor="middle" fill="#f6f7f9" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600">High-quality code</text>
+    <text y="50" text-anchor="middle" fill="#8e96a3" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11">Loops keep the bar</text>
+  </g>
+
+  <g font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+    <g transform="translate(150 240)">
+      <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+      <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Grill</text>
+    </g>
+    <g transform="translate(300 185)">
+      <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+      <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Spec</text>
+    </g>
+
+    <g transform="translate(470 170)">
+      <ellipse cx="0" cy="8" rx="58" ry="42" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="4 5" />
+      <rect x="-34" y="-14" width="68" height="28" rx="6" fill="#042f2e" stroke="#2dd4bf" stroke-width="2" />
+      <text x="0" y="5" text-anchor="middle" fill="#5eead4" font-size="13" font-weight="600">TDD</text>
+      <text x="-48" y="-28" fill="#8e96a3" font-size="10">red</text>
+      <text x="28" y="-28" fill="#8e96a3" font-size="10">green</text>
+      <text x="-8" y="58" fill="#8e96a3" font-size="10">refactor</text>
+      <text x="0" y="-48" text-anchor="middle" fill="#2dd4bf" font-size="10" letter-spacing="0.12em" font-weight="600">SHORT LOOP</text>
+    </g>
+
+    <g transform="translate(650 170)">
+      <rect x="-34" y="-14" width="68" height="28" rx="6" fill="#042f2e" stroke="#2dd4bf" stroke-width="2" />
+      <text x="0" y="5" text-anchor="middle" fill="#5eead4" font-size="13" font-weight="600">XFN</text>
+      <text x="0" y="36" text-anchor="middle" fill="#8e96a3" font-size="10">a11y · E2E · sec</text>
+    </g>
+    <text x="560" y="128" text-anchor="middle" fill="#2dd4bf" font-size="10" letter-spacing="0.14em" font-weight="600">THE BAR</text>
+
+    <g transform="translate(820 185)">
+      <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+      <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Audit</text>
+    </g>
+    <g transform="translate(1000 240)">
+      <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+      <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Ship</text>
+    </g>
+  </g>
+
+  <g transform="translate(1085 340)" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+    <path d="M0 -28 L28 0 L0 28 L-28 0 Z" fill="#0e1015" stroke="#5eead4" stroke-width="2" />
+    <text y="4" text-anchor="middle" fill="#5eead4" font-size="11" font-weight="600">Eval</text>
+    <text y="48" text-anchor="middle" fill="#e8eaee" font-size="12" font-weight="500">wk eval ci</text>
+    <text y="64" text-anchor="middle" fill="#8e96a3" font-size="10">validate routing</text>
+  </g>
+  <path d="M1070 268 V310" stroke="#5eead4" stroke-width="1.75" marker-end="url(#arrow)" />
+  <path d="M1085 370 C1085 420, 1040 470, 980 505" fill="none" stroke="#5eead4" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arrow)" />
+
+  <g transform="translate(600 530)" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+    <ellipse cx="0" cy="0" rx="170" ry="52" fill="none" stroke="#c4b5a0" stroke-width="1.5" stroke-dasharray="5 6" />
+    <text x="0" y="-62" text-anchor="middle" fill="#c4b5a0" font-size="10" letter-spacing="0.12em" font-weight="600">QUALITY LOOP · SIGNAL INTAKE</text>
+    <text x="-105" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Linear</text>
+    <text x="0" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Hygiene</text>
+    <text x="105" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Work picker</text>
+    <text x="0" y="28" text-anchor="middle" fill="#8e96a3" font-size="10">draft PR ? next session</text>
+  </g>
+
+  <path d="M450 530 C300 520, 200 430, 150 280" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow)" />
+
+  <text
+    x="600"
+    y="622"
+    text-anchor="middle"
+    fill="#8e96a3"
+    font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="12"
+  >Outer PDLC. Inner TDD. Outside signals start Learn. Evals validate the gate.</text>
+</svg>

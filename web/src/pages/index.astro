@@ -2,13 +2,7 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import SiteChrome from '../components/SiteChrome.astro';
 import { HomeHero } from '../components/HomeHero.tsx';
-import { HomeCli } from '../components/HomeCli.tsx';
-import { HomeUsedIn } from '../components/HomeUsedIn.tsx';
-import { HomeProof } from '../components/HomeProof.tsx';
 import { HomeNext } from '../components/HomeNext.tsx';
-import { TodayJobs } from '../components/TodayJobs.tsx';
-import { OntologyExplorer } from '../components/OntologyExplorer.tsx';
-import { EvalDemo } from '../components/EvalDemo.tsx';
 import { DOCS_PAGES } from '../docs/pages.ts';
 import { resolvePageSeo } from '../seo/siteSeo.ts';
 
@@ -20,12 +14,6 @@ const navPages = DOCS_PAGES.map(({ path, title }) => ({ path, title }));
   <SiteChrome layout="landing" pathname="/" pages={navPages}>
     <div class="landing-page">
       <HomeHero />
-      <TodayJobs client:load showHeading />
-      <OntologyExplorer client:load />
-      <HomeCli />
-      <HomeUsedIn />
-      <HomeProof />
-      <EvalDemo client:load />
       <HomeNext />
     </div>
   </SiteChrome>

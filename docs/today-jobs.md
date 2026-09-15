@@ -2,7 +2,7 @@
 
 Pick the job in front of you. Each card opens the steps and a command you can copy.
 
-Each heading is `id | title`. The homepage picker and this page share the same source.
+Each heading is `id | title`. The [jobs page](/docs/jobs) picker and this file share the same source.
 
 ## first-hour | I have never installed Waykit
 
@@ -90,8 +90,8 @@ Capture the miss as a JSONL case, mock the tool, and assert routing until the ag
 wk eval run --suite evals/edd/demo.yaml --model scripted
 ```
 
-- [See before / after](/#proof)
-- [Walk the failing-eval demo](/#demo)
+- [See before / after](/evals/edd/examples/before-after)
+- [Walk the failing-eval demo](/docs/edd)
 - [Demo suite](/evals/edd/demo.yaml)
 
 ## ci-gate | Gate a prompt or schema change
@@ -108,7 +108,7 @@ Treat the prompt and MCP schema like code under test. Fail the PR when routing a
 wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
 ```
 
-- [Before / after](/#proof)
+- [Before / after](/evals/edd/examples/before-after)
 - [Example report](/evals/edd/examples/eval-report)
 - [10-minute path](/docs/start)
 

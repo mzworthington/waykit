@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mock 03 · Proof first · Waykit</title>
+    <link rel="stylesheet" href="mock.css" />
+  </head>
+  <body>
+    <p class="mock-note">Mock 03 · Proof first · <a href="index.html">All mockups</a></p>
+    <header class="wrap site-header">
+      <a class="brand" href="03-proof.html">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <polygon fill="none" stroke="#2dd4bf" stroke-width="2.25" stroke-linejoin="round" points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75" />
+          <path fill="none" stroke="#2dd4bf" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2" />
+          <circle cx="32" cy="29.2" r="2.65" fill="#2dd4bf" />
+        </svg>
+        waykit
+      </a>
+      <nav>
+        <ul class="nav">
+          <li><a class="btn" href="#install">Install</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wrap hero" aria-labelledby="hero-heading" style="border-top: 0; padding-top: 2.2rem">
+        <p class="eyebrow">Used on our own product repos</p>
+        <h1 id="hero-heading">The kit we actually run</h1>
+        <p class="lede">
+          Waykit is the lifecycle behind these checkouts: TDD, hexagonal boundaries, a thin handshake and <code>wk</code>. Staff engineers distrust kits. Open the repos.
+        </p>
+        <ul class="repo-grid">
+          <li>
+            <a href="https://github.com/mzworthington/blueprint">
+              <span class="kicker">ArchLens</span>
+              <h2>Architecture canvas</h2>
+              <p>Parsers and merge in <code>@archlens/core</code> go red-green first. UI stays on the canvas adapter. Sparse ADRs.</p>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/mzworthington/steerco">
+              <span class="kicker">steerco</span>
+              <h2>Executive steering</h2>
+              <p>Markdown docs rendered in-app. Cloudflare Pages. Handovers under <code>steerco/</code>. Same <code>wk align</code> bar.</p>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/mzworthington/react-cloudflare-template">
+              <span class="kicker">Product starter</span>
+              <h2>React + Cloudflare</h2>
+              <p>This is what <code>wk init</code> writes, already aligned, so a clone inherits the handshake instead of a fat AGENTS.md.</p>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/mzworthington/gpio-build-monitor">
+              <span class="kicker">GPIO build monitor</span>
+              <h2>Pi + Worker</h2>
+              <p>Python on the device, Pulumi for the public UI. Default MCP for agents. Cloudflare profile only when the Worker is the job.</p>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="wrap" id="install" aria-labelledby="kit-heading">
+        <h2 id="kit-heading">The same kit, one curl</h2>
+        <p class="section-lead">
+          Full agent-supported PDLC and SDLC. Learning loops after ship. Evals on the merge gate. You operate it with <code>wk</code>.
+        </p>
+        <div class="terminal">
+          <p class="terminal-label">Single-line install</p>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/mzworthington/waykit/main/install.sh | sh</code></pre>
+          <p class="then"><code>wk init . --mcp default --hook</code> · then pick debug vs feature. No API key.</p>
+        </div>
+      </section>
+
+      <section class="wrap" aria-labelledby="how-heading">
+        <h2 id="how-heading">How the code stays honest</h2>
+        <ul class="pillars">
+          <li class="card">
+            <h3>High-quality code</h3>
+            <p>Tests are the behavior catalog. TDD in domain, XFN for the surfaces that need it, <code>wk check</code> before you call a phase done.</p>
+          </li>
+          <li class="card">
+            <h3>Learning loops</h3>
+            <p>CI, Lighthouse, RUM and Sonar become typed Linear tickets. A work picker plays allowlisted bugs as draft PRs.</p>
+          </li>
+          <li class="card">
+            <h3>Evals + CLI</h3>
+            <p><code>wk eval ci</code> for routing. <code>wk</code> for the menu. Operator guide for the long tail. Ontology map stays in docs, not the hero.</p>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="wrap site-footer">Mockup. Not the live site. Copy is draft for exploration.</footer>
+  </body>
+</html>

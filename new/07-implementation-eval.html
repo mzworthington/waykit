@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mock 07 · Implementation and eval · Waykit</title>
+    <link rel="stylesheet" href="mock.css" />
+    <style>
+      .graphic-hero {
+        border-top: 0;
+        padding: 2.2rem 0 0;
+      }
+
+      .graphic-hero h1 {
+        max-width: 28ch;
+        font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+        font-weight: 500;
+      }
+
+      .loop-figure {
+        margin: 1.4rem 0 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg-2);
+        overflow: hidden;
+      }
+
+      .loop-figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .loop-figure figcaption {
+        margin: 0;
+        padding: 0.85rem 1.1rem 1rem;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .key-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.9rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .key-row strong {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: var(--heading);
+        font-size: 0.92rem;
+      }
+
+      .key-row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      @media (max-width: 800px) {
+        .key-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="light wide">
+    <p class="mock-note">Mock 07 · Implementation and eval · <a href="index.html">All mockups</a> · <a href="06-loops-in-loops.html">Previous</a></p>
+    <header class="wrap site-header">
+      <a class="brand" href="07-implementation-eval.html">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <polygon fill="none" stroke="#0f766e" stroke-width="2.25" stroke-linejoin="round" points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75" />
+          <path fill="none" stroke="#0f766e" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2" />
+          <circle cx="32" cy="29.2" r="2.65" fill="#0f766e" />
+        </svg>
+        waykit
+      </a>
+      <nav>
+        <ul class="nav">
+          <li><a class="ghost" href="https://waykit.dev/docs/lifecycle">Lifecycle</a></li>
+          <li><a class="btn" href="https://waykit.dev">Live site</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wrap graphic-hero" aria-labelledby="hero-heading">
+        <p class="eyebrow">Paper theme · live site tokens</p>
+        <h1 id="hero-heading">Build in nested loops. Gate with evals. Outside pressure feeds the suite.</h1>
+        <p class="lede">
+          Same three-column story as the source diagram, restyled to IBM Plex, paper, and the live teal. No banners, shadows, or gold hex.
+        </p>
+        <figure class="loop-figure">
+          <img src="graphics/implementation-eval.svg" alt="Nested implementation loops beside an eval suite, with outside pressure in a third column." width="1120" height="460" />
+          <figcaption>
+            PDLC outside, SDLC in the middle, TDD at the centre. Eval sits beside the loops. Market, users, tech and compliance stay outside.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="wrap" aria-labelledby="read-heading">
+        <h2 id="read-heading">What changed from the source</h2>
+        <ul class="key-row">
+          <li>
+            <strong>Chrome</strong>
+            <p>Dropped the all-caps platform title, coloured header bars, drop shadows and 8px dashes. One paper surface, hairline column rules.</p>
+          </li>
+          <li>
+            <strong>Tokens</strong>
+            <p>Live site: <code>#f3efe6</code> paper, <code>#0f766e</code> teal, <code>#8a7a66</code> for eval and outside.</p>
+          </li>
+          <li>
+            <strong>Copy</strong>
+            <p>Sentence case. Eval list is what the kit actually gates: datasets, tests, routing, drift. Not hallucination scans.</p>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="wrap site-footer">
+      Graphic study on the live paper theme. Asset at <code>graphics/implementation-eval.svg</code>. Compare with <a href="06-loops-in-loops.html">mock 06</a>.
+    </footer>
+  </body>
+</html>

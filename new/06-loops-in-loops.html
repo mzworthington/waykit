@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mock 06 · Loops in loops · Waykit</title>
+    <link rel="stylesheet" href="mock.css" />
+    <style>
+      .graphic-hero {
+        position: relative;
+        border-top: 0;
+        padding: 0.85rem 0 0;
+        overflow: hidden;
+      }
+
+      .graphic-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: min(90vh, 56rem);
+        background:
+          radial-gradient(ellipse 75% 50% at 50% 32%, rgba(45, 212, 191, 0.11), transparent 70%),
+          linear-gradient(180deg, #0b0d12 0%, var(--bg) 100%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .graphic-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .graphic-hero .brand-lockup {
+        margin: 0 0 0.5rem;
+        color: var(--heading);
+        font-size: clamp(2.1rem, 5vw, 3rem);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .graphic-hero .brand-lockup span {
+        color: var(--teal);
+      }
+
+      .graphic-hero h1 {
+        max-width: 30ch;
+        font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        color: var(--heading);
+      }
+
+      .graphic-hero .lede {
+        max-width: 40rem;
+        margin-top: 0.4rem;
+        font-size: 0.96rem;
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 0.75rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .loop-figure {
+        margin: 0.9rem 0 0;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        background: #090a0d;
+        border-block: 1px solid var(--border);
+      }
+
+      .loop-figure svg {
+        display: block;
+        width: min(1200px, 100%);
+        height: auto;
+        margin: 0 auto;
+      }
+
+      .loop-figure figcaption {
+        width: min(var(--max), calc(100% - 2.5rem));
+        margin: 0 auto;
+        padding: 0.8rem 0 1rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .loop-figure .forward-rail {
+        stroke-dasharray: 1200;
+        stroke-dashoffset: 1200;
+        animation: draw-forward 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      }
+
+      .loop-figure .learn-rail {
+        stroke-dasharray: 8 10;
+        animation: learn-flow 2.4s linear infinite;
+      }
+
+      .loop-figure .inner-loop {
+        stroke-dasharray: 4 5;
+        animation: inner-spin 3.2s linear infinite;
+      }
+
+      .loop-figure .quality-loop {
+        stroke-dasharray: 5 6;
+        animation: quality-spin 3.8s linear infinite reverse;
+      }
+
+      .loop-figure .signal-in {
+        stroke-dasharray: 4 6;
+        animation: signal-drop 1.8s ease-in-out infinite;
+      }
+
+      .loop-figure .eval-gate {
+        animation: eval-pulse 2.6s ease-in-out infinite;
+      }
+
+      @keyframes draw-forward {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes learn-flow {
+        to {
+          stroke-dashoffset: -36;
+        }
+      }
+
+      @keyframes inner-spin {
+        to {
+          stroke-dashoffset: -36;
+        }
+      }
+
+      @keyframes quality-spin {
+        to {
+          stroke-dashoffset: -44;
+        }
+      }
+
+      @keyframes signal-drop {
+        0%,
+        100% {
+          opacity: 0.45;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes eval-pulse {
+        0%,
+        100% {
+          filter: brightness(1);
+        }
+        50% {
+          filter: brightness(1.25);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .loop-figure .forward-rail,
+        .loop-figure .learn-rail,
+        .loop-figure .inner-loop,
+        .loop-figure .quality-loop,
+        .loop-figure .signal-in,
+        .loop-figure .eval-gate {
+          animation: none;
+        }
+
+        .loop-figure .forward-rail {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .key-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.9rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .key-row strong {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: var(--heading);
+        font-size: 0.92rem;
+      }
+
+      .key-row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .key-dot {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-right: 0.35rem;
+        border-radius: 50%;
+        vertical-align: 0.05em;
+      }
+
+      .key-dot.outer {
+        background: var(--teal);
+      }
+
+      .key-dot.inner {
+        background: transparent;
+        box-shadow: inset 0 0 0 1.5px var(--teal);
+      }
+
+      .key-dot.eval {
+        background: #5eead4;
+      }
+
+      .key-dot.signal {
+        background: #c4b5a0;
+      }
+
+      @media (max-width: 900px) {
+        .key-row {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .key-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="wide">
+    <p class="mock-note">Mock 06 · Loops in loops · <a href="index.html">All mockups</a> · <a href="05-main-graphic.html">Previous</a></p>
+    <header class="wrap site-header">
+      <a class="brand" href="06-loops-in-loops.html">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <polygon fill="none" stroke="#2dd4bf" stroke-width="2.25" stroke-linejoin="round" points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75" />
+          <path fill="none" stroke="#2dd4bf" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2" />
+          <circle cx="32" cy="29.2" r="2.65" fill="#2dd4bf" />
+        </svg>
+        waykit
+      </a>
+      <nav>
+        <ul class="nav">
+          <li><a class="ghost" href="#install">Install</a></li>
+          <li><a class="ghost" href="https://github.com/mzworthington/waykit">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wrap graphic-hero" aria-labelledby="hero-heading">
+        <p class="brand-lockup" aria-hidden="true">way<span>kit</span></p>
+        <h1 id="hero-heading">Loops inside the loop. Outside signals start the next one.</h1>
+        <p class="lede">
+          TDD spins inside the PDLC. Evals validate the gate. CI, RUM, Lighthouse and Sonar enter Learn as typed work, not folklore.
+        </p>
+        <ul class="hero-cta">
+          <li><a class="btn" href="#install">Install</a></li>
+          <li><a class="ghost" href="https://waykit.dev/docs/lifecycle">Lifecycle</a></li>
+        </ul>
+
+        <figure class="loop-figure">
+          <svg viewBox="0 0 1200 640" role="img" aria-labelledby="loop-title loop-desc">
+            <title id="loop-title">Waykit loops in loops</title>
+            <desc id="loop-desc">
+              Outer PDLC loop from Grill to Ship with a Learn return. Nested TDD short loop on the bar.
+              Eval gate validates before Learn. Outside signals CI, RUM, Lighthouse and Sonar enter the
+              quality loop that feeds Linear and the work picker.
+            </desc>
+            <defs>
+              <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.25" />
+                <stop offset="40%" stop-color="#2dd4bf" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#5eead4" stop-opacity="0.9" />
+              </linearGradient>
+              <linearGradient id="learn" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.25" />
+              </linearGradient>
+              <radialGradient id="glow" cx="50%" cy="48%" r="48%">
+                <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.12" />
+                <stop offset="60%" stop-color="#2dd4bf" stop-opacity="0.03" />
+                <stop offset="100%" stop-color="#090a0d" stop-opacity="0" />
+              </radialGradient>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 1.2 L8.5 5 L0 8.8 Z" fill="#2dd4bf" />
+              </marker>
+              <marker id="arrow-warn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M0 1.2 L8.5 5 L0 8.8 Z" fill="#c4b5a0" />
+              </marker>
+            </defs>
+
+            <rect width="1200" height="640" fill="#090a0d" />
+            <rect width="1200" height="640" fill="url(#glow)" />
+
+            <g opacity="0.06" stroke="#e8eaee" stroke-width="1" aria-hidden="true">
+              <path d="M40 80 H1160 M40 160 H1160 M40 240 H1160 M40 320 H1160 M40 400 H1160 M40 480 H1160 M40 560 H1160" />
+              <path d="M100 40 V600 M220 40 V600 M340 40 V600 M460 40 V600 M580 40 V600 M700 40 V600 M820 40 V600 M940 40 V600 M1060 40 V600" />
+            </g>
+
+            <g font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+              <text x="250" y="48" text-anchor="middle" fill="#8e96a3" font-size="11" letter-spacing="0.16em" font-weight="500">OUTSIDE SIGNALS</text>
+              <g fill="#c4b5a0" font-size="12" font-weight="500">
+                <text x="100" y="78" text-anchor="middle">CI</text>
+                <text x="180" y="78" text-anchor="middle">RUM</text>
+                <text x="280" y="78" text-anchor="middle">Lighthouse</text>
+                <text x="390" y="78" text-anchor="middle">Sonar</text>
+              </g>
+              <path class="signal-in" d="M100 88 C120 200, 200 420, 450 500" fill="none" stroke="#c4b5a0" stroke-width="1.5" marker-end="url(#arrow-warn)" />
+              <path class="signal-in" d="M180 88 C200 220, 280 400, 500 510" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.75" marker-end="url(#arrow-warn)" />
+              <path class="signal-in" d="M280 88 C300 240, 360 400, 560 515" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.75" marker-end="url(#arrow-warn)" />
+              <path class="signal-in" d="M390 88 C420 250, 480 400, 640 515" fill="none" stroke="#c4b5a0" stroke-width="1.35" stroke-opacity="0.7" marker-end="url(#arrow-warn)" />
+            </g>
+
+            <path
+              class="forward-rail"
+              d="M130 250 C210 150, 990 150, 1070 250"
+              fill="none"
+              stroke="url(#rail)"
+              stroke-width="3.5"
+              stroke-linecap="round"
+            />
+
+            <path
+              class="learn-rail"
+              d="M1070 250 C1140 330, 1140 470, 980 520 C720 590, 480 590, 220 520 C60 470, 60 330, 130 250"
+              fill="none"
+              stroke="url(#learn)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-dasharray="8 10"
+            />
+
+            <g transform="translate(600 370)">
+              <circle r="70" fill="#0e1015" stroke="rgba(45,212,191,0.28)" stroke-width="1.5" />
+              <g transform="translate(-22 -36) scale(0.7)" aria-hidden="true">
+                <polygon fill="none" stroke="#2dd4bf" stroke-width="2.25" stroke-linejoin="round" points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75" />
+                <path fill="none" stroke="#2dd4bf" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2" />
+                <circle cx="32" cy="29.2" r="2.65" fill="#2dd4bf" />
+              </g>
+              <text y="32" text-anchor="middle" fill="#f6f7f9" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600">High-quality code</text>
+              <text y="50" text-anchor="middle" fill="#8e96a3" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11">Loops keep the bar</text>
+            </g>
+
+            <g font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+              <g transform="translate(150 240)">
+                <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+                <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Grill</text>
+              </g>
+              <g transform="translate(300 185)">
+                <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+                <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Spec</text>
+              </g>
+
+              <g transform="translate(470 170)">
+                <ellipse class="inner-loop" cx="0" cy="8" rx="58" ry="42" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="4 5" />
+                <rect x="-34" y="-14" width="68" height="28" rx="6" fill="#042f2e" stroke="#2dd4bf" stroke-width="2" />
+                <text x="0" y="5" text-anchor="middle" fill="#5eead4" font-size="13" font-weight="600">TDD</text>
+                <text x="-48" y="-28" fill="#8e96a3" font-size="10">red</text>
+                <text x="28" y="-28" fill="#8e96a3" font-size="10">green</text>
+                <text x="-8" y="58" fill="#8e96a3" font-size="10">refactor</text>
+                <text x="0" y="-48" text-anchor="middle" fill="#2dd4bf" font-size="10" letter-spacing="0.12em" font-weight="600">SHORT LOOP</text>
+              </g>
+
+              <g transform="translate(650 170)">
+                <rect x="-34" y="-14" width="68" height="28" rx="6" fill="#042f2e" stroke="#2dd4bf" stroke-width="2" />
+                <text x="0" y="5" text-anchor="middle" fill="#5eead4" font-size="13" font-weight="600">XFN</text>
+                <text x="0" y="36" text-anchor="middle" fill="#8e96a3" font-size="10">a11y · E2E · sec</text>
+              </g>
+              <text x="560" y="128" text-anchor="middle" fill="#2dd4bf" font-size="10" letter-spacing="0.14em" font-weight="600">THE BAR</text>
+
+              <g transform="translate(820 185)">
+                <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+                <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Audit</text>
+              </g>
+              <g transform="translate(1000 240)">
+                <circle r="7" fill="#12151c" stroke="#5eead4" stroke-width="2" />
+                <text x="0" y="-16" text-anchor="middle" fill="#e8eaee" font-size="13" font-weight="500">Ship</text>
+              </g>
+            </g>
+
+            <g class="eval-gate" transform="translate(1085 340)" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+              <path d="M0 -28 L28 0 L0 28 L-28 0 Z" fill="#0e1015" stroke="#5eead4" stroke-width="2" />
+              <text y="4" text-anchor="middle" fill="#5eead4" font-size="11" font-weight="600">Eval</text>
+              <text y="48" text-anchor="middle" fill="#e8eaee" font-size="12" font-weight="500">wk eval ci</text>
+              <text y="64" text-anchor="middle" fill="#8e96a3" font-size="10">validate routing</text>
+            </g>
+            <path d="M1070 268 V310" stroke="#5eead4" stroke-width="1.75" marker-end="url(#arrow)" />
+            <path d="M1085 370 C1085 420, 1040 470, 980 505" fill="none" stroke="#5eead4" stroke-width="1.5" stroke-opacity="0.7" marker-end="url(#arrow)" />
+
+            <g transform="translate(600 530)" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif">
+              <ellipse class="quality-loop" cx="0" cy="0" rx="170" ry="52" fill="none" stroke="#c4b5a0" stroke-width="1.5" stroke-dasharray="5 6" />
+              <text x="0" y="-62" text-anchor="middle" fill="#c4b5a0" font-size="10" letter-spacing="0.12em" font-weight="600">QUALITY LOOP · SIGNAL INTAKE</text>
+              <text x="-105" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Linear</text>
+              <text x="0" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Hygiene</text>
+              <text x="105" y="4" text-anchor="middle" fill="#e8eaee" font-size="12">Work picker</text>
+              <text x="0" y="28" text-anchor="middle" fill="#8e96a3" font-size="10">draft PR → next session</text>
+            </g>
+
+            <path d="M450 530 C300 520, 200 430, 150 280" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arrow)" />
+          </svg>
+          <figcaption>
+            Three nested motions: PDLC outer, TDD short loop, quality loop from outside signals. Eval sits on the gate between Ship and Learn.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="wrap" aria-labelledby="read-heading">
+        <h2 id="read-heading">How to read it</h2>
+        <ul class="key-row">
+          <li>
+            <strong><span class="key-dot outer" aria-hidden="true"></span>Outer PDLC</strong>
+            <p>Grill through Ship, then Learn. Same spine as mock 05.</p>
+          </li>
+          <li>
+            <strong><span class="key-dot inner" aria-hidden="true"></span>Loops in loops</strong>
+            <p>TDD short loop (red → green → refactor) spins inside the bar. Quality loop spins on Learn.</p>
+          </li>
+          <li>
+            <strong><span class="key-dot eval" aria-hidden="true"></span>Validate with evals</strong>
+            <p>Diamond after Ship: <code>wk eval ci</code> gates routing before the return path.</p>
+          </li>
+          <li>
+            <strong><span class="key-dot signal" aria-hidden="true"></span>Outside in</strong>
+            <p>CI, RUM, Lighthouse, Sonar arc into the quality loop (Linear → work picker), not into the PDLC bar.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="wrap" id="install" aria-labelledby="install-heading">
+        <h2 id="install-heading">Then the curl</h2>
+        <p class="section-lead">Graphic carries the story. Install stays one scroll away.</p>
+        <div class="terminal">
+          <p class="terminal-label">Single-line install</p>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/mzworthington/waykit/main/install.sh | sh</code></pre>
+          <p class="then">Then <code>wk init . --mcp default --hook</code>. Gate a miss with <code>wk eval ci</code>.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="wrap site-footer">
+      Graphic study v2. Asset at <code>graphics/loops-in-loops.svg</code>. Compare with <a href="05-main-graphic.html">mock 05</a>.
+    </footer>
+  </body>
+</html>

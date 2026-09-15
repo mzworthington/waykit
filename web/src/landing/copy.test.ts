@@ -15,13 +15,21 @@ describe('homepage copy', () => {
     expect(HOME_BRAND).toBe('Waykit');
     expect(HOME_CLI_HEADING).toBe('The wk CLI');
     expect(HOME_HEADLINE).toMatch(/grill/i);
-    expect(HOME_NEXT).toHaveLength(4);
+    expect(HOME_NEXT.map((item) => item.href)).toEqual([
+      '/docs/jobs',
+      '/docs/lifecycle',
+      '/SOPs/quality-loops',
+      '/docs/kit',
+      '/docs/map',
+      '/docs/edd'
+    ]);
     expect(HOME_NEXT[0]?.body).toMatch(/debug vs feature/i);
-    expect(HOME_NEXT[1]?.href).toBe('/docs/lifecycle');
-    expect(HOME_NEXT[2]?.href).toBe('/docs/kit');
-    expect(HOME_NEXT[2]?.body).toMatch(/wk /i);
-    expect(HOME_NEXT[3]?.href).toBe('/docs/map');
-    expect(HOME_NEXT[3]?.body).toMatch(/live graph/i);
+    expect(HOME_NEXT[2]?.title).toMatch(/quality loops/i);
+    expect(HOME_NEXT[2]?.body).toMatch(/ci/i);
+    expect(HOME_NEXT[2]?.body).toMatch(/rum/i);
+    expect(HOME_NEXT[3]?.body).toMatch(/wk /i);
+    expect(HOME_NEXT[4]?.body).toMatch(/live graph/i);
+    expect(HOME_NEXT[5]?.title).toMatch(/evals/i);
     expect(HOME_USED_IN).toHaveLength(4);
     expect(HOME_USED_IN.map((repo) => repo.href)).toEqual([
       'https://github.com/mzworthington/blueprint',

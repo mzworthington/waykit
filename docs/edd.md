@@ -15,6 +15,16 @@ Still to build before this is a framework: live judges per provider, skill-trigg
 
 EDD treats prompts and tool schemas as version-controlled, evaluated contracts. The harness is one learning loop inside the feature lifecycle, not the whole product.
 
+## Interactive demo
+
+Same `demo-edge` case as the teaching suite. Case, red, report, green, then the CI gate.
+
+```widget
+demo
+```
+
+Write-up: [before / after](../evals/edd/examples/before-after.md). Suite: [evals/edd/demo.yaml](../evals/edd/demo.yaml).
+
 ## The loop (same shape as TDD)
 
 1. **Red - Define intent.** JSONL cases and YAML metrics assert the tool (and arguments) you expect, and that chatty questions do not invent tool calls.

@@ -46,7 +46,7 @@ wk eval run
 });
 
 describe('docs/today-jobs.md', () => {
-  it('is the source for the landing-page jobs', () => {
+  it('is the source for the jobs page picker', () => {
     const jobs = parseTodayJobsMarkdown(todayMd);
     expect(jobs.map((job) => job.id)).toEqual([
       'first-hour',
