@@ -23,6 +23,7 @@
 ### 🐛 Bug Fixes
 
 - *(sops)* Drop duplicated vendor-PR catalog cases (MZW-113)
+- *(kit-knowledge)* Return complete quality-loop SOP
 
 ## 2026-09-14
 
