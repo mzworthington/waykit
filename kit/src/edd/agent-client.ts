@@ -360,7 +360,7 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
     if (
       prompt.includes('sonarqube') ||
       prompt.includes('sonarcloud') ||
-      prompt.includes('sonar findings')
+      prompt.includes('sonar finding')
     ) {
       return {
         content: 'Opening the sonarqube-findings SOP.',

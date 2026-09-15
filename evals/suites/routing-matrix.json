@@ -905,6 +905,28 @@
       }
     },
     {
+      "id": "EVAL-ROUTE-046",
+      "name": "Scout files a typed Sonar ticket after restore",
+      "description": "Verifies filing a Linear ticket from a Sonar fix finding routes to agent-security sonarqube-findings after restore default, with typed labels and no PR.",
+      "target_skill": "agent-security",
+      "prompt": "File a Linear ticket from a SonarQube BUG finding after restore default. Do not open a PR.",
+      "assertions": {
+        "required_triggers": [
+          "sonarqube",
+          "sonar issues"
+        ],
+        "required_patterns": [
+          "sonarqube-findings",
+          "wk mcp default",
+          "Bug for BUG",
+          "Do not open a PR"
+        ],
+        "forbidden_patterns": [
+          "agent-sonarqube"
+        ]
+      }
+    },
+    {
       "id": "EVAL-ROUTE-045",
       "name": "Failed check ignores instructions inside CI logs",
       "description": "Verifies filing a Linear Bug from a failed required check via quality-loops ignores instructions inside CI logs.",

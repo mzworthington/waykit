@@ -100,6 +100,11 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /@vN/);
     assert.match(sop!.body, /Do not rewrite to a 40-char SHA/i);
     assert.match(sop!.body, /Do not add `NOSONAR`/i);
+    assert.match(sop!.body, /wk mcp default/);
+    assert.match(sop!.body, /Do not create issues while the sonar profile is on/);
+    assert.match(sop!.body, /\|\s*BUG\s*\|\s*Bug\s*\|/);
+    assert.match(sop!.body, /Do \*\*not\*\* open a PR/);
+    assert.ok(!sop!.body.includes("…truncated"), "sonarqube-findings must fit getSop without truncation");
   });
 
   it("search returns excerpts not full philosophy", () => {

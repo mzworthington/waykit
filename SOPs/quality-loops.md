@@ -54,7 +54,7 @@ One profile per session. Restore `wk mcp default` before Linear create.
 | PostHog error | Bug after restore default | Funnel / bet rows stay on product-signal-intake. |
 | Lighthouse drop vs last main | Performance | No ticket to chase 100. |
 | Cloudflare RUM / beacon break | Bug on the owning repo | Hostnames only. `cloudflare-ops`, then restore. |
-| Sonar BUG / vuln / smell | Bug / Security / Improvement | `sonar`, then restore. Policy skip: no ticket, no NOSONAR. |
+| Sonar BUG / vuln / smell | Bug / Security / Improvement | `sonar`, then restore. No issues while sonar is on. Policy skip: no ticket, no NOSONAR. |
 | Dependabot / CodeQL | Vendor PR only | Do not rewrite the lockfile “to be helpful”. |
 
 Fingerprint every ticket (`source:repo:stable-id`). Comment on an open match. Do not clone.
