@@ -75,6 +75,9 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /Draft PR only/);
     assert.match(sop!.body, /hold/);
     assert.match(sop!.body, /auto-work/);
+    assert.match(sop!.body, /Hostnames only/);
+    assert.match(sop!.body, /site tags/);
+    assert.match(sop!.body, /source:<owning-repo>:rum:<hostname>/);
     assert.ok(!sop!.body.includes("…truncated"), "quality-loops must fit getSop without truncation");
   });
 

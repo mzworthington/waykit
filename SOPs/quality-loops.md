@@ -15,7 +15,7 @@ tools:
 ---
 # Standard Operating Procedure: Quality loops through Linear
 
-CI, scanners, and live telemetry become **typed Linear tickets**. Hygiene keeps the board clean. A work picker plays allowlisted tickets as **draft PRs**. No new specialist skill.
+CI, scanners, and live telemetry become **typed Linear tickets**. Hygiene keeps the board clean. A work picker plays allowlisted tickets as **draft PRs**. No new skill.
 
 Reuse existing roles. PostHog funnel/bet rows stay on [product-signal-intake](./product-signal-intake.md). Sonar skips stay on [sonarqube-findings](./sonarqube-findings.md).
 
@@ -41,7 +41,7 @@ Cloud Agent and Automation sessions only see MCP servers on the **Cursor dashboa
 
 Dashboard servers: GitHub, Linear, PostHog, Cloudflare Observability, SonarQube.
 
-If those tools are missing, stop **BLOCKED**. Do not invent site lists, issue lists, dashboard counts, or Linear URLs. A local profile does not wake a Cloud session — still stop.
+If those tools are missing, stop **BLOCKED**. Do not invent site tags, tokens, lists, counts, or Linear URLs. A local profile does not wake a Cloud session — still stop.
 
 One profile per session. Restore `wk mcp default` before Linear create.
 
@@ -53,17 +53,17 @@ One profile per session. Restore `wk mcp default` before Linear create.
 | Scheduled scout | Work type | One source per Automation. Evidence, no tokens. No PR. |
 | PostHog error | Bug after restore default | Funnel / bet rows stay on product-signal-intake. |
 | Lighthouse drop vs last main | Performance | No ticket to chase 100. |
-| Cloudflare RUM / beacon break | Bug on the owning repo | Hostnames only. `cloudflare-ops`, then restore. |
+| Cloudflare RUM / beacon break | Bug on the owning repo | Hostnames only, never site tokens. `cloudflare-ops`, then restore. No PR. |
 | Sonar BUG / vuln / smell | Bug / Security / Improvement | `sonar`, then restore. Policy skip: no ticket, no NOSONAR. |
 | Dependabot / CodeQL | Vendor PR only | Do not rewrite the lockfile “to be helpful”. |
 
-Fingerprint every ticket (`source:repo:stable-id`). Comment on an open match. Do not clone.
+Fingerprint every ticket (`source:repo:stable-id`; RUM `source:<owning-repo>:rum:<hostname>`). Comment on an open match. Do not clone.
 
-gpio-build-monitor is a signal bus. It does not write product code.
+gpio-build-monitor is a signal bus, not a product writer.
 
 ## Allowlist
 
-Work picker reads [lists/work-picker-allowlist.yaml](../lists/work-picker-allowlist.yaml). Change that file to change what auto-plays. Do not hardcode types in the Automation prompt.
+Work picker reads [lists/work-picker-allowlist.yaml](../lists/work-picker-allowlist.yaml). Change that file; do not hardcode types in the prompt.
 
 Default: Bug, Security, Performance, Improvement. Feature and UX wait unless `auto-work`. `hold` blocks any type.
 

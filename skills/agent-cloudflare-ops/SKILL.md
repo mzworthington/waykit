@@ -47,7 +47,9 @@ Upstream Cloudflare platform skills (`cloudflare`, `wrangler`) win on vendor API
 - User asks to diagnose or repair Cloudflare analytics with MCP
 - Live Worker errors on a RUM proxy / beacon host
 
-**Skip** for application bugs with no Cloudflare account angle (`agent-debug`), Sev-style outages (`agent-incident` first), or adding OpenTelemetry in app code (`agent-telemetry`). Fleet filing of a confirmed RUM break as a Linear Bug is [quality-loops](../../SOPs/quality-loops.md) after restore `wk mcp default`.
+**Skip** for application bugs with no Cloudflare account angle (`agent-debug`), Sev-style outages (`agent-incident` first), or adding OpenTelemetry in app code (`agent-telemetry`).
+
+**Scout filing:** after a confirmed RUM or beacon host break, restore `wk mcp default` and file via [quality-loops](../../SOPs/quality-loops.md): one Bug on the owning-repo project (no PR). Hostnames only — never site tokens. Fingerprint `source:<owning-repo>:rum:<hostname>`. Comment on an open match instead of cloning. Missing Cloudflare tools → **BLOCKED**; do not invent site tags, tokens, or Linear URLs.
 
 ## Profile
 

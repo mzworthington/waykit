@@ -31,7 +31,7 @@ Compare Lighthouse categories to last main. If a category dropped, file or updat
 ## File from a Cloudflare RUM break
 
 ```text
-wk mcp cloudflare-ops. If Cloudflare tools are missing, stop BLOCKED. If a RUM or beacon break is observed, restore wk mcp default, then file or update one Bug ticket on the owning-repo project. Hostnames only — never site tokens. If an open ticket already fingerprints this host break, comment instead of cloning. Do not open a PR. Do not stack Cloudflare onto default.
+wk mcp cloudflare-ops. If Cloudflare tools are missing, stop BLOCKED. Do not invent site tags, tokens, or Linear URLs. If a RUM or beacon break is observed, restore wk mcp default, then file or update one Bug ticket on the owning-repo project. Hostnames only — never site tokens. Fingerprint source:<owning-repo>:rum:<hostname>. If an open ticket already fingerprints this host break, comment instead of cloning. Do not open a PR. Do not stack Cloudflare onto default.
 ```
 
 ## File from a Sonar finding
