@@ -61,24 +61,9 @@ export const HOME_NEXT = [
     body: 'CI, RUM, Lighthouse and Sonar file Linear tickets. Hygiene then the work picker turns them into draft PRs.'
   },
   {
-    href: '/docs/kit',
-    title: 'CLI and what Waykit installs',
-    body: 'wk check, doctor, measure-context, one MCP profile. The operator surface, not just skills on disk.'
-  },
-  {
-    href: '/docs/map',
-    title: 'Waykit map',
-    body: 'Live graph of this kit: edit files, check dangling links, load one node. Not a second catalog.'
-  },
-  {
     href: '/docs/jobs',
     title: 'Jobs for today',
     body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
-  },
-  {
-    href: '/docs/edd',
-    title: 'Evals (alpha)',
-    body: 'A miss becomes a failing eval. Walk the demo and the before/after write-up.'
   }
 ];
 

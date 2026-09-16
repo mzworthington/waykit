@@ -1,11 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { cleanup, render, screen, within } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
 import { HomeLanding } from './HomeLanding';
 
 describe('HomeLanding', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it('keeps three docs cards and a used-in proof strip', () => {
     render(<HomeLanding />);
     expect(screen.getByRole('heading', { level: 1, name: 'Waykit' })).toBeTruthy();
