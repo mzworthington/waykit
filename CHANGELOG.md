@@ -6,6 +6,7 @@
 
 - *(cli)* Operate quality-loop Automations from wk (MZW-121) (#99)
 - Improved homepage
+- Homepage improvements
 
 ### 🐛 Bug Fixes
 
