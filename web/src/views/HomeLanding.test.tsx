@@ -6,45 +6,56 @@ import { describe, expect, it } from 'vitest';
 import { HomeLanding } from './HomeLanding';
 
 describe('HomeLanding', () => {
-  it('keeps the brand-first hero and sends jobs, map, CLI, proof and demo to docs', () => {
+  it('keeps three docs cards and a used-in proof strip', () => {
     render(<HomeLanding />);
-    expect(screen.getByText(/software lifecycle for coding agents/i)).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1, name: 'Waykit' })).toBeTruthy();
-    expect(screen.getByText(/grill, spec, tdd, ship/i)).toBeTruthy();
     expect(screen.getByRole('link', { name: /^Install Waykit$/ }).getAttribute('href')).toBe('/docs/start');
     expect(screen.getByRole('link', { name: /^Read the lifecycle$/ }).getAttribute('href')).toBe(
       '/docs/lifecycle'
     );
-    expect(screen.queryByRole('link', { name: /^See the CLI$/ })).toBeNull();
-    expect(screen.queryByRole('link', { name: /^Open the map$/ })).toBeNull();
-    expect(screen.getByRole('img', { name: 'CI passing' })).toBeTruthy();
     const next = screen.getByRole('heading', { name: /start in the docs/i }).closest('section');
     expect(next).toBeTruthy();
     const docs = within(next as HTMLElement);
-    expect(docs.getByRole('link', { name: /jobs for today/i }).getAttribute('href')).toBe('/docs/jobs');
-    expect(docs.getByRole('link', { name: /feature lifecycle/i }).getAttribute('href')).toBe(
-      '/docs/lifecycle'
+    expect(docs.getAllByRole('link').map((el) => el.getAttribute('href'))).toEqual([
+      '/docs/lifecycle',
+      '/docs/loops',
+      '/docs/jobs'
+    ]);
+    expect(docs.queryByRole('link', { name: /cli and what waykit installs/i })).toBeNull();
+    expect(docs.queryByRole('link', { name: /waykit map/i })).toBeNull();
+    expect(docs.queryByRole('link', { name: /evals \(alpha\)/i })).toBeNull();
+    expect(screen.getByRole('heading', { name: /used on our own product repos/i })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /archlens/i }).getAttribute('href')).toBe(
+      'https://github.com/mzworthington/blueprint'
     );
-    expect(docs.getByRole('link', { name: /cli and what waykit installs/i }).getAttribute('href')).toBe(
-      '/docs/kit'
-    );
-    expect(docs.getByRole('link', { name: /quality loops/i }).getAttribute('href')).toBe(
-      '/docs/loops'
-    );
-    expect(docs.getByText(/ci, rum, lighthouse and sonar/i)).toBeTruthy();
-    expect(docs.getByRole('link', { name: /waykit map/i }).getAttribute('href')).toBe('/docs/map');
-    expect(docs.getByRole('link', { name: /evals \(alpha\)/i }).getAttribute('href')).toBe('/docs/edd');
-    expect(docs.queryByRole('link', { name: /used on our repos/i })).toBeNull();
-    expect(screen.queryByRole('heading', { name: /what do i use this for today/i })).toBeNull();
     expect(screen.queryByRole('region', { name: 'Kit ontology map' })).toBeNull();
     expect(screen.queryByRole('heading', { name: 'The wk CLI' })).toBeNull();
-    expect(screen.queryByRole('heading', { name: /used on our own product repos/i })).toBeNull();
-    expect(screen.queryByRole('heading', { name: /one loop: a miss becomes a failing eval/i })).toBeNull();
-    expect(screen.queryByRole('heading', { name: /demo: a miss becomes a failing eval/i })).toBeNull();
+  });
+
+  it('puts a curl install beside the loops diagram and drops the badge row', () => {
+    render(<HomeLanding />);
+    expect(screen.queryByRole('img', { name: 'CI passing' })).toBeNull();
+    expect(screen.getByText(/a release bar for coding agents/i)).toBeTruthy();
+    expect(
+      screen.getByText(/curl -fsSL https:\/\/raw.githubusercontent.com\/mzworthington\/waykit\/main\/install.sh/i)
+    ).toBeTruthy();
   });
 
   it('does not full-bleed proof, demo, or the graph on the homepage', () => {
     const css = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8');
     expect(css).not.toMatch(/\.landing-page \.ontology-explorer,\s*\.landing-page \.proof/);
+  });
+
+  it('keeps the loops diagram inside the hero column on a phone', () => {
+    const css = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../index.css'), 'utf8');
+    expect(css).toMatch(/\.hero-copy,\s*\.hero-loops\s*\{[^}]*min-width:\s*0/);
+    expect(css).toMatch(/\.landing-page \.hero-loops\s*\{[^}]*max-width:\s*100%/);
+    expect(css).toMatch(/\.landing-page \.hero-loops img\s*\{[^}]*max-width:\s*100%/);
+    expect(css).toMatch(
+      /@media \(max-width: 720px\)\s*\{[^}]*\.hero-split\s*\{[^}]*minmax\(0,\s*1fr\)/
+    );
+    expect(css).toMatch(
+      /@media \(max-width: 720px\)[\s\S]*\.landing-page \.hero-loops\s*\{[^}]*max-width:\s*min\(100%,\s*22rem\)/
+    );
   });
 });

@@ -1,6 +1,6 @@
 # Quality loops
 
-TDD is the inner bar. The feature PDLC wraps it. After merge, two learn paths take what the world found and feed the next session:
+EDD and `wk` wrap the work. Feature PDLC and Learn sit inside that loop. TDD is the inner bar of a planned change. After ship, Learn takes what the world found and feeds the next session:
 
 - **Evals** prove tool routing in CI ([EDD guide](./edd.md), alpha).
 - **Quality loops** turn CI, RUM, Lighthouse and Sonar into typed Linear tickets, then draft PRs. No extra specialist.
@@ -15,34 +15,32 @@ The playbook agents follow is [quality loops through Linear](/SOPs/quality-loops
 | What you run | One failing test, then the smallest change. XFN on UI, auth and SLOs. Hexagonal boundaries. `wk check` before COMPLETE. | A miss becomes a failing eval. Red checks, RUM, Lighthouse and Sonar file Linear. The work picker plays allowlisted tickets as draft PRs. |
 | Who owns it | [Feature lifecycle](./lifecycle.md) | This page, then the SOP |
 
-EDD is alpha: routing contracts, not a full eval product. It sits inside TDD when the change is a prompt or a tool schema.
+EDD is alpha: routing contracts, not a full eval product. The suite and `wk` wrap the PDLC and Learn. When the change is a prompt or a tool schema, the inner bar is an eval case.
 
 ## Nested loops
 
 ```mermaid
-flowchart TB
-  subgraph tdd [TDD]
-    red[Red] --> green[Green] --> refactor[Refactor]
+flowchart LR
+  subgraph wk [WayKit]
+    align[Align] --> guide[Guide] 
+    guide --> improve[Improve] 
+    improve --> align
+    subgraph pdlc [Signals]
+      observe[Product Observability] --> plan
+      analyse[Code analysis] --> plan
+      research[User Research] --> plan
+
+      subgraph plan [Plan]
+        grill[Grill] --> spec[Spec] --> tdd --> learn[Learn] --> grill
+        subgraph tdd [Build]
+          red[Red] --> green[Green] --> refactor[Refactor] --> red
+        end
+      end
+    end
   end
-  subgraph pdlc [Feature PDLC]
-    grill[Grill] --> spec[Spec] --> tdd
-    tdd --> xfn[XFN] --> audit[Audit] --> ship[Ship]
-  end
-  subgraph learn [Learn]
-    signals[CI / RUM / Lighthouse / Sonar] --> linear[Linear]
-    linear --> hygiene[Hygiene]
-    hygiene --> picker[Work picker]
-    picker --> draft[Draft PR]
-    evalGate["wk eval ci"] --> miss[Eval miss]
-    miss --> edd[EDD suite]
-  end
-  ship --> signals
-  ship --> evalGate
-  draft --> grill
-  edd --> spec
 ```
 
-Learn starts *outside* a planned feature: a red required check, a RUM break, a Lighthouse drop versus last main, a Sonar finding, or an eval miss.
+Learn starts *outside* a planned feature: a red required check, a RUM break, a Lighthouse drop versus last main, a Sonar finding, or an eval miss. Those sessions still run inside the EDD / `wk` loop.
 
 ## Outside sources
 

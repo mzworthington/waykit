@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Waykit nested loops</title>
+  <desc id="desc">
+    Four concentric rings. Outer Waykit cycles Align, Guide, Improve.
+    Signals wrap Plan with Observe, Analyse, and Research.
+    Plan is Grill, Spec, Learn. Inner Build is Red, Green, Refactor.
+  </desc>
+  <style>
+    .sans { font-family: 'IBM Plex Sans', Helvetica Neue, Helvetica, Arial, sans-serif; }
+  </style>
+
+  <g transform="translate(400 400)">
+    <circle r="355" fill="rgba(15,118,110,0.05)" stroke="#0f766e" stroke-width="1.75" />
+    <circle r="280" fill="rgba(138,122,102,0.10)" stroke="#8a7a66" stroke-width="1.5" stroke-dasharray="7 8" />
+    <circle r="205" fill="#fffdf8" stroke="#0f766e" stroke-width="1.5" />
+    <circle r="130" fill="rgba(15,118,110,0.10)" stroke="#0f766e" stroke-width="1.75" />
+    <circle r="58" fill="#fffdf8" stroke="#0f766e" stroke-width="1.25" />
+  </g>
+
+  <g transform="translate(400 400) scale(0.78) translate(-32 -32)" aria-hidden="true">
+    <polygon
+      fill="none"
+      stroke="#0f766e"
+      stroke-width="2.25"
+      stroke-linejoin="round"
+      points="32,7 53.95,19.75 53.95,44.25 32,57 10.05,44.25 10.05,19.75"
+    />
+    <path
+      fill="none"
+      stroke="#0f766e"
+      stroke-width="3.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M18.8 20.2 24.6 44.2 32 29.2 39.4 44.2 45.2 20.2"
+    />
+    <circle cx="32" cy="29.2" r="2.65" fill="#0f766e" />
+  </g>
+
+  <g class="sans" text-anchor="middle" dominant-baseline="middle">
+    <g fill="#0c1412" font-size="20" font-weight="500">
+      <text x="400" y="306">Red</text>
+      <text x="481.4" y="447">Green</text>
+      <text x="318.6" y="447">Refactor</text>
+    </g>
+    <g fill="#0c1412" font-size="22" font-weight="500">
+      <text x="400" y="232.5">Grill</text>
+      <text x="545.1" y="483.8">Spec</text>
+      <text x="254.9" y="483.8">Learn</text>
+    </g>
+    <g fill="#8a7a66" font-size="18" font-weight="500">
+      <text x="190" y="278.8">Observe</text>
+      <text x="610" y="278.8">Analyse</text>
+      <text x="400" y="642.5">Research</text>
+    </g>
+    <g fill="#0c1412" font-size="22" font-weight="600">
+      <text x="125" y="558.8">Align</text>
+      <text x="400" y="82.5">Guide</text>
+      <text x="675" y="558.8">Improve</text>
+    </g>
+  </g>
+</svg>

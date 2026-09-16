@@ -58,6 +58,56 @@ body {
   margin-right: 0;
 }
 
+.hero-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 1.75rem 2rem;
+  align-items: center;
+}
+
+.hero-copy,
+.hero-loops {
+  min-width: 0;
+}
+
+.hero-install {
+  margin: 1rem 0 0.85rem;
+}
+
+.hero-install pre {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+.hero-install-then {
+  margin: 0.45rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.landing-page .hero-loops {
+  margin: 0;
+  max-width: 100%;
+}
+
+.landing-page .hero-loops img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.landing-page .hero-loops figcaption {
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+
 .edd-links {
   justify-content: flex-start;
 }
@@ -273,6 +323,27 @@ body {
 }
 
 @media (max-width: 720px) {
+  .hero-split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .landing-page .hero-loops {
+    max-width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .landing-page .hero-loops figcaption {
+    text-align: center;
+  }
+
+  .hero-install pre {
+    font-size: 0.72rem;
+    padding: 0.65rem 0.75rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
   .proof-grid,
   .used-in-grid,
   .home-next-grid {

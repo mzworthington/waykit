@@ -4,7 +4,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { describe, it } from 'node:test';
 import { loadQualityLoopCatalog, parseQualityLoopCatalog } from './catalog.js';
-import { parseLoopsOverlay, reportLoopsStatus } from './status.js';
+import { parseLoopsOverlay, printLoopsStatus, reportLoopsStatus } from './status.js';
+import { stripAnsi } from '../cli/outcome.js';
 import { fileURLToPath } from 'node:url';
 
 const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -58,7 +59,7 @@ describe('reportLoopsStatus', () => {
     });
     assert.equal(report.outcome, 'fail');
     assert.equal(report.packPresent, false);
-    assert.match(report.summary, /wk loops setup --write/);
+    assert.match(report.summary, /missing \.cursor\/waykit-loops pack/);
     assert.match(report.mcpHint, /cursor.com\/agents/);
     assert.match(report.mcpHint, /wk mcp --install/);
     assert.equal(report.rows.length, 2);
@@ -102,5 +103,25 @@ automations:
     const report = reportLoopsStatus({ catalog, targetDir: kitRoot });
     assert.equal(report.rows.length, 8);
     assert.match(report.mcpHint, /SonarQube/);
+  });
+});
+
+describe('printLoopsStatus', () => {
+  it('leads a missing pack with a bare next command, not a buried run phrase', () => {
+    const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wk-loops-print-'));
+    const report = reportLoopsStatus({
+      catalog: parseQualityLoopCatalog(SAMPLE),
+      targetDir
+    });
+    const lines: string[] = [];
+    printLoopsStatus(report, (msg) => lines.push(msg), (msg) => lines.push(msg));
+    const text = stripAnsi(lines.join('\n'));
+    assert.match(text, /^Quality-loop Automations/m);
+    assert.match(text, /missing \.cursor\/waykit-loops/i);
+    assert.match(text, /^next:$/m);
+    assert.match(text, /^ {2}wk loops setup --write$/m);
+    assert.doesNotMatch(text, /\brun wk loops setup --write\b/);
+    assert.doesNotMatch(text, /^ {2}miss {2}/m);
+    assert.match(text, /fail {2}loops {2}/);
   });
 });

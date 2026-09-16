@@ -93,7 +93,7 @@ export function reportLoopsStatus(opts: {
     return {
       outcome: 'fail',
       packPresent: false,
-      summary: `missing ${LOOPS_PACK_REL}; run wk loops setup --write`,
+      summary: `missing ${LOOPS_PACK_REL} pack`,
       mcpHint,
       rows
     };
@@ -122,6 +122,15 @@ export function printLoopsStatus(
   error: (msg: string) => void = console.error
 ): void {
   log(`Quality-loop Automations (${report.rows.length})`);
+  if (!report.packPresent) {
+    log(`This project is missing ${LOOPS_PACK_REL}.`);
+    log('Write the pack, then open AUTOMATE.md (or Cursor /automate) to create each Automation.');
+    log(report.mcpHint);
+    log('next:');
+    log('  wk loops setup --write');
+    printCliOutcome(report.outcome, 'loops', report.summary, { log, error });
+    return;
+  }
   for (const row of report.rows) {
     const mark = row.recordedId ? 'ok  ' : 'miss';
     const pr = row.opensPr ? 'draft PR' : 'no PR';
