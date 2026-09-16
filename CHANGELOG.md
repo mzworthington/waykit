@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-16
+
+### 🚀 Features
+
+- *(cli)* Operate quality-loop Automations from wk (MZW-121) (#99)
+
 ## 2026-09-15
 
 ### 🚀 Features
