@@ -401,15 +401,15 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
 
     case 'loops':
     case 'automations': {
-      const first = rest[0] && !rest[0].startsWith('-') ? rest[0] : undefined;
+      const first = firstPositional(rest);
       let action: 'status' | 'setup' = 'status';
-      let positional: string | undefined;
+      let dirArgs = rest;
       if (first === 'status' || first === 'setup') {
         action = first;
-        positional = rest[1] && !rest[1].startsWith('--') ? rest[1] : undefined;
-      } else if (first !== undefined) {
-        positional = first;
+        const idx = rest.indexOf(first);
+        dirArgs = rest.filter((_, i) => i !== idx);
       }
+      const positional = firstPositional(dirArgs);
       return {
         kind: 'loops',
         action,

@@ -141,6 +141,20 @@ describe('parseKitArgv', () => {
       write: false,
       json: true
     });
+    assert.deepEqual(parseKitArgv(['loops', 'status', '--json', './app'], opts), {
+      kind: 'loops',
+      action: 'status',
+      targetDir: path.resolve('/work', './app'),
+      write: false,
+      json: true
+    });
+    assert.deepEqual(parseKitArgv(['loops', '--json', 'setup', '--write', './app'], opts), {
+      kind: 'loops',
+      action: 'setup',
+      targetDir: path.resolve('/work', './app'),
+      write: true,
+      json: true
+    });
   });
 
   it('parses model resolve and requires skill or phase', () => {
