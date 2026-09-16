@@ -7,6 +7,7 @@
 - *(cli)* Operate quality-loop Automations from wk (MZW-121) (#99)
 - Improved homepage
 - Homepage improvements
+- Tweak graphic ordering
 
 ### 🐛 Bug Fixes
 
