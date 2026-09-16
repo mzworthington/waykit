@@ -59,13 +59,15 @@ export const HOME_NEXT = [
     href: '/docs/loops',
     title: 'Quality loops',
     body: 'CI, RUM, Lighthouse and Sonar file Linear tickets. Hygiene then the work picker turns them into draft PRs.'
-  },
-  {
-    href: '/docs/jobs',
-    title: 'Jobs for today',
-    body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
   }
 ];
+
+export const JOBS_FOR_TODAY = 
+{
+  href: '/docs/jobs',
+  title: 'Jobs for today',
+  body: 'Debug vs feature, a fat context, a tool call. Pick one and run it.'
+};
 
 /** First-party product checkouts that pass `wk align`. GitHub origins, not vanity domains. */
 export const HOME_USED_IN_HEADING = 'Used on our own product repos';

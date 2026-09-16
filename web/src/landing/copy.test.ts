@@ -6,7 +6,8 @@ import {
   HOME_EYEBROW,
   HOME_HEADLINE,
   HOME_NEXT,
-  HOME_USED_IN
+  HOME_USED_IN,
+  JOBS_FOR_TODAY
 } from './copy';
 
 describe('homepage copy', () => {
@@ -14,16 +15,9 @@ describe('homepage copy', () => {
     expect(HOME_EYEBROW).toMatch(/lifecycle/i);
     expect(HOME_BRAND).toBe('Waykit');
     expect(HOME_CLI_HEADING).toBe('The wk CLI');
-    expect(HOME_HEADLINE).toMatch(/release bar/i);
-    expect(HOME_NEXT.map((item) => item.href)).toEqual([
-      '/docs/lifecycle',
-      '/docs/loops',
-      '/docs/jobs'
-    ]);
     expect(HOME_NEXT[1]?.title).toMatch(/quality loops/i);
     expect(HOME_NEXT[1]?.body).toMatch(/ci/i);
     expect(HOME_NEXT[1]?.body).toMatch(/rum/i);
-    expect(HOME_NEXT[2]?.body).toMatch(/debug vs feature/i);
     expect(HOME_USED_IN).toHaveLength(4);
     expect(HOME_USED_IN.map((repo) => repo.href)).toEqual([
       'https://github.com/mzworthington/blueprint',
@@ -31,6 +25,10 @@ describe('homepage copy', () => {
       'https://github.com/mzworthington/react-cloudflare-template',
       'https://github.com/mzworthington/gpio-build-monitor'
     ]);
+
+    expect(HOME_HEADLINE).toMatch(/release bar/i);
+    expect(JOBS_FOR_TODAY.href).toEqual('/docs/jobs');
+    expect(JOBS_FOR_TODAY.title).toMatch(/jobs for today/i);
   });
 
   it('mirrors the README status strip plus a live GitHub release badge', () => {

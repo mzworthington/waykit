@@ -1,4 +1,4 @@
-import { HOME_NEXT } from '../landing/copy';
+import { HOME_NEXT, JOBS_FOR_TODAY } from '../landing/copy';
 
 export function HomeNext() {
   return (
@@ -14,6 +14,12 @@ export function HomeNext() {
           </li>
         ))}
       </ul>
+
+    <br/>
+      <a href={JOBS_FOR_TODAY.href} className="home-next-card">
+        <span className="home-next-title">Jobs for today</span>
+        <span className="home-next-body">{JOBS_FOR_TODAY.body}</span>
+      </a>
     </section>
   );
 }
