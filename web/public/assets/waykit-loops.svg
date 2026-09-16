@@ -53,9 +53,9 @@
       <text x="400" y="642.5">Research</text>
     </g>
     <g fill="#0c1412" font-size="22" font-weight="600">
-      <text x="125" y="558.8">Align</text>
-      <text x="400" y="82.5">Guide</text>
-      <text x="675" y="558.8">Improve</text>
+      <text x="400" y="82.5">Align</text>
+      <text x="675" y="558.8">Guide</text>
+      <text x="125" y="558.8">Improve</text>
     </g>
   </g>
 </svg>
