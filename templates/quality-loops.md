@@ -7,7 +7,7 @@ Ticket body: Story, Fingerprint (`source:repo:stable-id`), Evidence (no tokens),
 ## Cloud catalog missing (any loop)
 
 ```text
-This is a Cloud Agent or Automation session. List MCP tools first. If GitHub, Linear, PostHog, Cloudflare Observability, or SonarQube are missing from the dashboard catalog, stop BLOCKED. Do not invent site lists, issue lists, dashboard counts, or Linear URLs. A local wk mcp --install does not wake this catalog. Write coverage and stop.
+This is a Cloud Agent or Automation session. List MCP tools first. If GitHub, Linear, PostHog, Cloudflare Observability, or SonarQube are missing from the dashboard catalog, stop BLOCKED. Do not invent site lists, issue lists, dashboard counts, or Linear URLs. A local wk mcp --install does not wake this catalog. Write coverage and stop. Cap: at most one item this run, then stop. If skip_unless is not met, stop immediately without Linear.
 ```
 
 ## File from a failed required check

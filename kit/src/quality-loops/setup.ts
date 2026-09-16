@@ -30,6 +30,38 @@ function repoLine(item: QualityLoopAutomation, repo: string): string {
   return `Single repository: ${repo}.`;
 }
 
+function spendingUrl(catalog: QualityLoopCatalog): string {
+  return catalog.dashboard.spending ?? 'https://cursor.com/dashboard?tab=spending';
+}
+
+function spendIntro(catalog: QualityLoopCatalog): string {
+  return `Cursor has no per-Automation token cap. Set a monthly Cloud Agent spend limit at ${spendingUrl(catalog)}. Paste the listed cron; do not pick the hourly preset. Event loops must skip immediately when skip_unless is not met.`;
+}
+
+function capLines(item: QualityLoopAutomation): string {
+  const lines = [`Cap: at most ${item.maxItemsPerRun} item this run, then stop.`];
+  if (item.cron) {
+    lines.push(`Cron (UTC): \`${item.cron}\`. Do not replace this cron with an hourly expression.`);
+  }
+  if (item.skipUnless) {
+    lines.push(
+      `Skip unless: ${item.skipUnless}. If that is not met, stop immediately — do not list Linear or scan the repo.`
+    );
+  }
+  return lines.join('\n');
+}
+
+function loopPrompt(
+  catalog: QualityLoopCatalog,
+  prompts: Map<string, string>,
+  item: QualityLoopAutomation
+): string {
+  const skip = item.skipUnless
+    ? ` Skip unless: ${item.skipUnless}. If that is not met, stop immediately without Linear.`
+    : '';
+  return `${automationPrompt(catalog, prompts, item)}\n\nCap: at most ${item.maxItemsPerRun} item this run, then stop.${skip}`;
+}
+
 function loopFileBody(
   catalog: QualityLoopCatalog,
   prompts: Map<string, string>,
@@ -42,11 +74,12 @@ Trigger: ${item.trigger}
 Repo: ${repoLine(item, repo)}
 MCP: ${item.mcp.join(', ')}
 Opens PR: ${item.opensPr ? 'draft only' : 'no'}
+${capLines(item)}
 
 Paste this prompt into one Cursor Automation. Prefix is required on every loop.
 
 \`\`\`text
-${automationPrompt(catalog, prompts, item)}
+${loopPrompt(catalog, prompts, item)}
 \`\`\`
 `;
 }
@@ -72,8 +105,9 @@ Project: \`${repo}\`
 Cursor has no Automations create/list API. This pack is the kit catalog on disk.
 
 1. Connect ${catalog.dashboard.mcp.join(', ')} on ${catalog.dashboard.agents} (team: ${catalog.dashboard.integrations}). \`wk mcp --install\` does not wake Cloud sessions.
-2. Paste \`AUTOMATE.md\` into Cursor \`/automate\`, or create one Automation per file at ${catalog.dashboard.automations}.
-3. Record each UUID in \`overlay.yaml\`, then run \`wk loops status\`.
+2. Set a monthly Cloud Agent spend limit at ${spendingUrl(catalog)}. Cursor has no per-Automation token cap.
+3. Paste \`AUTOMATE.md\` into Cursor \`/automate\`, or create one Automation per file at ${catalog.dashboard.automations}. Use the listed cron; do not pick the hourly preset.
+4. Record each UUID in \`overlay.yaml\`, then run \`wk loops status\`.
 
 ${rows}
 `;
@@ -92,9 +126,10 @@ Trigger: ${item.trigger}
 ${repoLine(item, repo)}
 Enable MCP: ${item.mcp.join(', ')}
 ${item.opensPr ? 'May open a draft PR only. Never merge.' : 'Do not open a PR from this loop.'}
+${capLines(item)}
 
 \`\`\`text
-${automationPrompt(catalog, prompts, item)}
+${loopPrompt(catalog, prompts, item)}
 \`\`\`
 `;
     })
@@ -103,6 +138,8 @@ ${automationPrompt(catalog, prompts, item)}
   return `# Create quality-loop Automations for ${repo}
 
 Use Cursor \`/automate\` or create them at ${catalog.dashboard.automations}. One Automation per source. Do not collapse every source into one job.
+
+${spendIntro(catalog)}
 
 Connect dashboard MCP first: ${catalog.dashboard.mcp.join(', ')} at ${catalog.dashboard.agents}. \`wk mcp --install\` rewrites local host files only; it does not wake this catalog.
 

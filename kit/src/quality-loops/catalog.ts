@@ -11,6 +11,7 @@ export type QualityLoopDashboard = {
   automations: string;
   agents: string;
   integrations: string;
+  spending?: string;
   mcp: readonly string[];
 };
 
@@ -22,6 +23,9 @@ export type QualityLoopAutomation = {
   mcp: readonly string[];
   opensPr: boolean;
   promptHeading: string;
+  cron?: string;
+  maxItemsPerRun: number;
+  skipUnless?: string;
 };
 
 export type QualityLoopCatalog = {
@@ -64,6 +68,12 @@ function parseAutomation(value: unknown, index: number): QualityLoopAutomation {
   if (typeof value.opens_pr !== 'boolean') {
     throw new Error(`quality-loop catalog automations[${index}].opens_pr must be a boolean`);
   }
+  const cron = optionalCron(value.cron, index);
+  const maxItemsPerRun = optionalPositiveInt(value.max_items_per_run, `automations[${index}].max_items_per_run`, 1);
+  const skipUnless =
+    value.skip_unless === undefined || value.skip_unless === null
+      ? undefined
+      : stringField(value, 'skip_unless');
   return {
     id: stringField(value, 'id'),
     name: stringField(value, 'name'),
@@ -71,8 +81,27 @@ function parseAutomation(value: unknown, index: number): QualityLoopAutomation {
     repo,
     mcp: stringList(value.mcp, `automations[${index}].mcp`),
     opensPr: value.opens_pr,
-    promptHeading: stringField(value, 'prompt_heading')
+    promptHeading: stringField(value, 'prompt_heading'),
+    cron,
+    maxItemsPerRun,
+    skipUnless
   };
+}
+
+function optionalCron(value: unknown, index: number): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== 'string' || value.trim() === '') {
+    throw new Error(`quality-loop catalog automations[${index}].cron must be a cron expression or null`);
+  }
+  return value.trim();
+}
+
+function optionalPositiveInt(value: unknown, key: string, fallback: number): number {
+  if (value === undefined || value === null) return fallback;
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 1) {
+    throw new Error(`quality-loop catalog ${key} must be a positive integer`);
+  }
+  return value;
 }
 
 export function parseQualityLoopCatalog(raw: string): QualityLoopCatalog {
@@ -92,6 +121,10 @@ export function parseQualityLoopCatalog(raw: string): QualityLoopCatalog {
       automations: stringField(parsed.dashboard, 'automations'),
       agents: stringField(parsed.dashboard, 'agents'),
       integrations: stringField(parsed.dashboard, 'integrations'),
+      spending:
+        parsed.dashboard.spending === undefined || parsed.dashboard.spending === null
+          ? undefined
+          : stringField(parsed.dashboard, 'spending'),
       mcp: stringList(parsed.dashboard.mcp, 'dashboard.mcp')
     },
     promptPrefixHeading: stringField(parsed, 'prompt_prefix_heading'),

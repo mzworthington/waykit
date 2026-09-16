@@ -1,11 +1,15 @@
 # Quality-loop Cursor Automations. `wk loops status` / `wk loops setup` read this file.
 # Prompt bodies live in templates/quality-loops.md (heading = prompt_heading).
 # Cursor has no Automations create/list API; setup writes a project pack to paste.
+# Cursor has no per-Automation token cap. Cap spend at dashboard.spending, then
+# cron (scheduled) and skip_unless + max_items_per_run (every loop).
+# Scheduled default: Monday 08:00 UTC (`0 8 * * 1`).
 
 dashboard:
   automations: https://cursor.com/automations
   agents: https://cursor.com/agents
   integrations: https://cursor.com/dashboard/integrations
+  spending: https://cursor.com/dashboard?tab=spending
   mcp:
     - GitHub
     - Linear
@@ -25,6 +29,9 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: File from a failed required check
+    cron: null
+    max_items_per_run: 1
+    skip_unless: the triggering required check is red
   - id: scheduled-scout
     name: File typed tickets from a scheduled scout
     trigger: Schedule
@@ -33,6 +40,8 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: File typed tickets from a scheduled scout
+    cron: "0 8 * * 1"
+    max_items_per_run: 1
   - id: lighthouse-drop
     name: File from a Lighthouse drop
     trigger: Schedule
@@ -42,6 +51,8 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: File from a Lighthouse drop
+    cron: "0 8 * * 1"
+    max_items_per_run: 1
   - id: rum-break
     name: File from a Cloudflare RUM break
     trigger: Schedule
@@ -51,6 +62,8 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: File from a Cloudflare RUM break
+    cron: "0 8 * * 1"
+    max_items_per_run: 1
   - id: sonar-finding
     name: File from a Sonar finding
     trigger: Schedule
@@ -60,6 +73,8 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: File from a Sonar finding
+    cron: "0 8 * * 1"
+    max_items_per_run: 1
   - id: vendor-pr
     name: Keep Dependabot and CodeQL as vendor PRs
     trigger: GitHub pull request opened or pushed
@@ -68,6 +83,9 @@ automations:
       - GitHub
     opens_pr: false
     prompt_heading: Keep Dependabot and CodeQL as vendor PRs
+    cron: null
+    max_items_per_run: 1
+    skip_unless: the pull request is Dependabot or CodeQL
   - id: hygiene
     name: Hygiene
     trigger: Schedule
@@ -76,6 +94,8 @@ automations:
       - Linear
     opens_pr: false
     prompt_heading: Hygiene
+    cron: "0 8 * * 1"
+    max_items_per_run: 1
   - id: work-picker
     name: Work picker
     trigger: Schedule
@@ -85,3 +105,5 @@ automations:
       - GitHub
     opens_pr: true
     prompt_heading: Work picker
+    cron: "0 8 * * 1"
+    max_items_per_run: 1

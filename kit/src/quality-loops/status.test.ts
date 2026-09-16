@@ -124,4 +124,20 @@ describe('printLoopsStatus', () => {
     assert.doesNotMatch(text, /^ {2}miss {2}/m);
     assert.match(text, /fail {2}loops {2}/);
   });
+
+  it('prints cron, one-item cap, and the dashboard spending URL', () => {
+    const catalog = loadQualityLoopCatalog(kitRoot);
+    const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wk-loops-spend-'));
+    fs.mkdirSync(path.join(targetDir, '.cursor', 'waykit-loops'), { recursive: true });
+    const report = reportLoopsStatus({ catalog, targetDir });
+    const lines: string[] = [];
+    printLoopsStatus(report, (msg) => lines.push(msg), (msg) => lines.push(msg));
+    const text = stripAnsi(lines.join('\n'));
+    assert.match(report.mcpHint, /cursor.com\/dashboard\?tab=spending/);
+    assert.match(report.mcpHint, /no per-Automation token cap/i);
+    assert.equal(report.rows.find((row) => row.id === 'work-picker')?.cron, '0 8 * * 1');
+    assert.equal(report.rows.find((row) => row.id === 'failed-check')?.maxItemsPerRun, 1);
+    assert.match(text, /work-picker {2}Schedule 0 8 \* \* 1/);
+    assert.match(text, /failed-check {2}GitHub CI completed · cap 1/);
+  });
 });

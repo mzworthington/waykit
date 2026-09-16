@@ -62,7 +62,7 @@ Fingerprint tickets (`source:repo:stable-id`; RUM `source:<owning-repo>:rum:<hos
 
 ## Three sessions, one loop
 
-1. **File.** One Automation per source. Cloud sessions only see MCP servers on the Cursor dashboard; `wk mcp --install` rewrites local host files only. Missing dashboard tools → stop **BLOCKED**. Restore `wk mcp default` before Linear create. Do not invent site tags, tokens or Linear URLs. Operator CLI: `wk loops status` / `wk loops setup --write` (catalog in `lists/quality-loop-automations.yaml`; Cursor has no Automations create API).
+1. **File.** One Automation per source. Cloud sessions only see MCP servers on the Cursor dashboard; `wk mcp --install` rewrites local host files only. Missing dashboard tools → stop **BLOCKED**. Restore `wk mcp default` before Linear create. Do not invent site tags, tokens or Linear URLs. Operator CLI: `wk loops status` / `wk loops setup --write` (catalog in `lists/quality-loop-automations.yaml`; Cursor has no Automations create API). Cursor has no per-Automation token cap: set a monthly Cloud Agent spend limit at [cursor.com/dashboard?tab=spending](https://cursor.com/dashboard?tab=spending), paste the catalog `cron` (Monday 08:00 UTC weekly; do not pick the hourly preset), and stop immediately when `skip_unless` is not met. At most one item per run.
 2. **Hygiene.** Same fingerprint or near-duplicate title+body: one stays playable. Rewrite Backlog/Todo that is missing Story, Work type or an observable Then. Leave Done/Canceled. Skip gated PostHog bets. Unsure: comment and leave. No PRs in hygiene.
 3. **Play.** The work picker reads the [allowlist](https://github.com/mzworthington/waykit/blob/main/lists/work-picker-allowlist.yaml). Claim one Backlog or Todo in `auto_play` (or with `auto-work`, without `hold`). Bug → `agent-debug`. Security → `agent-security`. Performance → `agent-perf-opt`. Improvement → a write role. Draft PR only. Never merge, force-push, skip hooks or hide a CI failure. Before COMPLETE run the repo pre-commit hook, not a path-filtered test.
 
@@ -82,7 +82,7 @@ A green eval CI run is routing, not proof that the live agent is correct. Detail
 - Auto-filing PostHog funnel or bet rows.
 - Hiding a red required check behind a ticket.
 
-Kill the loop if it hides a CI failure or duplicates outpace hygiene.
+Kill the loop if it hides a CI failure, duplicates outpace hygiene, or spend runs away.
 
 ## Operator CLI
 

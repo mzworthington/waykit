@@ -16,6 +16,8 @@ export type LoopsStatusRow = {
   id: string;
   name: string;
   trigger: string;
+  cron: string | undefined;
+  maxItemsPerRun: number;
   mcp: readonly string[];
   opensPr: boolean;
   recordedId: string | undefined;
@@ -78,15 +80,19 @@ export function reportLoopsStatus(opts: {
     id: item.id,
     name: item.name,
     trigger: item.trigger,
+    cron: item.cron,
+    maxItemsPerRun: item.maxItemsPerRun,
     mcp: item.mcp,
     opensPr: item.opensPr,
     recordedId: overlay.automations.get(item.id)
   }));
   const missingIds = rows.filter((row) => !row.recordedId).length;
+  const spending = opts.catalog.dashboard.spending ?? 'https://cursor.com/dashboard?tab=spending';
   const mcpHint = [
     `Connect ${opts.catalog.dashboard.mcp.join(', ')} on ${opts.catalog.dashboard.agents}.`,
     `wk mcp --install rewrites local host files only; it does not wake Cloud Agent sessions.`,
-    `Create or inspect Automations at ${opts.catalog.dashboard.automations}.`
+    `Create or inspect Automations at ${opts.catalog.dashboard.automations}.`,
+    `Cursor has no per-Automation token cap; set a monthly Cloud Agent spend limit at ${spending}.`
   ].join(' ');
 
   if (!present) {
@@ -135,7 +141,8 @@ export function printLoopsStatus(
     const mark = row.recordedId ? 'ok  ' : 'miss';
     const pr = row.opensPr ? 'draft PR' : 'no PR';
     const id = row.recordedId ?? 'no recorded id';
-    log(`  ${mark}  ${row.id}  ${row.trigger} · ${row.mcp.join(', ')} · ${pr} · ${id}`);
+    const cadence = row.cron ? `${row.trigger} ${row.cron}` : `${row.trigger} · cap ${row.maxItemsPerRun}`;
+    log(`  ${mark}  ${row.id}  ${cadence} · ${row.mcp.join(', ')} · ${pr} · ${id}`);
   }
   log(report.mcpHint);
   printCliOutcome(report.outcome, 'loops', report.summary, { log, error });

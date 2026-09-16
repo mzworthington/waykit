@@ -70,4 +70,23 @@ describe('setupQualityLoops', () => {
     assert.match(result.preview, /Create these Cursor Automations/);
     assert.match(result.preview, /demo\/repo/);
   });
+
+  it('prints the spend cap: dashboard spending URL, cron, skip_unless, and one item per run', () => {
+    const catalog = loadQualityLoopCatalog(kitRoot);
+    const result = setupQualityLoops({
+      catalog,
+      kitRoot,
+      targetDir: fs.mkdtempSync(path.join(os.tmpdir(), 'wk-loops-cap-')),
+      write: false,
+      repo: 'mzworthington/blueprint'
+    });
+    assert.match(result.preview, /cursor.com\/dashboard\?tab=spending/);
+    assert.match(result.preview, /no per-Automation token cap/i);
+    assert.match(result.preview, /Cron \(UTC\): `0 8 \* \* 1`/);
+    assert.doesNotMatch(result.preview, /Cron \(UTC\): `0 11,15 \* \* 1-5`/);
+    assert.match(result.preview, /Skip unless: the triggering required check is red/);
+    assert.match(result.preview, /Skip unless: the pull request is Dependabot or CodeQL/);
+    assert.match(result.preview, /Cap: at most 1 item this run/);
+    assert.doesNotMatch(result.preview, /every hour/i);
+  });
 });
