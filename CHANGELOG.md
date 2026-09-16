@@ -5,6 +5,11 @@
 ### 🚀 Features
 
 - *(cli)* Operate quality-loop Automations from wk (MZW-121) (#99)
+- Improved homepage
+
+### 🐛 Bug Fixes
+
+- *(web)* Finish homepage catalog after release-bar copy (#100)
 
 ## 2026-09-15
 
