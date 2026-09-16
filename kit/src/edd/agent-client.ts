@@ -355,6 +355,8 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       prompt.includes('beacon break') ||
       prompt.includes('backlog hygiene') ||
       prompt.includes('hygiene pass') ||
+      prompt.includes('wk loops') ||
+      prompt.includes('cursor automation') ||
       (prompt.includes('allowlisted') && prompt.includes('draft pr'))
     ) {
       return {

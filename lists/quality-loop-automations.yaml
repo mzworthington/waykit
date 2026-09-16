@@ -1,0 +1,87 @@
+# Quality-loop Cursor Automations. `wk loops status` / `wk loops setup` read this file.
+# Prompt bodies live in templates/quality-loops.md (heading = prompt_heading).
+# Cursor has no Automations create/list API; setup writes a project pack to paste.
+
+dashboard:
+  automations: https://cursor.com/automations
+  agents: https://cursor.com/agents
+  integrations: https://cursor.com/dashboard/integrations
+  mcp:
+    - GitHub
+    - Linear
+    - PostHog
+    - Cloudflare Observability
+    - SonarQube
+
+prompt_prefix_heading: Cloud catalog missing (any loop)
+
+automations:
+  - id: failed-check
+    name: File from a failed required check
+    trigger: GitHub CI completed
+    repo: single
+    mcp:
+      - GitHub
+      - Linear
+    opens_pr: false
+    prompt_heading: File from a failed required check
+  - id: scheduled-scout
+    name: File typed tickets from a scheduled scout
+    trigger: Schedule
+    repo: none
+    mcp:
+      - Linear
+    opens_pr: false
+    prompt_heading: File typed tickets from a scheduled scout
+  - id: lighthouse-drop
+    name: File from a Lighthouse drop
+    trigger: Schedule
+    repo: single
+    mcp:
+      - GitHub
+      - Linear
+    opens_pr: false
+    prompt_heading: File from a Lighthouse drop
+  - id: rum-break
+    name: File from a Cloudflare RUM break
+    trigger: Schedule
+    repo: none
+    mcp:
+      - Cloudflare Observability
+      - Linear
+    opens_pr: false
+    prompt_heading: File from a Cloudflare RUM break
+  - id: sonar-finding
+    name: File from a Sonar finding
+    trigger: Schedule
+    repo: none
+    mcp:
+      - SonarQube
+      - Linear
+    opens_pr: false
+    prompt_heading: File from a Sonar finding
+  - id: vendor-pr
+    name: Keep Dependabot and CodeQL as vendor PRs
+    trigger: GitHub pull request opened or pushed
+    repo: single
+    mcp:
+      - GitHub
+    opens_pr: false
+    prompt_heading: Keep Dependabot and CodeQL as vendor PRs
+  - id: hygiene
+    name: Hygiene
+    trigger: Schedule
+    repo: none
+    mcp:
+      - Linear
+    opens_pr: false
+    prompt_heading: Hygiene
+  - id: work-picker
+    name: Work picker
+    trigger: Schedule
+    repo: environment
+    mcp:
+      - Linear
+      - GitHub
+    opens_pr: true
+    prompt_heading: Work picker

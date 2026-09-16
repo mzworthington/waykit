@@ -50,7 +50,7 @@ See [SOPs/context-budget.md](./context-budget.md).
 
 Hosted Cloud Agent and Cursor Automation sessions only see MCP servers connected on the **Cursor dashboard**. `wk mcp --install` rewrites local Cursor/Claude/Copilot/Antigravity files. It does not add tools to that catalog.
 
-Loops that file or play Linear work need GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube connected there. If they are missing, stop **BLOCKED**. Do not invent site lists, issue lists, or dashboard counts. A local profile already installed does not wake a Cloud session. Procedure: [quality-loops](./quality-loops.md).
+Loops that file or play Linear work need GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube connected there. If they are missing, stop **BLOCKED**. Do not invent site lists, issue lists, or dashboard counts. A local profile already installed does not wake a Cloud session. Operator CLI: `wk loops status` / `wk loops setup --write`. Procedure: [quality-loops](./quality-loops.md).
 
 ## 2. Add a server definition
 

@@ -142,6 +142,13 @@ export const KIT_COMMAND_TREE: Readonly<Record<string, KitCommandNode>> = {
   },
   site: { subs: { assemble: { flags: [{ name: '--out' }] } } },
   'commit-msg': { flags: [{ name: '--message' }] },
+  loops: {
+    subs: {
+      status: { flags: [{ name: '--json' }] },
+      setup: { flags: [{ name: '--write' }, { name: '--json' }] }
+    },
+    flags: [{ name: '--write' }, { name: '--json' }]
+  },
   'tdd-guard': {
     subs: {
       hook: {},

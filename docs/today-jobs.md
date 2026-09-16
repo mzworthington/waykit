@@ -166,3 +166,21 @@ wk align .
 - [Consumer align](/docs/align)
 - [Hosts](/docs/hosts)
 - [Repo doctor](/docs/doctor)
+
+## quality-loops | Turn on quality-loop Automations
+
+> Cursor Automations should file Linear tickets from CI, RUM, Lighthouse and Sonar. You want the catalog and a project pack, not a hunt through dashboard prompts.
+
+Quality loops are Cursor Automations. `wk` catalogs them and writes paste-ready prompts. Cursor has no Automations create API.
+
+1. **Report** with `wk loops status` (catalog, dashboard MCP checklist, recorded IDs).
+2. **Write the pack** with `wk loops setup --write` (never overwrites `.cursor/waykit-loops/`).
+3. **Create** them at [cursor.com/automations](https://cursor.com/automations) or paste `AUTOMATE.md` into `/automate`. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on [cursor.com/agents](https://cursor.com/agents). `wk mcp --install` does not wake Cloud sessions.
+
+```
+wk loops setup --write
+```
+
+- [Quality loops](/docs/loops)
+- [Procedure](/SOPs/quality-loops)
+- [Hosts](/docs/hosts)

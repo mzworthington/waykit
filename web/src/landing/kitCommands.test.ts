@@ -46,6 +46,7 @@ describe('docs/kit.md', () => {
     expect(rows.map((row) => row.command)).toEqual([
       'wk align',
       'wk doctor',
+      'wk loops',
       'wk check',
       'wk version',
       'wk measure-context',

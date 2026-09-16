@@ -71,7 +71,7 @@ Cursor and Claude Code then run `wk tdd-guard` before writes. Production source 
 
 ## How do quality loops work?
 
-TDD sits inside the feature PDLC. After ship, CI, RUM, Lighthouse and Sonar file typed Linear tickets. Hygiene then the work picker turns allowlisted ones into draft PRs. Evals are a separate loop: a miss becomes a failing case. Map: [Quality loops](/docs/loops). Procedure: [quality loops through Linear](/SOPs/quality-loops).
+TDD sits inside the feature PDLC. After ship, CI, RUM, Lighthouse and Sonar file typed Linear tickets. Hygiene then the work picker turns allowlisted ones into draft PRs. Evals are a separate loop: a miss becomes a failing case. Operator CLI: `wk loops status` / `wk loops setup --write`. Map: [Quality loops](/docs/loops). Procedure: [quality loops through Linear](/SOPs/quality-loops).
 
 ## Where does EDD fit?
 

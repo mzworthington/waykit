@@ -102,23 +102,11 @@ describe('scriptedDriver quality-loops', () => {
     );
   });
 
-  it('opens quality-loops for a work-picker draft PR prompt', async () => {
-    const response = await scriptedDriver({
-      model: 'scripted',
-      systemPrompt: '',
-      messages: [
-        {
-          role: 'user',
-          content:
-            'Play one allowlisted Bug from the board as a draft PR. Open the kit SOP.'
-        }
-      ],
-      tools: [{ name: 'get_sop' }],
-      mocks: new Map()
-    });
-    assert.equal(response.tool_calls?.[0]?.name, 'get_sop');
+  it('opens quality-loops for a wk loops setup prompt', async () => {
     assert.equal(
-      (response.tool_calls?.[0]?.arguments as { name?: string } | undefined)?.name,
+      await getSopName(
+        'How do I check which quality-loop Cursor Automations I have, and set them all up with wk loops?'
+      ),
       'quality-loops'
     );
   });

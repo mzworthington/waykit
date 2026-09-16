@@ -119,6 +119,44 @@ describe('parseKitArgv', () => {
     assert.deepEqual(parseKitArgv(['scan'], opts), { kind: 'audit' });
   });
 
+  it('parses loops status, setup --write, and the automations alias', () => {
+    assert.deepEqual(parseKitArgv(['loops'], opts), {
+      kind: 'loops',
+      action: 'status',
+      targetDir: path.resolve('/work', '.'),
+      write: false,
+      json: false
+    });
+    assert.deepEqual(parseKitArgv(['loops', 'setup', './app', '--write'], opts), {
+      kind: 'loops',
+      action: 'setup',
+      targetDir: path.resolve('/work', './app'),
+      write: true,
+      json: false
+    });
+    assert.deepEqual(parseKitArgv(['automations', 'status', '--json'], opts), {
+      kind: 'loops',
+      action: 'status',
+      targetDir: path.resolve('/work', '.'),
+      write: false,
+      json: true
+    });
+    assert.deepEqual(parseKitArgv(['loops', 'status', '--json', './app'], opts), {
+      kind: 'loops',
+      action: 'status',
+      targetDir: path.resolve('/work', './app'),
+      write: false,
+      json: true
+    });
+    assert.deepEqual(parseKitArgv(['loops', '--json', 'setup', '--write', './app'], opts), {
+      kind: 'loops',
+      action: 'setup',
+      targetDir: path.resolve('/work', './app'),
+      write: true,
+      json: true
+    });
+  });
+
   it('parses model resolve and requires skill or phase', () => {
     assert.equal(parseKitArgv(['model'], opts).kind, 'usage');
     assert.equal(parseKitArgv(['model', 'resolve'], opts).kind, 'usage');

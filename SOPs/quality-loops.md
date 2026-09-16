@@ -70,4 +70,8 @@ One Automation for every source. Auto-merge. A new specialist. Stacked MCP profi
 
 Kill if a loop hides a CI failure or duplicates outpace hygiene.
 
+## Operator CLI
+
+`wk loops status [dir]` reports the catalog, dashboard MCP checklist, and recorded IDs. `wk loops setup [dir] --write` writes `.cursor/waykit-loops/` (never overwrites). Cursor has no Automations create API; paste AUTOMATE.md into `/automate` or create at cursor.com/automations.
+
 Prompts: [templates/quality-loops.md](../templates/quality-loops.md).

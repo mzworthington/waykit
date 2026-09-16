@@ -57,7 +57,8 @@ describe('docs/today-jobs.md', () => {
       'ci-gate',
       'kit-graph',
       'repo-hygiene',
-      'consumer-align'
+      'consumer-align',
+      'quality-loops'
     ]);
     const firstHour = jobs[0]!;
     expect(firstHour.title).toBe('I have never installed Waykit');
@@ -82,6 +83,9 @@ describe('docs/today-jobs.md', () => {
     const align = jobs.find((job) => job.id === 'consumer-align')!;
     expect(align.title).toBe('App repo drifted from the Waykit handshake');
     expect(align.cmd).toBe('wk align .');
+    const loops = jobs.find((job) => job.id === 'quality-loops')!;
+    expect(loops.title).toBe('Turn on quality-loop Automations');
+    expect(loops.cmd).toBe('wk loops setup --write');
     expect(firstHour.cmd).toBe(
       'curl -fsSL https://raw.githubusercontent.com/mzworthington/waykit/main/install.sh | sh'
     );

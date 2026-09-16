@@ -12,7 +12,8 @@ export const KIT_HELP_TOPICS = [
   'check',
   'eval',
   'agents',
-  'tdd-guard'
+  'tdd-guard',
+  'loops'
 ] as const;
 
 export type KitHelpTopic = (typeof KIT_HELP_TOPICS)[number];
@@ -34,6 +35,7 @@ Day-to-day:
   Typo, bug, or failed CI   agent-debug (light XFN if UI/auth/SLO). Not grill → spec.
   Product feature           Full lifecycle in AGENTS.md
   Handshake / hygiene       ${CLI_BIN} align .    /  ${CLI_BIN} doctor
+  Quality-loop Automations   ${CLI_BIN} loops status  /  ${CLI_BIN} loops setup --write
   Merge bar                 ${CLI_BIN} check
 
 Commands:
@@ -67,6 +69,7 @@ Commands:
   site assemble        Copy web/dist plus public Markdown into site/ (needs web build first; optional --out)
   commit-msg           Check a commit subject or PR title (conventional commits)
   tdd-guard            Host TDD hooks (stdin JSON); install|enable|disable
+  loops [status|setup] Cursor Automations catalog, dashboard MCP checklist, project pack (alias: automations)
   completion <shell>   Print a live tab-completion stub (zsh or bash)
   completion install   Write the stub once; verbs stay in sync with this wk
   help                 Display this help menu
@@ -114,6 +117,8 @@ Examples:
   ${CLI_BIN} metrics
   ${CLI_BIN} sync --install
   ${CLI_BIN} debug-board archlens "initial load overlap"
+  ${CLI_BIN} loops status
+  ${CLI_BIN} loops setup --write
   ${CLI_BIN} completion install
   ${CLI_BIN} check
   ${CLI_BIN} check --json
@@ -197,6 +202,23 @@ ${CLI_BIN} agents generate|install|status|launch-prompt
   ${CLI_BIN} agents status
   ${CLI_BIN} agents launch-prompt --skill agent-tdd --project demo
   ${CLI_BIN} subagents status   (alias)
+`;
+    case 'loops':
+      return `
+${CLI_BIN} loops [status|setup] [dir] [--write] [--json]
+
+  Catalog of quality-loop Cursor Automations. Cursor has no create/list API.
+
+  status            Report catalog, dashboard MCP, and recorded IDs (default)
+  setup             Print the /automate prompt; --write fills .cursor/waykit-loops (never overwrites)
+  --json            Machine-readable findings
+
+  ${CLI_BIN} loops status .
+  ${CLI_BIN} loops setup --write
+  ${CLI_BIN} automations status   (alias)
+
+  Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on cursor.com/agents.
+  ${CLI_BIN} mcp --install does not wake Cloud Agent sessions.
 `;
     case 'tdd-guard':
       return `

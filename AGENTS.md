@@ -36,7 +36,7 @@ Do not commit or push unless the user explicitly asks.
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`) |
 | PostHog product analytics | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog --install`) |
-| Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (intake, hygiene, work picker); PostHog bets [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
+| Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (intake, hygiene, work picker; `wk loops`); PostHog bets [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
 | Crime-scene report | [complexity-hotspots](./SOPs/complexity-hotspots.md) §8 (arch-drift → gate → stories) |
 
 ## Phase → skill
