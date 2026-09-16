@@ -26,7 +26,7 @@ describe('homepage copy', () => {
       'https://github.com/mzworthington/gpio-build-monitor'
     ]);
 
-    expect(HOME_HEADLINE).toMatch(/release bar/i);
+    expect(HOME_HEADLINE).toMatch(/grill.*spec.*tdd.*ship.*learn/i);
     expect(JOBS_FOR_TODAY.href).toEqual('/docs/jobs');
     expect(JOBS_FOR_TODAY.title).toMatch(/jobs for today/i);
   });

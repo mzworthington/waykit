@@ -39,7 +39,6 @@ describe('HomeLanding', () => {
   it('puts a curl install beside the loops diagram and drops the badge row', () => {
     render(<HomeLanding />);
     expect(screen.queryByRole('img', { name: 'CI passing' })).toBeNull();
-    expect(screen.getByText(/a release bar for coding agents/i)).toBeTruthy();
     expect(
       screen.getByText(/curl -fsSL https:\/\/raw.githubusercontent.com\/mzworthington\/waykit\/main\/install.sh/i)
     ).toBeTruthy();

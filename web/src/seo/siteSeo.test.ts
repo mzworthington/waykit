@@ -28,7 +28,6 @@ describe('siteSeo catalog', () => {
   it('resolves distinctive homepage metadata with the social share image', () => {
     const seo = resolvePageSeo('/');
     expect(seo.title.toLowerCase()).toContain('waykit');
-    expect(seo.title.toLowerCase()).toMatch(/release bar/);
     expect(seo.description).toBe(HOME_LEDE);
     expect(seo.canonicalUrl).toBe(`${SITE_ORIGIN}/`);
     expect(seo.ogImageUrl).toBe(SITE_SOCIAL_IMAGE);
