@@ -106,6 +106,7 @@ Every **report** command starts with `ok`, `warn`, or `fail` in a fixed column (
 |---------|------------------------------|
 | `wk align` | Consumer handshake, host pointers, kit MCP, commit-msg (`--write` seeds missing AGENTS.md and pointers; `--owned --scan` for a worktree farm; `--json` for findings) |
 | `wk doctor` | Community files on owned GitHub sources (`--owned`, `--write`; `--json` for findings) |
+| `wk loops` | Quality-loop Cursor Automations (`status` catalog + MCP checklist; `setup --write` project pack) |
 | `wk check` | Audit, ontology, evals, EDD CI, context budget (`--json` for findings) |
 | `wk version` | Kit package/git describe and whether `~/.agents` is this clone (`--check` warns if origin is weeks ahead) |
 | `wk measure-context` | Always-on bootstrap size vs 8KB |

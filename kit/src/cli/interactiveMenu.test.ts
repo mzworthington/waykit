@@ -99,5 +99,12 @@ describe('interactiveMenu', () => {
     const sync = commandForMoreAction('sync', '/work');
     assert.equal(sync.kind, 'sync');
     if (sync.kind === 'sync') assert.deepEqual(sync.rest, ['--install']);
+    assert.deepEqual(commandForMoreAction('loops', '/work'), {
+      kind: 'loops',
+      action: 'status',
+      targetDir: '/work',
+      write: false,
+      json: false
+    });
   });
 });

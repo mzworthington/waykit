@@ -59,6 +59,7 @@ import {
   renderCompletion
 } from './completion.js';
 import { printKitVersion } from '../version/print_kit_version.js';
+import { printLoopsResult, runLoops, loopsResultToFindings } from '../quality-loops/run.js';
 import { errorMessage, printKitHelp } from './help.js';
 import { shouldShowInteractiveMenu } from './interactiveMenu.js';
 import { promptInteractiveMenu } from './runInteractiveMenu.js';
@@ -272,6 +273,30 @@ export async function runKitCommand(command: KitCommand, ctx: RunKitContext): Pr
 
     case 'debug-ci':
       return debugCiFailed(command.rest);
+
+    case 'loops': {
+      try {
+        const result = runLoops({
+          action: command.action,
+          targetDir: command.targetDir,
+          write: command.write,
+          kitRepoDir: repoDir
+        });
+        if (command.json) {
+          printJsonReport({
+            ok: result.outcome !== 'fail',
+            command: 'loops',
+            findings: loopsResultToFindings(result)
+          });
+        } else {
+          printLoopsResult(result, command.action, command.write);
+        }
+        return cliOutcomeExit(result.outcome);
+      } catch (err: unknown) {
+        console.error(`ERROR: ${errorMessage(err)}`);
+        return 1;
+      }
+    }
 
     case 'check':
       return runKitCheck(repoDir, {}, { json: command.json });

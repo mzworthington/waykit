@@ -77,6 +77,8 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /wait_unless_auto_work/);
     assert.match(sop!.body, /hold/);
     assert.match(sop!.body, /auto-work/);
+    assert.match(sop!.body, /wk loops status/);
+    assert.match(sop!.body, /wk loops setup/);
     assert.match(sop!.body, /Lighthouse drop vs last main/);
     assert.match(sop!.body, /Performance/);
     assert.match(sop!.body, /chase 100/);

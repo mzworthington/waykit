@@ -1097,6 +1097,26 @@
           "agent-quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-054",
+      "name": "wk loops reports and sets up quality-loop Automations",
+      "description": "Verifies checking or setting up Cursor Automations for quality loops stays on quality-loops and wk loops, not a new specialist.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "How do I check which quality-loop Cursor Automations I have, and set them all up on this project?",
+      "assertions": {
+        "required_triggers": [
+          "orchestrate",
+          "lifecycle"
+        ],
+        "required_patterns": [
+          "quality-loops",
+          "wk loops"
+        ],
+        "forbidden_patterns": [
+          "agent-quality-loops"
+        ]
+      }
     }
   ]
 }

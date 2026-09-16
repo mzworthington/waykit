@@ -1,6 +1,6 @@
 # Quality-loop Automation prompts
 
-Paste one prompt per Cursor Automation. One source per detect/file loop. Read [SOPs/quality-loops.md](../SOPs/quality-loops.md). Change what auto-plays in [lists/work-picker-allowlist.yaml](../lists/work-picker-allowlist.yaml), not in the work-picker prompt.
+Paste one prompt per Cursor Automation. One source per detect/file loop. `wk loops setup --write` writes these onto a project; `wk loops status` reports them. Read [SOPs/quality-loops.md](../SOPs/quality-loops.md). Change what auto-plays in [lists/work-picker-allowlist.yaml](../lists/work-picker-allowlist.yaml), not in the work-picker prompt.
 
 Ticket body: Story, Fingerprint (`source:repo:stable-id`), Evidence (no tokens), Given/When/Then, Out of scope, Notes (Work type + next agent).
 

@@ -28,6 +28,7 @@ describe('KIT_HELP', () => {
     assert.match(KIT_HELP, /agents install/);
     assert.match(KIT_HELP, /agents status/);
     assert.match(KIT_HELP, /launch-prompt/);
+    assert.match(KIT_HELP, /loops \[status\|setup\]/);
     assert.match(KIT_HELP, /refreshes user kit subagent stubs/);
     assert.match(KIT_HELP, /thin agent stubs/);
     assert.match(KIT_HELP, /Usage: wk <command>/);

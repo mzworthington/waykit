@@ -64,7 +64,7 @@ Fingerprint tickets (`source:repo:stable-id`; RUM `source:<owning-repo>:rum:<hos
 
 ## Three sessions, one loop
 
-1. **File.** One Automation per source. Cloud sessions only see MCP servers on the Cursor dashboard; `wk mcp --install` rewrites local host files only. Missing dashboard tools → stop **BLOCKED**. Restore `wk mcp default` before Linear create. Do not invent site tags, tokens or Linear URLs.
+1. **File.** One Automation per source. Cloud sessions only see MCP servers on the Cursor dashboard; `wk mcp --install` rewrites local host files only. Missing dashboard tools → stop **BLOCKED**. Restore `wk mcp default` before Linear create. Do not invent site tags, tokens or Linear URLs. Operator CLI: `wk loops status` / `wk loops setup --write` (catalog in `lists/quality-loop-automations.yaml`; Cursor has no Automations create API).
 2. **Hygiene.** Same fingerprint or near-duplicate title+body: one stays playable. Rewrite Backlog/Todo that is missing Story, Work type or an observable Then. Leave Done/Canceled. Skip gated PostHog bets. Unsure: comment and leave. No PRs in hygiene.
 3. **Play.** The work picker reads the [allowlist](https://github.com/mzworthington/waykit/blob/main/lists/work-picker-allowlist.yaml). Claim one Backlog or Todo in `auto_play` (or with `auto-work`, without `hold`). Bug → `agent-debug`. Security → `agent-security`. Performance → `agent-perf-opt`. Improvement → a write role. Draft PR only. Never merge, force-push, skip hooks or hide a CI failure. Before COMPLETE run the repo pre-commit hook, not a path-filtered test.
 
@@ -85,6 +85,16 @@ A green eval CI run is routing, not proof that the live agent is correct. Detail
 - Hiding a red required check behind a ticket.
 
 Kill the loop if it hides a CI failure or duplicates outpace hygiene.
+
+## Operator CLI
+
+```bash
+wk loops status .
+wk loops setup --write
+wk help loops
+```
+
+`status` prints the catalog (one Automation per source), the dashboard MCP checklist, and recorded UUIDs from `.cursor/waykit-loops/overlay.yaml`. `setup --write` fills `.cursor/waykit-loops/` (never overwrites): per-loop prompts, `AUTOMATE.md` for Cursor `/automate`, and the overlay. Cursor has no Automations create or list API; the pack is the kit on disk. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on [cursor.com/agents](https://cursor.com/agents).
 
 ## Related
 

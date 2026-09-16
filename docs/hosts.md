@@ -50,7 +50,7 @@ OAuth popups differ (Cursor vs Claude vs VS Code). Stdio servers that need env v
 
 ## Cloud Agent and Automations
 
-A Cloud Agent or Cursor Automation does **not** read the local `~/.cursor/mcp.json` that `wk mcp --install` writes. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on the Cursor dashboard if unattended loops need them. Missing tools → stop **BLOCKED**; do not invent counts. [quality-loops](/SOPs/quality-loops). [MCP library](/SOPs/mcp-library).
+A Cloud Agent or Cursor Automation does **not** read the local `~/.cursor/mcp.json` that `wk mcp --install` writes. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on the Cursor dashboard if unattended loops need them. Missing tools → stop **BLOCKED**; do not invent counts. Operator CLI: `wk loops status` / `wk loops setup --write`. [quality-loops](/SOPs/quality-loops). [MCP library](/SOPs/mcp-library).
 
 ## EDD vs hosts
 

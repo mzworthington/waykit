@@ -24,7 +24,14 @@ export const INTERACTIVE_MAIN_ACTIONS: Array<{
   { value: 'help', label: 'Show help', hint: 'Grouped command list' }
 ];
 
-export type InteractiveMoreAction = 'eval' | 'agents-status' | 'doctor' | 'sync' | 'audit' | 'back';
+export type InteractiveMoreAction =
+  | 'eval'
+  | 'agents-status'
+  | 'doctor'
+  | 'loops'
+  | 'sync'
+  | 'audit'
+  | 'back';
 
 export const INTERACTIVE_MORE_ACTIONS: Array<{
   value: InteractiveMoreAction;
@@ -34,6 +41,7 @@ export const INTERACTIVE_MORE_ACTIONS: Array<{
   { value: 'eval', label: 'Run evals', hint: 'Skill-trigger / EDD' },
   { value: 'agents-status', label: 'Agent launch status', hint: 'subagent vs skills-only' },
   { value: 'doctor', label: 'Repo doctor', hint: 'Community files on owned sources' },
+  { value: 'loops', label: 'Quality-loop Automations', hint: 'Catalog, MCP checklist, project pack' },
   { value: 'sync', label: 'Sync external skills', hint: 'Lockfile + user stubs' },
   { value: 'audit', label: 'Security audit', hint: 'Skills and scripts' },
   { value: 'back', label: 'Back', hint: 'Return to the main menu' }
@@ -129,6 +137,14 @@ export function commandForMoreAction(
         repoClass: undefined,
         installHook: false,
         login: undefined,
+        json: false
+      };
+    case 'loops':
+      return {
+        kind: 'loops',
+        action: 'status',
+        targetDir: cwd,
+        write: false,
         json: false
       };
     case 'sync':

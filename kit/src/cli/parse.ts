@@ -97,6 +97,13 @@ export type KitCommand =
       kind: 'tdd-guard';
       action: 'hook' | 'install' | 'enable' | 'disable';
       targetDir: string;
+    }
+  | {
+      kind: 'loops';
+      action: 'status' | 'setup';
+      targetDir: string;
+      write: boolean;
+      json: boolean;
     };
 
 const COMPLETION_USAGE = cliUsage('completion <zsh|bash|install>');
@@ -390,6 +397,26 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
         return { kind: 'usage', message: COMMIT_MSG_USAGE };
       }
       return { kind: 'commit-msg', message: undefined, file: path.resolve(opts.cwd, file) };
+    }
+
+    case 'loops':
+    case 'automations': {
+      const first = rest[0] && !rest[0].startsWith('-') ? rest[0] : undefined;
+      let action: 'status' | 'setup' = 'status';
+      let positional: string | undefined;
+      if (first === 'status' || first === 'setup') {
+        action = first;
+        positional = rest[1] && !rest[1].startsWith('--') ? rest[1] : undefined;
+      } else if (first !== undefined) {
+        positional = first;
+      }
+      return {
+        kind: 'loops',
+        action,
+        targetDir: path.resolve(opts.cwd, positional ?? '.'),
+        write: hasFlag(rest, '--write'),
+        json: hasFlag(rest, '--json')
+      };
     }
 
     case 'tdd-guard': {
