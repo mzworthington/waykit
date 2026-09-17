@@ -1,8 +1,8 @@
 # Waykit
 
-**Grill, spec, TDD, ship, then learn.**
+**Grill, spec, TDD, ship, learn.**
 
-Coding agents skip spec, test impact and a release bar. Waykit is that lifecycle plus the loops that feed the next session: grilling, spec, TDD, cross-functional quality, audit, telemetry and release. Eval-driven development (**alpha**) is one of those loops, when the change is a prompt or a tool contract.
+Give your coding agents a release bar. Waykit provides the full product and software delivery lifecycle, from Spec to Test to Release, plus the feedback loops that make every session better than the last.
 
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=github-actions)](./.github/workflows/ci.yml)
 [![Lifecycle](https://img.shields.io/badge/Lifecycle-SDLC-blueviolet?style=for-the-badge&logo=git)](./docs/lifecycle.md)

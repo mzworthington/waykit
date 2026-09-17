@@ -1,4 +1,5 @@
-import { HOME_HEADLINE, HOME_LEDE } from '../landing/copy';
+import { HOME_BRAND, HOME_HEADLINE, HOME_LEDE } from '../landing/copy';
+import { SITE_GITHUB } from '../site/footerNav';
 import {
   collapseSpaces,
   stripMarkdownDecorations,
@@ -6,16 +7,16 @@ import {
   trimIncompleteLastWord
 } from '../../../kit/src/shared/text_parse';
 
+export { SITE_GITHUB };
+
 export const SITE_ORIGIN = 'https://waykit.dev';
-export const SITE_NAME = 'Waykit';
-export const SITE_SHORT_NAME = 'waykit';
+export const SITE_NAME = HOME_BRAND;
+export const SITE_SHORT_NAME = HOME_BRAND.toLowerCase();
 export const SITE_MARK_SRC = '/assets/kit-mark.svg';
 export const SITE_SOCIAL_IMAGE = `${SITE_ORIGIN}/assets/og.jpg`;
 export const SITE_SOCIAL_IMAGE_WIDTH = 1200;
 export const SITE_SOCIAL_IMAGE_HEIGHT = 630;
-export const SITE_SOCIAL_IMAGE_ALT =
-  'Waykit: software lifecycle for coding agents. Grill, spec, TDD, quality, release and learning loops including eval-driven development.';
-export const SITE_GITHUB = 'https://github.com/mzworthington/waykit';
+export const SITE_SOCIAL_IMAGE_ALT = `${HOME_BRAND}: ${HOME_HEADLINE}. ${HOME_LEDE}`;
 
 export type PageSeo = {
   path: string;
@@ -40,124 +41,15 @@ export type ResolvePageSeoOptions = {
   missing?: boolean;
 };
 
-type SeoOverride = {
-  headline: string;
-  description: string;
-  title?: string;
-  softwareName?: string;
-  indexable?: boolean;
-};
-
-const PAGE_SEO: Record<string, SeoOverride> = {
-  '/': {
-    headline: SITE_NAME,
-    title: `${SITE_NAME}: ${HOME_HEADLINE.charAt(0).toLowerCase()}${HOME_HEADLINE.slice(1)}`,
-    description: HOME_LEDE,
-    softwareName: SITE_NAME
-  },
-  '/docs': {
-    headline: 'Product guide',
-    description:
-      'Start, practice and reference for Waykit: install, feature lifecycle, live kit graph, learning loops, SOPs, ADRs and the skill map.'
-  },
-  '/docs/start': {
-    headline: 'Getting started',
-    description:
-      'Install Waykit in about 10 minutes: link ~/.agents, run wk init, then pick debug vs feature. No API key.'
-  },
-  '/docs/jobs': {
-    headline: 'Jobs for today',
-    description:
-      'Pick a job for today: typo/debug vs product feature, install, fat always-on context, proving a tool call, checking the live kit graph, repo hygiene on sources you own, or consumer handshake drift.'
-  },
-  '/docs/faq': {
-    headline: 'Common questions',
-    description:
-      'Waykit FAQ: install, API keys, why AGENTS.md stays small, hosts (Cursor, Claude, Copilot, Antigravity), how agents find the right SOP, how quality loops work, where EDD alpha fits, repo doctor and what the map is not.'
-  },
-  '/docs/edd': {
-    headline: 'EDD guide (alpha)',
-    description:
-      'Eval-Driven Development is alpha: a routing and schema harness with a scripted CI gate. Not a full EDD framework. Write cases, mock tools, optionally run live HTTP or CLI judges.'
-  },
-  '/docs/hosts': {
-    headline: 'Hosts',
-    description:
-      'Cursor, Claude Code, Copilot and Antigravity share AGENTS.md. Waykit writes each host’s MCP file, model overlay and rules pointer. Windsurf is rules-only forever.'
-  },
-  '/docs/kit': {
-    headline: 'What Waykit gives you',
-    description:
-      'What Waykit installs: thin AGENTS.md handshake, feature lifecycle skills, live kit graph, one MCP profile per session and the wk CLI (align, doctor, check).'
-  },
-  '/docs/doctor': {
-    headline: 'Repo doctor',
-    description:
-      'wk doctor checks README, license, contributing and GitHub templates on sources you admin. Report-only by default; --write fills gaps and never overwrites.'
-  },
-  '/docs/align': {
-    headline: 'Consumer align',
-    description:
-      'wk align checks an app repo for a thin handshake, host rule pointers, kit-knowledge MCP and commit-msg. --write seeds missing AGENTS.md and IDE pointers; --owned --scan reports a worktree farm.'
-  },
-  '/docs/used-in': {
-    headline: 'Used on our own product repos',
-    description:
-      'ArchLens, steerco, the React Cloudflare template and GPIO build monitor run Waykit. Open those GitHub checkouts to see a thin handshake in the wild.'
-  },
-  '/docs/lifecycle': {
-    headline: 'Feature lifecycle',
-    description:
-      'Route product work through grill, stories, spec, TDD, XFN, telemetry and release. After a bet’s timebox, measure the leading indicator in PostHog, then confirm or kill.'
-  },
-  '/docs/loops': {
-    headline: 'Quality loops',
-    description:
-      'TDD sits inside the feature PDLC. After ship, CI, RUM, Lighthouse and Sonar become Linear tickets. Hygiene then the work picker turns allowlisted ones into draft PRs.'
-  },
-  '/docs/subagents': {
-    headline: 'Host subagent allowlist',
-    description:
-      'Which Waykit roles become Cursor or Claude subagents, plus the parent→child launch flow. Stack profiles stay skills. TDD gear 1 and gear 2 stay one agent.'
-  },
-  '/docs/map': {
-    headline: 'Waykit map',
-    description:
-      'Live graph of this kit: skills, host subagents, SOPs, MCPs and evals derived from the tree, feeding kit-knowledge so you load one node instead of the whole kit.'
-  },
-  '/docs/sops': {
-    headline: 'SOPs',
-    description:
-      'Operator procedures for Waykit: behavior catalog, context budget, conventional commits, evals, Cloudflare analytics ops and PostHog product analytics.'
-  },
-  '/docs/ADRs': {
-    headline: 'Architecture Decision Records',
-    description:
-      'Sparse MADRs for Waykit: hexagonal defaults, Unlicense, EDD contracts, thin bootstrap, ontology memory and the Astro docs site.'
-  },
-  '/evals/edd': {
-    headline: 'Eval suites',
-    description:
-      'Offline and live eval suites for Waykit: routing, schemas, Cloudflare ops and the teaching demo you can paste into a PR.'
-  },
-  '/mcps': {
-    headline: 'MCP library',
-    description:
-      'Named MCP profiles for Waykit sessions: default, cloud, cloudflare-ops and how to install one profile without stacking tools.'
-  },
-  '/ontology': {
-    headline: 'Author the Waykit map',
-    description:
-      'How to add skills, SOPs and evals to the Waykit map: which files become nodes, how to regenerate the index and why this is not a product architecture diagram.'
-  },
-  '/privacy': {
-    headline: 'Privacy policy',
-    description:
-      'What waykit.dev does with information: cookieless PostHog on Cloud EU, Cloudflare hosting, no PostHog cookie banner and how to ask for deletion.'
-  }
-};
-
 const NOINDEX_PATHS = new Set(['/docs/kit-review-backlog', '/404']);
+const KNOWN_ROOTS = new Set(['/', '/docs', '/privacy', '/mcps', '/ontology']);
+const PRIVACY_HEADLINE = 'Privacy policy';
+const PRIVACY_LEDE =
+  'What waykit.dev does with information: cookieless PostHog on Cloud EU, Cloudflare hosting, no PostHog cookie banner and how to ask for deletion.';
+
+function sentenceCase(text: string): string {
+  return `${text.charAt(0).toLowerCase()}${text.slice(1)}`;
+}
 
 function normalizePathname(pathname: string): string {
   const bare = pathname.split(/[?#]/)[0] ?? pathname;
@@ -228,10 +120,9 @@ export function breadcrumbsFor(path: string, headline: string): Array<{ name: st
   let acc = '';
   for (const [index, part] of parts.entries()) {
     acc += `/${part}`;
-    const override = PAGE_SEO[acc];
     const isLast = index === parts.length - 1;
     crumbs.push({
-      name: isLast ? headline : override?.headline ?? humanizeSegment(part),
+      name: isLast ? headline : humanizeSegment(part),
       path: acc
     });
   }
@@ -241,7 +132,7 @@ export function breadcrumbsFor(path: string, headline: string): Array<{ name: st
 const PUBLISHED_PREFIXES = ['/docs/', '/SOPs/', '/evals/', '/mcps/', '/ontology/'] as const;
 
 function isPublishedKitPath(path: string): boolean {
-  if (path === '/' || PAGE_SEO[path]) return true;
+  if (KNOWN_ROOTS.has(path)) return true;
   return PUBLISHED_PREFIXES.some((prefix) => path.startsWith(prefix));
 }
 
@@ -287,30 +178,44 @@ export function resolvePageSeo(pathname: string, opts?: ResolvePageSeoOptions): 
     };
   }
 
-  const override = PAGE_SEO[path];
-  const headline = override?.headline ?? opts?.headline ?? SITE_NAME;
+  if (path === '/') {
+    return {
+      path,
+      headline: HOME_BRAND,
+      title: `${HOME_BRAND}: ${sentenceCase(HOME_HEADLINE)}`,
+      description: HOME_LEDE,
+      excerpt: HOME_LEDE,
+      canonicalUrl: canonicalUrlForPath(path),
+      ogImageUrl: SITE_SOCIAL_IMAGE,
+      ogType: 'website',
+      indexable: true,
+      softwareName: HOME_BRAND,
+      breadcrumbs: breadcrumbsFor(path, HOME_BRAND)
+    };
+  }
+
   const excerptText = opts?.markdown ? markdownExcerpt(opts.markdown) : undefined;
   const derived = opts?.markdown ? firstParagraph(opts.markdown) : undefined;
+  const headline =
+    opts?.headline ?? (path === '/privacy' ? PRIVACY_HEADLINE : SITE_NAME);
   const description =
-    override?.description ??
     derived ??
+    (path === '/privacy' ? PRIVACY_LEDE : undefined) ??
     (excerptText && excerptText.length > 20 ? excerptText : undefined) ??
     `${headline} in Waykit operator docs.`;
   const excerpt = excerptText ?? description;
-  const indexable = override?.indexable !== false && !NOINDEX_PATHS.has(path);
 
   return {
     path,
     headline,
-    title: titleFor(headline, override?.title),
+    title: titleFor(headline),
     description,
     excerpt,
     canonicalUrl: canonicalUrlForPath(path),
     ogImageUrl: SITE_SOCIAL_IMAGE,
-    ogType: path === '/' ? 'website' : 'article',
-    indexable,
+    ogType: 'article',
+    indexable: !NOINDEX_PATHS.has(path),
     markdownUrl: opts?.file ? `${SITE_ORIGIN}/${opts.file}` : undefined,
-    softwareName: override?.softwareName,
     articleMarkdown: opts?.markdown,
     breadcrumbs: breadcrumbsFor(path, headline)
   };
@@ -360,6 +265,7 @@ ${urls}
 }
 
 export function buildJsonLdGraph(seo: PageSeo): Record<string, unknown> {
+  const homeDescription = HOME_LEDE;
   const organization = {
     '@type': 'Organization',
     '@id': `${SITE_ORIGIN}/#organization`,
@@ -373,7 +279,7 @@ export function buildJsonLdGraph(seo: PageSeo): Record<string, unknown> {
     '@id': `${SITE_ORIGIN}/#website`,
     name: SITE_NAME,
     url: `${SITE_ORIGIN}/`,
-    description: resolvePageSeo('/').description,
+    description: homeDescription,
     publisher: { '@id': `${SITE_ORIGIN}/#organization` }
   };
 
@@ -387,7 +293,7 @@ export function buildJsonLdGraph(seo: PageSeo): Record<string, unknown> {
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Web',
       url: `${SITE_ORIGIN}/`,
-      description: resolvePageSeo('/').description,
+      description: homeDescription,
       image: SITE_SOCIAL_IMAGE,
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       publisher: { '@id': `${SITE_ORIGIN}/#organization` }

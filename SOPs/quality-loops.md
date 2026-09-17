@@ -16,19 +16,9 @@ tools:
 ---
 # Standard Operating Procedure: Quality loops through Linear
 
-Operator map: [Quality loops](../docs/loops.md). This SOP is the procedure.
-
 CI, scanners, and telemetry become **typed Linear tickets**. Hygiene keeps the board clean. A work picker plays allowlisted tickets as **draft PRs**. No new specialist.
 
 PostHog funnel/bet rows stay on [product-signal-intake](./product-signal-intake.md). Sonar skips stay on [sonarqube-findings](./sonarqube-findings.md).
-
-```mermaid
-flowchart TD
-  src[CI / scanners] --> file[File ticket] --> hygiene[Hygiene] --> pick[Work picker]
-  pick --> feature{Feature, UX, or hold?}
-  feature -->|yes| wait[Backlog]
-  feature -->|no| auto[Cloud Agent] --> pr[Draft PR]
-```
 
 ## Cloud catalog
 
@@ -66,16 +56,12 @@ Claim one Backlog or Todo ticket in `auto_play` or with an `override` label, no 
 
 ## Spend cap
 
-Cursor has no per-Automation token cap. Set a monthly Cloud Agent spend limit at [cursor.com/dashboard?tab=spending](https://cursor.com/dashboard?tab=spending). Cadence lives in [lists/quality-loop-automations.yaml](../lists/quality-loop-automations.yaml): `cron` (UTC) on scheduled loops defaults to Monday 08:00 (`0 8 * * 1`) — do not pick the hourly preset — `skip_unless` on event loops, and `max_items_per_run: 1` (at most one item per run). If `skip_unless` is not met, stop immediately without Linear. `wk loops status` prints cron and the spending URL.
+Cursor has no per-Automation token cap. Set a monthly Cloud Agent spend limit at [cursor.com/dashboard?tab=spending](https://cursor.com/dashboard?tab=spending). Cadence lives in [lists/quality-loop-automations.yaml](../lists/quality-loop-automations.yaml): `cron` (UTC) on scheduled loops defaults to Monday 08:00 (`0 8 * * 1`) — do not pick the hourly preset — `skip_unless` on event loops, and `max_items_per_run: 1` (at most one item per run). If `skip_unless` is not met, stop immediately without Linear. `wk loops status` prints cron and the spending URL. `wk loops setup --write` writes `.cursor/waykit-loops/` (never overwrites).
 
 ## Out of scope
 
 One Automation for every source. Auto-merge. A new specialist. Stacked MCP profiles. Auto-filing PostHog funnel or bet rows.
 
 Kill if a loop hides a CI failure, duplicates outpace hygiene, or spend runs away.
-
-## Operator CLI
-
-`wk loops status [dir]` reports the catalog, dashboard MCP checklist, and recorded IDs. `wk loops setup [dir] --write` writes `.cursor/waykit-loops/` (never overwrites). Cursor has no Automations create API; paste AUTOMATE.md into `/automate` or create at cursor.com/automations.
 
 Prompts: [templates/quality-loops.md](../templates/quality-loops.md).

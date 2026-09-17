@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { DOCS_PAGES } from '../docs/pages';
-import { HOME_LEDE } from '../landing/copy';
+import { HOME_BRAND, HOME_LEDE } from '../landing/copy';
 import {
   SITE_MARK_SRC,
   SITE_NAME,
@@ -34,8 +34,8 @@ describe('siteSeo catalog', () => {
     expect(seo.indexable).toBe(true);
     expect(seo.ogType).toBe('website');
     expect(seo.softwareName).toBe(SITE_NAME);
-    expect(SITE_SHORT_NAME).toBe('waykit');
-    expect(SITE_NAME).toBe('Waykit');
+    expect(SITE_SHORT_NAME).toBe(HOME_BRAND.toLowerCase());
+    expect(SITE_NAME).toBe(HOME_BRAND);
     expect(SITE_MARK_SRC).toBe('/assets/kit-mark.svg');
   });
 
@@ -43,7 +43,8 @@ describe('siteSeo catalog', () => {
     const titles = new Set<string>();
     const descriptions = new Set<string>();
     for (const path of HUBS) {
-      const seo = resolvePageSeo(path);
+      const page = DOCS_PAGES.find((entry) => entry.path === path);
+      const seo = resolvePageSeo(path, page ? { headline: page.title, markdown: page.markdown } : undefined);
       expect(seo.indexable).toBe(true);
       expect(seo.title.length).toBeGreaterThan(10);
       expect(seo.description.length).toBeGreaterThan(40);
@@ -53,6 +54,15 @@ describe('siteSeo catalog', () => {
     }
     expect(titles.size).toBe(HUBS.length);
     expect(descriptions.size).toBe(HUBS.length);
+  });
+
+  it('uses the published markdown lede for a docs page instead of a parallel SEO catalog', () => {
+    const seo = resolvePageSeo('/docs/start', {
+      headline: 'Getting started',
+      markdown:
+        '# Getting started\n\nFour steps to Waykit on a repo. macOS and Linux; needs git and Node 22+. No API key.\n'
+    });
+    expect(seo.description).toMatch(/four steps to waykit on a repo/i);
   });
 
   it('covers every published docs page with a title and description', () => {

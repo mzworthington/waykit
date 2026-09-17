@@ -7,7 +7,17 @@ import { resolvePageSeo } from './siteSeo';
 
 describe('seoHeadModel', () => {
   it('maps title, description, canonical, robots, and social tags', () => {
-    const head = seoHeadModel(resolvePageSeo('/docs/start'));
+    const startPage = fs.readFileSync(
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../docs/start.md'),
+      'utf8'
+    );
+    const head = seoHeadModel(
+      resolvePageSeo('/docs/start', {
+        headline: 'Getting started',
+        markdown: startPage,
+        file: 'docs/start.md'
+      })
+    );
     expect(head.title.toLowerCase()).toMatch(/getting started/);
     expect(head.description.length).toBeGreaterThan(40);
     expect(head.canonicalUrl).toBe('https://waykit.dev/docs/start/');

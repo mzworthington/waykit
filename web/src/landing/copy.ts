@@ -1,8 +1,8 @@
 export const HOME_EYEBROW = 'Product lifecycle for coding agents';
 export const HOME_BRAND = 'Waykit';
-export const HOME_HEADLINE = 'Grill, spec, TDD, ship, then learn';
+export const HOME_HEADLINE = 'Grill, spec, TDD, ship, learn';
 export const HOME_LEDE =
-  'Give your coding agents a release bar. Waykit provides the full SDLC, from Spec to Test to Release, plus the feedback loops that make every session better than the last.';
+  'Give your coding agents a release bar. Waykit provides the full product and software delivery lifecycle, from Spec to Test to Release, plus the feedback loops that make every session better than the last.';
 export const HOME_INSTALL =
   'curl -fsSL https://raw.githubusercontent.com/mzworthington/waykit/main/install.sh | sh';
 export const HOME_INIT = 'wk init . --mcp default --hook';
