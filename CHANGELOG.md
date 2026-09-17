@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-17
+
+### 🐛 Bug Fixes
+
+- *(mcp)* Keep quality-loops inside get_sop and scannable CI reports (#101)
+
 ## 2026-09-16
 
 ### 🚀 Features
@@ -8,6 +14,7 @@
 - Improved homepage
 - Homepage improvements
 - Tweak graphic ordering
+- *(sops)* Cap quality-loop automation spend with cron and skip_unless
 
 ### 🐛 Bug Fixes
 
