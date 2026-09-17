@@ -28,6 +28,11 @@ describe('reusable consumer align workflow', () => {
     assert.doesNotMatch(yml, /rm -rf \$\{GITHUB_WORKSPACE\}\/\.waykit-src/);
   });
 
+  it('creates ~/.local/share before moving the kit so a fresh runner HOME does not fail mv', () => {
+    const yml = fs.readFileSync(workflowPath, 'utf8');
+    assert.match(yml, /mkdir -p "\$\{HOME\}\/\.local\/share"/);
+  });
+
   it('documents the reusable workflow for product CI', () => {
     const docs = fs.readFileSync(alignDocs, 'utf8');
     assert.match(docs, /align-consumer\.yml/);

@@ -56,6 +56,7 @@ jobs:
           INSTALL_EXTERNAL_SKILLS: '0'
         run: |
           KIT_DIR="${HOME}/.local/share/waykit"
+          mkdir -p "${HOME}/.local/share"
           rm -rf "${KIT_DIR}"
           mv "${GITHUB_WORKSPACE}/.waykit-src" "${KIT_DIR}"
           sh "${KIT_DIR}/install.sh"
