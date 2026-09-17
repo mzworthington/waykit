@@ -1,8 +1,14 @@
 # Waykit
 
-**Grill, spec, TDD, ship, learn.**
+Product lifecycle for coding agents
+
+**Grill, spec, TDD, ship, learn**
 
 Give your coding agents a release bar. Waykit provides the full product and software delivery lifecycle, from Spec to Test to Release, plus the feedback loops that make every session better than the last.
+
+<p align="center">
+  <img src="./web/public/assets/waykit-loops.svg" alt="Four concentric rings: Waykit, Signals, Plan, and Build" width="720" />
+</p>
 
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=github-actions)](./.github/workflows/ci.yml)
 [![Lifecycle](https://img.shields.io/badge/Lifecycle-SDLC-blueviolet?style=for-the-badge&logo=git)](./docs/lifecycle.md)
@@ -10,7 +16,13 @@ Give your coding agents a release bar. Waykit provides the full product and soft
 [![License](https://img.shields.io/badge/License-Unlicense-success?style=for-the-badge)](./LICENSE)
 [![Version](https://img.shields.io/github/v/release/mzworthington/waykit?style=for-the-badge&logo=github&label=Version)](https://github.com/mzworthington/waykit/releases)
 
-The CLI is `wk`.
+Site: [waykit.dev](https://waykit.dev/). Start in the docs:
+
+- [Feature lifecycle](https://waykit.dev/docs/lifecycle). Grill, spec, TDD, XFN, audit, release. EDD (alpha) sits here when tools are the change.
+- [Quality loops](https://waykit.dev/docs/loops). CI, RUM, Lighthouse and Sonar file Linear tickets. Hygiene then the work picker turns them into draft PRs.
+- [Jobs for today](https://waykit.dev/docs/jobs). Debug vs feature, a fat context, a tool call. Pick one and run it.
+
+The CLI is `wk`. Same `AGENTS.md`, same skills, MCP composed into Cursor, Claude Code, GitHub Copilot and Antigravity. [Hosts](./docs/hosts.md).
 
 ## Install
 
@@ -20,6 +32,22 @@ wk init . --mcp default --hook
 ```
 
 macOS / Linux; needs git and Node 22+. Already cloned this repo? Run `./install.sh` from the checkout. If `wk` is not found, add `~/.local/bin` to `PATH`.
+
+Then [start here in 10 minutes](https://waykit.dev/docs/start).
+
+## Used on our own product repos
+
+Waykit is not only this kit. First-party checkouts run the thin handshake, kit MCP and `wk align`. Open `AGENTS.md` if you want to see a consumer in the wild.
+
+| Product | What it is | What to look at |
+| :--- | :--- | :--- |
+| [ArchLens](https://github.com/mzworthington/archlens) | Architecture canvas and CLI | Hexagonal `@archlens/core`, TDD for parsers, sparse ADRs |
+| [RoMini](https://github.com/mzworthington/RoMini) | Screen-free NFC audio player on a Pi | Parent dashboard maps tags. Hexagon, TDD, bedtime-script skill |
+| [steerco](https://github.com/mzworthington/steerco) | Executive steering workspace | In-app docs, Cloudflare Pages, handover under `steerco/` |
+| [React Cloudflare template](https://github.com/mzworthington/react-cloudflare-template) | Greenfield product starter | The handshake `wk init` writes, already aligned so clones inherit it |
+| [GPIO build monitor](https://github.com/mzworthington/gpio-build-monitor) | Pi LEDs and a Cloudflare Worker status UI | Python plus Pulumi. Default MCP for agents; cloudflare-ops only when the Worker is the job |
+
+More on the site: [used in](https://waykit.dev/docs/used-in).
 
 ---
 
@@ -45,9 +73,7 @@ Teaching suite: [evals/edd/demo.yaml](./evals/edd/demo.yaml) ([before-after writ
 
 ---
 
-## The value: lifecycle plus learning loops
-
-Waykit standardizes coding-agent workflow across **Cursor, Claude Code, GitHub Copilot and Antigravity** (Gemini CLI / `agy`). Same `AGENTS.md`, same skills, MCP composed into each host’s config file. [Hosts](./docs/hosts.md).
+## Lifecycle plus learning loops
 
 | Pillar | Outcome |
 | :--- | :--- |
@@ -151,7 +177,7 @@ Start with the path that matches what you’re trying to do:
 6. **Operators:** [What Waykit gives you](./docs/kit.md) → [Repo doctor](./docs/doctor.md) → [Consumer align](./docs/align.md) → [Used on our own product repos](./docs/used-in.md) → [Context budget](./SOPs/context-budget.md)
 7. **Live kit graph:** [Waykit map](./docs/map.md) → [author the map](./ontology/README.md) (`wk ontology check`)
 
-Site: [waykit.dev](https://waykit.dev/) — Markdown in `docs/`, Astro app in `web/` (`pnpm site:dev`). HTML routes like [/docs/kit](https://waykit.dev/docs/kit) sit next to the raw [`.md` URLs](https://waykit.dev/docs/kit.md).
+Site: [waykit.dev](https://waykit.dev/). Markdown in `docs/`, Astro app in `web/` (`pnpm site:dev`). HTML routes like [/docs/kit](https://waykit.dev/docs/kit) sit next to the raw [`.md` URLs](https://waykit.dev/docs/kit.md).
 
 ---
 

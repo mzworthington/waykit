@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   HOME_BADGES,
@@ -5,8 +8,10 @@ import {
   HOME_CLI_HEADING,
   HOME_EYEBROW,
   HOME_HEADLINE,
+  HOME_LEDE,
   HOME_NEXT,
   HOME_USED_IN,
+  HOME_USED_IN_HEADING,
   JOBS_FOR_TODAY
 } from './copy';
 
@@ -44,5 +49,25 @@ describe('homepage copy', () => {
       'Latest GitHub release'
     ]);
     expect(HOME_BADGES[4]?.src).toContain('github/v/release/mzworthington/waykit');
+  });
+
+  it('puts the homepage loops image and lede in the README before install', () => {
+    const readme = fs.readFileSync(
+      path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../README.md'),
+      'utf8'
+    );
+    expect(readme).toContain(HOME_EYEBROW);
+    expect(readme).toContain(HOME_HEADLINE);
+    expect(readme).toContain(HOME_LEDE);
+    expect(readme).toContain('web/public/assets/waykit-loops.svg');
+    expect(readme).toContain('Four concentric rings: Waykit, Signals, Plan, and Build');
+    expect(readme.indexOf('waykit-loops.svg')).toBeLessThan(readme.indexOf('## Install'));
+    expect(readme.indexOf(HOME_LEDE)).toBeLessThan(readme.indexOf('## Install'));
+    expect(readme).toContain(HOME_USED_IN_HEADING);
+    expect(readme).toContain(HOME_NEXT[0]!.title);
+    expect(readme).toContain(JOBS_FOR_TODAY.body);
+    for (const repo of HOME_USED_IN) {
+      expect(readme).toContain(repo.href);
+    }
   });
 });
