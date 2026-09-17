@@ -27,7 +27,7 @@ describe('reusable consumer align workflow', () => {
     assert.match(docs, /align-consumer\.yml/);
     assert.match(docs, /workflow_call|reusable/i);
     assert.match(docs, /gpio-build-monitor/);
-    assert.match(docs, /blueprint/);
+    assert.match(docs, /archlens/);
     assert.match(docs, /steerco/);
     assert.match(docs, /react-cloudflare-template/);
     assert.match(docs, /edge-dns/);

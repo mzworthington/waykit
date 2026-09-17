@@ -12,7 +12,9 @@ import {
   entitySourceUrl,
   filterOntologyGraph,
   hexagonPath,
+  layoutMapText,
   layoutTargets,
+  mapTextBox,
   linkStrokeOpacity,
   neighborhoodIds,
   ontologyFocusHash,
@@ -60,23 +62,25 @@ describe('entitySourceUrl', () => {
 });
 
 describe('HOMEPAGE_TYPE_FILTERS', () => {
-  it('defaults to phase, skill, subagent, and philosophy; never offers handover', () => {
-    assert.deepEqual([...DEFAULT_ONTOLOGY_TYPES].sort(), [
-      'Phase',
-      'PhilosophySection',
-      'Skill',
-      'Subagent'
-    ]);
+  it('defaults every offered type on; never offers handover', () => {
+    assert.deepEqual(
+      [...DEFAULT_ONTOLOGY_TYPES].sort(),
+      HOMEPAGE_TYPE_FILTERS.map((f) => f.type).slice().sort()
+    );
+    assert.equal(HOMEPAGE_TYPE_FILTERS.every((f) => f.defaultOn), true);
     const offered = new Set<string>(HOMEPAGE_TYPE_FILTERS.map((f) => f.type));
     assert.equal(offered.has('Handover'), false);
   });
 });
 
 describe('filterOntologyGraph', () => {
-  it('hides evals, SOPs, MCPs, and handovers in the default type set', () => {
+  it('includes evals, SOPs, and MCPs in the default type set, and still drops handovers', () => {
     const view = filterOntologyGraph(fixture, { types: DEFAULT_ONTOLOGY_TYPES });
-    assert.deepEqual(view.entities.map((e) => e.id).sort(), ['phase:tdd', 'skill:agent-tdd']);
-    assert.equal(view.edges.length, 0);
+    assert.deepEqual(
+      view.entities.map((e) => e.id).sort(),
+      ['eval:demo', 'mcp:context7', 'phase:tdd', 'skill:agent-tdd', 'sop:behavior-catalog-and-xfn']
+    );
+    assert.ok(view.edges.some((e) => e.relation === 'gates'));
   });
 
   it('builds layout nodes from the filtered view', () => {
@@ -221,10 +225,49 @@ describe('layoutTargets', () => {
     assert.ok(spec && tdd);
     assert.notEqual(spec.y, tdd.y);
   });
+
+  it('places evals outside MCP so they do not share the outer ring', () => {
+    const nodes: LayoutNode[] = [
+      {
+        id: 'mcp:context7',
+        type: 'McpServer',
+        entity: { id: 'mcp:context7', type: 'McpServer', name: 'context7' }
+      },
+      {
+        id: 'mcp:linear',
+        type: 'McpServer',
+        entity: { id: 'mcp:linear', type: 'McpServer', name: 'linear' }
+      },
+      {
+        id: 'eval:demo',
+        type: 'EvalSuite',
+        entity: { id: 'eval:demo', type: 'EvalSuite', name: 'demo' }
+      },
+      {
+        id: 'eval:safety',
+        type: 'EvalSuite',
+        entity: { id: 'eval:safety', type: 'EvalSuite', name: 'safety' }
+      }
+    ];
+    const { targets, captions } = layoutTargets(nodes, 1400, 820);
+    const cx = 700;
+    const cy = 420;
+    const dist = (id: string): number => {
+      const p = targets.get(id);
+      assert.ok(p);
+      const dx = p.x - cx;
+      const dy = (p.y - cy) / 0.78;
+      return Math.hypot(dx, dy);
+    };
+    const mcpFar = Math.max(dist('mcp:context7'), dist('mcp:linear'));
+    const evalNear = Math.min(dist('eval:demo'), dist('eval:safety'));
+    assert.ok(evalNear > mcpFar);
+    assert.ok(captions.some((c) => c.label === 'Evals'));
+  });
 });
 
 describe('ontologyLabelVisible', () => {
-  it('always shows phases and philosophy; other types need hover, focus, or zoom', () => {
+  it('at rest shows only phase names; other types need hover, own focus, or a close zoom', () => {
     const base = {
       id: 'skill:agent-tdd',
       type: 'Skill' as const,
@@ -233,11 +276,16 @@ describe('ontologyLabelVisible', () => {
       zoomK: 1
     };
     assert.equal(ontologyLabelVisible({ ...base, type: 'Phase', id: 'phase:tdd' }), true);
-    assert.equal(ontologyLabelVisible({ ...base, type: 'PhilosophySection', id: 'philosophy:8' }), true);
+    assert.equal(ontologyLabelVisible({ ...base, type: 'PhilosophySection', id: 'philosophy:8' }), false);
     assert.equal(ontologyLabelVisible(base), false);
     assert.equal(ontologyLabelVisible({ ...base, hoverId: 'skill:agent-tdd' }), true);
-    assert.equal(ontologyLabelVisible({ ...base, focusId: 'skill:agent-xfn' }), true);
-    assert.equal(ontologyLabelVisible({ ...base, zoomK: 1.5 }), true);
+    assert.equal(ontologyLabelVisible({ ...base, focusId: 'skill:agent-xfn' }), false);
+    assert.equal(
+      ontologyLabelVisible({ ...base, id: 'skill:agent-xfn', focusId: 'skill:agent-xfn' }),
+      true
+    );
+    assert.equal(ontologyLabelVisible({ ...base, zoomK: 1.5 }), false);
+    assert.equal(ontologyLabelVisible({ ...base, zoomK: 2.2 }), true);
   });
 });
 
@@ -277,7 +325,7 @@ describe('hexagonPath / straightLinkPath / linkStrokeOpacity', () => {
   });
 
   it('dims links that are not incident to the focused node', () => {
-    assert.equal(linkStrokeOpacity(null, 'a', 'b'), 0.22);
+    assert.equal(linkStrokeOpacity(null, 'a', 'b'), 0.1);
     assert.equal(linkStrokeOpacity('a', 'a', 'b'), 0.85);
     assert.equal(linkStrokeOpacity('a', 'c', 'b'), 0.12);
   });
@@ -304,6 +352,59 @@ describe('skillBand / shortLabel / typeRadius', () => {
 });
 
 describe('live kit graph defaults', () => {
+  it('keeps node labels and ring captions from overlapping', () => {
+    const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+    const index = generateOntologyIndex(kitRoot);
+    const view = filterOntologyGraph(index, { types: DEFAULT_ONTOLOGY_TYPES });
+    const nodes = graphLayoutNodes(view);
+    const layout = layoutTargets(nodes, 1400, 820);
+    const texts = layoutMapText({
+      nodes: nodes.map((node) => {
+        const point = layout.targets.get(node.id);
+        assert.ok(point);
+        return {
+          id: node.id,
+          type: node.type,
+          entity: node.entity,
+          r: typeRadius(node.type, view.degrees.get(node.id) ?? 0),
+          x: point.x,
+          y: point.y
+        };
+      }),
+      captions: layout.captions,
+      width: 1400,
+      height: 820,
+      labelVisible: (node) =>
+        ontologyLabelVisible({
+          type: node.type,
+          id: node.id,
+          focusId: null,
+          hoverId: null,
+          zoomK: 1
+        })
+    });
+    const boxes = texts.map((text) => ({ id: text.id, ...mapTextBox(text) }));
+    for (const text of texts) {
+      if (text.kind !== 'node') continue;
+      const point = layout.targets.get(text.id);
+      assert.ok(point);
+      assert.ok(
+        Math.hypot(text.x - point.x, text.y - point.y) < 96,
+        `${text.id} label drifted from its node`
+      );
+    }
+    const overlaps: string[] = [];
+    for (let i = 0; i < boxes.length; i++) {
+      for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i]!;
+        const b = boxes[j]!;
+        const hit = a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        if (hit) overlaps.push(`${a.id} <> ${b.id}`);
+      }
+    }
+    assert.equal(overlaps.length, 0, overlaps.join('; '));
+  });
+
   it('default homepage view keeps skills and drops handovers', () => {
     const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
     const index = generateOntologyIndex(kitRoot);

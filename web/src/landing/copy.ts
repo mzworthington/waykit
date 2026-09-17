@@ -77,9 +77,15 @@ export const HOME_USED_IN_LEAD =
 export const HOME_USED_IN = [
   {
     name: 'ArchLens',
-    href: 'https://github.com/mzworthington/blueprint',
-    what: 'Architecture canvas and CLI (GitHub repo still named blueprint)',
+    href: 'https://github.com/mzworthington/archlens',
+    what: 'Architecture canvas and CLI',
     look: 'Hexagonal @archlens/core, TDD for parsers, sparse ADRs.'
+  },
+  {
+    name: 'RoMini',
+    href: 'https://github.com/mzworthington/RoMini',
+    what: 'Screen-free NFC audio player on a Pi',
+    look: 'Parent dashboard maps tags. Hexagon, TDD, bedtime-script skill.'
   },
   {
     name: 'steerco',

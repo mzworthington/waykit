@@ -30,7 +30,10 @@ describe('HomeLanding', () => {
     expect(docs.queryByRole('link', { name: /evals \(alpha\)/i })).toBeNull();
     expect(screen.getByRole('heading', { name: /used on our own product repos/i })).toBeTruthy();
     expect(screen.getByRole('link', { name: /archlens/i }).getAttribute('href')).toBe(
-      'https://github.com/mzworthington/blueprint'
+      'https://github.com/mzworthington/archlens'
+    );
+    expect(screen.getByRole('link', { name: /romini/i }).getAttribute('href')).toBe(
+      'https://github.com/mzworthington/RoMini'
     );
     expect(screen.queryByRole('region', { name: 'Kit ontology map' })).toBeNull();
     expect(screen.queryByRole('heading', { name: 'The wk CLI' })).toBeNull();

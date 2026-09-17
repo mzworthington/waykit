@@ -6,6 +6,7 @@ import {
   filterOntologyGraph,
   hexagonPath,
   HOMEPAGE_TYPE_FILTERS,
+  layoutMapText,
   layoutTargets,
   linkStrokeOpacity,
   ontologyFocusHash,
@@ -268,8 +269,8 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
   const form = root.querySelector('.ontology-toolbar');
   form?.addEventListener('submit', (event) => event.preventDefault());
   const clearBtn = root.querySelector('#ontology-clear');
-  const width = 1400;
-  const height = 820;
+  const width = 2100;
+  const height = 1280;
   renderTypeFilters(root);
   const publicIndex = toHomepageIndex(index);
 
@@ -292,17 +293,62 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
   const nodeG = g.append('g').attr('class', 'onto-nodes');
 
   let zoomK = 1;
+  let focusId: string | null = parseOntologyHash(window.location.hash).focusId;
+  let hoverId: string | null = null;
+  let lastNodes: MapNode[] = [];
+  let lastCaptions: ReturnType<typeof layoutTargets>['captions'] = [];
+
+  const applyPlacedLabels = () => {
+    const texts = layoutMapText({
+      nodes: lastNodes,
+      captions: focusId ? [] : lastCaptions,
+      width,
+      height,
+      labelVisible: (node) =>
+        ontologyLabelVisible({ type: node.type, id: node.id, focusId, hoverId, zoomK })
+    });
+    const byNode = new Map(texts.filter((text) => text.kind === 'node').map((text) => [text.id, text]));
+    captionG
+      .selectAll<SVGTextElement, (typeof texts)[number]>('text')
+      .data(
+        texts.filter((text) => text.kind === 'caption'),
+        (d) => d.id
+      )
+      .join('text')
+      .attr('x', (d) => d.x)
+      .attr('y', (d) => d.y)
+      .attr('text-anchor', (d) => d.anchor)
+      .attr('fill', '#9aa7b8')
+      .attr('font-size', '11px')
+      .attr('font-weight', '600')
+      .attr('letter-spacing', '0.04em')
+      .attr('pointer-events', 'none')
+      .text((d) => d.label);
+    nodeG
+      .selectAll<SVGTextElement, MapNode>('.onto-label')
+      .text((d) => byNode.get(d.id)?.label ?? shortLabel(entityLabel(d.entity)))
+      .attr('x', (d) => {
+        const text = byNode.get(d.id);
+        return text ? text.x - d.x : 0;
+      })
+      .attr('y', (d) => {
+        const text = byNode.get(d.id);
+        return text ? text.y - d.y : d.r + 12;
+      })
+      .attr('dy', 0)
+      .attr('text-anchor', (d) => byNode.get(d.id)?.anchor ?? 'middle')
+      .style('opacity', (d) =>
+        ontologyLabelVisible({ type: d.type, id: d.id, focusId, hoverId, zoomK }) ? 1 : 0
+      );
+  };
+
   const zoom = d3.zoom<SVGSVGElement, unknown>().scaleExtent([0.35, 4]).on('zoom', (event) => {
     zoomK = event.transform.k;
     g.attr('transform', event.transform.toString());
-    nodeG.selectAll<SVGTextElement, MapNode>('.onto-label').style('opacity', (d) =>
-      ontologyLabelVisible({ type: d.type, id: d.id, focusId, hoverId, zoomK }) ? 1 : 0
-    );
+    applyPlacedLabels();
   });
   svg.call(zoom);
 
-  let focusId: string | null = parseOntologyHash(window.location.hash).focusId;
-  let hoverId: string | null = null;
   const byId = new Map(publicIndex.entities.map((entity) => [entity.id, entity]));
 
   const syncInspector = () => {
@@ -319,9 +365,7 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
     });
 
   const applyLabelOpacity = () => {
-    nodeG.selectAll<SVGTextElement, MapNode>('.onto-label').style('opacity', (n) =>
-      ontologyLabelVisible({ type: n.type, id: n.id, focusId, hoverId, zoomK }) ? 1 : 0
-    );
+    applyPlacedLabels();
   };
 
   const draw = () => {
@@ -355,6 +399,8 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
       node.x = target.x;
       node.y = target.y;
     }
+    lastNodes = nodes;
+    lastCaptions = layout.captions;
     const nodeIndex = new Map(nodes.map((node) => [node.id, node]));
     const links = view.edges
       .map((edge) => ({
@@ -363,19 +409,7 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
       }))
       .filter((link) => nodeIndex.has(link.from) && nodeIndex.has(link.to));
 
-    captionG
-      .selectAll<SVGTextElement, (typeof layout.captions)[number]>('text')
-      .data(focusId ? [] : layout.captions, (d) => d.label)
-      .join('text')
-      .attr('x', (d) => d.x)
-      .attr('y', (d) => d.y)
-      .attr('text-anchor', 'middle')
-      .attr('fill', '#9aa7b8')
-      .attr('font-size', '11px')
-      .attr('font-weight', '600')
-      .attr('letter-spacing', '0.04em')
-      .attr('pointer-events', 'none')
-      .text((d) => d.label);
+    captionG.selectAll('text').remove();
 
     linkG
       .selectAll<SVGPathElement, MapLink>('path')
@@ -401,7 +435,6 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
           .append('text')
           .attr('class', 'onto-label')
           .attr('text-anchor', 'middle')
-          .attr('dy', (d) => d.r + 12)
           .attr('fill', '#0c1412')
           .attr('font-size', '10px')
           .attr('font-family', 'IBM Plex Sans, sans-serif')
@@ -417,10 +450,10 @@ function bindOntologyExplorer(root: HTMLElement, index: OntologyIndex): void {
       .attr('stroke-width', (d) => (d.id === focusId ? 3 : 1.5));
     node
       .select<SVGTextElement>('.onto-label')
-      .text((d) => shortLabel(entityLabel(d.entity)))
       .style('opacity', (d) =>
         ontologyLabelVisible({ type: d.type, id: d.id, focusId, hoverId, zoomK }) ? 1 : 0
       );
+    applyPlacedLabels();
 
     node
       .on('click', (event, d) => {

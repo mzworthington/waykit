@@ -34,11 +34,11 @@ export const HOMEPAGE_TYPE_FILTERS: readonly HomepageTypeFilter[] = [
   { type: 'Phase', label: 'Phase', defaultOn: true },
   { type: 'Skill', label: 'Skill', defaultOn: true },
   { type: 'Subagent', label: 'Subagent', defaultOn: true },
-  { type: 'SOP', label: 'SOP', defaultOn: false },
-  { type: 'McpServer', label: 'MCP', defaultOn: false },
+  { type: 'SOP', label: 'SOP', defaultOn: true },
+  { type: 'McpServer', label: 'MCP', defaultOn: true },
   { type: 'PhilosophySection', label: 'Philosophy', defaultOn: true },
-  { type: 'Doc', label: 'Doc', defaultOn: false },
-  { type: 'EvalSuite', label: 'Eval', defaultOn: false }
+  { type: 'Doc', label: 'Doc', defaultOn: true },
+  { type: 'EvalSuite', label: 'Eval', defaultOn: true }
 ];
 
 export const DEFAULT_ONTOLOGY_TYPES: readonly HomepageEntityType[] = HOMEPAGE_TYPE_FILTERS.filter(
@@ -105,7 +105,7 @@ export function straightLinkPath(x1: number, y1: number, x2: number, y2: number)
 }
 
 export function linkStrokeOpacity(focusId: string | null, sourceId: string, targetId: string): number {
-  if (!focusId) return 0.22;
+  if (!focusId) return 0.1;
   return sourceId === focusId || targetId === focusId ? 0.85 : 0.12;
 }
 
@@ -264,10 +264,10 @@ export function ontologyLabelVisible(opts: {
   hoverId: string | null;
   zoomK: number;
 }): boolean {
-  if (opts.type === 'Phase' || opts.type === 'PhilosophySection') return true;
-  if (opts.focusId) return true;
+  if (opts.type === 'Phase') return true;
+  if (opts.focusId === opts.id) return true;
   if (opts.hoverId === opts.id) return true;
-  return opts.zoomK >= 1.45;
+  return opts.zoomK >= 2.2;
 }
 
 export interface LayoutNode {
@@ -290,28 +290,161 @@ export interface RingLayout {
   captions: LayoutCaption[];
 }
 
+export type MapTextAnchor = 'start' | 'middle' | 'end';
+
+export interface MapPlacedNode extends LayoutNode, LayoutPoint {
+  r: number;
+}
+
+export interface MapText {
+  id: string;
+  kind: 'node' | 'caption';
+  label: string;
+  x: number;
+  y: number;
+  anchor: MapTextAnchor;
+  fontSize: number;
+  width: number;
+  height: number;
+}
+
+export function estimateMapTextSize(text: string, fontSize: number): { width: number; height: number } {
+  return {
+    width: Math.max(12, text.length * fontSize * 0.58),
+    height: fontSize + 4
+  };
+}
+
+export function mapTextBox(text: Pick<MapText, 'x' | 'y' | 'width' | 'height' | 'anchor'>): {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+} {
+  const left =
+    text.anchor === 'start' ? text.x : text.anchor === 'end' ? text.x - text.width : text.x - text.width / 2;
+  const top = text.y - text.height / 2;
+  return { left, top, right: left + text.width, bottom: top + text.height };
+}
+
+function boxesOverlap(
+  a: { left: number; top: number; right: number; bottom: number },
+  b: { left: number; top: number; right: number; bottom: number },
+  pad = 2
+): boolean {
+  return a.left < b.right + pad && a.right + pad > b.left && a.top < b.bottom + pad && a.bottom + pad > b.top;
+}
+
+function nudgeMapText(
+  text: MapText,
+  dx: number,
+  dy: number,
+  nodes: Map<string, MapPlacedNode>,
+  maxDrift: number
+): boolean {
+  const nextX = text.x + dx;
+  const nextY = text.y + dy;
+  if (text.kind === 'node') {
+    const node = nodes.get(text.id);
+    if (!node) return false;
+    if (Math.hypot(nextX - node.x, nextY - node.y) > maxDrift) return false;
+  }
+  text.x = nextX;
+  text.y = nextY;
+  return true;
+}
+
+function separateMapText(texts: MapText[], nodes: readonly MapPlacedNode[], maxDrift: number): void {
+  const byId = new Map(nodes.map((node) => [node.id, node]));
+  for (let iter = 0; iter < 80; iter++) {
+    let moved = false;
+    for (let i = 0; i < texts.length; i++) {
+      for (let j = i + 1; j < texts.length; j++) {
+        const a = texts[i]!;
+        const b = texts[j]!;
+        const boxA = mapTextBox(a);
+        const boxB = mapTextBox(b);
+        if (!boxesOverlap(boxA, boxB, 3)) continue;
+        const ax = (boxA.left + boxA.right) / 2;
+        const ay = (boxA.top + boxA.bottom) / 2;
+        const bx = (boxB.left + boxB.right) / 2;
+        const by = (boxB.top + boxB.bottom) / 2;
+        let vx = bx - ax;
+        let vy = by - ay;
+        const dist = Math.hypot(vx, vy);
+        if (dist < 1e-6) {
+          vx = 1;
+          vy = 0;
+        } else {
+          vx /= dist;
+          vy /= dist;
+        }
+        const overlapX = Math.min(boxA.right, boxB.right) - Math.max(boxA.left, boxB.left) + 3;
+        const overlapY = Math.min(boxA.bottom, boxB.bottom) - Math.max(boxA.top, boxB.top) + 3;
+        const push = Math.max(overlapX, overlapY) / 2 + 1.5;
+        const aMoved = nudgeMapText(a, -vx * push, -vy * push, byId, maxDrift);
+        const bMoved = nudgeMapText(b, vx * push, vy * push, byId, maxDrift);
+        if (aMoved || bMoved) moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+}
+
+export function layoutMapText(opts: {
+  nodes: readonly MapPlacedNode[];
+  captions: readonly LayoutCaption[];
+  width: number;
+  height: number;
+  labelVisible: (node: MapPlacedNode) => boolean;
+}): MapText[] {
+  const cx = opts.width / 2;
+  const cy = opts.height / 2 + 10;
+  const texts: MapText[] = [];
+  for (const node of opts.nodes) {
+    if (!opts.labelVisible(node)) continue;
+    const dx = node.x - cx;
+    const dy = node.y - cy;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len;
+    const uy = dy / len;
+    const pad = node.r + 16;
+    const anchor: MapTextAnchor = ux > 0.32 ? 'start' : ux < -0.32 ? 'end' : 'middle';
+    const label = shortLabel(entityLabel(node.entity));
+    const size = estimateMapTextSize(label, 10);
+    texts.push({
+      id: node.id,
+      kind: 'node',
+      label,
+      x: node.x + ux * pad,
+      y: node.y + uy * pad,
+      anchor,
+      fontSize: 10,
+      ...size
+    });
+  }
+  for (const caption of opts.captions) {
+    const size = estimateMapTextSize(caption.label, 11);
+    texts.push({
+      id: `caption:${caption.label}`,
+      kind: 'caption',
+      label: caption.label,
+      x: caption.x,
+      y: caption.y,
+      anchor: 'middle',
+      fontSize: 11,
+      ...size
+    });
+  }
+  separateMapText(texts, opts.nodes, 90);
+  return texts;
+}
+
 function polar(cx: number, cy: number, angle: number, radius: number): LayoutPoint {
   return {
     x: cx + Math.cos(angle) * radius,
     y: cy + Math.sin(angle) * radius * 0.78
   };
-}
-
-function placeArc(
-  nodes: LayoutNode[],
-  cx: number,
-  cy: number,
-  radius: number,
-  start: number,
-  sweep: number
-): Array<LayoutPoint & { id: string }> {
-  const n = nodes.length;
-  if (!n) return [];
-  return nodes.map((node, i) => {
-    const t = n === 1 ? 0.5 : i / (n - 1);
-    const extra = n > 12 ? Math.floor(i / Math.ceil(n / 2)) * 36 : 0;
-    return { id: node.id, ...polar(cx, cy, start + t * sweep, radius + extra) };
-  });
 }
 
 function attrOrder(entity: OntologyEntity): number {
@@ -331,6 +464,23 @@ function attrPhase(entity: OntologyEntity): string {
 export function layoutTargets(nodes: LayoutNode[], width: number, height: number): RingLayout {
   const cx = width / 2;
   const cy = height / 2 + 10;
+  const scale = Math.min(width / 1400, height / 820);
+  const at = (angle: number, radius: number): LayoutPoint => polar(cx, cy, angle, radius * scale);
+  const arc = (
+    group: LayoutNode[] | undefined,
+    radius: number,
+    start: number,
+    sweep: number
+  ): Array<LayoutPoint & { id: string }> => {
+    const list = group ?? [];
+    const n = list.length;
+    if (!n) return [];
+    return list.map((node, i) => {
+      const t = n === 1 ? 0.5 : (i + 0.5) / n;
+      const extra = (i % 2) * 30 + (n > 8 ? (Math.floor(i / 2) % 2) * 18 : 0);
+      return { id: node.id, ...at(start + t * sweep, radius + extra) };
+    });
+  };
   const byType = new Map<KitEntityType, LayoutNode[]>();
   for (const node of nodes) {
     const list = byType.get(node.type) ?? [];
@@ -345,9 +495,9 @@ export function layoutTargets(nodes: LayoutNode[], width: number, height: number
   phases.forEach((node, i) => {
     const angle = (i / Math.max(phases.length, 1)) * Math.PI * 2 - Math.PI / 2;
     phaseAngle.set(node.entity.name, angle);
-    targets.set(node.id, polar(cx, cy, angle, 118));
+    targets.set(node.id, at(angle, 176));
   });
-  if (phases.length) captions.push({ label: 'Phases', ...polar(cx, cy, -Math.PI / 2, 62) });
+  if (phases.length) captions.push({ label: 'Phases', ...at(-Math.PI / 2, 36) });
 
   const skills = byType.get('Skill') ?? [];
   const bands: Record<SkillBand, LayoutNode[]> = {
@@ -366,44 +516,49 @@ export function layoutTargets(nodes: LayoutNode[], width: number, height: number
   agents.forEach((node, i, list) => {
     const phase = attrPhase(node.entity);
     const base = phaseAngle.get(phase) ?? -Math.PI / 2 + (i / Math.max(list.length, 1)) * Math.PI * 2;
-    const slot = list.filter((s) => attrPhase(s.entity) === phase).indexOf(node);
-    const jitter = (slot - 1.5) * 0.16;
-    targets.set(node.id, polar(cx, cy, base + jitter, 230 + (slot % 3) * 22));
+    const siblings = list.filter((s) => attrPhase(s.entity) === phase);
+    const slot = siblings.indexOf(node);
+    const count = siblings.length;
+    const spread = Math.max(0.2, Math.min(0.5, 1.35 / Math.max(count, 1)));
+    const jitter = (slot - (count - 1) / 2) * spread;
+    const radius = 268 + Math.abs(slot - (count - 1) / 2) * 42 + (slot % 2) * 26;
+    targets.set(node.id, at(base + jitter, radius));
   });
-  if (bands.agent.length) captions.push({ label: 'Lifecycle skills', ...polar(cx, cy, Math.PI * 0.22, 230) });
+  if (bands.agent.length) captions.push({ label: 'Lifecycle skills', ...at(Math.PI * 0.22, 214) });
 
-  placeArc(byType.get('Subagent') ?? [], cx, cy, 185, -0.55, 1.4).forEach((t) => targets.set(t.id, t));
+  arc(byType.get('Subagent'), 222, -0.7, 1.7).forEach((t) => targets.set(t.id, t));
   if ((byType.get('Subagent') ?? []).length) {
-    captions.push({ label: 'Host subagents', ...polar(cx, cy, -0.2, 185) });
+    captions.push({ label: 'Host subagents', ...at(-0.2, 148) });
   }
 
-  placeArc(bands.lang, cx, cy, 340, -0.35, 0.9).forEach((t) => targets.set(t.id, t));
-  if (bands.lang.length) captions.push({ label: 'Languages', ...polar(cx, cy, 0.1, 390) });
+  arc(bands.lang, 372, -0.45, 1.15).forEach((t) => targets.set(t.id, t));
+  if (bands.lang.length) captions.push({ label: 'Languages', ...at(0.1, 438) });
 
-  placeArc(bands.framework, cx, cy, 395, 0.7, 1.15).forEach((t) => targets.set(t.id, t));
-  if (bands.framework.length) captions.push({ label: 'Frameworks', ...polar(cx, cy, 1.25, 445) });
+  arc(bands.framework, 438, 0.65, 1.45).forEach((t) => targets.set(t.id, t));
+  if (bands.framework.length) captions.push({ label: 'Frameworks', ...at(1.35, 508) });
 
-  placeArc(bands.profile, cx, cy, 355, 2.05, 0.7).forEach((t) => targets.set(t.id, t));
-  if (bands.profile.length) captions.push({ label: 'Profiles', ...polar(cx, cy, 2.35, 400) });
+  arc(bands.profile, 392, 2.0, 0.95).forEach((t) => targets.set(t.id, t));
+  if (bands.profile.length) captions.push({ label: 'Profiles', ...at(2.4, 458) });
 
-  placeArc(bands.other, cx, cy, 300, 2.85, 0.5).forEach((t) => targets.set(t.id, t));
+  arc(bands.other, 318, 2.85, 0.55).forEach((t) => targets.set(t.id, t));
 
-  placeArc(byType.get('SOP') ?? [], cx, cy, 310, 3.2, 0.7).forEach((t) => targets.set(t.id, t));
-  if ((byType.get('SOP') ?? []).length) captions.push({ label: 'SOPs', ...polar(cx, cy, 3.5, 350) });
+  arc(byType.get('SOP'), 332, 3.15, 0.9).forEach((t) => targets.set(t.id, t));
+  if ((byType.get('SOP') ?? []).length) captions.push({ label: 'SOPs', ...at(3.55, 388) });
 
-  placeArc(byType.get('PhilosophySection') ?? [], cx, cy, 430, 3.5, 0.85).forEach((t) => targets.set(t.id, t));
+  arc(byType.get('PhilosophySection'), 498, 3.25, 1.7).forEach((t) => targets.set(t.id, t));
   if ((byType.get('PhilosophySection') ?? []).length) {
-    captions.push({ label: 'Philosophy', ...polar(cx, cy, 3.9, 475) });
+    captions.push({ label: 'Philosophy', ...at(4.05, 560) });
   }
 
-  placeArc(byType.get('Doc') ?? [], cx, cy, 285, 4.4, 0.45).forEach((t) => targets.set(t.id, t));
-  placeArc(byType.get('McpServer') ?? [], cx, cy, 470, -2.4, 1.5).forEach((t) => targets.set(t.id, t));
-  if ((byType.get('McpServer') ?? []).length) captions.push({ label: 'MCP', ...polar(cx, cy, -1.65, 520) });
+  arc(byType.get('Doc'), 308, 4.45, 0.55).forEach((t) => targets.set(t.id, t));
+  arc(byType.get('McpServer'), 534, -2.5, 1.7).forEach((t) => targets.set(t.id, t));
+  if ((byType.get('McpServer') ?? []).length) captions.push({ label: 'MCP', ...at(-1.65, 590) });
 
-  placeArc(byType.get('EvalSuite') ?? [], cx, cy, 520, 0, Math.PI * 2).forEach((t) => targets.set(t.id, t));
-  placeArc(byType.get('Handover') ?? [], cx, cy, 560, Math.PI, Math.PI).forEach((t) => targets.set(t.id, t));
+  arc(byType.get('EvalSuite'), 650, 0, Math.PI * 2).forEach((t) => targets.set(t.id, t));
+  if ((byType.get('EvalSuite') ?? []).length) captions.push({ label: 'Evals', ...at(Math.PI / 2, 720) });
+  arc(byType.get('Handover'), 780, Math.PI, Math.PI).forEach((t) => targets.set(t.id, t));
 
-  const fallback = polar(cx, cy, 0, 200);
+  const fallback = at(0, 200);
   for (const node of nodes) {
     if (!targets.has(node.id)) targets.set(node.id, fallback);
   }

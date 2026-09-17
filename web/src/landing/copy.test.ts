@@ -18,13 +18,16 @@ describe('homepage copy', () => {
     expect(HOME_NEXT[1]?.title).toMatch(/quality loops/i);
     expect(HOME_NEXT[1]?.body).toMatch(/ci/i);
     expect(HOME_NEXT[1]?.body).toMatch(/rum/i);
-    expect(HOME_USED_IN).toHaveLength(4);
+    expect(HOME_USED_IN).toHaveLength(5);
     expect(HOME_USED_IN.map((repo) => repo.href)).toEqual([
-      'https://github.com/mzworthington/blueprint',
+      'https://github.com/mzworthington/archlens',
+      'https://github.com/mzworthington/RoMini',
       'https://github.com/mzworthington/steerco',
       'https://github.com/mzworthington/react-cloudflare-template',
       'https://github.com/mzworthington/gpio-build-monitor'
     ]);
+    expect(HOME_USED_IN[0]?.what).not.toMatch(/blueprint/i);
+    expect(HOME_USED_IN[1]?.name).toBe('RoMini');
 
     expect(HOME_HEADLINE).toMatch(/grill.*spec.*tdd.*ship.*learn/i);
     expect(JOBS_FOR_TODAY.href).toEqual('/docs/jobs');

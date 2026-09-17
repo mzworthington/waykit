@@ -37,6 +37,7 @@ export {
   filterOntologyGraph,
   neighborhoodIds,
   hexagonPath,
+  layoutMapText,
   layoutTargets,
   linkStrokeOpacity,
   ontologyFocusHash,

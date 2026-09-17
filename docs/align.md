@@ -55,7 +55,7 @@ jobs:
 
 Pin `wk _ref` (and the `uses:` ref) to a `vX.Y.Z` tag once you want a frozen installer. Optional `working_directory` is the path `wk align` runs in (default `.`).
 
-First-party adopters (align job on pull requests): [gpio-build-monitor](https://github.com/mzworthington/gpio-build-monitor), [blueprint](https://github.com/mzworthington/blueprint) (ArchLens), [steerco](https://github.com/mzworthington/steerco), [react-cloudflare-template](https://github.com/mzworthington/react-cloudflare-template), [mzworthington](https://github.com/mzworthington/mzworthington), [edge-dns](https://github.com/mzworthington/edge-dns). Align failures fail that check.
+First-party adopters (align job on pull requests): [gpio-build-monitor](https://github.com/mzworthington/gpio-build-monitor), [archlens](https://github.com/mzworthington/archlens) (ArchLens), [steerco](https://github.com/mzworthington/steerco), [react-cloudflare-template](https://github.com/mzworthington/react-cloudflare-template), [mzworthington](https://github.com/mzworthington/mzworthington), [edge-dns](https://github.com/mzworthington/edge-dns). Align failures fail that check.
 
 ## What it looks for
 
