@@ -22,6 +22,12 @@ describe('reusable consumer align workflow', () => {
     assert.doesNotMatch(yml, /KIT_EVAL_API_KEY/);
   });
 
+  it('installs the kit outside the caller workspace so wk survives checkout cleanup', () => {
+    const yml = fs.readFileSync(workflowPath, 'utf8');
+    assert.match(yml, /\$\{HOME\}\/\.local\/share\/waykit/);
+    assert.doesNotMatch(yml, /rm -rf \$\{GITHUB_WORKSPACE\}\/\.waykit-src/);
+  });
+
   it('documents the reusable workflow for product CI', () => {
     const docs = fs.readFileSync(alignDocs, 'utf8');
     assert.match(docs, /align-consumer\.yml/);

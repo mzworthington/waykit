@@ -1,20 +1,18 @@
 # Waykit
 
-Product lifecycle for coding agents
-
-**Grill, spec, TDD, ship, learn**
-
-Give your coding agents a release bar. Waykit provides the full product and software delivery lifecycle, from Spec to Test to Release, plus the feedback loops that make every session better than the last.
-
-<p align="center">
-  <img src="./web/public/assets/waykit-loops.svg" alt="Four concentric rings: Waykit, Signals, Plan, and Build" width="720" />
-</p>
-
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen?style=for-the-badge&logo=github-actions)](./.github/workflows/ci.yml)
+[![Quality gate](https://img.shields.io/sonar/alert_status/mzworthington_waykit?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge&logo=sonarqube)](https://sonarcloud.io/summary/new_code?id=mzworthington_waykit)
 [![Lifecycle](https://img.shields.io/badge/Lifecycle-SDLC-blueviolet?style=for-the-badge&logo=git)](./docs/lifecycle.md)
 [![Pages](https://img.shields.io/badge/Docs-waykit.dev-blue?style=for-the-badge&logo=github)](https://waykit.dev/)
 [![License](https://img.shields.io/badge/License-Unlicense-success?style=for-the-badge)](./LICENSE)
 [![Version](https://img.shields.io/github/v/release/mzworthington/waykit?style=for-the-badge&logo=github&label=Version)](https://github.com/mzworthington/waykit/releases)
+
+
+Product lifecycle for coding agents- **Grill, spec, TDD, ship, learn**
+
+Give your coding agents a release bar. Waykit provides the full product and software delivery lifecycle, from Spec to Test to Release, plus the feedback loops that make every session better than the last.
+
+![Four concentric rings: Waykit, Signals, Plan, and Build](./web/public/assets/waykit-loops.svg)
 
 Site: [waykit.dev](https://waykit.dev/). Start in the docs:
 
