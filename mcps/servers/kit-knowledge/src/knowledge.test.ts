@@ -79,6 +79,10 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /auto-work/);
     assert.match(sop!.body, /wk loops status/);
     assert.match(sop!.body, /wk loops setup/);
+    assert.match(sop!.body, /lists\/quality-loop-automations\.yaml/);
+    assert.match(sop!.body, /skip_unless/);
+    assert.match(sop!.body, /max_items_per_run/);
+    assert.match(sop!.body, /spend/i);
     assert.match(sop!.body, /Lighthouse drop vs last main/);
     assert.match(sop!.body, /Performance/);
     assert.match(sop!.body, /chase 100/);

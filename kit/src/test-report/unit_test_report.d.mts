@@ -3,6 +3,7 @@ export type UnitTestOutcome = 'pass' | 'fail' | 'skip' | 'todo';
 export interface UnitTestCaseResult {
   name: string;
   file: string;
+  line?: number;
   outcome: UnitTestOutcome;
   durationMs: number;
   errorMessage?: string;
@@ -29,6 +30,10 @@ export function outcomeFromTestEvent(event: {
 }): UnitTestOutcome | null;
 
 export function summarizeUnitTests(cases: UnitTestCaseResult[]): UnitTestReportStats;
+
+export function formatUnitTestErrorMessage(message?: string, maxChars?: number): string;
+
+export function githubErrorAnnotations(cases: UnitTestCaseResult[]): string[];
 
 export function renderUnitTestReportMarkdown(
   cases: UnitTestCaseResult[],

@@ -36,7 +36,8 @@ export interface PhilosophySection {
 
 const MAX_EXCERPT = 600;
 const MAX_HITS = 8;
-const MAX_SOP_CHARS = 4500;
+/** quality-loops and sonarqube-findings must still fit (see knowledge.test.ts). */
+const MAX_SOP_CHARS = 5200;
 
 export function resolveKitRoot(env: NodeJS.ProcessEnv = process["env"]): string {
   if (env.KIT_ROOT && env.KIT_ROOT.trim()) {
