@@ -5,6 +5,11 @@
 ### 🐛 Bug Fixes
 
 - *(mcp)* Keep quality-loops inside get_sop and scannable CI reports (#101)
+- *(web)* Put kit-map evals on a ring outside MCP
+
+### 🧰 Maintenance & Dependencies
+
+- Cleanup seo
 
 ## 2026-09-16
 
