@@ -3,6 +3,7 @@
  * Plain ESM so `node --test --test-reporter=...` can load it without tsx.
  */
 import {
+  githubErrorAnnotations,
   outcomeFromTestEvent,
   relativizeTestFile,
   renderUnitTestReportMarkdown
@@ -28,10 +29,17 @@ export default async function* githubTestReporter(source) {
     cases.push({
       name: event.data.name ?? '(unnamed)',
       file: relativizeTestFile(event.data.file),
+      line: event.data.line,
       outcome,
       durationMs: event.data.details?.duration_ms ?? 0,
       errorMessage: err?.message ?? err?.cause?.message
     });
+  }
+
+  if (process.env.GITHUB_ACTIONS === 'true') {
+    for (const line of githubErrorAnnotations(cases)) {
+      console.error(line);
+    }
   }
 
   yield renderUnitTestReportMarkdown(cases);

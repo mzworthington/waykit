@@ -2,7 +2,7 @@ import path from 'node:path';
 
 /**
  * @typedef {'pass' | 'fail' | 'skip' | 'todo'} UnitTestOutcome
- * @typedef {{ name: string, file: string, outcome: UnitTestOutcome, durationMs: number, errorMessage?: string }} UnitTestCaseResult
+ * @typedef {{ name: string, file: string, line?: number, outcome: UnitTestOutcome, durationMs: number, errorMessage?: string }} UnitTestCaseResult
  * @typedef {{ passed: number, failed: number, skipped: number, todo: number, total: number, durationMs: number }} UnitTestReportStats
  */
 
@@ -47,6 +47,46 @@ export function summarizeUnitTests(cases) {
   return stats;
 }
 
+const DEFAULT_ERROR_MESSAGE_CHARS = 280;
+
+/**
+ * Keep job-summary failures scannable. Node assert.match dumps the whole input
+ * after `. Input:`, which used to paste an entire SOP into $GITHUB_STEP_SUMMARY.
+ * @param {string | undefined} message
+ * @param {number} [maxChars]
+ */
+export function formatUnitTestErrorMessage(message, maxChars = DEFAULT_ERROR_MESSAGE_CHARS) {
+  if (!message) return '';
+  let text = String(message);
+  const inputIdx = text.search(/\. Input:/);
+  if (inputIdx >= 0) text = text.slice(0, inputIdx + 1);
+  text = text.replace(/\s+/g, ' ').trim();
+  if (text.length > maxChars) {
+    return `${text.slice(0, Math.max(0, maxChars - 1)).trimEnd()}…`;
+  }
+  return text;
+}
+
+/** @param {string} value */
+function escapeGithubAnnotation(value) {
+  return String(value).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+}
+
+/**
+ * Workflow commands for the Verify log so the check run points at the test file.
+ * @param {UnitTestCaseResult[]} cases
+ */
+export function githubErrorAnnotations(cases) {
+  return cases
+    .filter((c) => c.outcome === 'fail')
+    .map((c) => {
+      const loc = Number.isInteger(c.line) ? `,line=${c.line}` : '';
+      const title = escapeGithubAnnotation(c.name);
+      const msg = escapeGithubAnnotation(formatUnitTestErrorMessage(c.errorMessage ?? c.name));
+      return `::error file=${c.file}${loc},title=${title}::${msg}`;
+    });
+}
+
 /** @param {string} value */
 function escapeCell(value) {
   return value.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -76,8 +116,9 @@ export function renderUnitTestReportMarkdown(cases, options = {}) {
     lines.push('### Failures', '');
     for (const f of failures) {
       lines.push(`- \`${escapeCell(f.file)}\` › **${escapeCell(f.name)}**`);
-      if (f.errorMessage) {
-        lines.push(`  - ${escapeCell(f.errorMessage)}`);
+      const errorMessage = formatUnitTestErrorMessage(f.errorMessage);
+      if (errorMessage) {
+        lines.push(`  - ${escapeCell(errorMessage)}`);
       }
     }
     lines.push('');
