@@ -6,6 +6,7 @@
 
 - *(mcp)* Keep quality-loops inside get_sop and scannable CI reports (#101)
 - *(web)* Put kit-map evals on a ring outside MCP
+- *(align-ci)* Create ~/.local/share before moving the kit checkout
 
 ### 🧰 Maintenance & Dependencies
 
