@@ -11,6 +11,10 @@
 
 - Cleanup seo
 
+### 📚 Documentation
+
+- *(readme)* Lead with homepage value and loops image
+
 ## 2026-09-16
 
 ### 🚀 Features
