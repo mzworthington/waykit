@@ -10,6 +10,7 @@
 ### 🧰 Maintenance & Dependencies
 
 - Cleanup seo
+- Improved badges
 
 ### 📚 Documentation
 
