@@ -127,7 +127,8 @@ wk mcp posthog --install
 # SonarQube Cloud (user token + org in env)
 wk mcp sonar --install
 
-# SigNoz (stdio binary; Cloud instance URL or self-host)
+# SigNoz (mise-pinned stdio binary; Cloud instance URL or self-host)
+mise install                  # github:SigNoz/signoz-mcp-server from kit mise.toml
 wk mcp signoz --install
 
 # Project config
