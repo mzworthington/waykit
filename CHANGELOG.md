@@ -7,6 +7,10 @@
 - *(mcp)* Add opt-in SigNoz profile for agent tokens (MZW-122) (#102)
 - *(sops)* Send coding-agent traces to community SigNoz
 
+### 🐛 Bug Fixes
+
+- *(ci)* Retry changelog push when main advances (#103)
+
 ## 2026-09-17
 
 ### 🐛 Bug Fixes
