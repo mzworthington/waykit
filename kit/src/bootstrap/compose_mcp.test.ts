@@ -41,7 +41,7 @@ describe('composeMCP', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-'));
     writeProfile(root, 'demo', ['alpha', 'beta']);
     writeServer(root, 'alpha', { alpha: { command: 'npx', args: ['alpha'] } });
-    writeServer(root, 'beta', { command: 'node', args: ['beta.js'] } });
+    writeServer(root, 'beta', { beta: { command: 'node', args: ['beta.js'] } });
     const out = path.join(root, 'out', 'mcp.json');
     composeMCP('demo', out, false, { repoDir: root, env: {} });
     const body = JSON.parse(fs.readFileSync(out, 'utf8')) as { mcpServers: Record<string, unknown> };
