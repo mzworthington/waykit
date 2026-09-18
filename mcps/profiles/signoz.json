@@ -1,0 +1,10 @@
+{
+  "name": "signoz",
+  "description": "SigNoz MCP for coding-agent tokens, cost, and traces. Kit chunks, GitHub, and memory. URL + API key in env. One profile — do not stack.",
+  "servers": [
+    "kit-knowledge",
+    "github",
+    "memory",
+    "signoz"
+  ]
+}
