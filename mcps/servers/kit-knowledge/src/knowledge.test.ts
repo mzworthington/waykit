@@ -118,6 +118,8 @@ describe("kit-knowledge", () => {
     assert.ok(sop);
     assert.equal(sop!.id, "coding-agent-observability");
     assert.match(sop!.body, /wk mcp signoz/);
+    assert.match(sop!.body, /mise install/);
+    assert.match(sop!.body, /github:SigNoz\/signoz-mcp-server/);
     assert.match(sop!.body, /Do not add an `agent-signoz` skill/i);
     assert.match(sop!.body, /Do not add OpenObserve/i);
     assert.match(sop!.body, /wk eval/);
