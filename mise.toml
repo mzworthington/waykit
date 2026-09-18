@@ -3,10 +3,11 @@
 [tools]
 node = "24.20.0"
 pnpm = "11.25.0"
+"github:SigNoz/signoz-mcp-server" = "0.14.0"
 
 [tasks.install-tools]
-description = "Install Node and pnpm"
-run = "mise install node pnpm"
+description = "Install pinned tools from mise.toml"
+run = "mise install"
 
 [tasks.install]
 description = "Install Node dependencies"

@@ -196,6 +196,49 @@ describe('composeMCP', () => {
     assert.equal(body.mcpServers.context7, undefined);
   });
 
+  it('composes the signoz profile from the kit catalog', () => {
+    const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-signoz-')), 'mcp.json');
+    composeMCP('signoz', out, false, { repoDir: kitRoot, env: {} });
+    const body = JSON.parse(fs.readFileSync(out, 'utf8')) as {
+      mcpServers: Record<
+        string,
+        { command?: string; args?: string[]; env?: Record<string, string>; url?: string }
+      >;
+    };
+    assert.equal(body.mcpServers.signoz?.command, 'mise');
+    assert.deepEqual(body.mcpServers.signoz?.args, [
+      'exec',
+      '--cd',
+      '${userHome}/.agents',
+      '--',
+      'signoz-mcp-server'
+    ]);
+    assert.equal(body.mcpServers.signoz?.env?.SIGNOZ_URL, '${env:SIGNOZ_URL}');
+    assert.equal(body.mcpServers.signoz?.env?.SIGNOZ_API_KEY, '${env:SIGNOZ_API_KEY}');
+    assert.ok(body.mcpServers['kit-knowledge']);
+    assert.ok(body.mcpServers.github);
+    assert.ok(body.mcpServers.memory);
+    assert.equal(body.mcpServers.linear, undefined);
+    assert.equal(body.mcpServers.context7, undefined);
+    assert.equal(body.mcpServers.posthog, undefined);
+  });
+
+  it('pins signoz-mcp-server in kit mise.toml', () => {
+    const body = fs.readFileSync(path.join(kitRoot, 'mise.toml'), 'utf8');
+    assert.match(body, /github:SigNoz\/signoz-mcp-server/);
+    assert.match(body, /0\.14\.0/);
+    assert.match(body, /mise install/);
+  });
+
+  it('keeps signoz off the default profile', () => {
+    const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-default-signoz-')), 'mcp.json');
+    composeMCP('default', out, false, { repoDir: kitRoot, env: {} });
+    const body = JSON.parse(fs.readFileSync(out, 'utf8')) as {
+      mcpServers: Record<string, unknown>;
+    };
+    assert.equal(body.mcpServers.signoz, undefined);
+  });
+
   it('composes the astro profile from the kit catalog', () => {
     const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-astro-')), 'mcp.json');
     composeMCP('astro', out, false, { repoDir: kitRoot, env: {} });

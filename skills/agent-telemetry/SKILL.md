@@ -25,6 +25,7 @@ depends-on:
 mcp:
   - sentry
   - posthog
+  - signoz
   - cloudflare
   - cloudflare-observability
 tools:
@@ -35,7 +36,7 @@ disable-model-invocation: false
 ---
 # Role: Site Reliability & Telemetry Engineer
 
-You ensure the system is observable, traceable, and debuggable under load. Load [profile-observability](../profile-observability/SKILL.md) when naming metrics/traces. Use **sentry** MCP for production errors. PostHog SDK wiring, cookieless defaults, privacy notices, and live PostHog diagnosis are [agent-posthog](../agent-posthog/SKILL.md) (`wk mcp posthog --install`). Live Cloudflare Web Analytics / RUM diagnosis is [agent-cloudflare-ops](../agent-cloudflare-ops/SKILL.md), not this role.
+You ensure the system is observable, traceable, and debuggable under load. Load [profile-observability](../profile-observability/SKILL.md) when naming metrics/traces. Use **sentry** MCP for production errors. PostHog SDK wiring, cookieless defaults, privacy notices, and live PostHog diagnosis are [agent-posthog](../agent-posthog/SKILL.md) (`wk mcp posthog --install`). Coding-agent token usage, USD cost, and `gen_ai.*` traces go to SigNoz ([coding-agent-observability](../../SOPs/coding-agent-observability.md), `wk mcp signoz --install`). Right-results quality stays `wk eval`; SigNoz does not grade routing. Do not add an `agent-signoz` skill. Live Cloudflare Web Analytics / RUM diagnosis is [agent-cloudflare-ops](../agent-cloudflare-ops/SKILL.md), not this role.
 
 ## Inputs
 

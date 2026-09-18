@@ -23,6 +23,7 @@ mcps/
 │   ├── warp.json             # Warp Factory (OAuth)
 │   ├── posthog.json          # PostHog analytics / flags (OAuth)
 │   ├── sonar.json            # SonarQube Cloud quality gates / issues (token)
+│   ├── signoz.json           # SigNoz tokens / cost / traces (API key)
 │   └── project-example.json  # App-repo example
 ├── servers/<id>/
 │   ├── server.json           # Metadata + Cursor mcpServers fragment
@@ -50,6 +51,7 @@ mcps/
 | `warp` | kit-knowledge, github, memory, warp-factory | Warp Factory tasks (send, continue locally, onboard) |
 | `posthog` | kit-knowledge, github, memory, posthog | PostHog analytics, flags, errors (OAuth) |
 | `sonar` | kit-knowledge, github, memory, sonarqube | SonarQube Cloud issues / quality gates (user token) |
+| `signoz` | kit-knowledge, github, memory, signoz | Coding-agent tokens, cost, and OTel traces (API key) |
 
 **One profile per session.** Compose **one** profile that matches the work. Do not stack `collab` + `devtools` + `ops` into a single global `mcp.json`. Extra MCP tools compete for attention, inflate tool-schema tokens, and slow agents.
 
@@ -74,10 +76,11 @@ wk mcp cloudflare-ops --install    # RUM / Worker / DNS diagnosis
 wk mcp warp --install              # Warp Factory (OAuth)
 wk mcp posthog --install           # PostHog analytics / flags (OAuth)
 wk mcp sonar --install             # SonarQube Cloud issues / quality gates
+wk mcp signoz --install            # Coding-agent tokens / cost / traces
 wk mcp project-example --project
 ```
 
-Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/Cloudflare/Sentry/Stripe/Vercel/Warp Factory/PostHog use host OAuth on first tool use. SonarQube Cloud uses `SONARQUBE_TOKEN` + `SONARQUBE_ORG` in headers.
+Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/Cloudflare/Sentry/Stripe/Vercel/Warp Factory/PostHog use host OAuth on first tool use. SonarQube Cloud uses `SONARQUBE_TOKEN` + `SONARQUBE_ORG` in headers. SigNoz stdio uses `SIGNOZ_URL` + `SIGNOZ_API_KEY` and a mise-pinned `signoz-mcp-server`.
 
 ## Catalog
 
@@ -110,6 +113,7 @@ Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/C
 | warp-factory | http | OAuth (optional agent API key only for headless; never in repo) |
 | posthog | http | OAuth (optional personal API key only for headless; never in repo) |
 | sonarqube | http | `SONARQUBE_TOKEN`, `SONARQUBE_ORG` (Cloud user token; never in repo) |
+| signoz | stdio | `SIGNOZ_URL`, `SIGNOZ_API_KEY`; binary via `mise install` (`github:SigNoz/signoz-mcp-server`) |
 
 ## Adding a server
 

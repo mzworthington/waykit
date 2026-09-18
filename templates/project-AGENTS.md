@@ -12,8 +12,8 @@ Start from `~/.agents/AGENTS.md` (thin index). **Do not** bulk-read philosophy, 
 | Bug / CI / live symptom | `skills/agent-debug` (+ hypothesis-driven-debug SOP) |
 | Product bet / PRD / flags | `skills/agent-prd` (+ hypothesis-driven-development SOP) |
 | Cloudflare Web Analytics / RUM / beacon | `skills/agent-cloudflare-ops` (`wk mcp cloudflare-ops --project`) |
-| Warp Factory / PostHog | `wk mcp warp --install` / `skills/agent-posthog` (`wk mcp posthog --install`) |
-| Signals → Linear | `SOPs/quality-loops.md` (intake, hygiene, work picker); PostHog bets `SOPs/product-signal-intake.md`; Sonar `SOPs/sonarqube-findings.md` |
+| Warp / PostHog / agent tokens | `wk mcp warp`; `skills/agent-posthog` (`wk mcp posthog`); `SOPs/coding-agent-observability` (`wk mcp signoz`) |
+| Signals → Linear | `SOPs/quality-loops.md`; PostHog `SOPs/product-signal-intake.md`; Sonar `SOPs/sonarqube-findings.md` |
 | Crime-scene report | `SOPs/complexity-hotspots.md` §8 (arch-drift → gate → stories) |
 | Prompt / MCP tool / routing change | `docs/edd.md` + EDD SOP (`wk eval run\|ci`) |
 | Which model / host slug | `SOPs/model-routing.md` (`wk model resolve`) |
@@ -26,4 +26,4 @@ Start from `~/.agents/AGENTS.md` (thin index). **Do not** bulk-read philosophy, 
 
 For **bugs / failed jobs / live symptoms**, use `agent-debug`. Do not open the full feature lifecycle unless RCA needs a new capability.
 
-For non-trivial **feature** work: inventory tests (functional + XFN), complete an XFN apply/skip matrix, then orchestrator routing (grill if unsettled → spec → TDD short loop → XFN → audit → release). Host TDD hooks: `wk tdd-guard install`.
+For non-trivial **feature** work: inventory tests (functional + XFN), complete an XFN apply/skip matrix, then orchestrator routing (grill if unsettled → spec → TDD → XFN → audit → release). Host TDD hooks: `wk tdd-guard install`.

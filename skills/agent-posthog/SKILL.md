@@ -46,7 +46,7 @@ You add or repair **PostHog** in the repo’s real stack, then prove events with
 - Privacy notice / cookie-banner question for a cookieless PostHog setup
 - Pull PostHog suggestions into the backlog: findings handover only (no Linear mutate)
 
-**Skip** for OTel-only work (`agent-telemetry`), live Cloudflare RUM (`agent-cloudflare-ops`), or app bugs with no analytics angle (`agent-debug`).
+**Skip** for OTel-only work (`agent-telemetry`), coding-agent token / cost / traces ([coding-agent-observability](../../SOPs/coding-agent-observability.md), `wk mcp signoz`), live Cloudflare RUM (`agent-cloudflare-ops`), or app bugs with no analytics angle (`agent-debug`).
 
 ## Profile
 

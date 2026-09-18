@@ -369,6 +369,22 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       };
     }
     if (
+      prompt.includes('signoz') ||
+      prompt.includes('coding-agent observability') ||
+      prompt.includes('coding-agent token') ||
+      prompt.includes('coding agent token') ||
+      (prompt.includes('otlp') && (prompt.includes('claude code') || prompt.includes('copilot')))
+    ) {
+      return {
+        content: 'Opening the coding-agent-observability SOP.',
+        tool_calls: [{ name: 'get_sop', arguments: { name: 'coding-agent-observability' } }],
+        usage: { promptTokens: 50, completionTokens: 30, totalTokens: 85 },
+        consecutiveToolFailures: 0,
+        haltedAutonomousExecution: false,
+        routingConfidence: 0.91
+      };
+    }
+    if (
       prompt.includes('sonarqube') ||
       prompt.includes('sonarcloud') ||
       prompt.includes('sonar finding')

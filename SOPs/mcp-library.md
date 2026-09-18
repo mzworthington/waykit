@@ -34,6 +34,7 @@ Use this when adding a server to the kit catalog, composing a host config, or wi
 | Warp Factory tasks / factory onboard | `mcps/profiles/warp.json` |
 | PostHog analytics / flags / errors | `mcps/profiles/posthog.json` |
 | SonarQube Cloud issues / quality gates | `mcps/profiles/sonar.json` |
+| Coding-agent tokens / cost / OTel traces | `mcps/profiles/signoz.json` |
 | App-specific DB + frontend stack | `project-example` or `wk mcp project-example --project` |
 | Personal-only experiment | Local user MCP (`wk mcp default --install`) (do not commit secrets) |
 
@@ -126,6 +127,10 @@ wk mcp posthog --install
 # SonarQube Cloud (user token + org in env)
 wk mcp sonar --install
 
+# SigNoz (mise-pinned stdio binary; Cloud instance URL or self-host)
+mise install                  # github:SigNoz/signoz-mcp-server from kit mise.toml
+wk mcp signoz --install
+
 # Project config
 wk mcp project-example --project
 wk mcp cloudflare-ops --project          # RUM / Worker diagnosis for this session
@@ -134,7 +139,7 @@ wk mcp cloudflare-ops --install          # RUM / Worker diagnosis (user-scope)
 wk mcp default --install --host claude   # user-scope Claude Code only
 ```
 
-The installer (`curl | sh` in [Getting started](../docs/start.md), or `./install.sh` from a checkout) runs the **default** profile install for every supported host. Opt into `collab`, `ops`, `security`, `personal`, `devtools`, `cloud`, `cloudflare-ops`, `warp`, `posthog`, and `sonar` explicitly.
+The installer (`curl | sh` in [Getting started](../docs/start.md), or `./install.sh` from a checkout) runs the **default** profile install for every supported host. Opt into `collab`, `ops`, `security`, `personal`, `devtools`, `cloud`, `cloudflare-ops`, `warp`, `posthog`, `sonar`, and `signoz` explicitly.
 
 ## 4. Verify in the host
 
