@@ -54,6 +54,21 @@ AssertionError: expected 'team_platform' to be 'team_storefront'`;
     assert.equal(classifyCiLog(log).class, 'product-bug');
   });
 
+  it('classifies a stale Promote changelog push as config-drift', () => {
+    const log = `
+[main 0bc8421] chore(changelog): regenerate from conventional commits
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+To https://github.com/mzworthington/waykit
+ ! [rejected]        HEAD -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/mzworthington/waykit'
+hint: Updates were rejected because the tip of your current branch is behind
+`;
+    const result = classifyCiLog(log);
+    assert.equal(result.class, 'config-drift');
+    assert.match(result.reason, /changelog|Promote|main/i);
+    assert.match(result.next, /retry once|Do not .*--force/i);
+  });
+
   it('returns unknown when the log has no signal', () => {
     assert.equal(classifyCiLog('Process completed with exit code 1').class, 'unknown');
   });

@@ -174,20 +174,8 @@ jobs:
           git fetch --tags --force
           bash bin/release.sh sync-notes
 
-      - name: Regenerate CHANGELOG.md
-        run: pnpm changelog
-
       - name: Commit changelog if changed
-        run: |
-          if git diff --quiet -- CHANGELOG.md; then
-            echo "CHANGELOG.md already up to date."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md
-          git commit -m "chore(changelog): regenerate from conventional commits"
-          git push origin HEAD
+        run: bash bin/release.sh commit-changelog
 
       - name: Publish Promote job summary
         if: always()
@@ -202,7 +190,8 @@ jobs:
             echo "Runs only after green **Verify** on \`main\` (or \`workflow_dispatch\`)."
             echo "Cuts a GitHub Release from conventional commits, syncs version-scoped"
             echo "notes on all \`v*\` releases, then regenerates date-grouped"
-            echo "\`CHANGELOG.md\` and pushes when needed. Consumers pin with \`wk _REF=vX.Y.Z\`."
+            echo "\`CHANGELOG.md\` on the latest tip (retry push once; never force-push)."
+            echo "Consumers pin with \`wk _REF=vX.Y.Z\`."
             echo ""
             if [ "${RELEASE}" = "true" ]; then
               echo "- **Released:** \`${TAG}\` (bump=\`${BUMP}\`)"

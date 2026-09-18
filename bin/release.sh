@@ -3,7 +3,8 @@
 # Package stays private; distribution is git tags + GitHub Releases (install via KIT_REF).
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+KIT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="${RELEASE_ROOT:-$KIT_ROOT}"
 cd "$ROOT"
 
 emit() {
@@ -224,14 +225,58 @@ cmd_sync_notes() {
   done
 }
 
+# Push date-grouped CHANGELOG.md back to the branch tip.
+# Regenerates on the latest origin tip, then retries the push once if main advanced.
+# Never --force. CI-only unless FORCE_CHANGELOG_PUSH=1.
+cmd_commit_changelog() {
+  local branch="${1:-${GITHUB_REF_NAME:-main}}"
+  local attempt
+
+  if [[ "${CI:-}" != "true" && "${FORCE_CHANGELOG_PUSH:-}" != "1" ]]; then
+    echo "commit-changelog is for CI. Set FORCE_CHANGELOG_PUSH=1 to run locally." >&2
+    return 1
+  fi
+
+  git config user.name "github-actions[bot]"
+  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+  for attempt in 1 2; do
+    git fetch origin "$branch"
+    git checkout -B "$branch" "origin/${branch}"
+    git reset --hard "origin/${branch}"
+    if [[ -n "${CHANGELOG_CMD:-}" ]]; then
+      bash -c "$CHANGELOG_CMD"
+    else
+      pnpm changelog
+    fi
+    if git diff --quiet -- CHANGELOG.md; then
+      echo "CHANGELOG.md already up to date."
+      return 0
+    fi
+    git add CHANGELOG.md
+    git commit -m "chore(changelog): regenerate from conventional commits"
+    if git push origin "HEAD:refs/heads/${branch}"; then
+      return 0
+    fi
+    if [[ "$attempt" -eq 1 ]]; then
+      echo "Push rejected; retrying once after fetching latest ${branch}."
+      continue
+    fi
+    echo "Push rejected after retry." >&2
+    return 1
+  done
+}
+
 usage() {
   cat <<'EOF'
-Usage: bin/release.sh <detect|notes|publish|sync-notes> [args]
+Usage: bin/release.sh <detect|notes|publish|sync-notes|commit-changelog> [args]
 
   detect                     Emit GitHub Actions outputs for whether to release
   notes [since-tag] [until]  Print version-scoped notes (until defaults to HEAD)
   publish <tag> [since-tag]  Create/update GitHub Release for HEAD
   sync-notes                 Rewrite notes for all existing vX.Y.Z GitHub Releases
+  commit-changelog [branch]  Regenerate CHANGELOG.md on the latest tip and push
+                             (retries once if the branch advanced; never --force)
 EOF
 }
 
@@ -244,6 +289,10 @@ case "${1:-}" in
     cmd_publish "$1" "${2:-}"
     ;;
   sync-notes) cmd_sync_notes ;;
+  commit-changelog)
+    shift
+    cmd_commit_changelog "${1:-}"
+    ;;
   -h|--help|help) usage ;;
   *) usage >&2; exit 1 ;;
 esac
