@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-18
+
+### 🚀 Features
+
+- *(mcp)* Add opt-in SigNoz profile for agent tokens (MZW-122) (#102)
+
 ## 2026-09-17
 
 ### 🐛 Bug Fixes
