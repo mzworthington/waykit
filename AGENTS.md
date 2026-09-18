@@ -11,7 +11,7 @@ Do not commit or push unless the user explicitly asks.
 1. **Hexagonal** - dependencies point inward; domain stays pure.
 2. **Mermaid** for architecture diagrams in docs. **ASCII/box-drawing** for TTY CLI chrome ([CODING_PHILOSOPHY.md](./CODING_PHILOSOPHY.md) §8).
 3. **Commits / tickets** - conventional subjects ([SOPs/conventional-commits.md](./SOPs/conventional-commits.md)); type follows **behavior**. Linear playbook: [SOPs/linear-ticket-workflow.md](./SOPs/linear-ticket-workflow.md) (main, uncommitted unless asked).
-4. **Tests are the behavior catalog** - align functional + XFN impact before non-trivial coding. Prefer self-documenting names; do not comment intent. When why is not obvious, encode it in a test.
+4. **Tests are the behavior catalog** - align functional + XFN impact before non-trivial coding. Prefer self-documenting names; encode why in a test.
 5. **One MCP profile per session** - prefer skill frontmatter `mcp:` ids; more tools cost tokens ([mcps/README.md](./mcps/README.md)).
 
 ## Load on demand
@@ -28,15 +28,15 @@ Do not commit or push unless the user explicitly asks.
 | Product bet / PRD / flags | [agent-prd](./skills/agent-prd/SKILL.md) + [SOPs/hypothesis-driven-development.md](./SOPs/hypothesis-driven-development.md) |
 | EDD (prompts, MCP tools, routing; **alpha**) | [docs/edd.md](./docs/edd.md) + [SOPs/eval-driven-development.md](./SOPs/eval-driven-development.md) |
 | Model class / host slug | [SOPs/model-routing.md](./SOPs/model-routing.md) (`models/catalog.yaml` + `models/hosts/`) |
-| Subagent vs skill | [docs/subagents.md](./docs/subagents.md) (`wk agents status`, [SOPs/subagent-launch.md](./SOPs/subagent-launch.md)) |
+| Subagent vs skill | [docs/subagents.md](./docs/subagents.md) (`wk agents status`) |
 | SOP / handover search | **kit-knowledge** MCP (`search_kit`, `get_sop`, `get_handover`) |
 | Kit ontology | `ontology/schema.yaml` only (index derived at use time; authoring: `ontology/README.md`) |
 | Cross-session facts | **memory** MCP (glossary/SLO/prefs; never secrets) |
 | Vendor/framework API docs | **context7** MCP |
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`) |
-| PostHog product analytics | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog --install`) |
-| Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (intake, hygiene, work picker; `wk loops`); PostHog bets [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
+| PostHog / agent tokens | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog`); tokens/cost: [coding-agent-observability](./SOPs/coding-agent-observability.md) (`wk mcp signoz`) |
+| Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (`wk loops`); PostHog [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
 | Crime-scene report | [complexity-hotspots](./SOPs/complexity-hotspots.md) §8 (arch-drift → gate → stories) |
 
 ## Phase → skill
@@ -57,7 +57,7 @@ Do not commit or push unless the user explicitly asks.
 | Prune / perf / debug / telemetry | [agent-prune](./skills/agent-prune/SKILL.md), [agent-perf-opt](./skills/agent-perf-opt/SKILL.md), [agent-debug](./skills/agent-debug/SKILL.md), [agent-telemetry](./skills/agent-telemetry/SKILL.md), [agent-cloudflare-ops](./skills/agent-cloudflare-ops/SKILL.md), [agent-posthog](./skills/agent-posthog/SKILL.md) |
 | Pre-commit | [agent-pre-commit](./skills/agent-pre-commit/SKILL.md) |
 
-Handovers: `~/.agents/handover/<project>/` ([templates/handover.md](./templates/handover.md)). Run pre-commit before marking a phase **COMPLETE** when hooks exist.
+Handovers: `~/.agents/handover/<project>/` ([templates/handover.md](./templates/handover.md)). Run pre-commit before **COMPLETE** when hooks exist.
 
 Public site: [waykit.dev](https://waykit.dev) (Astro in `web/`, Markdown in `docs/`; DNS in [edge-dns](https://github.com/mzworthington/edge-dns)).
 
