@@ -72,7 +72,7 @@ describe('scriptedDriver quality-loops', () => {
   it('opens coding-agent-observability for Claude Code OTLP, not PostHog', async () => {
     assert.equal(
       await getSopName(
-        'Point Claude Code and Copilot OTLP at SigNoz and query token cost. Do not use PostHog.'
+        'Point Claude Code and Copilot OTLP at local SigNoz and query token cost. Do not use PostHog.'
       ),
       'coding-agent-observability'
     );

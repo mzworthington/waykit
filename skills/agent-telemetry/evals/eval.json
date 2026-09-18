@@ -29,10 +29,10 @@
     },
     {
       "id": "EVAL-TEL-COLOCATED-002",
-      "name": "Coding-agent tokens and cost go to SigNoz",
-      "description": "Ensures coding-agent token, cost, and gen_ai traces use coding-agent-observability and wk mcp signoz, not PostHog or a new specialist.",
+      "name": "Coding-agent tokens and cost go to self-hosted SigNoz",
+      "description": "Ensures coding-agent token, cost, and gen_ai traces use coding-agent-observability and community SigNoz docker, not PostHog or a new specialist.",
       "target_skill": "agent-telemetry",
-      "prompt": "I want observability on my coding agents for token usage, cost, and traces in SigNoz.",
+      "prompt": "I want observability on my coding agents for token usage, cost, and traces in self-hosted SigNoz.",
       "context": {
         "active_phase": "telemetry"
       },
@@ -43,6 +43,7 @@
         ],
         "required_patterns": [
           "coding-agent-observability",
+          "foundryctl",
           "wk mcp signoz",
           "wk eval"
         ],

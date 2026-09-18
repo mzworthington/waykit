@@ -6,6 +6,10 @@
 
 - *(mcp)* Add opt-in SigNoz profile for agent tokens (MZW-122) (#102)
 
+### 🧰 Maintenance & Dependencies
+
+- Keep community SigNoz Docker as the local OTLP viewer; restore the opt-in SigNoz MCP profile (`wk mcp signoz`) and `github:SigNoz/signoz-mcp-server` pin (no kit `agent-signoz` skill)
+
 ## 2026-09-17
 
 ### 🐛 Bug Fixes

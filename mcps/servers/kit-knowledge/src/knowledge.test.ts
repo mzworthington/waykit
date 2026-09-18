@@ -113,12 +113,14 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /BLOCKED/);
   });
 
-  it("returns coding-agent-observability with the SigNoz split and no new skill", () => {
+  it("returns coding-agent-observability with community SigNoz docker and no new skill", () => {
     const sop = getSop(kitRoot, "coding-agent-observability");
     assert.ok(sop);
     assert.equal(sop!.id, "coding-agent-observability");
+    assert.match(sop!.body, /foundryctl/);
+    assert.match(sop!.body, /localhost:8080/);
+    assert.doesNotMatch(sop!.body, /github:mashiro\/otelop/);
     assert.match(sop!.body, /wk mcp signoz/);
-    assert.match(sop!.body, /mise install/);
     assert.match(sop!.body, /github:SigNoz\/signoz-mcp-server/);
     assert.match(sop!.body, /Do not add an `agent-signoz` skill/i);
     assert.match(sop!.body, /Do not add OpenObserve/i);
@@ -126,8 +128,6 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /claude_code\.token\.usage/);
     assert.match(sop!.body, /claude_code\.cost\.usage/);
     assert.match(sop!.body, /gen_ai/);
-    assert.match(sop!.body, /wk mcp default/);
-    assert.match(sop!.body, /BLOCKED/);
     assert.ok(!sop!.body.includes("…truncated"), "coding-agent-observability must fit getSop without truncation");
   });
 

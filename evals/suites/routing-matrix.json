@@ -1121,9 +1121,9 @@
     {
       "id": "EVAL-ROUTE-055",
       "name": "Route coding-agent token cost to telemetry not PostHog",
-      "description": "Verifies coding-agent token, cost, and OTel traces in SigNoz route to agent-telemetry and coding-agent-observability, not PostHog or a new specialist.",
+      "description": "Verifies coding-agent token, cost, and OTel traces in self-hosted SigNoz route to agent-telemetry and coding-agent-observability, not PostHog or a new specialist.",
       "target_skill": "agent-telemetry",
-      "prompt": "I want observability on my coding agents for token usage, cost, and traces in SigNoz.",
+      "prompt": "I want observability on my coding agents for token usage, cost, and traces in self-hosted SigNoz.",
       "assertions": {
         "required_triggers": [
           "opentelemetry",
@@ -1132,6 +1132,7 @@
         "required_patterns": [
           "agent-telemetry",
           "coding-agent-observability",
+          "foundryctl",
           "wk mcp signoz"
         ],
         "forbidden_patterns": [

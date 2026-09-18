@@ -48,7 +48,7 @@ wk agents install
 
 OAuth popups differ (Cursor vs Claude vs VS Code). Stdio servers that need env vars still need those vars in the process that launches the host.
 
-Coding-agent **token / cost / trace** export is host OTLP into SigNoz, not an extra MCP on `default`. Claude Code and Copilot have native exporters; Cursor Enterprise is metrics/logs only (hooks for traces). Procedure: [coding-agent-observability](/SOPs/coding-agent-observability). Profile: `wk mcp signoz --install`.
+Coding-agent **token / cost / trace** export is host OTLP into community SigNoz Docker, not an extra MCP on `default`. Claude Code and Copilot have native exporters; Cursor Enterprise is metrics/logs only (hooks for traces). Procedure: [coding-agent-observability](/SOPs/coding-agent-observability). Profile: `wk mcp signoz --install`.
 
 ## Cloud Agent and Automations
 

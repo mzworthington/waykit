@@ -370,6 +370,7 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
     }
     if (
       prompt.includes('signoz') ||
+      prompt.includes('otelop') ||
       prompt.includes('coding-agent observability') ||
       prompt.includes('coding-agent token') ||
       prompt.includes('coding agent token') ||

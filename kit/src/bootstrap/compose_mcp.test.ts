@@ -223,10 +223,11 @@ describe('composeMCP', () => {
     assert.equal(body.mcpServers.posthog, undefined);
   });
 
-  it('pins signoz-mcp-server in kit mise.toml', () => {
+  it('pins signoz-mcp-server in kit mise.toml and does not pin otelop', () => {
     const body = fs.readFileSync(path.join(kitRoot, 'mise.toml'), 'utf8');
     assert.match(body, /github:SigNoz\/signoz-mcp-server/);
     assert.match(body, /0\.14\.0/);
+    assert.doesNotMatch(body, /otelop/);
     assert.match(body, /mise install/);
   });
 
