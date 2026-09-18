@@ -9,8 +9,14 @@
   "requiredEnv": ["SIGNOZ_URL", "SIGNOZ_API_KEY"],
   "mcp": {
     "signoz": {
-      "command": "signoz-mcp-server",
-      "args": [],
+      "command": "mise",
+      "args": [
+        "exec",
+        "--cd",
+        "${userHome}/.agents",
+        "--",
+        "signoz-mcp-server"
+      ],
       "env": {
         "SIGNOZ_URL": "${env:SIGNOZ_URL}",
         "SIGNOZ_API_KEY": "${env:SIGNOZ_API_KEY}"

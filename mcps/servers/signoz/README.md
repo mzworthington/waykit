@@ -2,7 +2,7 @@
 
 Official SigNoz MCP for querying metrics, logs, traces, and alerts. Use it after hosts export coding-agent **token usage, cost, and `gen_ai.*` traces** over OTLP.
 
-Compose default is the **stdio** binary (`signoz-mcp-server` on `PATH`). `SIGNOZ_URL` may be a SigNoz Cloud instance (`https://your-instance.signoz.cloud`) or a self-hosted base URL.
+Compose default is `mise exec --cd ~/.agents -- signoz-mcp-server`. Pin: `github:SigNoz/signoz-mcp-server` in kit `mise.toml`. `SIGNOZ_URL` may be a SigNoz Cloud instance (`https://your-instance.signoz.cloud`) or a self-hosted base URL.
 
 ## Auth
 
@@ -11,9 +11,13 @@ Compose default is the **stdio** binary (`signoz-mcp-server` on `PATH`). `SIGNOZ
 | `SIGNOZ_URL` | SigNoz UI / API base (Cloud or self-host). No trailing slash. |
 | `SIGNOZ_API_KEY` | Settings → API Keys (Admin). Never commit. |
 
-Install the binary from [GitHub releases](https://github.com/SigNoz/signoz-mcp-server/releases) (`signoz-mcp-server_<os>_<arch>.tar.gz`) and put `signoz-mcp-server` on `PATH`. `go install github.com/SigNoz/signoz-mcp-server/cmd/server@latest` builds a `server` binary — rename it to `signoz-mcp-server` if you use that path.
+Install from the kit pin (do not curl a release tarball by hand):
 
-The host that launches Cursor / Claude / Copilot must see both env vars. Compose does not interpolate them.
+```bash
+mise install                  # or: mise run install-tools
+```
+
+`mise use github:SigNoz/signoz-mcp-server@0.14.0` only when bumping the pin. The host that launches Cursor / Claude / Copilot must see `mise` and both env vars. Compose does not interpolate them.
 
 ## Cloud hosted MCP (no binary)
 
