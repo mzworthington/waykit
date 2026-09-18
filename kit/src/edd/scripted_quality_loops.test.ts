@@ -60,6 +60,24 @@ describe('scriptedDriver quality-loops', () => {
     );
   });
 
+  it('opens coding-agent-observability for a SigNoz token-cost prompt', async () => {
+    assert.equal(
+      await getSopName(
+        'Open the kit SOP for coding-agent token usage, cost, and traces in SigNoz.'
+      ),
+      'coding-agent-observability'
+    );
+  });
+
+  it('opens coding-agent-observability for Claude Code OTLP, not PostHog', async () => {
+    assert.equal(
+      await getSopName(
+        'Point Claude Code and Copilot OTLP at SigNoz and query token cost. Do not use PostHog.'
+      ),
+      'coding-agent-observability'
+    );
+  });
+
   it('opens sonarqube-findings for a Sonar ticket-file prompt', async () => {
     const response = await scriptedDriver({
       model: 'scripted',
@@ -111,4 +129,3 @@ describe('scriptedDriver quality-loops', () => {
     );
   });
 });
-
