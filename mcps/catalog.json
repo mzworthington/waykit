@@ -1,5 +1,5 @@
 {
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Registry of MCP servers managed by the agent lifecycle kit.",
   "servers": [
     {
@@ -177,7 +177,7 @@
       "name": "Figma",
       "summary": "Figma design context via Framelink stdio MCP (personal access token).",
       "transport": "stdio",
-      "phases": ["impl", "spec", "xfn"],
+      "phases": ["impl", "tdd", "xfn"],
       "triggers": ["Figma", "design file", "frame", "UI mock"],
       "requiredEnv": ["FIGMA_API_KEY"],
       "enabledByDefault": false
@@ -270,6 +270,16 @@
       "phases": ["audit", "security", "impl"],
       "triggers": ["SonarQube", "SonarCloud", "quality gate", "Sonar issues", "security hotspot"],
       "requiredEnv": ["SONARQUBE_TOKEN", "SONARQUBE_ORG"],
+      "enabledByDefault": false
+    },
+    {
+      "id": "signoz",
+      "name": "SigNoz",
+      "summary": "Official SigNoz MCP for coding-agent tokens, cost, traces, logs, and alerts (stdio binary; Cloud instance URL or self-host).",
+      "transport": "stdio",
+      "phases": ["telemetry", "debug"],
+      "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces"],
+      "requiredEnv": ["SIGNOZ_URL", "SIGNOZ_API_KEY"],
       "enabledByDefault": false
     }
   ]
