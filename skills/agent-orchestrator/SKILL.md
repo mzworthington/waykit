@@ -81,6 +81,7 @@ Read [references/scope-gate.md](./references/scope-gate.md) before routing. Keep
 | Bug / failed job / live symptom | `agent-debug` (not grill → spec) |
 | PostHog → Linear ([product-signal-intake](../../SOPs/product-signal-intake.md)) | Session A `agent-posthog`, Session B `agent-user-stories` / `agent-prd`. Do not invent a product-insights skill. |
 | SonarQube issues ([sonarqube-findings](../../SOPs/sonarqube-findings.md)) | `wk mcp sonar`, triage, skip Actions SHA pins (`@vN`). Scout file after restore `wk mcp default`: Bug / Security / Improvement, no PR. Do not invent an `agent-sonarqube` skill. |
+| Coding-agent tokens / cost / traces ([coding-agent-observability](../../SOPs/coding-agent-observability.md)) | `wk mcp signoz`, OTLP from Claude Code / Copilot / Cursor hooks. `wk eval` for right results. PostHog stays product. Do not invent an `agent-signoz` skill. |
 | CI / telemetry → Linear ([quality-loops](../../SOPs/quality-loops.md)) | File typed tickets (scout: one source, no PR), hygiene, then work picker. `wk loops status` / `wk loops setup --write`. Read [lists/work-picker-allowlist.yaml](../../lists/work-picker-allowlist.yaml). `agent-debug` for Bug. A Lighthouse drop vs last main files **Performance**; no ticket to chase 100; comment instead of cloning. Play: `agent-perf-opt`. A RUM / beacon break files a **Bug** on the owning repo (hostnames only). Dependabot / CodeQL stay on vendor PRs. Draft PR only. No new specialist. Cloud dashboard catalog missing → **BLOCKED**. |
 | New feature / new bounded context | Full lifecycle: `agent-spec` → `agent-tdd` (gear 1+2) → `agent-xfn`. `agent-adapter` only if gear 2 is too large. "Continue until complete" still means the TDD micro-loop. |
 
@@ -95,5 +96,6 @@ Read [references/scope-gate.md](./references/scope-gate.md) before routing. Keep
 | [SOPs/behavior-catalog-and-xfn.md](../../SOPs/behavior-catalog-and-xfn.md) | Catalog impact / XFN matrix on any non-trivial route |
 | [SOPs/product-signal-intake.md](../../SOPs/product-signal-intake.md) | PostHog findings → backlog |
 | [SOPs/sonarqube-findings.md](../../SOPs/sonarqube-findings.md) | SonarQube issues / hotspots |
+| [SOPs/coding-agent-observability.md](../../SOPs/coding-agent-observability.md) | Coding-agent tokens / cost / OTel traces |
 | [SOPs/quality-loops.md](../../SOPs/quality-loops.md) | CI / RUM / Lighthouse / scout → Linear → draft PR |
 | [SOPs/eval-driven-development.md](../../SOPs/eval-driven-development.md) | Prompt, MCP tool, or routing change |
