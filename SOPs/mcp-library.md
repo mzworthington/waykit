@@ -99,7 +99,7 @@ wk mcp default
 # Global Cursor config (backup written if file exists)
 wk mcp default --install
 
-# Auto extras (Notion OAuth, Slack env tokens; Linear is already on default)
+# Collab extras (Notion OAuth, Slack env tokens; Linear is already on default)
 wk mcp collab --install
 
 # Ops / incident (Sentry OAuth + Slack)

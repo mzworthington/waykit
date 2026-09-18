@@ -49,6 +49,7 @@ wk mcp cloudflare-ops --install
 wk mcp warp --install
 wk mcp posthog --install
 wk mcp sonar --install
+wk mcp signoz --install
 ```
 
 Match the profile to the skill’s `mcp:` frontmatter. Do not merge collab + devtools + ops into one global `mcp.json`. Catalog: [mcps/README.md](../mcps/README.md). Procedure: [SOPs/mcp-library.md](../SOPs/mcp-library.md).
@@ -116,7 +117,7 @@ Every **report** command starts with `ok`, `warn`, or `fail` in a fixed column (
 | `wk agents install` | Copy stubs into `~/.cursor/agents` and `~/.claude/agents` (user scope) |
 | `wk agents status` | Launch vs skills-only (`WK_SUBAGENTS`) and the expand-kill indicator |
 | `wk agents launch-prompt` | Parent Task prompt for one allowlisted specialist |
-| `wk ontology generate` | Write gitignored index for kit-knowledge and the map |
+| `wk ontology generate` | Write gitignored index for kit-knowledge and the public map |
 | `wk mcp <profile>` | One MCP profile into Cursor, Claude, Copilot, and Antigravity |
 | `wk audit` | Skills and scripts supply-chain scan |
 | `wk eval ci` | Routing accuracy gate (EDD) |
