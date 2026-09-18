@@ -49,7 +49,7 @@ After green **Verify** on `main`, the **Promote** job:
    - `docs` / `chore` / `ci` / `test` alone do **not** cut a release
 2. **Publish** - creates a GitHub Release with **version-scoped** notes (`bin/release.sh publish`): commits since the previous tag only, headed `## vX.Y.Z` (never `[unreleased]`)
 3. **Sync notes** - `bin/release.sh sync-notes` rewrites every existing `vX.Y.Z` GitHub Release body from `previous-tag..this-tag` (idempotent repair)
-4. **Changelog** - regenerates date-grouped `CHANGELOG.md` via `pnpm changelog` (`bin/changelog-render.mjs`) and commits `chore(changelog): …` when needed. CHANGELOG stays date-grouped; GitHub Release notes stay version-scoped.
+4. **Changelog** - `bin/release.sh commit-changelog` regenerates date-grouped `CHANGELOG.md` (`pnpm changelog` / `bin/changelog-render.mjs`) on the latest branch tip and commits `chore(changelog): …` when needed. Retries the push once if `main` advanced; never `--force`. CHANGELOG stays date-grouped; GitHub Release notes stay version-scoped.
 
 Local:
 

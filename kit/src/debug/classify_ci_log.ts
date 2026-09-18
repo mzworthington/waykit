@@ -41,6 +41,15 @@ const PATTERNS: Array<{
     next: 'Retry the pnpm binary download once. Do not retry unrelated install/cwd errors as if they were 504s.'
   },
   {
+    class: 'config-drift',
+    test: (log) =>
+      /non-fast-forward/.test(log) &&
+      /chore\(changelog\)|CHANGELOG\.md/.test(log),
+    reason:
+      'Promote committed CHANGELOG.md on a stale main tip; a sibling run or re-run already advanced the branch.',
+    next: 'Retry the push once after fetching latest main. Do not --force. Use bin/release.sh commit-changelog.'
+  },
+  {
     class: 'auth',
     test: (log) =>
       /Resource not accessible|403 Forbidden|permission denied|secrets? (is|are) not available/i.test(
