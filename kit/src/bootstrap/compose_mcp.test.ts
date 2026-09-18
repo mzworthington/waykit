@@ -41,7 +41,7 @@ describe('composeMCP', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-'));
     writeProfile(root, 'demo', ['alpha', 'beta']);
     writeServer(root, 'alpha', { alpha: { command: 'npx', args: ['alpha'] } });
-    writeServer(root, 'beta', { beta: { command: 'node', args: ['beta.js'] } });
+    writeServer(root, 'beta', { command: 'node', args: ['beta.js'] } });
     const out = path.join(root, 'out', 'mcp.json');
     composeMCP('demo', out, false, { repoDir: root, env: {} });
     const body = JSON.parse(fs.readFileSync(out, 'utf8')) as { mcpServers: Record<string, unknown> };
@@ -202,10 +202,17 @@ describe('composeMCP', () => {
     const body = JSON.parse(fs.readFileSync(out, 'utf8')) as {
       mcpServers: Record<
         string,
-        { command?: string; env?: Record<string, string>; url?: string }
+        { command?: string; args?: string[]; env?: Record<string, string>; url?: string }
       >;
     };
-    assert.equal(body.mcpServers.signoz?.command, 'signoz-mcp-server');
+    assert.equal(body.mcpServers.signoz?.command, 'mise');
+    assert.deepEqual(body.mcpServers.signoz?.args, [
+      'exec',
+      '--cd',
+      '${userHome}/.agents',
+      '--',
+      'signoz-mcp-server'
+    ]);
     assert.equal(body.mcpServers.signoz?.env?.SIGNOZ_URL, '${env:SIGNOZ_URL}');
     assert.equal(body.mcpServers.signoz?.env?.SIGNOZ_API_KEY, '${env:SIGNOZ_API_KEY}');
     assert.ok(body.mcpServers['kit-knowledge']);
@@ -214,6 +221,13 @@ describe('composeMCP', () => {
     assert.equal(body.mcpServers.linear, undefined);
     assert.equal(body.mcpServers.context7, undefined);
     assert.equal(body.mcpServers.posthog, undefined);
+  });
+
+  it('pins signoz-mcp-server in kit mise.toml', () => {
+    const body = fs.readFileSync(path.join(kitRoot, 'mise.toml'), 'utf8');
+    assert.match(body, /github:SigNoz\/signoz-mcp-server/);
+    assert.match(body, /0\.14\.0/);
+    assert.match(body, /mise install/);
   });
 
   it('keeps signoz off the default profile', () => {
