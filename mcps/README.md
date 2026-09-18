@@ -80,7 +80,7 @@ wk mcp signoz --install            # Coding-agent tokens / cost / traces
 wk mcp project-example --project
 ```
 
-Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/Cloudflare/Sentry/Stripe/Vercel/Warp Factory/PostHog use host OAuth on first tool use. SonarQube Cloud uses `SONARQUBE_TOKEN` + `SONARQUBE_ORG` in headers. SigNoz stdio uses `SIGNOZ_URL` + `SIGNOZ_API_KEY`.
+Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/Cloudflare/Sentry/Stripe/Vercel/Warp Factory/PostHog use host OAuth on first tool use. SonarQube Cloud uses `SONARQUBE_TOKEN` + `SONARQUBE_ORG` in headers. SigNoz stdio uses `SIGNOZ_URL` + `SIGNOZ_API_KEY` and a mise-pinned `signoz-mcp-server`.
 
 ## Catalog
 
@@ -113,7 +113,7 @@ Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/C
 | warp-factory | http | OAuth (optional agent API key only for headless; never in repo) |
 | posthog | http | OAuth (optional personal API key only for headless; never in repo) |
 | sonarqube | http | `SONARQUBE_TOKEN`, `SONARQUBE_ORG` (Cloud user token; never in repo) |
-| signoz | stdio | `SIGNOZ_URL`, `SIGNOZ_API_KEY` (Cloud instance or self-host; never in repo) |
+| signoz | stdio | `SIGNOZ_URL`, `SIGNOZ_API_KEY`; binary via `mise install` (`github:SigNoz/signoz-mcp-server`) |
 
 ## Adding a server
 

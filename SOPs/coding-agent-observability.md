@@ -43,7 +43,7 @@ Langfuse-style judges are optional later. Do not add them to the catalog here.
 
 One MCP profile: `wk mcp signoz --install` (or `--project`). Do not stack onto `default`. Restore `wk mcp default --install` (or `--project`) when the session ends.
 
-Compose default is stdio `signoz-mcp-server` with `SIGNOZ_URL` + `SIGNOZ_API_KEY` (Cloud instance URL or self-host). Put the binary on `PATH` from [releases](https://github.com/SigNoz/signoz-mcp-server/releases). Never commit keys.
+Compose default is `mise exec --cd ~/.agents -- signoz-mcp-server` with `SIGNOZ_URL` + `SIGNOZ_API_KEY` (Cloud instance URL or self-host). Install the pin with `mise install` in the kit (`github:SigNoz/signoz-mcp-server` in `mise.toml`). Never commit keys.
 
 SigNoz Cloud hosted MCP (no binary): `https://mcp.<region>.signoz.cloud/mcp` plus `SIGNOZ-API-KEY` and `X-SigNoz-URL` when OAuth is unavailable. Connect that URL on the **Cursor dashboard** for Cloud Agents. `wk mcp --install` does not wake hosted sessions. Missing tools: **BLOCKED** — do not invent dashboard counts.
 
