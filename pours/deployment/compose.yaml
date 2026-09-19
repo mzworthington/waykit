@@ -32,7 +32,7 @@ services:
     container_name: signoz-metastore-postgres-0
     environment:
     - POSTGRES_DB=signoz
-    - POSTGRES_PASSWORD=signoz
+    - POSTGRES_PASSWORD=${SIGNOZ_POSTGRES_PASSWORD:?set SIGNOZ_POSTGRES_PASSWORD}
     - POSTGRES_USER=signoz
     healthcheck:
       interval: 30s
@@ -51,7 +51,7 @@ services:
   signoz-signoz-0:
     container_name: signoz-signoz-0
     environment:
-    - SIGNOZ_SQLSTORE_POSTGRES_DSN=postgres://signoz:signoz@signoz-metastore-postgres-0:5432/signoz?sslmode=disable
+    - SIGNOZ_SQLSTORE_POSTGRES_DSN=postgres://signoz:${SIGNOZ_POSTGRES_PASSWORD}@signoz-metastore-postgres-0:5432/signoz?sslmode=disable
     - SIGNOZ_SQLSTORE_PROVIDER=postgres
     - SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN=tcp://signoz-telemetrystore-clickhouse-0-0:9000
     - SIGNOZ_TELEMETRYSTORE_PROVIDER=clickhouse
