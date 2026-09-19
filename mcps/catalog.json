@@ -278,7 +278,7 @@
       "summary": "Official SigNoz MCP for coding-agent tokens, cost, traces, logs, and alerts (stdio binary; Cloud instance URL or self-host).",
       "transport": "stdio",
       "phases": ["telemetry", "debug"],
-      "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces"],
+      "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces", "cloud agent traces"],
       "requiredEnv": ["SIGNOZ_URL", "SIGNOZ_API_KEY"],
       "enabledByDefault": false
     }

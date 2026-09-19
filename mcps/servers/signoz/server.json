@@ -5,7 +5,7 @@
   "homepage": "https://signoz.io/docs/ai/signoz-mcp-server/",
   "transport": "stdio",
   "phases": ["telemetry", "debug"],
-  "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces"],
+  "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces", "cloud agent traces"],
   "requiredEnv": ["SIGNOZ_URL", "SIGNOZ_API_KEY"],
   "mcp": {
     "signoz": {

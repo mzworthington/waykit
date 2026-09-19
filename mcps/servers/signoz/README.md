@@ -29,12 +29,15 @@ https://mcp.<region>.signoz.cloud/mcp
 
 Headers when the host cannot complete OAuth: `SIGNOZ-API-KEY` and `X-SigNoz-URL`. Use this URL on the **Cursor dashboard** for Cloud Agent sessions. `wk mcp --install` is local only.
 
+Cloud Agent **ingest** is a different URL: `https://ingest.<region>.signoz.cloud:443` with header `signoz-ingestion-key` (dashboard secret / env). Never commit the key. Correlate turns with `cursor.conversation.id` (`bc-...`). Do not point Cloud Agents at localhost.
+
 Do not put the hosted URL in the kit compose default — stdio + env works for Cloud **or** self-host.
 
 ## When to use
 
 - Token / USD / `gen_ai.*` dashboards after a host OTLP export
 - Trace waterfalls for a Claude Code, Copilot, or Cursor-hook session
+- Cursor Cloud Agent traces on SigNoz Cloud (hosted MCP + Cloud ingest)
 
 Procedure: [coding-agent-observability](../../../SOPs/coding-agent-observability.md). Install the `signoz` profile (`wk mcp signoz --install` or `wk mcp signoz --project`). Do not stack it onto `default`. Restore `wk mcp default --install` (or `--project`) when the session ends. Do not add an `agent-signoz` skill. Product analytics stay on the `posthog` profile. `wk eval` stays the quality gate for routing.
 
