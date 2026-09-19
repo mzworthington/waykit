@@ -152,7 +152,7 @@ Full metric table and harness layout: [evals/edd/README.md](../evals/edd/README.
 | Weekly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `CURSOR_API_KEY` | repo variable `KIT_EVAL_MODEL` (default `cursor-grok-4.6-medium`) | `cursor-agent` paraphrases, prompt-injection, multi-tool, safety |
 | `pnpm check` / `wk check` | unused | `--style local` | Same as Verify, locally |
 
-Weekly **skips the whole job** if `CURSOR_API_KEY` is empty. Set it with `gh secret set CURSOR_API_KEY --body "$CURSOR_API_KEY"`. Optional `KIT_EVAL_MODEL` overrides the default Cursor model id.
+The scheduled job **fails** if `CURSOR_API_KEY` is empty so a missing secret cannot look green. `workflow_dispatch` may skip with `allow_unkeyed_skip`; the summary then says so. Set the secret with `gh secret set CURSOR_API_KEY --body "$CURSOR_API_KEY"`. Optional `KIT_EVAL_MODEL` overrides the default Cursor model id. Scripted `wk check` in Verify stays the PR merge gate; live remains extra.
 
 Verify and the weekly live job (plus Pages deploy) publish a **job summary**: what the gate means, then an EDD overview table and collapsible full report via `wk eval report --github-summary`.
 

@@ -37,7 +37,7 @@ Rough inventory (as of this refresh): ~45 skills, SOPs, dual eval layers (`evals
 | Finding (Aug 30) | Status now |
 |------------------|------------|
 | Architecture invariants feel non-optional | **Improved:** applicability and opt-out + seed ADRs (#36) |
-| Closed-loop / live EDD aspirational | **Improved:** deeper EDD suites, shadow path, nightly `edd-live.yml` (still skips without `wk _EVAL_API_KEY`) |
+| Closed-loop / live EDD aspirational | **Improved:** deeper EDD suites, shadow path, nightly `edd-live.yml` (scheduled job fails without `CURSOR_API_KEY`; dispatch may skip) |
 | Default CI is scripted keyword driver | **Still true:** intentional merge gate; docs now say so clearly |
 | Skill-trigger evals are theater | **Still true:** `wk /src/edd/run_evals.ts` does not invoke a model or assert `required_patterns` / `required_output_sections` |
 | Multi-IDE peer-depth oversold | **Improved:** MCP/model/rules writers for Cursor, Claude, Copilot, Antigravity; Windsurf is rules-only forever |
