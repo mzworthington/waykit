@@ -10,7 +10,7 @@ No open P0 items. R1 (rename) and R2 (host writers, not Cursor-only copy) are in
 
 | ID | Finding | Proposed action | Status |
 |----|---------|-----------------|--------|
-| R3 | Merge gate is scripted-only; nightly live skips without `wk _EVAL_API_KEY` | Keep scripted as default; document required secrets for live; fail a scheduled job loudly when `CURSOR_API_KEY` is missing; `workflow_dispatch` may skip with `allow_unkeyed_skip` | **Done** (scheduled fail-closed; PR pending) |
+| R3 | Merge gate is scripted-only; nightly live skips without `wk _EVAL_API_KEY` | Keep scripted as default; document required secrets for live; fail a scheduled job loudly when `CURSOR_API_KEY` is missing; `workflow_dispatch` may skip with `allow_unkeyed_skip` | **Done (PR #107)** |
 | R4 | Live client is OpenAI-compatible only; `ANTHROPIC_API_KEY` as bearer is easy to misconfigure | Document gateways honestly; consider native Anthropic/Gemini adapters only if demand appears | **Open** |
 
 ## P2: maintainability / adoption
