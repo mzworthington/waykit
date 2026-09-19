@@ -27,15 +27,7 @@ function kitWithTemplates(): string {
   const templates = path.join(root, 'templates');
   fs.mkdirSync(templates);
   fs.writeFileSync(path.join(templates, 'project-AGENTS.md'), THIN_HANDSHAKE, 'utf8');
-  for (const name of [
-    'project-GEMINI.md',
-    'project-CLAUDE.md',
-    'project-windsurfrules',
-    'project-cursorrules',
-    'project-copilot-instructions.md'
-  ]) {
-    fs.writeFileSync(path.join(templates, name), `# ${name}\n`, 'utf8');
-  }
+  fs.writeFileSync(path.join(templates, 'host-pointer.md'), '# shared-host-pointer\n', 'utf8');
   return root;
 }
 
@@ -111,7 +103,8 @@ describe('alignProject', () => {
     assert.equal(result.ok, true);
     assert.ok(result.written.includes('CLAUDE.md'));
     assert.equal(fs.readFileSync(path.join(target, 'AGENTS.md'), 'utf8'), before);
-    assert.equal(fs.readFileSync(path.join(target, 'CLAUDE.md'), 'utf8'), '# project-CLAUDE.md\n');
+    assert.equal(fs.readFileSync(path.join(target, 'CLAUDE.md'), 'utf8'), '# shared-host-pointer\n');
+    assert.equal(fs.readFileSync(path.join(target, 'GEMINI.md'), 'utf8'), '# shared-host-pointer\n');
   });
 
   it('passes when only Copilot project MCP includes kit-knowledge', () => {

@@ -4,11 +4,7 @@ import { resolveRepoDir } from '../shared/paths.js';
 
 const defaultRepoDir: string = resolveRepoDir(import.meta.url);
 
-interface IDETarget {
-  filename: string;
-  templateName: string;
-  fallbackContent: string;
-}
+export const HOST_POINTER_TEMPLATE = 'host-pointer.md';
 
 export const IDE_RULE_REL_PATHS: readonly string[] = [
   'GEMINI.md',
@@ -18,33 +14,19 @@ export const IDE_RULE_REL_PATHS: readonly string[] = [
   path.join('.github', 'copilot-instructions.md')
 ];
 
-const IDE_TARGETS: IDETarget[] = [
-  {
-    filename: 'GEMINI.md',
-    templateName: 'project-GEMINI.md',
-    fallbackContent: `# Gemini CLI entry point\n\nThe canonical bootstrap lives in [AGENTS.md](./AGENTS.md).\n\nRead [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.\n`
-  },
-  {
-    filename: 'CLAUDE.md',
-    templateName: 'project-CLAUDE.md',
-    fallbackContent: `# Claude Code entry point\n\nThe canonical bootstrap lives in [AGENTS.md](./AGENTS.md).\n\nRead [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.\n`
-  },
-  {
-    filename: '.windsurfrules',
-    templateName: 'project-windsurfrules',
-    fallbackContent: `# Windsurf entry point\n\nThe canonical bootstrap lives in [AGENTS.md](./AGENTS.md).\n\nRead [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.\n`
-  },
-  {
-    filename: '.cursorrules',
-    templateName: 'project-cursorrules',
-    fallbackContent: `# Cursor entry point\n\nThe canonical bootstrap lives in [AGENTS.md](./AGENTS.md).\n\nRead [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.\n`
-  },
-  {
-    filename: path.join('.github', 'copilot-instructions.md'),
-    templateName: 'project-copilot-instructions.md',
-    fallbackContent: `# GitHub Copilot Workspace entry point\n\nThe canonical bootstrap lives in [AGENTS.md](./AGENTS.md).\n\nRead [AGENTS.md](./AGENTS.md) for context structure, lifecycle routing, and specialist activation.\n`
+export const HOST_POINTER_FALLBACK = `# Waykit host pointer
+
+Standards and lifecycle agents live in \`~/.agents\`.
+Read \`~/.agents/AGENTS.md\` (thin index) before starting work. Do not bulk-load philosophy or SOPs. Prefer kit-knowledge / memory MCP for chunks and durable facts. Use EDD for prompts, MCP tools, and agent routing (\`~/.agents/docs/edd.md\`). Align on hexagonal boundaries, TDD short-loop execution, and XFN quality requirements.
+`;
+
+export function hostPointerContent(kitRepoDir: string): string {
+  const templatePath = path.join(kitRepoDir, 'templates', HOST_POINTER_TEMPLATE);
+  if (fs.existsSync(templatePath)) {
+    return fs.readFileSync(templatePath, 'utf8');
   }
-];
+  return HOST_POINTER_FALLBACK;
+}
 
 export function exportIDERules(
   targetDir: string = defaultRepoDir,
@@ -52,22 +34,17 @@ export function exportIDERules(
   kitRepoDir: string = defaultRepoDir
 ): boolean {
   let allValid = true;
+  const contentToUse = hostPointerContent(kitRepoDir);
 
-  for (const target of IDE_TARGETS) {
-    const destPath = path.join(targetDir, target.filename);
-    const templatePath = path.join(kitRepoDir, 'templates', target.templateName);
-
-    let contentToUse = target.fallbackContent;
-    if (fs.existsSync(templatePath)) {
-      contentToUse = fs.readFileSync(templatePath, 'utf8');
-    }
+  for (const filename of IDE_RULE_REL_PATHS) {
+    const destPath = path.join(targetDir, filename);
 
     if (checkOnly) {
       if (!fs.existsSync(destPath)) {
-        console.error(`❌ [IDE Rule Sync] Missing entry point file: ${target.filename}`);
+        console.error(`❌ [IDE Rule Sync] Missing entry point file: ${filename}`);
         allValid = false;
       } else {
-        console.log(`✓ [IDE Rule Sync] Found ${target.filename}`);
+        console.log(`✓ [IDE Rule Sync] Found ${filename}`);
       }
     } else {
       const parentDir = path.dirname(destPath);
@@ -75,7 +52,7 @@ export function exportIDERules(
         fs.mkdirSync(parentDir, { recursive: true });
       }
       fs.writeFileSync(destPath, contentToUse, 'utf8');
-      console.log(`Exported ${target.filename}`);
+      console.log(`Exported ${filename}`);
     }
   }
 

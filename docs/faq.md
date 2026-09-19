@@ -47,7 +47,7 @@ wk align . --write --mcp
 
 ## Why not dump everything into AGENTS.md?
 
-Agents pay for every byte in the bootstrap. Always-on files (`AGENTS.md` and the project handshake) stay under about 8KB, roughly 2k tokens. Host pointers (`.cursorrules`, `CLAUDE.md`, Copilot instructions, `GEMINI.md`) are copies of the same thin file; a session loads one of them, so `wk measure-context` does not sum every host. Philosophy and SOPs load on demand via kit-knowledge. Compose **one MCP profile** per session (`wk mcp default --install`, or `--host claude` / `copilot` / `antigravity`) so unused tool schemas stay out of the prompt. `wk measure-context` prints the breakdown; `wk check` fails if the budget is exceeded. Operator write-up: [What Waykit gives you](/docs/kit). Host paths: [hosts](/docs/hosts).
+Agents pay for every byte in the bootstrap. Always-on files (`AGENTS.md` and the project handshake) stay under about 8KB, roughly 2k tokens. Host pointers (`.cursorrules`, `CLAUDE.md`, Copilot instructions, `GEMINI.md`) are copies of `templates/host-pointer.md`; a session should load one of them, so `wk measure-context` does not sum every host. Do not symlink those files to `AGENTS.md` — Cursor injects the handshake and every host filename it finds. Philosophy and SOPs load on demand via kit-knowledge. Compose **one MCP profile** per session (`wk mcp default --install`, or `--host claude` / `copilot` / `antigravity`) so unused tool schemas stay out of the prompt. `wk measure-context` prints the breakdown; `wk check` fails if the budget is exceeded. Operator write-up: [What Waykit gives you](/docs/kit). Host paths: [hosts](/docs/hosts).
 
 ## How does host subagent launch work?
 

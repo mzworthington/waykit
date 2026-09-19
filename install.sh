@@ -253,7 +253,7 @@ export_ide_rules() {
   _kit="${_repo_dir}/bin/kit"
   if [ -x "${_kit}" ]; then
     echo ""
-    echo "Exporting Multi-IDE rules (CLAUDE.md, .windsurfrules, Copilot)..."
+    echo "Exporting Multi-IDE host pointers from templates/host-pointer.md..."
     "${_kit}" export-rules || true
   fi
 }

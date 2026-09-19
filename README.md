@@ -78,7 +78,7 @@ Teaching suite: [evals/edd/demo.yaml](./evals/edd/demo.yaml) ([before-after writ
 | **Lifecycle skills** | Grill → spec → TDD short loop → XFN → security → release via `agent-*` roles |
 | **Architecture** | Hexagonal + DDD + vertical slices + clean code ([CODING_PHILOSOPHY.md](./CODING_PHILOSOPHY.md); applicability/opt-out included) |
 | **Learning loops** | Behavior catalog, XFN gates, evals for tool calls, prod misses back into the suite |
-| **One rules file** | `AGENTS.md` syncs to IDE entry points (`wk export-rules`) |
+| **One rules file** | `AGENTS.md` is the handshake; `wk export-rules` copies one host-pointer stub to each IDE entry point |
 | **MCP catalog** | One profile composed into Cursor, Claude, Copilot and Antigravity config files ([mcps/](./mcps/), [docs/hosts.md](./docs/hosts.md)) |
 | **Context budget** | Always-on bootstrap under ~8KB; `wk measure-context` / `wk check` ([docs/kit.md](./docs/kit.md)) |
 | **Security audit** | Prompt injection, secrets, entropy, unpinned skills (`wk audit`) |
@@ -152,7 +152,7 @@ wk eval ci --suite evals/edd/demo.yaml --threshold-routing 95 --out out/reports
 | `wk eval` | Skill-trigger harness (which specialist activates) |
 | `wk audit` | Security and supply-chain audit |
 | `wk validate` / `wk verify` | Eval schema + skills layout and role line budget |
-| `wk export-rules` | Sync `AGENTS.md` → IDE entry points |
+| `wk export-rules` | Copy `templates/host-pointer.md` → Cursor, Claude, Copilot, Gemini/Antigravity, and Windsurf filenames |
 | `wk sync` | Install upstream skills from the lockfile, then refresh user kit subagent stubs |
 | `wk measure-context` | Always-on context budget |
 | `wk model resolve` | Capability class + host slug (`models/catalog.yaml`) |
