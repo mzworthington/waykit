@@ -9,6 +9,14 @@ on:
   schedule:
     - cron: '0 3 * * 0'
   workflow_dispatch:
+    inputs:
+      allow_unkeyed_skip:
+        description: >-
+          Skip when CURSOR_API_KEY is missing (manual runs only). Scheduled
+          runs always fail without the secret so a green skip cannot hide a
+          missing key.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -23,17 +31,30 @@ jobs:
         env:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           KIT_EVAL_MODEL: ${{ vars.KIT_EVAL_MODEL }}
+          ALLOW_UNKEYED_SKIP: ${{ github.event_name == 'workflow_dispatch' && inputs.allow_unkeyed_skip || false }}
         run: |
           if [ -z "${CURSOR_API_KEY}" ]; then
-            echo "CURSOR_API_KEY is not set; skipping live-model EDD. Scripted CI remains the merge gate."
             echo "skip=true" >> "$GITHUB_OUTPUT"
+            if [ "${ALLOW_UNKEYED_SKIP}" = "true" ]; then
+              echo "CURSOR_API_KEY is not set; skipping live-model EDD because allow_unkeyed_skip was requested."
+              {
+                echo "## Weekly live-model EDD"
+                echo ""
+                echo "Skipped: \`CURSOR_API_KEY\` is not configured and \`allow_unkeyed_skip\` was set."
+                echo "Scripted PR CI (\`wk check\` in Verify) remains the merge gate."
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "CURSOR_API_KEY is not set; scheduled live EDD fails so a missing secret cannot look green."
             {
               echo "## Weekly live-model EDD"
               echo ""
-              echo "Skipped: \`CURSOR_API_KEY\` is not configured."
+              echo "Failed: \`CURSOR_API_KEY\` is not configured."
+              echo "The scheduled production job must not skip green without the secret."
+              echo "Use workflow_dispatch with \`allow_unkeyed_skip\` to skip intentionally."
               echo "Scripted PR CI (\`wk check\` in Verify) remains the merge gate."
             } >> "$GITHUB_STEP_SUMMARY"
-            exit 0
+            exit 1
           fi
           echo "skip=false" >> "$GITHUB_OUTPUT"
           echo "model=${KIT_EVAL_MODEL:-cursor-grok-4.6-medium}" >> "$GITHUB_OUTPUT"
