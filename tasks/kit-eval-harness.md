@@ -34,6 +34,7 @@ For each golden prompt: note expected route, actual route an agent took (or woul
 | 8 | “Web Analytics isn’t recording / RUM beacon 404” | `agent-cloudflare-ops` (`wk mcp cloudflare-ops --install`) | EVAL-ROUTE-025 |
 | 9 | “Add PostHog / cookieless events empty / do not run the wizard” | `agent-posthog` (`wk mcp posthog --install`) | EVAL-ROUTE-028 |
 | 11 | “Observe coding-agent tokens, cost, and traces” | `agent-telemetry` + [coding-agent-observability](../SOPs/coding-agent-observability.md) (community SigNoz Docker + `wk mcp signoz`); not PostHog; no `agent-signoz` | EVAL-ROUTE-055 |
+| 12 | “Distributed tracing for Cursor Cloud Agents in SigNoz Cloud” | Same route; Cloud ingest + hosted MCP, not localhost-only | EVAL-ROUTE-056 |
 | 10 | “Change MCP tool schema / system prompt for routing” | **EDD:** `wk eval run|ci` ([docs/edd.md](../docs/edd.md)); not vibes-only | `evals/edd/` |
 
 ### Pass criteria

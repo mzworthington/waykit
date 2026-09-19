@@ -52,6 +52,32 @@
           "OpenObserve"
         ]
       }
+    },
+    {
+      "id": "EVAL-TEL-COLOCATED-003",
+      "name": "Cloud Agent traces go to SigNoz Cloud",
+      "description": "Ensures Cursor Cloud Agent distributed traces use coding-agent-observability and SigNoz Cloud ingest, not localhost-only Docker, PostHog, or a new specialist.",
+      "target_skill": "agent-telemetry",
+      "prompt": "I want distributed tracing for Cursor Cloud Agents in SigNoz Cloud. Localhost SigNoz is unreachable from the VM.",
+      "context": {
+        "active_phase": "telemetry"
+      },
+      "assertions": {
+        "required_triggers": [
+          "opentelemetry",
+          "observability"
+        ],
+        "required_patterns": [
+          "coding-agent-observability",
+          "SigNoz Cloud",
+          "wk mcp signoz",
+          "wk eval"
+        ],
+        "forbidden_patterns": [
+          "agent-signoz",
+          "OpenObserve"
+        ]
+      }
     }
   ]
 }

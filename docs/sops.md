@@ -24,7 +24,7 @@ Agent-facing procedures. Do not duplicate them in `/docs`; link here when a guid
 | [PostHog product analytics](/SOPs/posthog-product-analytics) | Cookieless SDK, privacy notice, official MCP |
 | [Product signal intake](/SOPs/product-signal-intake) | Two-session PostHog findings → human gate → Linear |
 | [SonarQube findings](/SOPs/sonarqube-findings) | Triage Sonar issues; skip kit disagreements (Actions stay `@vN`); then fix or file one typed ticket |
-| [Coding-agent observability](/SOPs/coding-agent-observability) | Token usage, cost, and OTel traces in community SigNoz Docker; query via `wk mcp signoz`; `wk eval` stays the quality gate |
+| [Coding-agent observability](/SOPs/coding-agent-observability) | Token usage, cost, and OTel traces in community SigNoz Docker or SigNoz Cloud (Cloud Agents); query via `wk mcp signoz` or hosted MCP; `wk eval` stays the quality gate |
 | [Quality loops through Linear](/SOPs/quality-loops) | CI / RUM / scouts → typed tickets → hygiene → work picker draft PR; Dependabot / CodeQL stay on vendor PRs |
 
 Operator narrative: [What Waykit gives you](/docs/kit). Nested loops and outside sources: [Quality loops](/docs/loops).

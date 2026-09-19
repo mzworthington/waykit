@@ -78,6 +78,15 @@ describe('scriptedDriver quality-loops', () => {
     );
   });
 
+  it('opens coding-agent-observability for Cloud Agent SigNoz Cloud traces', async () => {
+    assert.equal(
+      await getSopName(
+        'Point Cursor Cloud Agents at SigNoz Cloud ingest and query traces. Do not use localhost or PostHog.'
+      ),
+      'coding-agent-observability'
+    );
+  });
+
   it('opens sonarqube-findings for a Sonar ticket-file prompt', async () => {
     const response = await scriptedDriver({
       model: 'scripted',

@@ -231,6 +231,16 @@ describe('composeMCP', () => {
     assert.match(body, /mise install/);
   });
 
+  it('documents the operator SigNoz Cloud instance without committing keys', () => {
+    const body = fs.readFileSync(path.join(kitRoot, 'mcps/servers/signoz/README.md'), 'utf8');
+    assert.match(body, /https:\/\/awake-redfish\.us2\.signoz\.cloud/);
+    assert.match(body, /https:\/\/ingest\.us2\.signoz\.cloud:443/);
+    assert.match(body, /https:\/\/mcp\.us2\.signoz\.cloud\/mcp/);
+    assert.match(body, /signoz-ingestion-key/);
+    assert.doesNotMatch(body, /signoz-ingestion-key=[A-Za-z0-9_-]{8,}/);
+    assert.doesNotMatch(body, /SIGNOZ_API_KEY=[A-Za-z0-9_-]{8,}/);
+  });
+
   it('keeps signoz off the default profile', () => {
     const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-default-signoz-')), 'mcp.json');
     composeMCP('default', out, false, { repoDir: kitRoot, env: {} });
