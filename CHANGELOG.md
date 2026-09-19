@@ -6,6 +6,10 @@
 
 - *(sops)* Source SigNoz compose password from env (#104)
 
+### ⚙️ Refactoring & Performance
+
+- *(kit)* Write one host-pointer stub to all IDE entry points (#106)
+
 ## 2026-09-18
 
 ### 🚀 Features
