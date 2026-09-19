@@ -119,6 +119,8 @@ describe("kit-knowledge", () => {
     assert.equal(sop!.id, "coding-agent-observability");
     assert.match(sop!.body, /foundryctl/);
     assert.match(sop!.body, /localhost:8080/);
+    assert.match(sop!.body, /SIGNOZ_POSTGRES_PASSWORD/);
+    assert.match(sop!.body, /pours\/deployment\/\.env\.example/);
     assert.doesNotMatch(sop!.body, /github:mashiro\/otelop/);
     assert.match(sop!.body, /wk mcp signoz/);
     assert.match(sop!.body, /github:SigNoz\/signoz-mcp-server/);

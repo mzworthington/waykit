@@ -38,8 +38,6 @@ flowchart LR
 | Did the agent pick the right tool? | `wk eval run\|ci` |
 | App SLOs in product code | [agent-telemetry](../skills/agent-telemetry/SKILL.md) |
 
-Langfuse-style judges are optional later. Do not add them to the catalog here.
-
 ## Viewer (machine, not kit)
 
 Needs Docker Engine 20.10+ and Compose v2 (Colima or Docker Desktop). Apple Container (`docker` aliased to `container`) is not this stack. Stop anything else bound to `:4317` / `:4318` first.
@@ -76,7 +74,7 @@ Cloud Agent sessions cannot see localhost SigNoz: **BLOCKED** — do not invent 
 
 One MCP profile: `wk mcp signoz --install` (or `--project`). Do not stack onto `default`. Restore `wk mcp default --install` (or `--project`) when the session ends.
 
-Compose default is `mise exec --cd ~/.agents -- signoz-mcp-server` with `SIGNOZ_URL` + `SIGNOZ_API_KEY`. Local Docker: `SIGNOZ_URL=http://localhost:8080`. Install the pin with `mise install` in the kit (`github:SigNoz/signoz-mcp-server` in `mise.toml`). Never commit keys.
+Compose default is `mise exec --cd ~/.agents -- signoz-mcp-server` with `SIGNOZ_URL` + `SIGNOZ_API_KEY`. Local Docker: `SIGNOZ_URL=http://localhost:8080`. Set `SIGNOZ_POSTGRES_PASSWORD` (`pours/deployment/.env.example`; `openssl rand -hex 24`). Install the pin with `mise install` in the kit (`github:SigNoz/signoz-mcp-server` in `mise.toml`). Never commit keys.
 
 SigNoz Cloud hosted MCP (no binary): `https://mcp.<region>.signoz.cloud/mcp` plus `SIGNOZ-API-KEY` and `X-SigNoz-URL` when OAuth is unavailable. Connect that URL on the **Cursor dashboard** for Cloud Agents. `wk mcp --install` does not wake hosted sessions. Missing tools: **BLOCKED**.
 
