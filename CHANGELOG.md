@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-19
+
+### 🐛 Bug Fixes
+
+- *(sops)* Source SigNoz compose password from env (#104)
+
 ## 2026-09-18
 
 ### 🚀 Features
