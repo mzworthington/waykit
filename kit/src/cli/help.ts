@@ -49,7 +49,7 @@ Commands:
   scan                 Alias of audit
   validate             Validate evals structure against JSON schemas
   eval                 Run skill-trigger evals, or EDD subcommands (run|watch|report|ci|shadow|dataset|miss-rate)
-  export-rules [dir]   Sync AGENTS.md into Cursor, Claude, Copilot, Gemini/Antigravity, and Windsurf pointers
+  export-rules [dir]   Copy the host-pointer stub into Cursor, Claude, Copilot, Gemini/Antigravity, and Windsurf filenames
   metrics              Display telemetry analytics summary for subagent phase handovers
   verify               Verify skills layout, role SKILL.md line budget, subagent allowlist, and thin agent stubs
   agents generate      Write thin Cursor/Claude agent stubs under agents/ from skills/subagents.yaml

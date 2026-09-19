@@ -1,6 +1,6 @@
 # Hosts: Cursor, Claude Code, Copilot, Antigravity
 
-Lifecycle rules live in `AGENTS.md`. `wk init` and `wk export-rules` write a thin pointer for each host. `wk mcp` writes MCP config in the file that host actually reads. `wk model resolve --host …` maps the same capability class to that host’s model slug.
+Lifecycle rules live in `AGENTS.md`. `wk init` and `wk export-rules` copy one thin stub (`templates/host-pointer.md`) to each host filename. `wk mcp` writes MCP config in the file that host actually reads. `wk model resolve --host …` maps the same capability class to that host’s model slug.
 
 Windsurf is **rules-only forever**. `wk export-rules` / `wk align` keep `.windsurfrules`. `wk mcp` does not accept `--host windsurf` and does not write a Windsurf MCP file. Cascade’s own MCP UI is outside this kit.
 
@@ -15,7 +15,7 @@ Windsurf is **rules-only forever**. `wk export-rules` / `wk align` keep `.windsu
 | Model overlay | `models/hosts/cursor.yaml` | `models/hosts/claude.yaml` | `models/hosts/copilot.yaml` | `models/hosts/antigravity.yaml` |
 | External skills (`wk sync`) | `~/.cursor/skills` | symlink `~/.claude/skills` | not mirrored (use repo `.mcp.json`) | symlink `~/.gemini/skills` |
 
-Canonical content is still `AGENTS.md`, `skills/`, and `mcps/`. Host files are adapters.
+Canonical content is still `AGENTS.md`, `skills/`, and `mcps/`. Host files are adapters: the same pointer, not a symlink to `AGENTS.md` (Cursor loads `AGENTS.md` plus host files in one session).
 
 ```bash
 wk init . --mcp default --hook

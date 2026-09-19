@@ -26,15 +26,7 @@ function kitWithTemplates(): string {
   const templates = path.join(root, 'templates');
   fs.mkdirSync(templates);
   fs.writeFileSync(path.join(templates, 'project-AGENTS.md'), THIN, 'utf8');
-  for (const name of [
-    'project-GEMINI.md',
-    'project-CLAUDE.md',
-    'project-windsurfrules',
-    'project-cursorrules',
-    'project-copilot-instructions.md'
-  ]) {
-    fs.writeFileSync(path.join(templates, name), `# ${name}\n`, 'utf8');
-  }
+  fs.writeFileSync(path.join(templates, 'host-pointer.md'), '# shared-host-pointer\n', 'utf8');
   return root;
 }
 

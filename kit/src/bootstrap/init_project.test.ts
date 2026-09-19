@@ -10,11 +10,7 @@ function kitRoot(): string {
   const templates = path.join(root, 'templates');
   fs.mkdirSync(templates);
   fs.writeFileSync(path.join(templates, 'project-AGENTS.md'), '# handshake-template\n', 'utf8');
-  fs.writeFileSync(path.join(templates, 'project-GEMINI.md'), 'g\n', 'utf8');
-  fs.writeFileSync(path.join(templates, 'project-CLAUDE.md'), 'c\n', 'utf8');
-  fs.writeFileSync(path.join(templates, 'project-windsurfrules'), 'w\n', 'utf8');
-  fs.writeFileSync(path.join(templates, 'project-cursorrules'), 'u\n', 'utf8');
-  fs.writeFileSync(path.join(templates, 'project-copilot-instructions.md'), 'p\n', 'utf8');
+  fs.writeFileSync(path.join(templates, 'host-pointer.md'), '# shared-host-pointer\n', 'utf8');
   const profiles = path.join(root, 'mcps', 'profiles');
   fs.mkdirSync(profiles, { recursive: true });
   fs.writeFileSync(path.join(profiles, 'default.json'), JSON.stringify({ servers: ['alpha'] }), 'utf8');

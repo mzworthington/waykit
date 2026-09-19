@@ -17,7 +17,7 @@ wk align . --json                         # machine-readable findings on stdout 
 `--owned` lists GitHub sources you admin (`gh`). `--scan` matches local worktrees. Uncloned sources are skipped, not failed as fat handshakes. The kit repo is classified and skipped so a fat kit `AGENTS.md` cannot fail the fleet. Any drifted consumer fails the command with exit code 1.
 
 
-`--write` seeds `AGENTS.md` from `templates/project-AGENTS.md` when it is missing, and fills host pointers. It never overwrites `AGENTS.md`. It does not compose MCP unless you also pass `--mcp`. It also installs kit subagent stubs into **user** `~/.cursor/agents` and `~/.claude/agents` (not the app repo).
+`--write` seeds `AGENTS.md` from `templates/project-AGENTS.md` when it is missing, and fills host pointers from `templates/host-pointer.md`. It never overwrites `AGENTS.md`. It does not compose MCP unless you also pass `--mcp`. It also installs kit subagent stubs into **user** `~/.cursor/agents` and `~/.claude/agents` (not the app repo).
 
 ```bash
 wk align . --write --mcp
