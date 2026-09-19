@@ -10,6 +10,10 @@
 
 - *(kit)* Write one host-pointer stub to all IDE entry points (#106)
 
+### 🧰 Maintenance & Dependencies
+
+- *(edd)* Fail scheduled live EDD when the key is missing (MZW-30) (#107)
+
 ## 2026-09-18
 
 ### 🚀 Features
