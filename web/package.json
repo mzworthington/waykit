@@ -1,37 +1,37 @@
 {
-    "name": "@kit/web",
-    "private": true,
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "astro dev",
-        "build": "astro build",
-        "preview": "astro preview",
-        "typecheck": "astro sync && tsc --noEmit",
-        "test": "vitest run",
-        "test:mermaid": "vitest run src/components/MermaidPreview.test.ts"
-    },
-    "dependencies": {
-        "@astrojs/react": "6.0.6",
-        "astro": "7.3.3",
-        "d3": "7.9.0",
-        "mermaid": "12.0.0",
-        "posthog-js": "1.433.7",
-        "react": "19.3.0",
-        "react-dom": "19.3.0",
-        "react-markdown": "10.1.0",
-        "remark-gfm": "4.0.1"
-    },
-    "devDependencies": {
-        "@astrojs/check": "0.9.10",
-        "@testing-library/react": "16.3.3",
-        "@types/d3": "7.4.3",
-        "@types/react": "19.3.0",
-        "@types/react-dom": "19.3.0",
-        "@vitejs/plugin-react": "6.1.1",
-        "jsdom": "30.0.1",
-        "typescript": "7.0.2",
-        "vite": "8.3.0",
-        "vitest": "5.0.1"
-    }
+  "name": "@kit/web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro sync && tsc --noEmit",
+    "test": "vitest run",
+    "test:mermaid": "vitest run src/components/MermaidPreview.test.ts"
+  },
+  "dependencies": {
+    "@astrojs/react": "6.0.6",
+    "astro": "7.3.3",
+    "d3": "7.9.0",
+    "mermaid": "12.0.0",
+    "posthog-js": "1.433.7",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@testing-library/react": "16.3.3",
+    "@types/d3": "7.4.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "jsdom": "30.0.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "vitest": "5.0.1"
+  }
 }
