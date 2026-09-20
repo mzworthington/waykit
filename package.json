@@ -1,38 +1,38 @@
 {
-  "name": "waykit",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "description": "Waykit: software lifecycle, skills, and learning loops for coding agents",
-  "bin": {
-    "wk": "./bin/kit"
-  },
-  "scripts": {
-    "prepare": "husky",
-    "typecheck": "tsc --noEmit",
-    "wk": "node --import tsx/esm bin/kit.ts",
-    "changelog": "node bin/changelog-render.mjs",
-    "release:detect": "bash bin/release.sh detect",
-    "test": "node --import tsx/esm --test 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
-    "test:ci": "mkdir -p out/reports && node --import tsx/esm --test --test-reporter=spec --test-reporter=./kit/src/test-report/github_test_reporter.mjs --test-reporter-destination=stdout --test-reporter-destination=out/reports/unit-test-report.md 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
-    "check": "pnpm test && pnpm wk check",
-    "site:dev": "pnpm --dir web dev"
-  },
-  "devDependencies": {
-    "@types/node": "^26.5.1",
-    "ajv": "^8.20.0",
-    "git-cliff": "^2.13.1",
-    "husky": "^9.1.7",
-    "tsx": "^4.23.13",
-    "typescript": "^7.0.2"
-  },
-  "engines": {
-    "node": ">=24.0.0"
-  },
-  "dependencies": {
-    "@clack/prompts": "^1.8.0",
-    "picocolors": "^1.1.1",
-    "yaml": "^2.9.0",
-    "zod": "^4.6.1"
-  }
+    "name": "waykit",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "description": "Waykit: software lifecycle, skills, and learning loops for coding agents",
+    "bin": {
+        "wk": "./bin/kit"
+    },
+    "scripts": {
+        "prepare": "husky",
+        "typecheck": "tsc --noEmit",
+        "wk": "node --import tsx/esm bin/kit.ts",
+        "changelog": "node bin/changelog-render.mjs",
+        "release:detect": "bash bin/release.sh detect",
+        "test": "node --import tsx/esm --test 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
+        "test:ci": "mkdir -p out/reports && node --import tsx/esm --test --test-reporter=spec --test-reporter=./kit/src/test-report/github_test_reporter.mjs --test-reporter-destination=stdout --test-reporter-destination=out/reports/unit-test-report.md 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
+        "check": "pnpm test && pnpm wk check",
+        "site:dev": "pnpm --dir web dev"
+    },
+    "devDependencies": {
+        "@types/node": "^26.6.1",
+        "ajv": "^8.20.0",
+        "git-cliff": "^2.13.1",
+        "husky": "^9.1.7",
+        "tsx": "^4.23.13",
+        "typescript": "^7.0.2"
+    },
+    "engines": {
+        "node": ">=24.0.0"
+    },
+    "dependencies": {
+        "@clack/prompts": "^1.8.1",
+        "picocolors": "^1.1.1",
+        "yaml": "^2.9.0",
+        "zod": "^4.6.5"
+    }
 }
