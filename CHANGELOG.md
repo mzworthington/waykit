@@ -2,6 +2,10 @@
 
 ## 2026-09-20
 
+### ⚙️ Refactoring & Performance
+
+- *(edd)* Update descriptions for get_sop and get_entity tools
+
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Batch dependabot updates (#117)
