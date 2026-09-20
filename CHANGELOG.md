@@ -5,6 +5,7 @@
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Batch dependabot updates (#117)
+- *(edd)* Update installation method for cursor-agent in live workflow
 
 ## 2026-09-19
 
