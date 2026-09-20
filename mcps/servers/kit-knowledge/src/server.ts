@@ -66,7 +66,7 @@ const TOOLS = [
   {
     name: "get_sop",
     description:
-      "Return one SOP by stem name (e.g. \"conventional-commits\", \"context-budget\"). Truncated if very long.",
+      "Return one SOP file body by stem name (e.g. \"conventional-commits\", \"context-budget\", \"subagent-launch\"). Use this when the user asks to open a kit SOP. Truncated if very long.",
     inputSchema: {
       type: "object",
       properties: {
@@ -96,7 +96,7 @@ const TOOLS = [
   {
     name: "get_entity",
     description:
-      "Return one ontology entity by id (e.g. skill:agent-tdd, subagent:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd).",
+      "Return one ontology entity by id (e.g. skill:agent-tdd, subagent:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd). Ontology metadata only, not SOP bodies (use get_sop).",
     inputSchema: {
       type: "object",
       properties: {

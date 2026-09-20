@@ -1,6 +1,6 @@
 {
   "name": "get_entity",
-  "description": "Return one ontology entity by id (e.g. skill:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd).",
+  "description": "Return one ontology entity by id (e.g. skill:agent-tdd, subagent:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd). Ontology metadata only, not SOP bodies (use get_sop).",
   "inputSchema": {
     "type": "object",
     "required": ["id"],

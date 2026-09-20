@@ -1,6 +1,6 @@
 {
   "name": "get_sop",
-  "description": "Return one SOP by stem name (e.g. conventional-commits, context-budget). Truncated if very long.",
+  "description": "Return one SOP file body by stem name (e.g. conventional-commits, context-budget, subagent-launch). Use this when the user asks to open a kit SOP. Truncated if very long.",
   "inputSchema": {
     "type": "object",
     "required": ["name"],
