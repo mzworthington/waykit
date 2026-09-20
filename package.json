@@ -19,7 +19,7 @@
     "site:dev": "pnpm --dir web dev"
   },
   "devDependencies": {
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.1",
     "ajv": "^8.20.0",
     "git-cliff": "^2.13.1",
     "husky": "^9.1.7",
@@ -30,9 +30,9 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
-    "@clack/prompts": "^1.8.0",
+    "@clack/prompts": "^1.8.1",
     "picocolors": "^1.1.1",
     "yaml": "^2.9.0",
-    "zod": "^4.6.1"
+    "zod": "^4.6.5"
   }
 }
