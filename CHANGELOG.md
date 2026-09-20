@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-20
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Batch dependabot updates (#117)
+
 ## 2026-09-19
 
 ### 🐛 Bug Fixes
