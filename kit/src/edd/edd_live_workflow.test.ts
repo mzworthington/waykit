@@ -80,9 +80,24 @@ describe('nightly live-model EDD workflow', () => {
   it('runs cursor-agent with CURSOR_API_KEY from GitHub secrets', () => {
     const yml = fs.readFileSync(workflowPath, 'utf8');
     assert.match(yml, /secrets\.CURSOR_API_KEY/);
-    assert.match(yml, /cursor\.com\/install/);
     assert.match(yml, /--style cli/);
     assert.match(yml, /--cli cursor-agent/);
+  });
+
+  it('installs a checksum-pinned linux cursor-agent tarball instead of cursor.com/install', () => {
+    const step = loadWorkflow().doc.jobs?.live?.steps?.find(
+      (item) => item.name === 'Install Cursor CLI'
+    );
+    const run = step?.run ?? '';
+    assert.match(step?.env?.CURSOR_AGENT_VERSION ?? '', /^\d{4}\.\d{2}\.\d{2}-[0-9a-f]+$/);
+    assert.match(step?.env?.CURSOR_AGENT_SHA256 ?? '', /^[a-f0-9]{64}$/);
+    assert.match(
+      run,
+      /downloads\.cursor\.com\/lab\/\$\{CURSOR_AGENT_VERSION\}\/linux\/x64\/agent-cli-package\.tar\.gz/
+    );
+    assert.match(run, /sha256sum -c/);
+    assert.match(run, /cursor-agent/);
+    assert.doesNotMatch(run, /cursor\.com\/install/);
   });
 
   it('schedules live cursor-agent evals once a week', () => {

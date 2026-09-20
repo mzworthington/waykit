@@ -83,14 +83,20 @@ jobs:
       - name: Install Cursor CLI
         if: steps.creds.outputs.skip != 'true'
         env:
-          CURSOR_INSTALL_SHA256: 'bb54a2c0c13a936faab47355edd7125ec43a203af5610175ab39f5571df16e74'
+          CURSOR_AGENT_VERSION: '2026.09.18-9a7762b'
+          CURSOR_AGENT_SHA256: 'b1308f5a2fc05458b9d8966752986bb23a971bbcc67c842c1df94c4b8132bad9'
         run: |
-          installer="${RUNNER_TEMP}/cursor-install.sh"
-          curl --proto '=https' --tlsv1.2 -fsSL https://cursor.com/install -o "$installer"
-          echo "${CURSOR_INSTALL_SHA256}  $installer" | sha256sum -c -
-          bash "$installer"
+          archive="${RUNNER_TEMP}/agent-cli-package.tar.gz"
+          curl --proto '=https' --tlsv1.2 -fsSL \
+            "https://downloads.cursor.com/lab/${CURSOR_AGENT_VERSION}/linux/x64/agent-cli-package.tar.gz" \
+            -o "$archive"
+          echo "${CURSOR_AGENT_SHA256}  $archive" | sha256sum -c -
+          dest="${HOME}/.local/share/cursor-agent/versions/${CURSOR_AGENT_VERSION}"
+          mkdir -p "$dest" "${HOME}/.local/bin"
+          tar --strip-components=1 -xzf "$archive" -C "$dest"
+          ln -sf "${dest}/cursor-agent" "${HOME}/.local/bin/cursor-agent"
+          ln -sf "${dest}/cursor-agent" "${HOME}/.local/bin/agent"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          echo "$HOME/.cursor/bin" >> "$GITHUB_PATH"
 
       - name: Run live EDD suites (includes requires-live)
         if: steps.creds.outputs.skip != 'true'
