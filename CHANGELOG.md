@@ -6,6 +6,10 @@
 
 - *(edd)* Route host-subagent SOP opens to get_sop
 
+### 🧰 Maintenance & Dependencies
+
+- Exclude workflows from sonar
+
 ## 2026-09-20
 
 ### ⚙️ Refactoring & Performance
