@@ -9,6 +9,8 @@
 ### 🧰 Maintenance & Dependencies
 
 - Exclude workflows from sonar
+- Publish existing test coverage to SonarCloud
+- Use SONARQUBE_API_TOKEN and SONARQUBE_ORG for SonarCloud
 
 ## 2026-09-20
 
