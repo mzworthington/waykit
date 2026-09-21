@@ -14,7 +14,7 @@
     "changelog": "node bin/changelog-render.mjs",
     "release:detect": "bash bin/release.sh detect",
     "test": "node --import tsx/esm --test 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web test",
-    "test:ci": "mkdir -p out/reports && c8 --reporter=lcov --report-dir=coverage node --import tsx/esm --test --test-reporter=spec --test-reporter=./kit/src/test-report/github_test_reporter.mjs --test-reporter-destination=stdout --test-reporter-destination=out/reports/unit-test-report.md 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web exec vitest run --coverage",
+    "test:ci": "mkdir -p out/reports && c8 --reporter=lcov --report-dir=coverage --exclude '**/*.test.ts' node --import tsx/esm --test --test-reporter=spec --test-reporter=./kit/src/test-report/github_test_reporter.mjs --test-reporter-destination=stdout --test-reporter-destination=out/reports/unit-test-report.md 'kit/src/**/*.test.ts' mcps/servers/kit-knowledge/src/knowledge.test.ts mcps/servers/memory/src/memory.test.ts && pnpm --dir web exec vitest run --coverage",
     "check": "pnpm test && pnpm wk check",
     "site:dev": "pnpm --dir web dev"
   },
