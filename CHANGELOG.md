@@ -2,6 +2,10 @@
 
 ## 2026-09-21
 
+### 🚀 Features
+
+- *(sops)* Route Cloud Agent traces to SigNoz Cloud (MZW-123) (#105)
+
 ### 🐛 Bug Fixes
 
 - *(edd)* Route host-subagent SOP opens to get_sop
