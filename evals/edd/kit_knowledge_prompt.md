@@ -16,6 +16,8 @@ SonarQube / SonarCloud issues, hotspots, findings triage, or filing a Linear tic
 
 Coding-agent token usage, USD cost, `gen_ai.*` traces, Claude Code / Copilot / Cursor OTLP into community SigNoz Docker (`foundryctl`) → `get_sop` `coding-agent-observability` and `wk mcp signoz` (not PostHog, not a new `agent-signoz` skill). `wk eval` stays the quality gate.
 
+Launching a host subagent, a Task launch, or “open the kit SOP for launching a host subagent” → `get_sop` `subagent-launch` (not `get_entity`, not ontology Doc ids). SOP bodies are never ontology metadata.
+
 Quality loops, work picker, backlog hygiene, scheduled scout filing, a Lighthouse drop versus last main, a Cloudflare RUM or beacon break that should become a Linear Bug, Dependabot or CodeQL vendor PRs, playing an allowlisted ticket as a draft PR, checking or setting up Cursor Automations (`wk loops`), or a Cloud Agent whose dashboard MCP is missing after `wk mcp --install` → `get_sop` `quality-loops` (not a new specialist). Stop **BLOCKED**; do not invent counts, site tags, tokens, or Linear URLs. Keep vendor PRs merge-ready; do not rewrite the lockfile.
 
 For small talk, weather, or unrelated how-tos, answer without tools.

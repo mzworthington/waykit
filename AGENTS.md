@@ -28,7 +28,7 @@ Do not commit or push unless the user explicitly asks.
 | Product bet / PRD / flags | [agent-prd](./skills/agent-prd/SKILL.md) + [SOPs/hypothesis-driven-development.md](./SOPs/hypothesis-driven-development.md) |
 | EDD (prompts, MCP tools, routing; **alpha**) | [docs/edd.md](./docs/edd.md) + [SOPs/eval-driven-development.md](./SOPs/eval-driven-development.md) |
 | Model class / host slug | [SOPs/model-routing.md](./SOPs/model-routing.md) (`models/catalog.yaml` + `models/hosts/`) |
-| Subagent vs skill | [docs/subagents.md](./docs/subagents.md) (`wk agents status`) |
+| Subagent vs skill | `get_sop` `subagent-launch` (`wk agents status`) |
 | SOP / handover search | **kit-knowledge** MCP (`search_kit`, `get_sop`, `get_handover`) |
 | Kit ontology | `ontology/schema.yaml` only (index derived at use time; authoring: `ontology/README.md`) |
 | Cross-session facts | **memory** MCP (glossary/SLO/prefs; never secrets) |

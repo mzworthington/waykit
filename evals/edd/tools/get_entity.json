@@ -1,6 +1,6 @@
 {
   "name": "get_entity",
-  "description": "Return one ontology entity by id (e.g. skill:agent-tdd, subagent:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd). Ontology metadata only, not SOP bodies (use get_sop).",
+  "description": "Return one ontology entity by id (e.g. skill:agent-tdd, subagent:agent-tdd, sop:conventional-commits, philosophy:8, doc:edd). Ontology metadata only, not SOP bodies (use get_sop). Do not use this to open SOP file bodies or a host subagent launch SOP; never open a kit SOP with this tool.",
   "inputSchema": {
     "type": "object",
     "required": ["id"],

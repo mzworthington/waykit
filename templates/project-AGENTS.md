@@ -17,7 +17,7 @@ Start from `~/.agents/AGENTS.md` (thin index). **Do not** bulk-read philosophy, 
 | Crime-scene report | `SOPs/complexity-hotspots.md` §8 (arch-drift → gate → stories) |
 | Prompt / MCP tool / routing change | `docs/edd.md` + EDD SOP (`wk eval run\|ci`) |
 | Which model / host slug | `SOPs/model-routing.md` (`wk model resolve`) |
-| Subagent vs skill | `docs/subagents.md` (`wk agents status`, `SOPs/subagent-launch.md`) |
+| Subagent vs skill | `get_sop` `subagent-launch` (`wk agents status`) |
 | Landing copy / docs narrative | `skills/agent-copy` (+ `agent-ui` / `agent-docs` as needed) |
 | Commit / Linear ticket | `SOPs/conventional-commits.md` + `SOPs/linear-ticket-workflow.md` |
 | SOP / handover lookup | kit-knowledge MCP when installed |

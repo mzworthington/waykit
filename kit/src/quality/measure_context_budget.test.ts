@@ -3,7 +3,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { describe, it } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import { measureContextBudget } from './measure_context_budget.js';
+
+const kitRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 
 function write(root: string, rel: string, contents: string): void {
   const full = path.join(root, rel);
@@ -12,6 +15,15 @@ function write(root: string, rel: string, contents: string): void {
 }
 
 describe('measureContextBudget', () => {
+  it('keeps the kit handshake always-on surface under the default target', () => {
+    const result = measureContextBudget(kitRoot);
+    assert.equal(
+      result.ok,
+      true,
+      `always-on ${result.alwaysOnChars} exceeds ${result.targetChars}`
+    );
+  });
+
   it('passes when always-on files are under the target', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-ctx-'));
     write(root, 'AGENTS.md', 'thin\n');
