@@ -14,7 +14,7 @@ Failed GitHub Actions, a red CI job, `ERR_PNPM_NO_PKG_MANIFEST`, or “debug thi
 
 SonarQube / SonarCloud issues, hotspots, findings triage, or filing a Linear ticket from a Sonar finding → `get_sop` `sonarqube-findings` (not a failed-job debug SOP). Restore `wk mcp default` before Linear create.
 
-Coding-agent token usage, USD cost, `gen_ai.*` traces, Claude Code / Copilot / Cursor OTLP into community SigNoz Docker (`foundryctl`) → `get_sop` `coding-agent-observability` and `wk mcp signoz` (not PostHog, not a new `agent-signoz` skill). `wk eval` stays the quality gate.
+Coding-agent token usage, USD cost, `gen_ai.*` traces, Claude Code / Copilot / Cursor OTLP into community SigNoz Docker (`foundryctl`), or Cursor Cloud Agent traces into SigNoz Cloud ingest → `get_sop` `coding-agent-observability` and `wk mcp signoz` (not PostHog, not a new `agent-signoz` skill). `wk eval` stays the quality gate.
 
 Launching a host subagent, a Task launch, or “open the kit SOP for launching a host subagent” → `get_sop` `subagent-launch` (not `get_entity`, not ontology Doc ids). SOP bodies are never ontology metadata.
 

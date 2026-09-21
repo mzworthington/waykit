@@ -1141,6 +1141,30 @@
           "OpenObserve"
         ]
       }
+    },
+    {
+      "id": "EVAL-ROUTE-056",
+      "name": "Route Cloud Agent traces to SigNoz Cloud not PostHog",
+      "description": "Verifies Cursor Cloud Agent distributed traces in SigNoz Cloud route to agent-telemetry and coding-agent-observability, not localhost Docker as the only path, PostHog, or a new specialist.",
+      "target_skill": "agent-telemetry",
+      "prompt": "I want distributed tracing for Cursor Cloud Agents in SigNoz Cloud. Localhost SigNoz is unreachable from the VM.",
+      "assertions": {
+        "required_triggers": [
+          "opentelemetry",
+          "observability"
+        ],
+        "required_patterns": [
+          "agent-telemetry",
+          "coding-agent-observability",
+          "SigNoz Cloud",
+          "wk mcp signoz"
+        ],
+        "forbidden_patterns": [
+          "agent-signoz",
+          "agent-posthog",
+          "OpenObserve"
+        ]
+      }
     }
   ]
 }

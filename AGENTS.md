@@ -35,7 +35,7 @@ Do not commit or push unless the user explicitly asks.
 | Vendor/framework API docs | **context7** MCP |
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`) |
-| PostHog / agent tokens | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog`); tokens/cost: [coding-agent-observability](./SOPs/coding-agent-observability.md) (community SigNoz Docker) |
+| PostHog / agent tokens | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog`); tokens/cost: [coding-agent-observability](./SOPs/coding-agent-observability.md) (community SigNoz Docker; Cloud Agents → SigNoz Cloud) |
 | Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (`wk loops`); PostHog [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |
 | Crime-scene report | [complexity-hotspots](./SOPs/complexity-hotspots.md) §8 (arch-drift → gate → stories) |
 

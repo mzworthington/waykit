@@ -374,6 +374,7 @@ export const scriptedDriver: AgentDriver = async ({ messages, mocks, tools, syst
       prompt.includes('coding-agent observability') ||
       prompt.includes('coding-agent token') ||
       prompt.includes('coding agent token') ||
+      (prompt.includes('cloud agent') && (prompt.includes('trace') || prompt.includes('otlp'))) ||
       (prompt.includes('otlp') && (prompt.includes('claude code') || prompt.includes('copilot')))
     ) {
       return {

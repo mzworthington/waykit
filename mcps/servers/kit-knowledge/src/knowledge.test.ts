@@ -130,6 +130,11 @@ describe("kit-knowledge", () => {
     assert.match(sop!.body, /claude_code\.token\.usage/);
     assert.match(sop!.body, /claude_code\.cost\.usage/);
     assert.match(sop!.body, /gen_ai/);
+    assert.match(sop!.body, /ingest\.<region>\.signoz\.cloud/);
+    assert.match(sop!.body, /signoz-ingestion-key/);
+    assert.match(sop!.body, /cursor\.conversation\.id/);
+    assert.match(sop!.body, /Cloud Agent/);
+    assert.doesNotMatch(sop!.body, /signoz-ingestion-key=[A-Za-z0-9_-]{8,}/);
     assert.ok(!sop!.body.includes("…truncated"), "coding-agent-observability must fit getSop without truncation");
   });
 
