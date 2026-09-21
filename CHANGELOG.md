@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-21
+
+### 🐛 Bug Fixes
+
+- *(edd)* Route host-subagent SOP opens to get_sop
+
 ## 2026-09-20
 
 ### ⚙️ Refactoring & Performance
