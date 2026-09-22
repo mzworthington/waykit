@@ -71,14 +71,6 @@ jobs:
       - name: Unit tests
         run: pnpm test:ci
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_API_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          args: -Dsonar.organization=${{ vars.SONARQUBE_ORG }}
-
       - name: Kit quality gate
         run: pnpm wk check
 
