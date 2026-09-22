@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-22
+
+### 🧰 Maintenance & Dependencies
+
+- Sonar auto analysis
+
 ## 2026-09-21
 
 ### 🚀 Features
@@ -16,6 +22,7 @@
 - Publish existing test coverage to SonarCloud
 - Use SONARQUBE_API_TOKEN and SONARQUBE_ORG for SonarCloud
 - Keep test files out of coverage reports
+- Omit test folders, scripts, and Vite from coverage
 
 ## 2026-09-20
 
