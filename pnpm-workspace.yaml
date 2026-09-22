@@ -5,3 +5,8 @@ packages:
 allowBuilds:
   core-js: false
   esbuild: true
+
+# mermaid@12.0.0 still lists unused chevrotain@11, which pins lodash-es@4.17.23
+# (CVE-2026-4800). Chevrotain 12 dropped lodash; mermaid 12 dist does not import it.
+overrides:
+  chevrotain: 12.0.0
