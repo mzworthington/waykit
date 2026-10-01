@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-01
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Apply open Dependabot version bumps
+
 ## 2026-09-22
 
 ### 🧰 Maintenance & Dependencies
