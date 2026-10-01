@@ -2,6 +2,10 @@
 
 ## 2026-10-01
 
+### 🐛 Bug Fixes
+
+- *(deps)* Pin DOMPurify to 3.4.16
+
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Apply open Dependabot version bumps
