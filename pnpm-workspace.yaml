@@ -10,3 +10,5 @@ allowBuilds:
 # (CVE-2026-4800). Chevrotain 12 dropped lodash; mermaid 12 dist does not import it.
 overrides:
   chevrotain: 12.0.0
+  # mermaid still resolves DOMPurify 3.4.15; 3.4.16 is the current patch.
+  dompurify: '>=3.4.16'
