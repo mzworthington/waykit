@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-03
+
+### 🚀 Features
+
+- *(sops)* Hold handover to the Sonar default profile
+
 ## 2026-10-01
 
 ### 🐛 Bug Fixes
