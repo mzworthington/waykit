@@ -33,6 +33,21 @@ flowchart TD
 
 Prefer a secure, maintainable tree. Do **not** action every finding. Policy skips below are automatic. New disagreements stay `ask` until this SOP is updated.
 
+## Default profile gate
+
+SonarCloud's **default quality profile** is the bar for code we ship. Before handover or a commit, open issues at impact severity **BLOCKER**, **HIGH**, or **MEDIUM** on files this change touched are `fix`. Do not leave them for a later pass. Do not add `NOSONAR`.
+
+When `SONARQUBE_TOKEN` is available (`set-secrets` in a shell, then the Sonar API or `wk mcp sonar`), list those issues for the project and clear any that sit on the change. When the token is not available, still apply the rules below by reading every changed TypeScript file.
+
+These two default-profile rules are the ones that slipped through on ArchLens. Treat them as failing the gate:
+
+| Rule | Required handling |
+|------|-------------------|
+| `typescript:S9383` | A promise is awaited, ended with `.catch`, ended with `.then` that includes a rejection handler, or explicitly ignored with `void`. Return the inner promise into an existing `.catch` chain. A bare call to an async function does not count. |
+| `typescript:S8786` | Do not ship a regular expression with super-linear backtracking (stacked quantifiers, such as repeated `\s+` around a literal). Parse with an index scan or one linear pass. |
+
+Policy skips in the next section still win. A skip is not a default-profile failure to implement.
+
 ## Policy skips (never implement)
 
 | Signal | Keep | Why |
@@ -83,5 +98,5 @@ Report-only: stop at the handover. Asked to fix: BUG → [agent-debug](../skills
 ## Copy-paste prompt
 
 ```text
-wk mcp sonar --install. Run sonarqube-findings. Triage handover_sonar.md. Skip Actions SHA pins (@vN); no NOSONAR, no ticket. Fix rows: restore wk mcp default, file one ticket (Bug / Security / Improvement). No issues while sonar is on. No PR. No agent-sonarqube.
+wk mcp sonar --install. Run sonarqube-findings. Triage handover_sonar.md. Default profile: BLOCKER, HIGH, and MEDIUM on touched files are fix (S9383 floating promises, S8786 super-linear regex) before handover. Skip Actions SHA pins (@vN); no NOSONAR, no ticket. Fix rows a scout still files: restore wk mcp default, file one ticket (Bug / Security / Improvement). No issues while sonar is on. No PR. No agent-sonarqube.
 ```

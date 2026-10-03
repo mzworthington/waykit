@@ -111,6 +111,7 @@ Prefer the **exact commands** named in the hook over guessing.
 2. On failure: read stderr, fix the reported files, do not `--no-verify` or skip hooks unless the user explicitly requests it.
 3. Re-run the **same** check command until exit code 0.
 4. If auto-fixers run (`prettier --write`, `lint-staged`), re-run checks to confirm clean.
+5. Hold the change to SonarCloud's **default quality profile** ([sonarqube-findings](../../SOPs/sonarqube-findings.md) § Default profile gate). Open issues at BLOCKER, HIGH, or MEDIUM on touched files fail this gate. `typescript:S9383` (floating promises) and `typescript:S8786` (super-linear regex) are fixed in the change. Policy skips stay skipped. No `NOSONAR`. If `set-secrets` has loaded `SONARQUBE_TOKEN`, query the project issues; otherwise inspect the changed TypeScript.
 
 Report to the user: which hook/commands ran and what was fixed.
 

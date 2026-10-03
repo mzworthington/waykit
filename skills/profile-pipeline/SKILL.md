@@ -120,6 +120,7 @@ Default graph is small. Split jobs for isolation, cache locality, or wall-clock 
 - OIDC to cloud; no long-lived keys if the platform allows federation.
 - Default `GITHUB_TOKEN` read-only; raise per job.
 - Pin Actions by **version tag** (`uses: owner/action@vN` or `@vN.N.N`), not a commit SHA. Sonar SHA-pin findings are a kit skip ([sonarqube-findings](../../SOPs/sonarqube-findings.md)).
+- Hold application code to SonarCloud's default quality profile before merge: open BLOCKER, HIGH, and MEDIUM issues on the change are fixed first, including floating promises (`typescript:S9383`) and super-linear regexes (`typescript:S8786`).
 - Prod deploy/apply: concurrency 1 per environment.
 - Untrusted/fork PRs: verify without secrets.
 

@@ -33,7 +33,7 @@ Cloud sessions only see MCP servers on the **Cursor dashboard**. `wk mcp --insta
 | PostHog error | Bug after restore default | Funnel / bet rows stay on product-signal-intake. |
 | Lighthouse drop vs last main | Performance | No ticket to chase 100. |
 | Cloudflare RUM / beacon break | Bug on the owning repo | Hostnames only, never site tokens. `cloudflare-ops`, then restore. No PR. |
-| Sonar BUG / vuln / smell | Bug / Security / Improvement | `sonar`, then restore. Policy skip: no ticket, no NOSONAR. |
+| Sonar BUG / vuln / smell | Bug / Security / Improvement | `sonar`, then restore. Policy skip: no ticket, no NOSONAR. Default-profile BLOCKER / HIGH / MEDIUM on the change are fixed in the coding session before handover ([sonarqube-findings](./sonarqube-findings.md)). |
 | Dependabot / CodeQL | Vendor PR only | Merge-ready hygiene. |
 
 Fingerprint tickets (`source:repo:stable-id`; RUM `source:<owning-repo>:rum:<hostname>`). Comment on an open match. Do not clone. gpio-build-monitor may ingest alerts. It does not write product code.

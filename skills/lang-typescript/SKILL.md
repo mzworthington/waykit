@@ -31,6 +31,9 @@ Apply these rules strictly when writing TypeScript or Node.js code:
 - **Vertical slices** - Co-locate `*Handler`, request/response types, and slice tests under `features/<capability>/`. Extra modules for that capability go in the same folder (`index.ts` barrel). Never add prefixed siblings in the parent (`fooBar.ts` next to `foo.ts`); never leave `foo.ts` beside a `foo/` directory.
 - **Validation** - Zero-trust parsing at infrastructure boundaries with `Zod` or `ArkType` before data reaches handlers.
 - **No narrative comments** - Names and tests document why ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §4). Do not add JSDoc that restates the identifier.
+- **Sonar default profile** - Before the change is done, it must satisfy SonarCloud's default quality profile at BLOCKER, HIGH, and MEDIUM ([sonarqube-findings](../../SOPs/sonarqube-findings.md)). Two rules that must not regress:
+  - `typescript:S9383` — await the promise, end it with `.catch`, end it with `.then` that has a rejection handler, or mark it `void`. Do not call an async function and drop the return value.
+  - `typescript:S8786` — do not add a regular expression whose quantifiers backtrack super-linearly (repeated `\s+` around a literal is the usual shape). Scan the string by index instead.
 
 ## Testing defaults
 
