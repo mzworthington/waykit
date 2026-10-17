@@ -12,7 +12,7 @@
     "test:mermaid": "vitest run src/components/MermaidPreview.test.ts"
   },
   "dependencies": {
-    "@astrojs/react": "7.0.0",
+    "@astrojs/react": "7.0.1",
     "astro": "7.3.4",
     "d3": "7.9.0",
     "mermaid": "12.1.0",
