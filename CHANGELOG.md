@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-17
+
+### 🐛 Bug Fixes
+
+- *(edd)* Retry a timed-out judge CLI once
+
 ## 2026-10-03
 
 ### 🚀 Features
