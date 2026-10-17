@@ -5,11 +5,14 @@
 ### 🐛 Bug Fixes
 
 - *(edd)* Retry a timed-out judge CLI once
+- *(deps)* Land open dependency updates and patched advisories
+- *(deps)* Pin the remaining waykit advisories
 
 ### 🧰 Maintenance & Dependencies
 
 - *(deps)* Bump mermaid from 12.0.0 to 12.1.0 (#138)
 - *(deps-dev)* Bump @types/node from 26.6.2 to 26.6.4 (#137)
+- Keep Dependabot lockfile updates with the manifest
 
 ## 2026-10-03
 
