@@ -2,6 +2,10 @@
 
 ## 2026-10-17
 
+### 🚀 Features
+
+- *(skills)* Treat a skipped hook path as a failed pre-commit
+
 ### 🐛 Bug Fixes
 
 - *(edd)* Retry a timed-out judge CLI once
