@@ -110,7 +110,7 @@ Sites still get date-grouped changelog, not a semver tag, unless the repo also s
 
 Default graph is small. Split jobs for isolation, cache locality, or wall-clock (lint ∥ test ∥ typecheck → one build). Collapse when the hop costs more than it saves.
 
-- Fast local pre-commit; CI is source of truth.
+- Fast local pre-commit; CI is source of truth. A hook that skips a path CI formats is not a pass.
 - Lockfile-keyed caches; cache is not a correctness substitute.
 - Cancel superseded **PR** runs. Never cancel an in-flight **apply** or prod deploy.
 - Path filters plus a **merge-gate** job so skipped required checks do not block GitHub.
@@ -133,3 +133,4 @@ Default graph is small. Split jobs for isolation, cache locality, or wall-clock 
 5. Summaries on verify, plan, deploy, smoke, promote.
 6. Changelog render + push-back cannot re-enter deploy/release.
 7. Previews off unless explicitly enabled; never on forks.
+8. Local pre-commit path filter and `lint-staged` include every path verify `format:check` covers, including `.github/**/*.{yml,yaml,md}`.

@@ -81,6 +81,8 @@ If the hook still skips checks, read the script and run the underlying commands 
 
 **Subset is not PASS.** A filtered `vitest run path/…` run is not the quality gate. Status is FAIL or BLOCKED until the commands named in the hook for those paths exit 0 (`lint-staged`, `oxlint --deny-warnings`, format, typecheck, knip, `vitest run --changed`, and so on). Do not mark a phase COMPLETE after skipping hook steps or after running only a path-filtered test command. [quality-loops](../../SOPs/quality-loops.md) work-picker sessions use this hook, not a path-filtered test.
 
+**Hook skip is not PASS.** Exit 0 only means the path filter ran nothing when the change sits outside it. If CI `format:check` includes `.github/**/*.{yml,yaml,md}`, run that command anyway, and keep the hook filter and `lint-staged` on the same glob. Prettier `singleQuote` rewrites double-quoted YAML; an unformatted `.github/dependabot.yml` fails the verify job.
+
 ### No hook
 
 Run the project's documented quality scripts from README, `AGENTS.md`, or CI (e.g. `pnpm lint`, `pnpm typecheck`, `pnpm test`).
@@ -100,6 +102,7 @@ Common patterns:
 |---------------|------------------|
 | `app/` TypeScript | `cd app && pnpm lint && pnpm typecheck && pnpm test` (or `vitest run --changed`) |
 | `docs/`, `*.md` | `cd app && pnpm format:check` |
+| `.github/**/*.{yml,yaml,md}` | `cd app && pnpm format:check` |
 | `app/packages/core/` | schema/codegen `--check` if hook references it |
 | `*.go` in a Go module | `make check test` in that module |
 

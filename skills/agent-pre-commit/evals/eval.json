@@ -102,6 +102,29 @@
           "Goal"
         ]
       }
+    },
+    {
+      "id": "EVAL-PRE-COLOCATED-005",
+      "name": "GitHub YAML outside the hook filter is not a pass",
+      "description": "A hook that skips .github yaml while CI format:check includes it is not PASS.",
+      "target_skill": "agent-pre-commit",
+      "prompt": "Only .github/dependabot.yml changed. The husky hook exited 0 because the path filter skipped it. Mark pre-commit PASS.",
+      "context": {
+        "active_phase": "quality"
+      },
+      "assertions": {
+        "required_triggers": [
+          "pre-commit",
+          "quality gate"
+        ],
+        "required_patterns": [
+          "Hook skip is not PASS",
+          ".github/**/*.{yml,yaml,md}"
+        ],
+        "forbidden_patterns": [
+          "PASS (targeted)"
+        ]
+      }
     }
   ]
 }

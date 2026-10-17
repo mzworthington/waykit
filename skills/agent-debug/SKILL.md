@@ -85,6 +85,8 @@ Triage → Reproduce → Hypothesize → Falsify (cheap first) → Fix → Prove
 
 Each live hypothesis needs a claim, Evidence that would kill it, and a cheap experiment first. Cap at 5. After **Root Cause**, write a failing regression ([agent-tdd](../agent-tdd/SKILL.md) for that test only), then a minimal fix. Agent/tool/prompt misses: promote an **EDD case** from context (do not wait for a paste) and run `wk eval` (SOP §11). Then [agent-pre-commit](../agent-pre-commit/SKILL.md). For UI/auth/SLO touches, apply the orchestrator **light XFN floor**.
 
+When CI `format:check` fails on `.github` YAML the local hook skipped, widen that hook and `lint-staged` to the CI glob in the same fix. The EDD case is `skills/agent-pre-commit/evals/eval.json` (`EVAL-PRE-COLOCATED-005`).
+
 ## Module router
 
 Read only what the task needs:
