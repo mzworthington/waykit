@@ -212,6 +212,13 @@ export function isSpawnEnoent(err: unknown): boolean {
   return Boolean(err && typeof err === 'object' && 'code' in err && err.code === 'ENOENT');
 }
 
+function isCliTimeout(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  const code = (err as NodeJS.ErrnoException).code;
+  if (code === 'ETIMEDOUT') return true;
+  return /CLI exited 143/.test(err.message);
+}
+
 export function assistantCliMissingMessage(role: 'Judge' | 'Agent', command: string): string {
   if (CURSOR_AGENT_COMMANDS.has(command) || command.endsWith(`${path.sep}cursor-agent`)) {
     return (
@@ -255,21 +262,30 @@ export function createCliJudgeCompletion(options: CreateCliJudgeCompletionOption
 
   return async (input) => {
     const args = buildArgs({ prompt: input.prompt, model: input.model });
-    try {
-      const { stdout } = await execFile(command, args, {
-        encoding: 'utf8',
-        maxBuffer: 8 * 1024 * 1024,
-        timeout: timeoutMs,
-        onStdout: options.onStdout
-      });
-      return parseJudgeCliStdout(stdout);
-    } catch (err) {
-      if (isSpawnEnoent(err)) {
-        throw new Error(assistantCliMissingMessage('Judge', command));
+    const attempts = 2;
+    let last: unknown;
+    for (let attempt = 0; attempt < attempts; attempt++) {
+      try {
+        const { stdout } = await execFile(command, args, {
+          encoding: 'utf8',
+          maxBuffer: 8 * 1024 * 1024,
+          timeout: timeoutMs,
+          onStdout: options.onStdout
+        });
+        return parseJudgeCliStdout(stdout);
+      } catch (err) {
+        last = err;
+        if (isSpawnEnoent(err)) {
+          throw new Error(assistantCliMissingMessage('Judge', command));
+        }
+        if (!isCliTimeout(err) || attempt === attempts - 1) {
+          const message = err instanceof Error ? err.message : String(err);
+          throw new Error(`Judge CLI (${command}) failed: ${message}`);
+        }
       }
-      const message = err instanceof Error ? err.message : String(err);
-      throw new Error(`Judge CLI (${command}) failed: ${message}`);
     }
+    const message = last instanceof Error ? last.message : String(last);
+    throw new Error(`Judge CLI (${command}) failed: ${message}`);
   };
 }
 

@@ -152,6 +152,27 @@ describe('createCliJudgeCompletion', () => {
     assert.ok(calls[0]?.args.includes('--trust'));
   });
 
+  it('retries once when the judge CLI is killed at the timeout (exit 143)', async () => {
+    let attempts = 0;
+    const execFile: ExecFileFn = async () => {
+      attempts += 1;
+      if (attempts === 1) {
+        const err = new Error('CLI exited 143') as NodeJS.ErrnoException;
+        err.code = 'ETIMEDOUT';
+        throw err;
+      }
+      return { stdout: '{"score":"PASS","reasoning":"recovered"}', stderr: '' };
+    };
+    const parsed = await createCliJudgeCompletion({ cli: 'cursor-agent', execFile, exists: () => false })({
+      model: 'cursor-grok-4.6-medium',
+      prompt: 'grade schema-03',
+      apiKey: 'cli'
+    });
+    assert.equal(attempts, 2);
+    assert.equal(parsed.score, 'PASS');
+    assert.equal(parsed.reasoning, 'recovered');
+  });
+
   it('explains ENOENT with the cursor-agent install path', async () => {
     const execFile: ExecFileFn = async () => {
       const err = new Error('spawn cursor-agent ENOENT') as NodeJS.ErrnoException;

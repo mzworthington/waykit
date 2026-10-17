@@ -36,7 +36,7 @@ describe('docs mermaid fences', () => {
     const markdown = fs.readFileSync(path.join(kitRoot, 'SOPs/subagent-launch.md'), 'utf8');
     const mermaidBlocks = splitFenceSegments(markdown).filter((segment) => segment.kind === 'mermaid');
     expect(mermaidBlocks.length).toBeGreaterThanOrEqual(1);
-    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict' });
     const launch = mermaidBlocks.find((block) =>
       block.code.includes('Parent->>Child: Task prompt from wk agents launch-prompt')
     );
@@ -53,7 +53,7 @@ describe('docs mermaid fences', () => {
   });
 
   it('rejects sequence messages that contain a semicolon, even when quoted', async () => {
-    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict' });
     await expect(mermaid.parse('sequenceDiagram\n  A->>B: foo; bar\n')).rejects.toThrow(/Parse error/);
     await expect(mermaid.parse('sequenceDiagram\n  A->>B: "foo; bar"\n')).rejects.toThrow(/Parse error/);
     const parsed = await mermaid.parse('sequenceDiagram\n  A->>B: foo, bar\n');
@@ -67,13 +67,13 @@ describe('docs mermaid fences', () => {
     );
     const mermaidBlocks = splitFenceSegments(markdown).filter((segment) => segment.kind === 'mermaid');
     expect(mermaidBlocks).toHaveLength(1);
-    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict' });
     const parsed = await mermaid.parse(mermaidBlocks[0]!.code);
     expect(parsed).toMatchObject({ diagramType: 'sequence' });
   });
 
   it('parses every mermaid fence in published docs, skills, and README', async () => {
-    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose' });
+    mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'strict' });
     const failures: string[] = [];
     for (const file of publishedMarkdownFiles()) {
       const markdown = fs.readFileSync(file, 'utf8');
