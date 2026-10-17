@@ -12,6 +12,10 @@ overrides:
   # devalue GHSA stringify shared memory / stringifyAsync rejection; 5.9.3+.
   devalue: '>=5.9.4'
   http-cache-semantics: '>=4.3.0'
+  sharp: '>=0.35.5'
+  source-map-js: '>=1.2.2'
+  smol-toml: '>=1.9.0'
+  katex: '>=0.18.2'
   chevrotain: 12.0.0
   # mermaid still resolves DOMPurify 3.4.15; 3.4.16 is the current patch.
   dompurify: '>=3.4.16'
