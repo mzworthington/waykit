@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-18
+
+### ⚙️ Refactoring & Performance
+
+- *(quality-loops)* Enhance vendor PR handling and update documentation
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Bump the npm-minor-patch group across 1 directory with 10 updates
+
 ## 2026-10-17
 
 ### 🚀 Features
