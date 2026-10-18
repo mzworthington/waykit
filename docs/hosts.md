@@ -52,7 +52,7 @@ Coding-agent **token / cost / trace** export is host OTLP into community SigNoz 
 
 ## Cloud Agent and Automations
 
-A Cloud Agent or Cursor Automation does **not** read the local `~/.cursor/mcp.json` that `wk mcp --install` writes. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on the Cursor dashboard if unattended loops need them. For Cloud Agent traces, also connect SigNoz Cloud hosted MCP and point OTLP at Cloud ingest — localhost SigNoz is unreachable. Missing tools → stop **BLOCKED**; do not invent counts. Operator CLI: `wk loops status` / `wk loops setup --write`. [quality-loops](/SOPs/quality-loops). [MCP library](/SOPs/mcp-library). [coding-agent observability](/SOPs/coding-agent-observability).
+A Cloud Agent or Cursor Automation does **not** read the local `~/.cursor/mcp.json` that `wk mcp --install` writes. Connect GitHub, Linear, PostHog, Cloudflare Observability, and SonarQube on the Cursor dashboard if unattended loops need them. The public build monitor (`https://monitor.mzworthington.co.uk/mcp`) is on kit `default`; connect that URL on the dashboard when a Cloud Agent should read aggregated CI status. For Cloud Agent traces, also connect SigNoz Cloud hosted MCP and point OTLP at Cloud ingest — localhost SigNoz is unreachable. Missing tools → stop **BLOCKED**; do not invent counts. Operator CLI: `wk loops status` / `wk loops setup --write`. [quality-loops](/SOPs/quality-loops). [MCP library](/SOPs/mcp-library). [coding-agent observability](/SOPs/coding-agent-observability).
 
 ## EDD vs hosts
 

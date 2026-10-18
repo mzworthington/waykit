@@ -24,6 +24,7 @@ depends-on:
   - agent-pre-commit
 mcp:
   - github
+  - build-monitor
 tools:
   - read
   - write
@@ -31,7 +32,7 @@ disable-model-invocation: false
 ---
 # Pipeline Profile
 
-House stack: **GitHub Actions** + **Environments** + **OIDC**. Implementation notes: [github-actions.md](github-actions.md). Releases: [SOPs/release.md](../../SOPs/release.md). IaC content: [profile-iac](../profile-iac/SKILL.md).
+House stack: **GitHub Actions** + **Environments** + **OIDC**. Implementation notes: [github-actions.md](github-actions.md). Releases: [SOPs/release.md](../../SOPs/release.md). IaC content: [profile-iac](../profile-iac/SKILL.md). Aggregated CI status for watched repos is the **build-monitor** MCP on `default` (`get_build_status`, `get_repo_status`, `list_attention`). Wait `retry_after_seconds`. It does not poll GitHub or CircleCI.
 
 ## Invariants
 

@@ -1,5 +1,5 @@
 {
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Registry of MCP servers managed by the agent lifecycle kit.",
   "servers": [
     {
@@ -281,6 +281,16 @@
       "triggers": ["SigNoz", "OTLP", "gen_ai", "token usage", "agent cost", "coding-agent traces", "cloud agent traces"],
       "requiredEnv": ["SIGNOZ_URL", "SIGNOZ_API_KEY"],
       "enabledByDefault": false
+    },
+    {
+      "id": "build-monitor",
+      "name": "Build monitor",
+      "summary": "Public CI status for repos watched by monitor.mzworthington.co.uk (GitHub Actions and CircleCI).",
+      "transport": "http",
+      "phases": ["debug", "impl", "audit"],
+      "triggers": ["CI", "GitHub Actions", "CircleCI", "build status", "failed workflow", "build monitor"],
+      "requiredEnv": [],
+      "enabledByDefault": true
     }
   ]
 }

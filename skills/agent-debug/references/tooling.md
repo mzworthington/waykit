@@ -6,6 +6,7 @@ Read when choosing how to gather evidence. Procedure stays in [SOPs/hypothesis-d
 |------|------|
 | Init board | `wk debug-board` |
 | Failed Actions logs | `wk debug-ci` ([gh](https://cli.github.com/)) |
+| Aggregated CI status | **build-monitor** MCP (`get_build_status`, `get_repo_status`, `list_attention`). Wait `retry_after_seconds`. Does not poll GitHub or CircleCI. |
 | Prior cloud-agent context | `cursor-cloud` MCP: `list-cloud-agents` → `batch-fetch-details` (transcripts via subagents) |
 | Instrumented deep dive | Cursor **debug** subagent / Debug mode (hypothesis + runtime logs) |
 | UI verify | computerUse / browser / RecordScreen - required for visual bugs |
