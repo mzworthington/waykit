@@ -44,6 +44,10 @@ describe('vendor PR loop (Dependabot / CodeQL)', () => {
     });
   });
 
+  it('skips a grouped Dependabot version bump instead of paying it down', () => {
+    assert.deepEqual(decideVendorLoop({ kind: 'grouped-version-bump' }), { action: 'skip' });
+  });
+
   it('updates the existing vendor PR for a high alert with a clear file and line', () => {
     assert.deepEqual(
       decideVendorLoop(
@@ -136,5 +140,10 @@ describe('vendor PR catalog (SOP and Automation prompt)', () => {
     assert.match(prompt, /Noisy or product-decision findings: comment why and do not churn code/);
     assert.match(prompt, /No auto-merge/);
     assert.match(prompt, /Do not rewrite Actions pins from tags to SHAs/);
+    assert.match(sop, /grouped Dependabot version bump/i);
+    assert.match(sop, /agent-security/);
+    assert.match(prompt, /grouped Dependabot version bump/i);
+    assert.match(prompt, /agent-security/);
+    assert.match(prompt, /draft PR only/);
   });
 });

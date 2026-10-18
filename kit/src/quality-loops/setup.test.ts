@@ -85,7 +85,10 @@ describe('setupQualityLoops', () => {
     assert.match(result.preview, /Cron \(UTC\): `0 8 \* \* 1`/);
     assert.doesNotMatch(result.preview, /Cron \(UTC\): `0 11,15 \* \* 1-5`/);
     assert.match(result.preview, /Skip unless: the triggering required check is red/);
-    assert.match(result.preview, /Skip unless: the pull request is Dependabot or CodeQL/);
+    assert.match(
+      result.preview,
+      /Skip unless: the event is a Dependabot security alert, a CodeQL alert, or a Dependabot security-update pull request/
+    );
     assert.match(result.preview, /Cap: at most 1 item this run/);
     assert.doesNotMatch(result.preview, /every hour/i);
   });

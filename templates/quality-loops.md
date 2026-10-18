@@ -43,7 +43,7 @@ wk mcp sonar. Run sonarqube-findings triage. Default profile BLOCKER, HIGH, and 
 ## Keep Dependabot and CodeQL as vendor PRs
 
 ```text
-Dependabot and CodeQL stay on their vendor PRs. Review or keep a Dependabot PR merge-ready. Do not replace the lockfile change with an unrelated rewrite. For a high or critical alert with a clear file and line, update the existing vendor PR or open one draft PR keyed to that alert number. A duplicate tick updates the same PR. Noisy or product-decision findings: comment why and do not churn code. No auto-merge. Do not rewrite Actions pins from tags to SHAs.
+Dependabot and CodeQL stay on their vendor PRs. Start from the triggering security alert or security-update pull request. Skip a grouped Dependabot version bump. Review or keep a Dependabot PR merge-ready when it is a security update. Do not replace the lockfile change with an unrelated rewrite. For a high or critical alert with a clear file and line, update the existing vendor PR or open one draft PR keyed to that alert number, then hand the diff to agent-security. Draft PR only. A duplicate tick updates the same PR. Noisy or product-decision findings: comment why and do not churn code. No auto-merge. Do not rewrite Actions pins from tags to SHAs.
 ```
 
 ## Hygiene

@@ -10,6 +10,7 @@ export type VendorSeverity =
 
 export type VendorLoopInput =
   | { kind: 'dependabot-pr' }
+  | { kind: 'grouped-version-bump' }
   | {
       kind: 'alert';
       source: VendorSource;
@@ -25,6 +26,7 @@ export type VendorLoopInput =
     };
 
 export type VendorLoopDecision =
+  | { action: 'skip' }
   | { action: 'hygiene'; rewriteLockfile: false; autoMerge: false }
   | { action: 'update-pr'; pr: number; fingerprint: string; autoMerge: false }
   | { action: 'open-draft-pr'; fingerprint: string; autoMerge: false }
@@ -53,6 +55,10 @@ export function vendorAlertFingerprint(
 }
 
 export function decideVendorLoop(input: VendorLoopInput): VendorLoopDecision {
+  if (input.kind === 'grouped-version-bump') {
+    return { action: 'skip' };
+  }
+
   if (input.kind === 'dependabot-pr') {
     return { action: 'hygiene', rewriteLockfile: false, autoMerge: false };
   }

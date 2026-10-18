@@ -40,7 +40,7 @@ Fingerprint tickets (`source:repo:stable-id`; RUM `source:<owning-repo>:rum:<hos
 
 ## Vendor PRs
 
-Merge-ready hygiene. Do not rewrite the lockfile. No auto-merge. High alert with file and line: update the vendor PR or one draft keyed to the alert number (`dependabot|codeql:<repo>:<n>`). Duplicate tick updates that PR. Next: agent-security. Noisy: comment why. Do not churn code.
+Merge-ready hygiene. Do not rewrite the lockfile. No auto-merge. The loop starts from a Dependabot security alert, a CodeQL alert, or a Dependabot security-update pull request. Skip a grouped Dependabot version bump. High alert with file and line: update the vendor PR or one draft keyed to the alert number (`dependabot|codeql:<repo>:<n>`). Duplicate tick updates that PR. Next: agent-security. Draft PR only. Noisy: comment why. Do not churn code.
 
 ## Allowlist
 

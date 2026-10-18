@@ -167,7 +167,13 @@ describe('kit quality-loop catalog', () => {
       }
     }
     assert.equal(catalog.automations.find((item) => item.id === 'failed-check')?.skipUnless, 'the triggering required check is red');
-    assert.equal(catalog.automations.find((item) => item.id === 'vendor-pr')?.skipUnless, 'the pull request is Dependabot or CodeQL');
+    const vendor = catalog.automations.find((item) => item.id === 'vendor-pr');
+    assert.equal(vendor?.trigger, 'GitHub Dependabot or CodeQL alert, or security-update pull request');
+    assert.equal(vendor?.opensPr, true);
+    assert.equal(
+      vendor?.skipUnless,
+      'the event is a Dependabot security alert, a CodeQL alert, or a Dependabot security-update pull request'
+    );
     assert.equal(catalog.automations.find((item) => item.id === 'work-picker')?.cron, '0 8 * * 1');
   });
 

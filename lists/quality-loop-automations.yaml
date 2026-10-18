@@ -77,15 +77,15 @@ automations:
     max_items_per_run: 1
   - id: vendor-pr
     name: Keep Dependabot and CodeQL as vendor PRs
-    trigger: GitHub pull request opened or pushed
+    trigger: GitHub Dependabot or CodeQL alert, or security-update pull request
     repo: single
     mcp:
       - GitHub
-    opens_pr: false
+    opens_pr: true
     prompt_heading: Keep Dependabot and CodeQL as vendor PRs
     cron: null
     max_items_per_run: 1
-    skip_unless: the pull request is Dependabot or CodeQL
+    skip_unless: the event is a Dependabot security alert, a CodeQL alert, or a Dependabot security-update pull request
   - id: hygiene
     name: Hygiene
     trigger: Schedule
