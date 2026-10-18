@@ -2,6 +2,10 @@
 
 ## 2026-10-18
 
+### 🚀 Features
+
+- *(mcp)* Add the public build monitor to default
+
 ### ⚙️ Refactoring & Performance
 
 - *(quality-loops)* Enhance vendor PR handling and update documentation
