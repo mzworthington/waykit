@@ -36,6 +36,7 @@ mcp:
   - cloudflare
   - cloudflare-observability
   - linear
+  - build-monitor
 tools:
   - read
   - grep

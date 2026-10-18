@@ -21,7 +21,7 @@ Do not commit or push unless the user explicitly asks.
 | Architecture / clean-code detail | [CODING_PHILOSOPHY.md](./CODING_PHILOSOPHY.md) or kit-knowledge `get_philosophy_section` |
 | Feature routing / multi-phase | [agent-orchestrator](./skills/agent-orchestrator/SKILL.md) |
 | Phase work | Matching `skills/agent-*` only for that phase |
-| Stack rules | Matching `lang-*` / `framework-*` / `profile-*` after detecting the codebase |
+| Stack rules | Matching `lang-*` / `framework-*` / `profile-*` for the repo |
 | CI/CD / GitHub Actions | [profile-pipeline](./skills/profile-pipeline/SKILL.md) |
 | Catalog / XFN matrix | [SOPs/behavior-catalog-and-xfn.md](./SOPs/behavior-catalog-and-xfn.md) during Design |
 | Debug / RCA | [agent-debug](./skills/agent-debug/SKILL.md) + [SOPs/hypothesis-driven-debug.md](./SOPs/hypothesis-driven-debug.md) |
@@ -34,6 +34,7 @@ Do not commit or push unless the user explicitly asks.
 | Cross-session facts | **memory** MCP (glossary/SLO/prefs; never secrets) |
 | Vendor/framework API docs | **context7** MCP |
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |
+| CI status | **build-monitor** on `default` |
 | Warp Factory tasks | **warp-factory** MCP (`wk mcp warp --install`) |
 | PostHog / agent tokens | [agent-posthog](./skills/agent-posthog/SKILL.md) (`wk mcp posthog`); tokens/cost: [coding-agent-observability](./SOPs/coding-agent-observability.md) (community SigNoz Docker; Cloud Agents → SigNoz Cloud) |
 | Signals → Linear | [quality-loops](./SOPs/quality-loops.md) (`wk loops`); PostHog [product-signal-intake](./SOPs/product-signal-intake.md); Sonar [sonarqube-findings](./SOPs/sonarqube-findings.md) |

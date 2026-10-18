@@ -1,0 +1,15 @@
+{
+  "id": "build-monitor",
+  "name": "Build monitor",
+  "summary": "Public CI status for repos watched by monitor.mzworthington.co.uk (GitHub Actions and CircleCI).",
+  "homepage": "https://monitor.mzworthington.co.uk",
+  "transport": "http",
+  "phases": ["debug", "impl", "audit"],
+  "triggers": ["CI", "GitHub Actions", "CircleCI", "build status", "failed workflow", "build monitor"],
+  "requiredEnv": [],
+  "mcp": {
+    "build-monitor": {
+      "url": "https://monitor.mzworthington.co.uk/mcp"
+    }
+  }
+}

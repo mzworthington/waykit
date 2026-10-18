@@ -131,6 +131,10 @@ describe('composeMCP', () => {
     assert.ok(body.mcpServers.github);
     assert.ok(body.mcpServers.memory);
     assert.ok(body.mcpServers.context7);
+    assert.equal(
+      body.mcpServers['build-monitor']?.url,
+      'https://monitor.mzworthington.co.uk/mcp'
+    );
     assert.equal(body.mcpServers.notion, undefined);
     assert.equal(body.mcpServers.slack, undefined);
     assertStdioUsesKitTsx(body.mcpServers['kit-knowledge']);
@@ -180,6 +184,21 @@ describe('composeMCP', () => {
     assert.ok(body.mcpServers.memory);
     assert.equal(body.mcpServers.linear, undefined);
     assert.equal(body.mcpServers.context7, undefined);
+    assert.equal(body.mcpServers['build-monitor'], undefined);
+  });
+
+  it('keeps the public build monitor on collab because collab is default plus chat', () => {
+    const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-collab-')), 'mcp.json');
+    composeMCP('collab', out, false, { repoDir: kitRoot, env: {} });
+    const body = JSON.parse(fs.readFileSync(out, 'utf8')) as {
+      mcpServers: Record<string, { url?: string }>;
+    };
+    assert.equal(
+      body.mcpServers['build-monitor']?.url,
+      'https://monitor.mzworthington.co.uk/mcp'
+    );
+    assert.ok(body.mcpServers.notion);
+    assert.ok(body.mcpServers.slack);
   });
 
   it('composes the posthog profile from the kit catalog', () => {

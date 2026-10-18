@@ -35,7 +35,7 @@ mcps/
 
 | Profile | Servers | Install target |
 |---------|---------|----------------|
-| `default` | kit-knowledge, context7, github, memory, linear | `wk mcp default --install` (all hosts) |
+| `default` | kit-knowledge, context7, github, memory, linear, build-monitor | `wk mcp default --install` (all hosts) |
 | `project-example` | context7, github, next-devtools, chrome-devtools, playwright, postgres | `wk mcp project-example --project` |
 | `collab` | default + notion, slack | When the team also uses Notion and Slack |
 | `devtools` | chrome-devtools, next-devtools, playwright | Frontend / XFN project config |
@@ -114,6 +114,7 @@ Secrets never live in this repo. Stdio servers use `${env:VAR}`; Linear/Notion/C
 | posthog | http | OAuth (optional personal API key only for headless; never in repo) |
 | sonarqube | http | `SONARQUBE_TOKEN`, `SONARQUBE_ORG` (Cloud user token; never in repo) |
 | signoz | stdio | `SIGNOZ_URL`, `SIGNOZ_API_KEY`; binary via `mise install` (`github:SigNoz/signoz-mcp-server`) |
+| build-monitor | http | none (public `https://monitor.mzworthington.co.uk/mcp`) |
 
 ## Adding a server
 
@@ -131,6 +132,7 @@ Follow [SOPs/mcp-library.md](../SOPs/mcp-library.md).
 | Cross-session glossary / SLOs | **memory** |
 | Vendor API docs | **context7** |
 | Linear issues / projects | **linear** (on `default`; OAuth on first use) |
+| Aggregated CI status | **build-monitor** (on `default`; public, no token) |
 | Live trackers / browsers / cloud | Phase profiles (`collab`, `devtools`, `ops`, …) |
 
 ### Discipline
