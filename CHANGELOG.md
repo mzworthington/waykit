@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-24
+
+### 🚀 Features
+
+- *(quality-loops)* Declare Cursor automations in Pulumi
+
+### 🐛 Bug Fixes
+
+- *(quality-loops)* Install the Pulumi program with the kit
+
 ## 2026-10-18
 
 ### 🚀 Features
