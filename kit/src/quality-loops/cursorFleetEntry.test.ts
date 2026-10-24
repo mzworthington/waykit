@@ -17,6 +17,16 @@ describe('cursor automation pulumi entry', () => {
     assert.equal(typeof stackEntryExportsPlan, 'function');
   });
 
+  it('belongs to the kit workspace so root typecheck resolves Pulumi', () => {
+    const root = path.resolve(projectDir, '../..');
+    const workspace = parseYaml(fs.readFileSync(path.join(root, 'pnpm-workspace.yaml'), 'utf8')) as {
+      packages?: string[];
+    };
+    assert.ok(workspace.packages?.includes('infra/cursor-automations'));
+    const lockfile = fs.readFileSync(path.join(root, 'pnpm-lock.yaml'), 'utf8');
+    assert.match(lockfile, /^ {2}infra\/cursor-automations:/m);
+  });
+
   it('loads under the Node args Pulumi is configured to pass', () => {
     const manifest = parseYaml(fs.readFileSync(path.join(projectDir, 'Pulumi.yaml'), 'utf8')) as {
       runtime?: { options?: { nodeargs?: string } };
