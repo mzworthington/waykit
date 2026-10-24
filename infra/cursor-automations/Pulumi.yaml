@@ -1,0 +1,16 @@
+name: cursor-automations
+description: Cursor quality-loop automations for every workspace repo
+runtime:
+  name: nodejs
+  options:
+    typescript: true
+    packagemanager: pnpm
+    # Node runs this entry as TypeScript. tsx maps the kit's .js specifiers onto .ts sources.
+    nodeargs: "--import tsx/esm"
+packages:
+  cursor:
+    source: pulumi/pulumi/terraform-provider
+    version: 1.5.0
+    parameters:
+      - cursor/cursor
+      - 0.8.0

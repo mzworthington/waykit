@@ -1,0 +1,10 @@
+{
+  "name": "cursor-automations",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "@pulumi/cursor": "file:sdks/cursor",
+    "@pulumi/pulumi": "^3.255.0"
+  }
+}

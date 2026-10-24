@@ -1,0 +1,7 @@
+packages:
+  - "."
+
+allowBuilds:
+  '@pulumi/cursor@file:sdks/cursor': true
+  esbuild: true
+  protobufjs: true
