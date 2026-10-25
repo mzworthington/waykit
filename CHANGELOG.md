@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-25
+
+### ⚙️ Refactoring & Performance
+
+- *(quality-loops)* Generate the Cursor Pulumi SDK on install
+
 ## 2026-10-24
 
 ### 🚀 Features
