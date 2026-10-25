@@ -48,7 +48,7 @@ function retryAttempts(): number {
   return Math.min(8, Math.floor(raw));
 }
 
-function backoffMs(attemptZeroBased: number): number {
+export function providerRetryBackoffMs(attemptZeroBased: number): number {
   const base = Number(process.env.KIT_EVAL_RETRY_BACKOFF_MS ?? '500');
   const step = Number.isFinite(base) && base >= 0 ? base : 500;
   return step * 2 ** attemptZeroBased;
@@ -77,7 +77,7 @@ export async function withProviderRetry<T>(
       if (!isRetryableProviderFailure(err) || i === attempts - 1) {
         throw err;
       }
-      await sleep(backoffMs(i));
+      await sleep(providerRetryBackoffMs(i));
     }
   }
   throw last;

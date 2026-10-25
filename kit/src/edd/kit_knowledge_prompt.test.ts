@@ -50,4 +50,37 @@ describe('kit knowledge live routing hints', () => {
     assert.match(cliPrompt, /get_sop name=subagent-launch/);
     assert.match(cliPrompt, /never get_entity/i);
   });
+
+  it('opens conventional-commits for where pull request titles are documented, not search_kit', () => {
+    const prompt = fs.readFileSync(path.join(kitRoot, 'evals/edd/kit_knowledge_prompt.md'), 'utf8');
+    assert.match(
+      prompt,
+      /title pull requests[^\n]*`get_sop` `conventional-commits`[^\n]*not `search_kit`/i
+    );
+
+    const getSop = JSON.parse(
+      fs.readFileSync(path.join(kitRoot, 'evals/edd/tools/get_sop.json'), 'utf8')
+    ) as { description: string };
+    assert.match(getSop.description, /name=conventional-commits instead of search_kit/);
+
+    const searchKit = JSON.parse(
+      fs.readFileSync(path.join(kitRoot, 'evals/edd/tools/search_kit.json'), 'utf8')
+    ) as { description: string };
+    assert.match(searchKit.description, /name=conventional-commits instead of search_kit/);
+
+    const server = fs.readFileSync(
+      path.join(kitRoot, 'mcps/servers/kit-knowledge/src/server.ts'),
+      'utf8'
+    );
+    assert.match(server, /name=conventional-commits instead of search_kit/);
+
+    const cliPrompt = buildCliAgentPrompt({
+      systemPrompt: prompt,
+      messages: [
+        { role: 'user', content: 'Where do we document how to title pull requests in this kit?' }
+      ],
+      tools: [{ name: 'get_sop' }, { name: 'search_kit' }]
+    });
+    assert.match(cliPrompt, /get_sop name=conventional-commits \(not search_kit\)/);
+  });
 });
