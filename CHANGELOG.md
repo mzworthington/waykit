@@ -2,6 +2,10 @@
 
 ## 2026-10-25
 
+### 🐛 Bug Fixes
+
+- *(edd)* Retry live CLI 503s and route PR titles to get_sop
+
 ### ⚙️ Refactoring & Performance
 
 - *(quality-loops)* Generate the Cursor Pulumi SDK on install
