@@ -2,11 +2,13 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { runLlmJudge, runCriteriaJudge, runTaskCompletionJudge } from './run-judges.js';
 import {
+  cliFailureRetryBudget,
   createCliJudgeCompletion,
   parseJudgeCliStdout,
   resolveJudgeApiKey,
   resolveJudgeBackend,
   resolveJudgeCompletion,
+  spawnCapturedCli,
   type ExecFileFn
 } from './judge-provider.js';
 
@@ -171,6 +173,48 @@ describe('createCliJudgeCompletion', () => {
     assert.equal(attempts, 2);
     assert.equal(parsed.score, 'PASS');
     assert.equal(parsed.reasoning, 'recovered');
+  });
+
+  it('retries a transient HTTP 503 from the judge CLI', async () => {
+    let attempts = 0;
+    const execFile: ExecFileFn = async () => {
+      attempts += 1;
+      if (attempts === 1) {
+        throw new Error('CLI exited 1: Error: [unavailable] HTTP 503');
+      }
+      return { stdout: '{"score":"PASS","reasoning":"recovered"}', stderr: '' };
+    };
+    const parsed = await createCliJudgeCompletion({
+      cli: 'cursor-agent',
+      execFile,
+      exists: () => false,
+      sleep: async () => undefined
+    })({
+      model: 'cursor-grok-4.6-medium',
+      prompt: 'grade kit-sop-hdd-01',
+      apiKey: 'cli'
+    });
+    assert.equal(attempts, 2);
+    assert.equal(parsed.score, 'PASS');
+  });
+
+  it('keeps transient HTTP failures on the CLI error so the retry can see them', async () => {
+    await assert.rejects(
+      spawnCapturedCli(
+        process.execPath,
+        ['-e', 'process.stderr.write("Error: [unavailable] HTTP 503\\n"); process.exit(1)'],
+        { encoding: 'utf8', maxBuffer: 1024 * 1024, timeout: 5000 }
+      ),
+      (err: unknown) => err instanceof Error && /HTTP 503/.test(err.message) && cliFailureRetryBudget(err) === 3
+    );
+  });
+
+  it('budgets one retry for timeouts and none for other exits', () => {
+    const timeout = new Error('CLI exited 143') as NodeJS.ErrnoException;
+    timeout.code = 'ETIMEDOUT';
+    assert.equal(cliFailureRetryBudget(timeout), 2);
+    assert.equal(cliFailureRetryBudget(new Error('CLI exited 1')), 1);
+    assert.equal(cliFailureRetryBudget(new Error('CLI exited 1: HTTP 502')), 3);
   });
 
   it('explains ENOENT with the cursor-agent install path', async () => {

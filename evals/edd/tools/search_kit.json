@@ -1,6 +1,6 @@
 {
   "name": "search_kit",
-  "description": "Search kit philosophy, SOPs, skill heads, and docs. Returns short excerpts - not full files. Use for kit questions; never invent SOP or philosophy content.",
+  "description": "Search kit philosophy, SOPs, skill heads, and docs. Returns short excerpts - not full files. Use for kit questions that are not one known SOP; never invent SOP or philosophy content. Where pull request titles are documented, call get_sop with name=conventional-commits instead of search_kit.",
   "inputSchema": {
     "type": "object",
     "required": ["query"],

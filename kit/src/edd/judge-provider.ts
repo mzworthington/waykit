@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { isLocalModelId, judgeBackendForStyle, resolveEvalRun, type JudgeBackend } from './eval-style.js';
 import { tryParseJsonObject } from './parse-json-object.js';
-import { ProviderHttpError, withProviderRetry } from './provider-retry.js';
+import { ProviderHttpError, providerRetryBackoffMs, withProviderRetry } from './provider-retry.js';
 
 /**
  * Driven port: complete a judge prompt and return parsed JSON.
@@ -33,15 +33,27 @@ export type ExecFileFn = (
   }
 ) => Promise<{ stdout: string; stderr: string }>;
 
-/** Spawn a headless assistant CLI; capture stdout, inherit stderr, optionally tee stdout. */
+function cliExitDetail(stderr: string, stdout: string): string {
+  const fromErr = stderr.trim().replace(/\s+/g, ' ');
+  if (fromErr) return fromErr.slice(0, 400);
+  return stdout.trim().replace(/\s+/g, ' ').slice(0, 200);
+}
+
+/** Spawn a headless assistant CLI; capture stdout, forward stderr, and keep it on failures. */
 export const spawnCapturedCli: ExecFileFn = async (file, args, options) => {
   return new Promise((resolve, reject) => {
-    const child = spawn(file, args, { stdio: ['ignore', 'pipe', 'inherit'] });
+    const child = spawn(file, args, { stdio: ['ignore', 'pipe', 'pipe'] });
     const chunks: Buffer[] = [];
+    const errChunks: Buffer[] = [];
     child.stdout?.on('data', (chunk: Buffer | string) => {
       const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
       chunks.push(buf);
       options.onStdout?.(buf.toString('utf8'));
+    });
+    child.stderr?.on('data', (chunk: Buffer | string) => {
+      const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+      errChunks.push(buf);
+      process.stderr.write(buf);
     });
     const timer = setTimeout(() => {
       child.kill('SIGTERM');
@@ -53,11 +65,15 @@ export const spawnCapturedCli: ExecFileFn = async (file, args, options) => {
     child.on('close', (code) => {
       clearTimeout(timer);
       const stdout = Buffer.concat(chunks).toString('utf8');
+      const stderr = Buffer.concat(errChunks).toString('utf8');
       if (code === 0) {
-        resolve({ stdout, stderr: '' });
+        resolve({ stdout, stderr });
         return;
       }
-      const err = new Error(`CLI exited ${code ?? 'null'}`) as NodeJS.ErrnoException;
+      const detail = cliExitDetail(stderr, stdout);
+      const err = new Error(
+        detail ? `CLI exited ${code ?? 'null'}: ${detail}` : `CLI exited ${code ?? 'null'}`
+      ) as NodeJS.ErrnoException;
       if (code === null || code === 143) err.code = 'ETIMEDOUT';
       reject(err);
     });
@@ -212,11 +228,53 @@ export function isSpawnEnoent(err: unknown): boolean {
   return Boolean(err && typeof err === 'object' && 'code' in err && err.code === 'ENOENT');
 }
 
+const TRANSIENT_CLI_HTTP = /\[unavailable\]|\bHTTP (?:429|502|503|504)\b/;
+
 function isCliTimeout(err: unknown): boolean {
   if (!(err instanceof Error)) return false;
   const code = (err as NodeJS.ErrnoException).code;
   if (code === 'ETIMEDOUT') return true;
   return /CLI exited 143/.test(err.message);
+}
+
+/**
+ * Timeouts get one retry. Transient provider HTTP (429/502/503/504, `[unavailable]`)
+ * gets three attempts. Missing binaries and other exits do not retry.
+ */
+export function cliFailureRetryBudget(err: unknown): number {
+  if (!(err instanceof Error)) return 1;
+  const code = (err as NodeJS.ErrnoException).code;
+  if (code === 'ENOENT') return 1;
+  if (isCliTimeout(err)) return 2;
+  if (TRANSIENT_CLI_HTTP.test(err.message)) return 3;
+  return 1;
+}
+
+export async function withCliAttempts<T>(
+  op: () => Promise<T>,
+  sleep?: (ms: number) => Promise<void>
+): Promise<T> {
+  const maxAttempts = 3;
+  let last: unknown;
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      return await op();
+    } catch (err) {
+      last = err;
+      if (attempt + 1 >= cliFailureRetryBudget(err)) throw err;
+      if (err instanceof Error && TRANSIENT_CLI_HTTP.test(err.message)) {
+        const wait = providerRetryBackoffMs(attempt);
+        if (sleep) {
+          await sleep(wait);
+        } else if (wait > 0) {
+          await new Promise<void>((resolve) => {
+            setTimeout(resolve, wait);
+          });
+        }
+      }
+    }
+  }
+  throw last;
 }
 
 export function assistantCliMissingMessage(role: 'Judge' | 'Agent', command: string): string {
@@ -243,6 +301,8 @@ export interface CreateCliJudgeCompletionOptions {
   exists?: (filePath: string) => boolean;
   /** Mirror child stdout while it is still captured for JSON parsing. */
   onStdout?: (chunk: string) => void;
+  /** Test hook for transient-HTTP backoff. Production uses KIT_EVAL_RETRY_BACKOFF_MS. */
+  sleep?: (ms: number) => Promise<void>;
 }
 
 /**
@@ -262,30 +322,25 @@ export function createCliJudgeCompletion(options: CreateCliJudgeCompletionOption
 
   return async (input) => {
     const args = buildArgs({ prompt: input.prompt, model: input.model });
-    const attempts = 2;
-    let last: unknown;
-    for (let attempt = 0; attempt < attempts; attempt++) {
-      try {
-        const { stdout } = await execFile(command, args, {
-          encoding: 'utf8',
-          maxBuffer: 8 * 1024 * 1024,
-          timeout: timeoutMs,
-          onStdout: options.onStdout
-        });
-        return parseJudgeCliStdout(stdout);
-      } catch (err) {
-        last = err;
-        if (isSpawnEnoent(err)) {
-          throw new Error(assistantCliMissingMessage('Judge', command));
-        }
-        if (!isCliTimeout(err) || attempt === attempts - 1) {
-          const message = err instanceof Error ? err.message : String(err);
-          throw new Error(`Judge CLI (${command}) failed: ${message}`);
-        }
+    try {
+      const { stdout } = await withCliAttempts(
+        () =>
+          execFile(command, args, {
+            encoding: 'utf8',
+            maxBuffer: 8 * 1024 * 1024,
+            timeout: timeoutMs,
+            onStdout: options.onStdout
+          }),
+        options.sleep
+      );
+      return parseJudgeCliStdout(stdout);
+    } catch (err) {
+      if (isSpawnEnoent(err)) {
+        throw new Error(assistantCliMissingMessage('Judge', command));
       }
+      const message = err instanceof Error ? err.message : String(err);
+      throw new Error(`Judge CLI (${command}) failed: ${message}`);
     }
-    const message = last instanceof Error ? last.message : String(last);
-    throw new Error(`Judge CLI (${command}) failed: ${message}`);
   };
 }
 

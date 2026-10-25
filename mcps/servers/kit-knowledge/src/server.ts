@@ -33,7 +33,7 @@ const TOOLS = [
   {
     name: "search_kit",
     description:
-      "Search kit philosophy, SOPs, skill heads, and docs. Returns short excerpts - not full files.",
+      "Search kit philosophy, SOPs, skill heads, and docs. Returns short excerpts - not full files. Use for kit questions that are not one known SOP; never invent SOP or philosophy content. Where pull request titles are documented, call get_sop with name=conventional-commits instead of search_kit.",
     inputSchema: {
       type: "object",
       properties: {
@@ -66,7 +66,7 @@ const TOOLS = [
   {
     name: "get_sop",
     description:
-      "Return one SOP file body by stem name (e.g. \"conventional-commits\", \"context-budget\", \"subagent-launch\"). Use this when the user asks to open a kit SOP, including launching a host subagent (name=subagent-launch). Truncated if very long.",
+      "Return one SOP file body by stem name (e.g. \"conventional-commits\", \"context-budget\", \"subagent-launch\"). Use this when the user asks to open a kit SOP, including launching a host subagent (name=subagent-launch). Where pull request titles or commit subjects are documented, call this with name=conventional-commits instead of search_kit. Truncated if very long.",
     inputSchema: {
       type: "object",
       properties: {

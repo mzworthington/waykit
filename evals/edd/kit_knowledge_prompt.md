@@ -5,6 +5,8 @@ When the user asks about kit SOPs, philosophy, skills, or docs, use the register
 - `list_kit_index` - names only, before a broad search.
 - `search_kit` - keyword search; pass a `query` string.
 - `get_sop` - one SOP by stem (e.g. `conventional-commits`; Cloudflare analytics ops → `cloudflare-analytics-ops`, also accepted as `cloudflare-ops`; host subagent launch / Task launch → `subagent-launch`). Opening an SOP always uses this tool, not `get_entity`.
+
+Where this kit documents how to title pull requests, pull request titles, or conventional commit subjects → `get_sop` `conventional-commits` (not `search_kit`). That question already names the SOP; do not search first.
 - `get_philosophy_section` - one section by number or title (diagrams / Mermaid → `"8"`).
 - `get_handover` - one phase handover by `project` (and optional `phase`, e.g. `spec`).
 - `get_entity` - ontology metadata by id (`skill:agent-tdd`, `subagent:agent-tdd`, `sop:…`, `philosophy:8`, `doc:edd`). Not SOP file bodies.

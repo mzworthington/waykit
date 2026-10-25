@@ -1,6 +1,6 @@
 {
   "name": "get_sop",
-  "description": "Return one SOP file body by stem name (e.g. conventional-commits, context-budget, subagent-launch). Use this when the user asks to open a kit SOP, including launching a host subagent (name=subagent-launch). Truncated if very long.",
+  "description": "Return one SOP file body by stem name (e.g. conventional-commits, context-budget, subagent-launch). Use this when the user asks to open a kit SOP, including launching a host subagent (name=subagent-launch). Where pull request titles or commit subjects are documented, call this with name=conventional-commits instead of search_kit. Truncated if very long.",
   "inputSchema": {
     "type": "object",
     "required": ["name"],

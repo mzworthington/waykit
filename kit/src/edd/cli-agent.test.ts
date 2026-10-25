@@ -232,6 +232,63 @@ describe('createCliAgentDriver', () => {
     assert.equal(result.tool_calls[0]?.name, 'read_architecture_yaml');
   });
 
+  it('retries a transient HTTP 503 from the agent CLI', async () => {
+    let attempts = 0;
+    const execFile: ExecFileFn = async () => {
+      attempts += 1;
+      if (attempts < 3) {
+        throw new Error('CLI exited 1: Error: [unavailable] HTTP 503');
+      }
+      return {
+        stdout: JSON.stringify({
+          content: '',
+          tool_calls: [{ name: 'get_sop', arguments: { name: 'hypothesis-driven-development' } }]
+        }),
+        stderr: ''
+      };
+    };
+    const driver = createCliAgentDriver({
+      cli: 'cursor-agent',
+      execFile,
+      exists: () => false,
+      sleep: async () => undefined
+    });
+    const result = await driver({
+      model: 'cursor-grok-4.6-medium',
+      systemPrompt: 's',
+      messages: [{ role: 'user', content: 'Open the kit SOP for hypothesis-driven development.' }],
+      tools: [{ name: 'get_sop' }],
+      mocks: new Map()
+    });
+    assert.equal(attempts, 3);
+    assert.equal(result.tool_calls[0]?.name, 'get_sop');
+  });
+
+  it('does not retry a non-transient agent CLI exit', async () => {
+    let attempts = 0;
+    const execFile: ExecFileFn = async () => {
+      attempts += 1;
+      throw new Error('CLI exited 1');
+    };
+    const driver = createCliAgentDriver({
+      cli: 'cursor-agent',
+      execFile,
+      exists: () => false,
+      sleep: async () => undefined
+    });
+    await assert.rejects(
+      driver({
+        model: 'cursor-grok-4.6-medium',
+        systemPrompt: 's',
+        messages: [{ role: 'user', content: 'Open the kit SOP for conventional commits.' }],
+        tools: [{ name: 'get_sop' }],
+        mocks: new Map()
+      }),
+      /CLI exited 1/
+    );
+    assert.equal(attempts, 1);
+  });
+
   it('refuses local model ids for the CLI style', () => {
     assert.throws(
       () => resolveCliAgentDriver({ style: 'cli', model: 'scripted', cli: 'claude' }),
