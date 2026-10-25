@@ -14,6 +14,8 @@ overrides:
   chevrotain: 12.0.0
   dompurify: '>=3.4.16'
 
+pnpmfileChecksum: sha256-3CeXmh4SVHLA4/KT1vQd9L4L96d+OF/qPItqQH260hM=
+
 importers:
 
   .:

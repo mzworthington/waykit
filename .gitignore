@@ -64,6 +64,9 @@ out/
 # TDD Guard session state (wk tdd-guard)
 .waykit/tdd-guard/
 
+# Local Pulumi SDK. pnpm install regenerates this from infra/cursor-automations/Pulumi.yaml.
+infra/cursor-automations/sdks/
+
 # OS / editor
 .DS_Store
 *.swp
