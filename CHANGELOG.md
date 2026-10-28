@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-27
+
+### 🐛 Bug Fixes
+
+- *(deps)* Pin DOMPurify, undici, and fast-uri advisories
+
 ## 2026-10-25
 
 ### 🐛 Bug Fixes
