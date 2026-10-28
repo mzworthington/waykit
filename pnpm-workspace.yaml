@@ -20,5 +20,10 @@ overrides:
   smol-toml: '>=1.9.0'
   katex: '>=0.18.2'
   chevrotain: 12.0.0
-  # mermaid still resolves DOMPurify 3.4.15; 3.4.16 is the current patch.
-  dompurify: '>=3.4.16'
+  # DOMPurify GHSA-cg2g-xh64-v4q7, GHSA-mrv2-3pqr-j5jr, GHSA-c6gr-qvv4-5v3f; 3.4.17+.
+  dompurify: '>=3.4.17'
+  # undici 8 GHSA-xjj6-f33q-929c, GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472.
+  # Selector stays on the 8.x line so node-gyp keeps undici 6.
+  "undici@>=8.0.0 <8.12.2": ">=8.12.2"
+  # fast-uri GHSA-w74x-v6f9-j3xg and related host/scheme bugs. ajv stays on 3.x.
+  "fast-uri@>=3.0.0 <3.1.9": ">=3.1.9 <4"
