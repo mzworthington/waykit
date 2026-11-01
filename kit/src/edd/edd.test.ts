@@ -610,7 +610,7 @@ metrics:
     const debug = report.results.find((r) => r.id === 'subagent-debug-skills-01');
     const typo = report.results.find((r) => r.id === 'subagent-parent-skills-01');
     const weather = report.results.find((r) => r.id === 'subagent-ignore-skills-01');
-    assert.equal(review?.passed, true, review?.failures.join(','));
+    assert.equal(review?.passed, true, (review?.failures ?? []).join(','));
     assert.equal(debug?.passed, false);
     assert.ok(debug?.failures.some((f) => f.includes('skills/agent-debug/SKILL.md')));
     assert.equal(typo?.passed, false);
