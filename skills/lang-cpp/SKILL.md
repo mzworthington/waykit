@@ -24,7 +24,7 @@ disable-model-invocation: false
 ---
 # C++ Coding Philosophy
 
-Apply these rules when writing C++. Kit hexagonal / clean-code invariants win on structure. Language safety follows the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) (rule ids in [references/core-guidelines.md](references/core-guidelines.md)). Idioms also take the useful subset of [Mindrally cpp](https://github.com/Mindrally/skills/blob/main/cpp/SKILL.md) and [Alexandrescu](https://github.com/andralex) (types first, `expected`, ScopeGuard, algorithms, zero-overhead). Do not paste guideline prose into code or reviews; cite the rule id and apply it.
+Apply these rules when writing C++. Waykit hexagonal / clean-code invariants win on structure. Language safety follows the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) (rule ids in [references/core-guidelines.md](references/core-guidelines.md)). Idioms also take the useful subset of [Mindrally cpp](https://github.com/Mindrally/skills/blob/main/cpp/SKILL.md) and [Alexandrescu](https://github.com/andralex) (types first, `expected`, ScopeGuard, algorithms, zero-overhead). Do not paste guideline prose into code or reviews; cite the rule id and apply it.
 
 ## Architecture
 

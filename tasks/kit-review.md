@@ -1,5 +1,5 @@
 ---
-title: Agent Kit Review
+title: Waykit review
 kind: task
 frequency: weekly
 triggers:
@@ -8,7 +8,7 @@ triggers:
   - improve agents
   - kit maintenance
 ---
-# Agent Kit Review
+# Waykit review
 
 Run this checklist weekly (or after a major feature) to turn local session lessons into durable kit improvements.
 

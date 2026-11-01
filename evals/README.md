@@ -1,6 +1,6 @@
 # Evaluation Framework (`evals/`)
 
-Kit evaluates two layers: **skill routing** (which specialist activates) and **agent tool use** (EDD alpha: how an agent calls tools in the harness). Use EDD when you change prompts, MCP schemas, or routing.
+Waykit evaluates two layers: **skill routing** (which specialist activates) and **agent tool use** (EDD alpha: how an agent calls tools in the harness). Use EDD when you change prompts, MCP schemas, or routing.
 
 1. **Eval-Driven Development (`evals/edd/`):** YAML + JSONL harness for tool routing, schema match, LLM-as-a-judge, CI gates (`wk eval run|watch|report|ci|shadow|dataset|miss-rate`). Guide: [docs/edd.md](../docs/edd.md) · Suites: [edd/README.md](./edd/README.md).
 2. **Co-located skill evals (`skills/<skill>/evals/eval.json`):** Single-skill output assertions next to `SKILL.md`.
@@ -24,8 +24,8 @@ Together they guard: correct skill activation, architectural conformance, no pro
 │   │   ├── architecture_routing.yaml
 │   │   └── … 
 │   └── suites/
-│       ├── lifecycle-roles.json   # Kit-wide test cases for agent-* specialist roles
-│       ├── stack-profiles.json    # Kit-wide test cases for lang-* and framework-* profiles
+│       ├── lifecycle-roles.json   # Waykit-wide test cases for agent-* specialist roles
+│       ├── stack-profiles.json    # Waykit-wide test cases for lang-* and framework-* profiles
 │       └── routing-matrix.json    # Cross-role routing classification accuracy tests
 └── skills/
     ├── agent-spec/

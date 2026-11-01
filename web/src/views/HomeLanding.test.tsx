@@ -35,7 +35,7 @@ describe('HomeLanding', () => {
     expect(screen.getByRole('link', { name: /romini/i }).getAttribute('href')).toBe(
       'https://github.com/mzworthington/RoMini'
     );
-    expect(screen.queryByRole('region', { name: 'Kit ontology map' })).toBeNull();
+    expect(screen.queryByRole('region', { name: 'Waykit ontology map' })).toBeNull();
     expect(screen.queryByRole('heading', { name: 'The wk CLI' })).toBeNull();
   });
 

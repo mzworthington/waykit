@@ -1,4 +1,4 @@
-name: "Routing: Kit Knowledge MCP"
+name: "Routing: Waykit knowledge MCP"
 dataset: "kit_knowledge.jsonl"
 system_prompt: "kit_knowledge_prompt.md"
 mcp_tools:

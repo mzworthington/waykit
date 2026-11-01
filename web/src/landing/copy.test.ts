@@ -8,6 +8,8 @@ import {
   HOME_CLI_HEADING,
   HOME_EYEBROW,
   HOME_HEADLINE,
+  HOME_INIT,
+  HOME_INSTALL,
   HOME_LEDE,
   HOME_NEXT,
   HOME_USED_IN,
@@ -16,6 +18,17 @@ import {
 } from './copy';
 
 describe('homepage copy', () => {
+  it('says what Waykit is and how to install it without calling the product Kit', () => {
+    const firstScreen = [HOME_EYEBROW, HOME_BRAND, HOME_HEADLINE, HOME_LEDE, HOME_INSTALL, HOME_INIT].join(
+      '\n'
+    );
+    expect(HOME_BRAND).toBe('Waykit');
+    expect(firstScreen).toMatch(/lifecycle/i);
+    expect(firstScreen).toMatch(/install\.sh/);
+    expect(firstScreen).toMatch(/wk init/);
+    expect(firstScreen).not.toMatch(/\bKit\b/);
+  });
+
   it('puts the kit name first, then the job line', () => {
     expect(HOME_EYEBROW).toMatch(/lifecycle/i);
     expect(HOME_BRAND).toBe('Waykit');

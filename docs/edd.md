@@ -2,7 +2,7 @@
 
 Connecting an LLM to MCP tools, APIs, or terminals turns a chatbot into a decision-maker. Failures rarely look like stack traces. They look like a wrong tool, a hallucinated parameter, or an infinite retry loop.
 
-**Status: alpha.** Waykit ships a routing and schema harness you can run in CI. It is not a full EDD framework. There is no prompt registry, no hosted dataset product, no native Anthropic or Gemini judge, and the default merge gate does not call a product LLM. Skill-trigger `wk eval` (no subcommand) only checks which Kit skill should activate. Use this loop when you change prompts, tool schemas, or routing. Do not treat a green `wk eval ci` as proof that the live agent is correct.
+**Status: alpha.** Waykit ships a routing and schema harness you can run in CI. It is not a full EDD framework. There is no prompt registry, no hosted dataset product, no native Anthropic or Gemini judge, and the default merge gate does not call a product LLM. Skill-trigger `wk eval` (no subcommand) only checks which Waykit skill should activate. Use this loop when you change prompts, tool schemas, or routing. Do not treat a green `wk eval ci` as proof that the live agent is correct.
 
 What you do get today:
 
@@ -51,7 +51,7 @@ flowchart LR
 | **Closed-loop telemetry** | Production misses become `.jsonl` cases (`wk eval dataset from-trace`); `wk eval shadow` samples live turns into the suite; `wk eval miss-rate` compares specialist-launch vs skill-picker prod-derived rates. |
 | **Dataset hygiene** | `wk eval dataset lint\|dedupe\|synthesize\|from-trace` keeps suites valid and scalable. |
 
-Bare `wk eval` still validates which Kit skill activates. `wk eval run|watch|report|ci` validates how an agent calls tools. Use EDD whenever you change prompts, tool schemas, or routing.
+Bare `wk eval` still validates which Waykit skill activates. `wk eval run|watch|report|ci` validates how an agent calls tools. Use EDD whenever you change prompts, tool schemas, or routing.
 
 ## Quick start
 
@@ -91,7 +91,7 @@ flowchart TD
 
 ### Cursor Agent CLI as the agent under test
 
-`cursor-agent` is not OpenAI `/chat/completions`. Kit prompts it in `--mode=ask` and expects a JSON envelope `{ "content": "…", "tool_calls": [{ "name": "<eval tool>", "arguments": {} }] }` using only registered eval tools. After a tool call, the harness fills `content` from the mock JSON (quality metrics grade that grounded text). Token totals come from the CLI JSON `usage` object when present (`inputTokens` / `input_tokens` / `prompt_tokens`); otherwise Kit estimates ~4 characters per token. Suite summaries include a rough USD line using `$0.003` per 1k tokens (`DEFAULT_TOKEN_USD_PER_1K`). Override with `wk _EVAL_TOKEN_USD_PER_1K`, or set it to `0` to hide USD. Local/scripted models omit USD. Judge calls use the same `--cli` and `--model`.
+`cursor-agent` is not OpenAI `/chat/completions`. Waykit prompts it in `--mode=ask` and expects a JSON envelope `{ "content": "…", "tool_calls": [{ "name": "<eval tool>", "arguments": {} }] }` using only registered eval tools. After a tool call, the harness fills `content` from the mock JSON (quality metrics grade that grounded text). Token totals come from the CLI JSON `usage` object when present (`inputTokens` / `input_tokens` / `prompt_tokens`); otherwise Waykit estimates ~4 characters per token. Suite summaries include a rough USD line using `$0.003` per 1k tokens (`DEFAULT_TOKEN_USD_PER_1K`). Override with `wk _EVAL_TOKEN_USD_PER_1K`, or set it to `0` to hide USD. Local/scripted models omit USD. Judge calls use the same `--cli` and `--model`.
 
 ```bash
 noglob wk eval run --suite evals/edd/architecture_routing.yaml \

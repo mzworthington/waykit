@@ -64,7 +64,7 @@ You are the master coordinator for the multi-agent software engineering lifecycl
 
 **Memory MCP:** After **spec** and **xfn** handovers, store durable facts (glossary, SLOs, prefs) or record N/A. Never store secrets.
 
-**Kit-knowledge MCP:** Prefer `search_kit` / `get_sop` over bulk-reading SOPs. One MCP profile per session.
+**kit-knowledge MCP:** Prefer `search_kit` / `get_sop` over bulk-reading SOPs. One MCP profile per session.
 
 **Isolated specialists:** Run `wk agents status` before routing. Launch allowlisted roles as host subagents ([SOPs/subagent-launch.md](../../SOPs/subagent-launch.md)). `launch_specialist` is an eval adapter only. Read `COMPLETE`/`BLOCKED` from disk. If skills-only, load the matching `SKILL.md` in this chat instead of launching.
 

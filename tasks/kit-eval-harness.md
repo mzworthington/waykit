@@ -1,5 +1,5 @@
 ---
-title: Kit routing & EDD eval harness
+title: Waykit routing and EDD eval harness
 kind: task
 frequency: on-demand
 triggers:
@@ -10,7 +10,7 @@ triggers:
   - edd
   - eval driven development
 ---
-# Kit routing & EDD eval harness
+# Waykit routing and EDD eval harness
 
 ## A. Orchestrator routing (skill triggers)
 

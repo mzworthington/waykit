@@ -18,7 +18,7 @@ Use this for **official / third-party** Agent Skills (Cloudflare, Vercel, etc.).
 
 | Kind | Location | Update path |
 |------|----------|-------------|
-| Kit lifecycle / stack skills | `skills/agent-*`, `lang-*`, `framework-*` | PRs in this repo |
+| Waykit lifecycle / stack skills | `skills/agent-*`, `lang-*`, `framework-*` | PRs in this repo |
 | Official upstream skills | Cursor user scope via `gh skill` | `wk sync` |
 
 Declared list: [skills/external.lock.json](../skills/external.lock.json).

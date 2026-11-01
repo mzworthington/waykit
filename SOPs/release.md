@@ -31,7 +31,7 @@ artifacts are **GitHub Releases** (`vX.Y.Z` tags). Changelog generation uses
 - [ ] Rollback: previous version / flag off / migration reverse notes
 - [ ] Bets: timebox still open **or** confirm/kill follow-up filed ([hypothesis-driven-development.md](./hypothesis-driven-development.md))
 
-### Kit release automation
+### Waykit release automation
 
 Pipelines (keep these separate on purpose):
 

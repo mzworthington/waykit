@@ -8,7 +8,7 @@ Load this file when the task is a C++ review, lifetime bug, or C-ism cleanup. Ke
 
 Cite the id (`R.11`, `I.11`) and state the kit action. Do not quote long guideline examples.
 
-| Kit concern | First rules to apply |
+| Waykit concern | First rules to apply |
 |-------------|----------------------|
 | Hexagonal leak (HAL in domain) | P.11, SF.1–SF.2, A (architectural ideas) |
 | Lifetime / leaks | P.8, R.1, R.11, R.12, E.6 |

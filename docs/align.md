@@ -64,7 +64,7 @@ First-party adopters (align job on pull requests): [gpio-build-monitor](https://
 | `AGENTS.md` | File exists |
 | Budget | `AGENTS.md` ≤ ~8KB |
 | No bulk-load | Handshake does not require `CODING_PHILOSOPHY.md` before phase work (or it says do not bulk-read) |
-| Kit pointer | Text names `~/.agents` |
+| Waykit pointer | Text names `~/.agents` |
 | Host pointers | `.cursorrules`, `CLAUDE.md`, `GEMINI.md`, `.windsurfrules`, `.github/copilot-instructions.md` |
 | `commit-msg` | Husky, `.githooks`, or `.git/hooks` (enable `.githooks` with `git config core.hooksPath .githooks`) |
 | MCP | Present project MCP files for Cursor, Claude, Copilot, and Antigravity include `wk -knowledge` (`.cursor/mcp.json`, `.mcp.json`, `.vscode/mcp.json`, `.agents/mcp_config.json`). Missing host files are skipped. An empty present file fails and is named. Windsurf has no MCP writer. |
@@ -76,4 +76,4 @@ First-party adopters (align job on pull requests): [gpio-build-monitor](https://
 - Handshake write: `wk init . --mcp default --hook`
 - Host pointers only: `wk export-rules`
 - Community files: `wk doctor`
-- Kit merge bar: `wk check` (this repo, not a product clone)
+- Waykit merge bar: `wk check` (this repo, not a product clone)

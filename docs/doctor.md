@@ -36,7 +36,7 @@ Default license for **kit** class is Unlicense. Other classes get an MIT stub. E
 
 Shared: `README.md`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `AGENTS.md`, PR template, issue templates, Dependabot, CodeQL workflow.
 
-Kit class also requires `.github/CODEOWNERS`.
+The `kit` class also requires `.github/CODEOWNERS`.
 
 Templates live under `templates/community/` in the Waykit checkout. Product copy still needs an `agent-docs` pass after a stub README.
 
@@ -44,5 +44,5 @@ Templates live under `templates/community/` in the Waykit checkout. Product copy
 
 - Handshake: `wk init . --mcp default --hook`
 - Consumer handshake after init: [Consumer align](./align.md) (`wk align .`)
-- Kit merge bar: `wk check` (audit, evals, ontology, context budget). Doctor is not part of that gate.
+- Waykit merge bar: `wk check` (audit, evals, ontology, context budget). Doctor is not part of that gate.
 - Conventional commits: [SOP](/SOPs/conventional-commits)

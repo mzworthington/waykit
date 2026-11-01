@@ -35,7 +35,7 @@ wk model resolve --skill agent-tdd --spec-complete --host antigravity
 
 Cursor’s in-product skill picker and Task `model` slugs are the deepest. Claude Code and Antigravity pick up Agent Skills from their user skill dirs after `wk sync`. Copilot Chat reads `.vscode/mcp.json`; Copilot’s Agent Host also reads workspace `.mcp.json`.
 
-Kit-authored `skills/agent-*` stay in the Waykit clone (`~/.agents/skills`). Hosts that do not walk that tree still need the handshake: read `~/.agents/AGENTS.md`, then load the skill file.
+Waykit-authored `skills/agent-*` stay in the Waykit clone (`~/.agents/skills`). Hosts that do not walk that tree still need the handshake: read `~/.agents/AGENTS.md`, then load the skill file.
 
 Which roles may become Cursor/Claude **subagents** (fresh window) vs stay skills: [subagent allowlist](./subagents.md). Profiles never become agents.
 

@@ -41,7 +41,7 @@ const fixture: OntologyIndex = {
 function explorerRoot(): HTMLElement {
   const root = document.createElement('section');
   root.innerHTML = `
-    <h2 id="ontology-heading">Kit ontology</h2>
+    <h2 id="ontology-heading">Waykit ontology</h2>
     <form class="ontology-toolbar" role="search">
       <input id="ontology-q" type="search" />
       <fieldset class="ontology-types" id="ontology-types"><legend>Show types</legend></fieldset>

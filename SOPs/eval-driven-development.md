@@ -37,7 +37,7 @@ tools:
 
 ## IDEs vs live keys
 
-Cursor, Claude Code, Copilot, and Antigravity load Kit via host pointers and MCP files ([docs/hosts.md](../docs/hosts.md)). Run evals with `--style local`; no provider key. `--style http` POSTs to an OpenAI-compatible `/chat/completions`. `--style cli` shells out to one assistant binary for agent and judge. Key order, nightly vs PR: [docs/edd.md](../docs/edd.md#cursor-claude-copilot-antigravity-and-api-keys).
+Cursor, Claude Code, Copilot, and Antigravity load Waykit via host pointers and MCP files ([docs/hosts.md](../docs/hosts.md)). Run evals with `--style local`; no provider key. `--style http` POSTs to an OpenAI-compatible `/chat/completions`. `--style cli` shells out to one assistant binary for agent and judge. Key order, nightly vs PR: [docs/edd.md](../docs/edd.md#cursor-claude-copilot-antigravity-and-api-keys).
 
 ## CI
 

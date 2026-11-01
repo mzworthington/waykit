@@ -1,4 +1,4 @@
-# Kit lessons (local, per project)
+# Waykit lessons (local, per project)
 
 This directory captures **learnings from real sessions** so the kit can improve over time. Entries stay local and gitignored until you promote them into the shared repository during [kit review](../tasks/kit-review.md).
 

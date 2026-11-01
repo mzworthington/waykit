@@ -93,7 +93,7 @@ Read `references/examples.md` when the brief is vague or the register is unclear
 
 ## Product rules
 
-Sentence case for headings, buttons, menus and modal titles unless the design system says otherwise. On branded marketing, the product name is the hero; headlines must not overpower it. Errors answer what happened, why if useful, what next. Glossary over parallel slogans. Do not leak internals. Numerals for counts. Kit-owned prose: commas, colons, periods or spaced hyphens, not em dashes; no serial (Oxford) comma unless the list is ambiguous ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §8). No passive voice, no error-code-only messages, no dead-end "Are you sure?" confirms. Do not bulk-delete every `, and`: that search matches clause joins, changelogs and code.
+Sentence case for headings, buttons, menus and modal titles unless the design system says otherwise. On branded marketing, the product name is the hero; headlines must not overpower it. Errors answer what happened, why if useful, what next. Glossary over parallel slogans. Do not leak internals. Numerals for counts. Waykit-owned prose: commas, colons, periods or spaced hyphens, not em dashes; no serial (Oxford) comma unless the list is ambiguous ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §8). No passive voice, no error-code-only messages, no dead-end "Are you sure?" confirms. Do not bulk-delete every `, and`: that search matches clause joins, changelogs and code.
 
 ## Module router
 
