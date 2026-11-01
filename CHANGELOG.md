@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-11-01
+
+### 🚀 Features
+
+- *(edd)* Grade skills-only routing on a live model (MZW-72)
+
+### 🐛 Bug Fixes
+
+- *(edd)* Type the skills-only assertion message
+
+### 📚 Documentation
+
+- *(site)* Name Waykit on the homepage and in the docs (MZW-93)
+
 ## 2026-10-27
 
 ### 🐛 Bug Fixes
