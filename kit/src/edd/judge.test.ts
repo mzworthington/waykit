@@ -5,6 +5,7 @@ import {
   buildCriteriaJudgePrompt,
   buildJudgePrompt,
   buildTaskCompletionPrompt,
+  gradeSkillsOnlyCompletion,
   localTaskCompletion
 } from './judge.js';
 
@@ -69,6 +70,52 @@ describe('eval judge prompts', () => {
     });
     assert.match(completion, /return await/);
     assert.match(completion, /async \(\) =>/);
+  });
+
+  it('grades a live skills-only review on the skill path and no launch', () => {
+    const base = {
+      goal: 'load skills/agent-review/SKILL.md',
+      toolCalls: [] as { name: string; arguments: Record<string, unknown> }[]
+    };
+    const named = gradeSkillsOnlyCompletion({
+      ...base,
+      agentResponse: 'Skills-only: load skills/agent-review/SKILL.md in the parent.'
+    });
+    assert.equal(named.score, 'PASS');
+    const installed = gradeSkillsOnlyCompletion({
+      ...base,
+      agentResponse: 'Read ~/.agents/skills/agent-review/SKILL.md and stay in the parent.'
+    });
+    assert.equal(installed.score, 'PASS');
+    const missing = gradeSkillsOnlyCompletion({
+      ...base,
+      agentResponse: 'I will review the PR in the parent.'
+    });
+    assert.equal(missing.score, 'FAIL');
+    assert.match(missing.reasoning, /skills\/agent-review\/SKILL\.md/);
+    const launched = gradeSkillsOnlyCompletion({
+      ...base,
+      toolCalls: [{ name: 'launch_specialist', arguments: { specialist: 'agent-review' } }],
+      agentResponse: 'Launching after naming skills/agent-review/SKILL.md.'
+    });
+    assert.equal(launched.score, 'FAIL');
+    assert.match(launched.reasoning, /launch adapter/);
+  });
+
+  it('fails a live stay-in-parent case that names a specialist skill', () => {
+    const weather = gradeSkillsOnlyCompletion({
+      goal: 'stay in the parent',
+      toolCalls: [],
+      agentResponse: 'Next playbook: skills/agent-review/SKILL.md'
+    });
+    assert.equal(weather.score, 'FAIL');
+    assert.match(weather.reasoning, /next playbook/);
+    const typo = gradeSkillsOnlyCompletion({
+      goal: 'stay in the parent',
+      toolCalls: [],
+      agentResponse: 'Staying in the parent for a tiny typo.'
+    });
+    assert.equal(typo.score, 'PASS');
   });
 
   it('requires goal tokens even when no_tool is set', () => {

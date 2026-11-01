@@ -149,7 +149,7 @@ Full metric table and harness layout: [evals/edd/README.md](../evals/edd/README.
 | Job | Key | Model | Purpose |
 |-----|-----|--------|---------|
 | **Verify** in [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) | unused | `--style local` via `wk check` | Merge gate: harness + keyword routing + safety + recovery |
-| Weekly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `CURSOR_API_KEY` | repo variable `KIT_EVAL_MODEL` (default `cursor-grok-4.6-medium`) | `cursor-agent` paraphrases, prompt-injection, multi-tool, safety |
+| Weekly [`.github/workflows/edd-live.yml`](../.github/workflows/edd-live.yml) | **requires** `CURSOR_API_KEY` | repo variable `KIT_EVAL_MODEL` (default `cursor-grok-4.6-medium`) | `cursor-agent` paraphrases, prompt-injection, multi-tool, safety, skills-only routing |
 | `pnpm check` / `wk check` | unused | `--style local` | Same as Verify, locally |
 
 The scheduled job **fails** if `CURSOR_API_KEY` is empty so a missing secret cannot look green. `workflow_dispatch` may skip with `allow_unkeyed_skip`; the summary then says so. Set the secret with `gh secret set CURSOR_API_KEY --body "$CURSOR_API_KEY"`. Optional `KIT_EVAL_MODEL` overrides the default Cursor model id. Scripted `wk check` in Verify stays the PR merge gate; live remains extra.

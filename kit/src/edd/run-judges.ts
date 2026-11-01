@@ -2,6 +2,8 @@ import {
   buildCriteriaJudgePrompt,
   buildJudgePrompt,
   buildTaskCompletionPrompt,
+  gradeSkillsOnlyCompletion,
+  isSkillsOnlyLiveGoal,
   localCriteriaJudge,
   localJudge,
   localTaskCompletion,
@@ -158,6 +160,12 @@ export async function runTaskCompletionJudge(input: {
   backend?: JudgeBackend;
   complete?: JudgeCompletionPort;
 }): Promise<JudgeVerdict> {
+  if (
+    (input.backend === 'http' || input.backend === 'cli') &&
+    isSkillsOnlyLiveGoal(input.goal)
+  ) {
+    return gradeSkillsOnlyCompletion(input);
+  }
   if (input.noTool) {
     return localTaskCompletion(input);
   }

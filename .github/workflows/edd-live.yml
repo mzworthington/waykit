@@ -106,7 +106,7 @@ jobs:
         run: |
           mkdir -p out/reports
           failed=0
-          for suite in architecture_routing kit_knowledge model_routing cloudflare_ops safety; do
+          for suite in architecture_routing kit_knowledge model_routing cloudflare_ops safety subagent_routing_skills_only; do
             pnpm wk eval ci \
               --suite "evals/edd/${suite}.yaml" \
               --style cli --cli cursor-agent \
@@ -135,6 +135,7 @@ jobs:
             echo "| model_routing | Live plan/review/implement/cheap class selection |"
             echo "| cloudflare_ops | Live Cloudflare RUM / observability MCP routing |"
             echo "| safety | Injection + no-tool refusal under a live model |"
+            echo "| subagent_routing_skills_only | Skills-only parent names the role SKILL.md and does not launch |"
             echo ""
           } >> "$GITHUB_STEP_SUMMARY"
 
