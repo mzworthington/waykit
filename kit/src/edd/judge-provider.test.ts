@@ -283,6 +283,50 @@ describe('runLlmJudge backends', () => {
     assert.equal(verdict.score, 1);
   });
 
+  it('grades skills-only on live HTTP without a hosted judge', async () => {
+    const pass = await runTaskCompletionJudge({
+      prompt: 'Review the PR as an independent audit.',
+      goal: 'load skills/agent-review/SKILL.md',
+      noTool: true,
+      toolCalls: [],
+      toolOutput: null,
+      agentResponse: 'Load skills/agent-review/SKILL.md in the parent.',
+      model: 'gpt-4o-mini',
+      backend: 'http',
+      complete: async () => {
+        throw new Error('hosted judge must not grade skills-only');
+      }
+    });
+    assert.equal(pass.score, 'PASS');
+
+    const miss = await runTaskCompletionJudge({
+      prompt: 'Review the PR as an independent audit.',
+      goal: 'load skills/agent-review/SKILL.md',
+      noTool: true,
+      toolCalls: [],
+      toolOutput: null,
+      agentResponse: 'I will load the review skill.',
+      model: 'gpt-4o-mini',
+      backend: 'http',
+      complete: async () => {
+        throw new Error('hosted judge must not grade skills-only');
+      }
+    });
+    assert.equal(miss.score, 'FAIL');
+
+    const scripted = await runTaskCompletionJudge({
+      prompt: 'Review the PR as an independent audit.',
+      goal: 'load skills/agent-review/SKILL.md',
+      noTool: true,
+      toolCalls: [],
+      toolOutput: null,
+      agentResponse: 'I will load the review skill.',
+      model: 'scripted',
+      backend: 'heuristic'
+    });
+    assert.equal(scripted.score, 'PASS');
+  });
+
   it('does not call a live judge for no_tool task completion', async () => {
     const verdict = await runTaskCompletionJudge({
       prompt: 'What is TDD?',

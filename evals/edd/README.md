@@ -77,7 +77,7 @@ wk eval watch --suite evals/edd/architecture_routing.yaml --target evals/edd
 | `tool_selection` | Correct tool, `expect.no_tool`, or ordered `expect.tools[]` |
 | `schema_match` | Valid JSON object args (type/shape; not value meaning) |
 | `argument_correctness` | `expect.arguments_contains` / per-call args match intent meaning |
-| `task_completion` | User goal achieved (`expect.goal` or expected tool plan); scripted heuristic or live judge |
+| `task_completion` | User goal achieved (`expect.goal` or expected tool plan); scripted heuristic or live judge. Skills-only (`subagent_routing_skills_only.yaml`): `--style local` keeps the no-launch gate and does not need a key. `--style http` and `--style cli` fail a specialist case unless the reply names `skills/<role>/SKILL.md` (or `~/.agents/skills/<role>/SKILL.md`) and does not call `launch_specialist`. A typo or weather case on those styles fails if the reply names a specialist `SKILL.md` as the next playbook. |
 | `criteria_judge` | Written suite `criteria` + `threshold` (0-1); per-criterion reasons |
 | `mcp_use` | Only catalog MCP tools; expected MCP capability when intent requires it |
 | `plan_adherence` | Ordered `expect.tools[]` / `expect.tool` matches trajectory steps |

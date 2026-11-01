@@ -545,6 +545,79 @@ metrics:
     assert.ok(!report.results.some((r) => r.id === 'model-live-01'));
   });
 
+  it('passes skills-only routing with the scripted driver and no API key', async () => {
+    const previous = process.env.KIT_EVAL_API_KEY;
+    const openai = process.env.OPENAI_API_KEY;
+    delete process.env.KIT_EVAL_API_KEY;
+    delete process.env.OPENAI_API_KEY;
+    try {
+      const runner = new EvalRunner({ model: 'scripted' });
+      const report = await runner.runSuite(
+        path.join(repoDir, 'evals/edd/subagent_routing_skills_only.yaml')
+      );
+      assert.equal(
+        report.failed,
+        0,
+        report.results.filter((r) => !r.passed).map((r) => `${r.id}: ${r.failures.join(',')}`).join(' | ')
+      );
+      assert.ok(report.results.some((r) => r.id === 'subagent-review-skills-01'));
+      assert.ok(report.results.some((r) => r.id === 'subagent-parent-skills-01'));
+      assert.ok(report.results.some((r) => r.id === 'subagent-ignore-skills-01'));
+    } finally {
+      if (previous === undefined) delete process.env.KIT_EVAL_API_KEY;
+      else process.env.KIT_EVAL_API_KEY = previous;
+      if (openai === undefined) delete process.env.OPENAI_API_KEY;
+      else process.env.OPENAI_API_KEY = openai;
+    }
+  });
+
+  it('grades skills-only review and parent cases on live HTTP', async () => {
+    const usage = { promptTokens: 1, completionTokens: 1, totalTokens: 2 };
+    const runner = new EvalRunner({
+      model: 'gpt-4o-mini',
+      style: 'http',
+      apiKey: 'test-key',
+      driver: async ({ messages }) => {
+        const prompt = [...messages].reverse().find((turn) => turn.role === 'user')?.content ?? '';
+        if (prompt.includes('weather') || prompt.includes('typo')) {
+          return {
+            content: 'Next playbook: skills/agent-review/SKILL.md',
+            tool_calls: [],
+            usage
+          };
+        }
+        if (prompt.includes('independent audit') && prompt.includes('Review')) {
+          return {
+            content: 'Load skills/agent-review/SKILL.md in the parent.',
+            tool_calls: [],
+            usage
+          };
+        }
+        return {
+          content: 'I will handle that in the parent.',
+          tool_calls: [],
+          usage
+        };
+      },
+      complete: async () => {
+        throw new Error('hosted judge must not grade skills-only');
+      }
+    });
+    const report = await runner.runSuite(
+      path.join(repoDir, 'evals/edd/subagent_routing_skills_only.yaml')
+    );
+    const review = report.results.find((r) => r.id === 'subagent-review-skills-01');
+    const debug = report.results.find((r) => r.id === 'subagent-debug-skills-01');
+    const typo = report.results.find((r) => r.id === 'subagent-parent-skills-01');
+    const weather = report.results.find((r) => r.id === 'subagent-ignore-skills-01');
+    assert.equal(review?.passed, true, review?.failures.join(','));
+    assert.equal(debug?.passed, false);
+    assert.ok(debug?.failures.some((f) => f.includes('skills/agent-debug/SKILL.md')));
+    assert.equal(typo?.passed, false);
+    assert.equal(weather?.passed, false);
+    assert.ok(weather?.failures.some((f) => f.includes('next playbook')));
+  });
+
   it('passes cloudflare-ops suite with scripted model', async () => {
     const runner = new EvalRunner({ model: 'scripted' });
     const report = await runner.runSuite(path.join(repoDir, 'evals/edd/cloudflare_ops.yaml'));

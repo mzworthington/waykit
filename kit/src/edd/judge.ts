@@ -219,6 +219,87 @@ function goalTokensHit(response: string, goal: string): boolean {
   return tokens.length === 0 || tokens.some((t) => lower.includes(t));
 }
 
+function skillsOnlyRoleFromGoal(goal: string | undefined): string | null {
+  const match = goal?.match(/skills\/(agent-[a-z0-9-]+)\/SKILL\.md/i);
+  return match?.[1] ?? null;
+}
+
+function isStayInParentGoal(goal: string | undefined): boolean {
+  return (goal ?? '').trim().toLowerCase() === 'stay in the parent';
+}
+
+export function isSkillsOnlyLiveGoal(goal: string | undefined): boolean {
+  return skillsOnlyRoleFromGoal(goal) !== null || isStayInParentGoal(goal);
+}
+
+function namedSkillRoles(response: string): string[] {
+  const roles: string[] = [];
+  const paths = /(?:~\/\.agents\/)?skills\/(agent-[a-z0-9-]+)\/SKILL\.md/gi;
+  for (const match of response.matchAll(paths)) {
+    const role = match[1];
+    if (role && !roles.includes(role)) roles.push(role);
+  }
+  return roles;
+}
+
+/**
+ * Live HTTP/CLI grade for skills-only routing.
+ * A specialist case passes only when the reply names that role's SKILL.md
+ * and does not call the launch adapter. A stay-in-parent case fails when
+ * the reply names any specialist SKILL.md as the next playbook.
+ */
+export function gradeSkillsOnlyCompletion(input: {
+  goal?: string;
+  toolCalls: AgentToolCall[];
+  agentResponse: string;
+}): JudgeVerdict {
+  const calls = input.toolCalls ?? [];
+  if (calls.length > 0) {
+    return {
+      score: 'FAIL',
+      reasoning: 'Skills-only response called the launch adapter.',
+      hallucinated: false
+    };
+  }
+
+  const role = skillsOnlyRoleFromGoal(input.goal);
+  const named = namedSkillRoles(input.agentResponse);
+  if (role) {
+    if (named.includes(role)) {
+      return {
+        score: 'PASS',
+        reasoning: `Named skills/${role}/SKILL.md without calling the launch adapter.`,
+        hallucinated: false
+      };
+    }
+    return {
+      score: 'FAIL',
+      reasoning: `Response does not name skills/${role}/SKILL.md.`,
+      hallucinated: false
+    };
+  }
+
+  if (named.length > 0) {
+    return {
+      score: 'FAIL',
+      reasoning: `Named a specialist skill as the next playbook: skills/${named[0]}/SKILL.md`,
+      hallucinated: false
+    };
+  }
+  if (!input.agentResponse.trim()) {
+    return {
+      score: 'FAIL',
+      reasoning: 'Response does not stay in the parent.',
+      hallucinated: false
+    };
+  }
+  return {
+    score: 'PASS',
+    reasoning: 'Stayed in the parent without naming a specialist skill.',
+    hallucinated: false
+  };
+}
+
 /**
  * Scripted task-completion heuristic: correct expected tool use (or no_tool) counts as done.
  */
