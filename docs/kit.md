@@ -109,7 +109,7 @@ Every **report** command starts with `ok`, `warn`, or `fail` in a fixed column (
 | `wk doctor` | Community files on owned GitHub sources (`--owned`, `--write`; `--json` for findings) |
 | `wk loops` | Quality-loop Cursor Automations (`status` catalog + MCP checklist; `setup --write` project pack) |
 | `wk check` | Audit, ontology, evals, EDD CI, context budget (`--json` for findings) |
-| `wk version` | Kit package/git describe and whether `~/.agents` is this clone (`--check` warns if origin is weeks ahead) |
+| `wk version` | Waykit package/git describe and whether `~/.agents` is this clone (`--check` warns if origin is weeks ahead) |
 | `wk measure-context` | Always-on bootstrap size vs 8KB |
 | `wk completion zsh` | Print a live tab-completion stub (`wk completion install` writes it once) |
 | `wk ontology check` | Live graph referential integrity |

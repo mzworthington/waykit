@@ -36,8 +36,8 @@ Chosen option: "**Option B**", because the kit's value is process and prompts th
 
 ```mermaid
 flowchart LR
-  Kit[Waykit] -->|copy / fork / adapt| Consumer[App repos and agents]
-  Kit --> License[Unlicense]
+  Waykit -->|copy / fork / adapt| Consumer[App repos and agents]
+  Waykit --> License[Unlicense]
 ```
 
 ## Links

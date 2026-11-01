@@ -99,7 +99,7 @@ Deep-link a node with `#ontology:skill%3Aagent-tdd` (URL-encoded id after `ontol
 | Eval→skill/MCP edges | suite YAML `ontology.gates` | Declarative ids like `mcp:memory`, `skill:agent-ship` |
 | Philosophy / docs | `CODING_PHILOSOPHY.md`, `docs/*.md` | Linked via `§N` and markdown paths |
 
-Memory writes stay on that allowlist (`GlossaryTerm`, `Slo`, `Preference`, `ProjectFact` today). Kit-static facts belong in files + kit-knowledge, not memory. Decision: [ADR 0005](/docs/ADRs/0005-live-derived-ontology-memory-allowlist).
+Memory writes stay on that allowlist (`GlossaryTerm`, `Slo`, `Preference`, `ProjectFact` today). Waykit-static facts belong in files + kit-knowledge, not memory. Decision: [ADR 0005](/docs/ADRs/0005-live-derived-ontology-memory-allowlist).
 
 ## Layout the generator expects
 
@@ -120,7 +120,7 @@ flowchart LR
   derive[wk ontology generate or check]
   cache[gitignored sync cache]
   site[web/public/assets JSON]
-  map[Kit map widget]
+  map[Waykit map widget]
   know[kit-knowledge get_entity]
   schema --> derive
   tree --> derive

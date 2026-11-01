@@ -1,4 +1,4 @@
-# Kit review backlog
+# Waykit review backlog
 
 Open findings from [kit-value-and-model-agnostic-review.md](./kit-value-and-model-agnostic-review.md) (refreshed 2026-09-01). Track work here; mark items done with a PR reference.
 

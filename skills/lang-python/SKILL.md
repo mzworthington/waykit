@@ -30,7 +30,7 @@ disable-model-invocation: false
 ---
 # Python Coding Philosophy
 
-Apply when writing Python. Kit hexagonal / clean-code rules win on structure ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §4). HTTP/ASGI delivery lives in [framework-fastapi](../framework-fastapi/SKILL.md). Load a `references/` file only when the table says so. Distilled from PEP 8/20, typing PEPs, and public Python agent skills — kit wins on docstrings and coverage theater ([references/sources.md](references/sources.md)).
+Apply when writing Python. Waykit hexagonal / clean-code rules win on structure ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §4). HTTP/ASGI delivery lives in [framework-fastapi](../framework-fastapi/SKILL.md). Load a `references/` file only when the table says so. Distilled from PEP 8/20, typing PEPs, and public Python agent skills — kit wins on docstrings and coverage theater ([references/sources.md](references/sources.md)).
 
 ## Navigate
 

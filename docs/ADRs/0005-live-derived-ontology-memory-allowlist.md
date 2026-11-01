@@ -13,7 +13,7 @@ Agents need a graph of skills, SOPs, MCPs, evals, and philosophy sections, plus 
 ## Decision Drivers
 
 * Referential integrity against the live kit tree (`wk ontology check`)
-* Kit-static facts vs cross-session facts must not share one store
+* Waykit-static facts vs cross-session facts must not share one store
 * Write surface for memory must be an explicit allowlist, not free-form types
 * Optional local cache must not become source of truth in git
 

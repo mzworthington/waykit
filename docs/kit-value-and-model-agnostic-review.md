@@ -1,4 +1,4 @@
-# Kit review: value and model-agnosticism
+# Waykit review: value and model-agnosticism
 
 **Status:** refreshed 2026-09-01 (supersedes the Aug 30 draft on PR #22).  
 **Open actions:** [kit-review-backlog.md](./kit-review-backlog.md)

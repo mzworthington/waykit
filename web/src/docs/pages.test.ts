@@ -32,6 +32,16 @@ describe('published markdown catalog', () => {
     expect(findPublishedPage('/docs/edd')?.title).toMatch(/EDD|Eval/i);
     expect(findPublishedPage('/ontology')?.title).toBe('Author the Waykit map');
   });
+
+  it('names the product Waykit on published pages', () => {
+    const hits = DOCS_PAGES.flatMap((page) => {
+      const where: string[] = [];
+      if (/\bKit\b/.test(page.title)) where.push(`${page.file} title`);
+      if (/\bKit\b/.test(page.markdown)) where.push(page.file);
+      return where;
+    });
+    expect(hits).toEqual([]);
+  });
 });
 
 describe('site information architecture', () => {

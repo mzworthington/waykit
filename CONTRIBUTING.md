@@ -38,7 +38,7 @@ Husky `.husky/commit-msg` (and `wk commit-msg`) reject a non-conventional **comm
 |-------|--------------------|
 | Typecheck | `pnpm typecheck` |
 | Unit tests | `pnpm test` / `pnpm test:ci` |
-| Kit gate | `pnpm wk check` (audit, layout, EDD routing thresholds, context budget) |
+| Waykit gate | `pnpm wk check` (audit, layout, EDD routing thresholds, context budget) |
 | Pre-commit | Husky: audit, validate, verify (skill layout + role line budget), **measure-context**, ontology, typecheck, mermaid |
 | Commit message | Husky `commit-msg` → `wk commit-msg`; PR title checked in Verify |
 

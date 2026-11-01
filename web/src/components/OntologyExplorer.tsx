@@ -29,7 +29,7 @@ export function OntologyExplorer() {
     <section
       id="ontology"
       className={`ontology-explorer${fullscreen ? ' ontology-explorer--fullscreen' : ''}`}
-      aria-label="Kit ontology map"
+      aria-label="Waykit ontology map"
       ref={rootRef}
     >
       <header className="ontology-chrome">

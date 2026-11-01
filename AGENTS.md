@@ -30,7 +30,7 @@ Do not commit or push unless the user explicitly asks.
 | Model class / host slug | [SOPs/model-routing.md](./SOPs/model-routing.md) (`models/catalog.yaml` + `models/hosts/`) |
 | Subagent vs skill | `get_sop` `subagent-launch` (`wk agents status`) |
 | SOP / handover search | **kit-knowledge** MCP (`search_kit`, `get_sop`, `get_handover`) |
-| Kit ontology | `ontology/schema.yaml` only (index derived at use time; authoring: `ontology/README.md`) |
+| Ontology | `ontology/schema.yaml` only (index derived at use time; authoring: `ontology/README.md`) |
 | Cross-session facts | **memory** MCP (glossary/SLO/prefs; never secrets) |
 | Vendor/framework API docs | **context7** MCP |
 | Linear issues / projects | **linear** MCP (OAuth; on the `default` profile) |

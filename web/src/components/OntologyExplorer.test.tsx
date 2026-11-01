@@ -21,7 +21,7 @@ afterEach(() => {
 describe('OntologyExplorer', () => {
   it('covers the viewport when full screen is toggled, and Escape restores the page', () => {
     render(<OntologyExplorer />);
-    const map = screen.getByRole('region', { name: 'Kit ontology map' });
+    const map = screen.getByRole('region', { name: 'Waykit ontology map' });
     const toggle = screen.getByRole('button', { name: 'Full screen' });
 
     expect(toggle.getAttribute('aria-pressed')).toBe('false');
@@ -69,7 +69,7 @@ describe('OntologyExplorer', () => {
     render(<OntologyExplorer />);
     expect(mountOntologyExplorer).toHaveBeenCalledTimes(1);
     expect(mountOntologyExplorer).toHaveBeenCalledWith(
-      screen.getByRole('region', { name: 'Kit ontology map' })
+      screen.getByRole('region', { name: 'Waykit ontology map' })
     );
   });
 });

@@ -36,7 +36,7 @@ export function printSkillsLayoutResult(result: SkillsLayoutResult): void {
   }
   if (!result.ok) {
     console.error('');
-    console.error(`Found ${result.invalid.length} invalid skill(s). See skills/README.md (Kit vs external).`);
+    console.error(`Found ${result.invalid.length} invalid skill(s). See skills/README.md (Waykit vs external).`);
     return;
   }
   console.log('OK: skills/ contains only kit-authored prefixes (agent-, profile-, lang-, framework-)');

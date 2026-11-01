@@ -1,4 +1,4 @@
-# Kit Knowledge MCP
+# Waykit knowledge MCP
 
 Local stdio server that returns **chunks** from the agent lifecycle kit so agents avoid bulk-reading `CODING_PHILOSOPHY.md`, SOPs, and handovers into every turn.
 

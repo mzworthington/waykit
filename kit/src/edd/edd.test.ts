@@ -235,7 +235,7 @@ describe('EDD EvalRunner', () => {
   it('lists failed case ids in the GitHub Actions overview', () => {
     const overview = renderGithubSummaryOverview([
       {
-        suite: 'Routing: Kit Knowledge MCP',
+        suite: 'Routing: Waykit knowledge MCP',
         suitePath: '/tmp/kit.yaml',
         model: 'cursor-grok-4.6-medium',
         startedAt: '2026-09-13T08:15:00.000Z',

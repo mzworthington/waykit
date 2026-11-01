@@ -2,7 +2,7 @@
 
 Use during the audit pass and whenever cleaning AI-generated copy. A pattern on this list is not always wrong. The test: does the line *perform* intelligence, or *deliver* it?
 
-Kit-owned prose also follows [CODING_PHILOSOPHY.md](../../../CODING_PHILOSOPHY.md) §8 (no em dashes; no default Oxford comma; lead with the point).
+Waykit-owned prose also follows [CODING_PHILOSOPHY.md](../../../CODING_PHILOSOPHY.md) §8 (no em dashes; no default Oxford comma; lead with the point).
 
 ## When a banned-looking pattern is fine
 
@@ -41,7 +41,7 @@ Kit-owned prose also follows [CODING_PHILOSOPHY.md](../../../CODING_PHILOSOPHY.m
 - Copula-adjacent: "enables you to", "allows users to" when a verb would do
 - Emoji as headings
 
-## Kit-specific tells
+## Waykit-specific tells
 
 | Tell | Prefer |
 |------|--------|

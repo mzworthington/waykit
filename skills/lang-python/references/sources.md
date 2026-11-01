@@ -15,7 +15,7 @@ Canonical texts stay at their URLs. Do not vendor copies into the kit.
 | [proven-python](https://github.com/shanwije/proven-python) | TDD order, small functions, typed signatures, refuse swallow/`Any` | PEP 257-on-everything; coverage theater; paste their files |
 | [cortex python skill](https://github.com/alexander-danilenko/cortex-ai-skills/blob/main/skills/python/SKILL.md) | Built-in generics, Protocol, pathlib, TaskGroup, no mutable defaults | Google-style docstring mandate |
 
-Kit wins when those skills conflict:
+Waykit wins when those skills conflict:
 
 - No docstrings that restate a name or signature ([CODING_PHILOSOPHY.md](../../../CODING_PHILOSOPHY.md) §4).
 - Tests are the behavior catalog, not a coverage target.

@@ -18,7 +18,7 @@ Use this when adding a server to the kit catalog, composing a host config, or wi
 | Need | Put it in |
 |------|-----------|
 | Useful across most projects | `mcps/profiles/default.json` (+ global install) |
-| Kit SOP / philosophy / handover chunks | `wk -knowledge` on `default` (already) |
+| Waykit SOP / philosophy / handover chunks | `wk -knowledge` on `default` (already) |
 | Linear issues / projects | `default` (OAuth; already in that profile) |
 | Aggregated CI status (GitHub Actions and CircleCI) | `default` (`build-monitor`; public HTTP, no token) |
 | Notion / Slack | `mcps/profiles/collab.json` |

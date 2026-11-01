@@ -112,13 +112,13 @@ tools: []                     # optional CLI/tool hints for the agent
 - Capture session lessons locally under `lessons/<project>/`; promote approved rules via [tasks/kit-review.md](../tasks/kit-review.md).
 - Routing regressions: [tasks/kit-eval-harness.md](../tasks/kit-eval-harness.md).
 
-## Kit vs external
+## Waykit vs external
 
 Two ownership models - do not mix them in git.
 
 | Kind | Committed in this repo? | Location | Update path |
 |------|-------------------------|----------|-------------|
-| **Kit-authored** | Yes | `skills/agent-*`, `skills/profile-*`, `skills/lang-*`, `skills/framework-*` | PRs in this repo |
+| **Waykit-authored** | Yes | `skills/agent-*`, `skills/profile-*`, `skills/lang-*`, `skills/framework-*` | PRs in this repo |
 | **Upstream / official** | No (lockfile only) | `~/.cursor/skills` via `gh skill` | [external.lock.json](./external.lock.json) + sync script |
 
 **When to prefer kit profile vs upstream skill:** Use kit `lang-*` / `framework-*` for hexagonal/DDD/vertical-slice rules. Use upstream skills (Cloudflare, Vercel React, Stripe, …) for vendor-specific APIs and platform idioms. If both apply, kit architecture wins on structure; upstream wins on vendor API details - do not duplicate long vendor guides into kit skills.
