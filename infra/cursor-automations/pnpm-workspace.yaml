@@ -5,3 +5,7 @@ allowBuilds:
   '@pulumi/cursor@file:sdks/cursor': true
   esbuild: true
   protobufjs: true
+
+overrides:
+  # GHSA-3g3m-2fjr-6pw4: an aborted glob walk kept reading the filesystem.
+  "glob@>=9.0.0 <14.0.2": 14.0.3
