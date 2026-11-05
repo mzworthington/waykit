@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-05
+
+### 🐛 Bug Fixes
+
+- *(deps)* Pin glob 14.0.3 past the abort-walk advisory
+
 ## 2026-11-01
 
 ### 🚀 Features
