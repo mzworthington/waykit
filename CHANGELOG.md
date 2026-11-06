@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-06
+
+### 🐛 Bug Fixes
+
+- *(deps)* Pin minimatch 11.0.5 past the globparts advisory
+
 ## 2026-11-05
 
 ### 🐛 Bug Fixes
