@@ -98,7 +98,7 @@ describe('cursor automation pulumi entry', () => {
 const fs = require('node:fs');
 fs.writeFileSync(${JSON.stringify(log)}, process.argv.slice(2).join('\\n'));
 fs.mkdirSync('sdks/cursor', { recursive: true });
-fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor","main":"index.js"}\\n');
+fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor","main":"bin/index.js"}\\n');
 `
     );
     fs.chmodSync(fake, 0o755);
@@ -113,6 +113,12 @@ fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor","main":"i
     const stub = ensureCursorSdk({ root: tmp, pulumiBin: fake });
     assert.equal(stub.generated, true);
     assert.equal(fs.readFileSync(log, 'utf8'), 'install\n--no-dependencies\n--non-interactive');
+    const preserved = JSON.parse(
+      fs.readFileSync(path.join(project, 'sdks', 'cursor', 'package.json'), 'utf8')
+    ) as { main?: string; exports?: unknown; name?: string };
+    assert.equal(preserved.name, '@pulumi/cursor');
+    assert.equal(preserved.main, undefined);
+    assert.equal(preserved.exports, undefined);
 
     fs.writeFileSync(log, '');
     const second = ensureCursorSdk({ root: tmp, pulumiBin: fake });

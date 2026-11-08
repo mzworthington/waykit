@@ -52,17 +52,46 @@ function defaultInstallPulumi() {
   return bin;
 }
 
-function cursorSdkIsGenerated(sdkPackage) {
-  // The Dependabot stub commits package.json before `pulumi install` writes an entry.
-  if (!fs.existsSync(sdkPackage)) return false;
-  let manifest;
+function readManifest(sdkPackage) {
   try {
-    manifest = JSON.parse(fs.readFileSync(sdkPackage, 'utf8'));
+    return JSON.parse(fs.readFileSync(sdkPackage, 'utf8'));
   } catch {
-    return false;
+    return null;
   }
+}
+
+function manifestHasEntry(manifest) {
+  if (!manifest || typeof manifest !== 'object') return false;
   if (typeof manifest.main === 'string' && manifest.main !== '') return true;
   return manifest.exports != null;
+}
+
+function cursorSdkIsGenerated(sdkPackage) {
+  // The Dependabot stub commits package.json with no main or exports.
+  // `pulumi install` rewrites that file; keep the stub and treat a gitignored
+  // index.js shim (or a compiled main that is actually on disk) as generated.
+  if (!fs.existsSync(sdkPackage)) return false;
+  const sdkDir = path.dirname(sdkPackage);
+  if (fs.existsSync(path.join(sdkDir, 'index.js'))) return true;
+  const manifest = readManifest(sdkPackage);
+  if (!manifestHasEntry(manifest)) return false;
+  const main = typeof manifest.main === 'string' ? manifest.main : '';
+  return main !== '' && fs.existsSync(path.join(sdkDir, main));
+}
+
+function restoreStub(sdkPackage, priorBytes) {
+  fs.mkdirSync(path.dirname(sdkPackage), { recursive: true });
+  fs.writeFileSync(sdkPackage, priorBytes);
+}
+
+function writeEntryShim(sdkDir, generatedManifest) {
+  const declared = generatedManifest && typeof generatedManifest.main === 'string'
+    ? generatedManifest.main.replace(/^\.\//, '')
+    : '';
+  const main = declared !== '' ? declared : 'bin/index.js';
+  if (main === 'index.js') return;
+  const contents = `'use strict';\nmodule.exports = require(${JSON.stringify(`./${main}`)});\n`;
+  fs.writeFileSync(path.join(sdkDir, 'index.js'), contents);
 }
 
 function ensureCursorSdk(options = {}) {
@@ -72,6 +101,15 @@ function ensureCursorSdk(options = {}) {
     return { generated: false };
   }
   const projectDir = path.join(root, 'infra', 'cursor-automations');
+  const sdkDir = path.dirname(sdkPackage);
+  const priorBytes = fs.existsSync(sdkPackage) ? fs.readFileSync(sdkPackage) : null;
+  const preserveStub = priorBytes !== null && !manifestHasEntry(readManifest(sdkPackage));
+  const workspaceFile = path.join(projectDir, 'pnpm-workspace.yaml');
+  const priorWorkspace = fs.existsSync(workspaceFile) ? fs.readFileSync(workspaceFile) : null;
+  const restoreTracked = () => {
+    if (preserveStub) restoreStub(sdkPackage, priorBytes);
+    if (priorWorkspace) fs.writeFileSync(workspaceFile, priorWorkspace);
+  };
   const env = options.env ?? process.env;
   const pulumiBin = options.pulumiBin ?? findPulumi(env) ?? (options.installPulumi ?? defaultInstallPulumi)();
   const result = spawnSync(pulumiBin, ['install', '--no-dependencies', '--non-interactive'], {
@@ -80,14 +118,23 @@ function ensureCursorSdk(options = {}) {
     stdio: 'inherit'
   });
   if (result.error) {
+    restoreTracked();
     throw result.error;
   }
   if (result.status !== 0) {
+    restoreTracked();
     throw new Error(`pulumi install --no-dependencies failed in ${projectDir}`);
   }
   if (!fs.existsSync(sdkPackage)) {
+    restoreTracked();
     throw new Error(`pulumi install did not write ${sdkPackage}`);
   }
+  if (preserveStub) {
+    const generatedManifest = readManifest(sdkPackage);
+    restoreStub(sdkPackage, priorBytes);
+    writeEntryShim(sdkDir, generatedManifest);
+  }
+  if (priorWorkspace) fs.writeFileSync(workspaceFile, priorWorkspace);
   return { generated: true };
 }
 
