@@ -66,17 +66,59 @@ function manifestHasEntry(manifest) {
   return manifest.exports != null;
 }
 
+function relativeField(manifest, field) {
+  const value = manifest && manifest[field];
+  if (typeof value !== 'string' || value === '') return '';
+  return value.replace(/^\.\//, '');
+}
+
+function declarationForEntry(entry) {
+  if (entry.endsWith('.d.ts')) return entry;
+  if (/\.(?:mjs|cjs|js)$/.test(entry)) return entry.replace(/\.(?:mjs|cjs|js)$/, '.d.ts');
+  return `${entry}.d.ts`;
+}
+
+function onDisk(sdkDir, relativePath) {
+  return relativePath !== '' && fs.existsSync(path.join(sdkDir, relativePath));
+}
+
+function readQuotedSpecifier(source, pattern) {
+  const match = source.match(pattern);
+  if (!match) return '';
+  return match[1].replace(/^\.\//, '');
+}
+
 function cursorSdkIsGenerated(sdkPackage) {
   // The Dependabot stub commits package.json with no main or exports.
-  // `pulumi install` rewrites that file; keep the stub and treat a gitignored
-  // index.js shim (or a compiled main that is actually on disk) as generated.
+  // `pulumi install` rewrites that file; keep the stub. A gitignored shim counts
+  // as generated only when the compiled JS entry and its declarations are on disk.
   if (!fs.existsSync(sdkPackage)) return false;
   const sdkDir = path.dirname(sdkPackage);
-  if (fs.existsSync(path.join(sdkDir, 'index.js'))) return true;
   const manifest = readManifest(sdkPackage);
-  if (!manifestHasEntry(manifest)) return false;
-  const main = typeof manifest.main === 'string' ? manifest.main : '';
-  return main !== '' && fs.existsSync(path.join(sdkDir, main));
+  if (!manifestHasEntry(manifest)) return stubShimIsComplete(sdkDir);
+  const main = relativeField(manifest, 'main');
+  if (!onDisk(sdkDir, main)) return false;
+  const types = relativeField(manifest, 'types') || declarationForEntry(main);
+  return onDisk(sdkDir, types);
+}
+
+function stubShimIsComplete(sdkDir) {
+  const shimPath = path.join(sdkDir, 'index.js');
+  const typesShimPath = path.join(sdkDir, 'index.d.ts');
+  if (!fs.existsSync(shimPath) || !fs.existsSync(typesShimPath)) return false;
+  const target = readQuotedSpecifier(
+    fs.readFileSync(shimPath, 'utf8'),
+    /^'use strict';\nmodule\.exports = require\("(\.\/[^"]+)"\);\n$/
+  );
+  // Pulumi's generated main was already index.js, so the declaration beside it is the SDK.
+  if (target === '') return true;
+  if (!onDisk(sdkDir, target)) return false;
+  const specifier = readQuotedSpecifier(
+    fs.readFileSync(typesShimPath, 'utf8'),
+    /^export \* from "(\.\/[^"]+)";\n$/
+  );
+  if (specifier === '') return false;
+  return onDisk(sdkDir, declarationForEntry(specifier));
 }
 
 function restoreStub(sdkPackage, priorBytes) {
@@ -85,13 +127,15 @@ function restoreStub(sdkPackage, priorBytes) {
 }
 
 function writeEntryShim(sdkDir, generatedManifest) {
-  const declared = generatedManifest && typeof generatedManifest.main === 'string'
-    ? generatedManifest.main.replace(/^\.\//, '')
-    : '';
+  const declared = relativeField(generatedManifest, 'main');
   const main = declared !== '' ? declared : 'bin/index.js';
   if (main === 'index.js') return;
   const contents = `'use strict';\nmodule.exports = require(${JSON.stringify(`./${main}`)});\n`;
   fs.writeFileSync(path.join(sdkDir, 'index.js'), contents);
+  const types = relativeField(generatedManifest, 'types') || declarationForEntry(main);
+  if (types === 'index.d.ts') return;
+  const specifier = types.endsWith('.d.ts') ? `./${types.slice(0, -5)}.js` : `./${types}`;
+  fs.writeFileSync(path.join(sdkDir, 'index.d.ts'), `export * from ${JSON.stringify(specifier)};\n`);
 }
 
 function ensureCursorSdk(options = {}) {

@@ -119,7 +119,30 @@ fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor","main":"b
     assert.equal(preserved.name, '@pulumi/cursor');
     assert.equal(preserved.main, undefined);
     assert.equal(preserved.exports, undefined);
+    const sdkDir = path.join(project, 'sdks', 'cursor');
+    assert.equal(
+      fs.readFileSync(path.join(sdkDir, 'index.js'), 'utf8'),
+      `'use strict';\nmodule.exports = require("./bin/index.js");\n`
+    );
+    assert.equal(
+      fs.readFileSync(path.join(sdkDir, 'index.d.ts'), 'utf8'),
+      'export * from "./bin/index.js";\n'
+    );
 
+    // A leftover shim is not the SDK. Pulumi's postinstall still has to emit
+    // bin/index.js and bin/index.d.ts, which this fake never writes.
+    fs.writeFileSync(log, '');
+    const missingOutput = ensureCursorSdk({ root: tmp, pulumiBin: fake });
+    assert.equal(missingOutput.generated, true);
+    assert.equal(fs.readFileSync(log, 'utf8'), 'install\n--no-dependencies\n--non-interactive');
+
+    fs.mkdirSync(path.join(sdkDir, 'bin'), { recursive: true });
+    fs.writeFileSync(path.join(sdkDir, 'bin', 'index.js'), 'module.exports = {};\n');
+    fs.writeFileSync(log, '');
+    const missingTypes = ensureCursorSdk({ root: tmp, pulumiBin: fake });
+    assert.equal(missingTypes.generated, true);
+
+    fs.writeFileSync(path.join(sdkDir, 'bin', 'index.d.ts'), 'export {};\n');
     fs.writeFileSync(log, '');
     const second = ensureCursorSdk({ root: tmp, pulumiBin: fake });
     assert.equal(second.generated, false);
