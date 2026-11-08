@@ -39,7 +39,50 @@ describe('cursor automation pulumi entry', () => {
       encoding: 'utf8'
     });
     assert.equal(listed.status, 0, listed.stderr);
-    assert.equal(listed.stdout.trim(), '');
+    assert.deepEqual(
+      listed.stdout
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line !== ''),
+      ['infra/cursor-automations/sdks/cursor/package.json']
+    );
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(root, 'infra/cursor-automations/sdks/cursor/package.json'), 'utf8')
+    ) as { main?: string; exports?: unknown };
+    assert.equal(manifest.main, undefined);
+    assert.equal(manifest.exports, undefined);
+
+    const ignoredGenerated = spawnSync(
+      'git',
+      [
+        'check-ignore',
+        '--no-index',
+        '--',
+        'infra/cursor-automations/sdks/cursor/bin/index.js',
+        'infra/cursor-automations/sdks/cursor/scripts/postinstall.js',
+        'infra/cursor-automations/sdks/other/pkg/index.js'
+      ],
+      { cwd: root, encoding: 'utf8' }
+    );
+    assert.equal(ignoredGenerated.status, 0, ignoredGenerated.stderr);
+    assert.deepEqual(
+      ignoredGenerated.stdout
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line !== '')
+        .sort(),
+      [
+        'infra/cursor-automations/sdks/cursor/bin/index.js',
+        'infra/cursor-automations/sdks/cursor/scripts/postinstall.js',
+        'infra/cursor-automations/sdks/other/pkg/index.js'
+      ]
+    );
+    const ignoredStub = spawnSync(
+      'git',
+      ['check-ignore', '--no-index', '--', 'infra/cursor-automations/sdks/cursor/package.json'],
+      { cwd: root, encoding: 'utf8' }
+    );
+    assert.equal(ignoredStub.status, 1, ignoredStub.stdout);
   });
 
   it('regenerates a missing cursor SDK from Pulumi.yaml during pnpm install', () => {
@@ -55,7 +98,7 @@ describe('cursor automation pulumi entry', () => {
 const fs = require('node:fs');
 fs.writeFileSync(${JSON.stringify(log)}, process.argv.slice(2).join('\\n'));
 fs.mkdirSync('sdks/cursor', { recursive: true });
-fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor"}\\n');
+fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor","main":"index.js"}\\n');
 `
     );
     fs.chmodSync(fake, 0o755);
@@ -63,6 +106,12 @@ fs.writeFileSync('sdks/cursor/package.json', '{"name":"@pulumi/cursor"}\\n');
     const first = ensureCursorSdk({ root: tmp, pulumiBin: fake });
     assert.equal(first.generated, true);
     assert.equal(fs.readFileSync(path.join(project, 'sdks/cursor/package.json'), 'utf8').includes('@pulumi/cursor'), true);
+    assert.equal(fs.readFileSync(log, 'utf8'), 'install\n--no-dependencies\n--non-interactive');
+
+    fs.writeFileSync(path.join(project, 'sdks', 'cursor', 'package.json'), '{"name":"@pulumi/cursor"}\n');
+    fs.writeFileSync(log, '');
+    const stub = ensureCursorSdk({ root: tmp, pulumiBin: fake });
+    assert.equal(stub.generated, true);
     assert.equal(fs.readFileSync(log, 'utf8'), 'install\n--no-dependencies\n--non-interactive');
 
     fs.writeFileSync(log, '');

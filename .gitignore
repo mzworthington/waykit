@@ -65,8 +65,10 @@ out/
 .waykit/tdd-guard/
 
 # Local Pulumi SDK. pnpm install regenerates this from infra/cursor-automations/Pulumi.yaml.
-infra/cursor-automations/sdks/
-# Stub package.json committed so Dependabot can resolve the workspace link.
+# Ignore contents, not the directory, so the Dependabot stub package.json can stay tracked.
+infra/cursor-automations/sdks/**
+!infra/cursor-automations/sdks/cursor/
+infra/cursor-automations/sdks/cursor/**
 !infra/cursor-automations/sdks/cursor/package.json
 
 # OS / editor

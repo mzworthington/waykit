@@ -52,10 +52,23 @@ function defaultInstallPulumi() {
   return bin;
 }
 
+function cursorSdkIsGenerated(sdkPackage) {
+  // The Dependabot stub commits package.json before `pulumi install` writes an entry.
+  if (!fs.existsSync(sdkPackage)) return false;
+  let manifest;
+  try {
+    manifest = JSON.parse(fs.readFileSync(sdkPackage, 'utf8'));
+  } catch {
+    return false;
+  }
+  if (typeof manifest.main === 'string' && manifest.main !== '') return true;
+  return manifest.exports != null;
+}
+
 function ensureCursorSdk(options = {}) {
   const root = options.root ?? path.resolve(__dirname, '..', '..');
   const sdkPackage = path.join(root, SDK_RELATIVE);
-  if (fs.existsSync(sdkPackage)) {
+  if (cursorSdkIsGenerated(sdkPackage)) {
     return { generated: false };
   }
   const projectDir = path.join(root, 'infra', 'cursor-automations');
