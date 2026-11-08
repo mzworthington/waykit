@@ -66,6 +66,8 @@ out/
 
 # Local Pulumi SDK. pnpm install regenerates this from infra/cursor-automations/Pulumi.yaml.
 infra/cursor-automations/sdks/
+# Stub package.json committed so Dependabot can resolve the workspace link.
+!infra/cursor-automations/sdks/cursor/package.json
 
 # OS / editor
 .DS_Store
