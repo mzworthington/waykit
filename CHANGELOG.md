@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-08
+
+### 🐛 Bug Fixes
+
+- *(deps)* Commit cursor SDK stub so Dependabot can resolve workspace link (#154)
+- *(deps)* Correct cursor SDK stub so pnpm install and tsc both pass (#155)
+
 ## 2026-11-06
 
 ### 🐛 Bug Fixes
