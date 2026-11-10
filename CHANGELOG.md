@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-10
+
+### 🚀 Features
+
+- Copy skills using Diátaxis framework
+
 ## 2026-11-08
 
 ### 🐛 Bug Fixes
