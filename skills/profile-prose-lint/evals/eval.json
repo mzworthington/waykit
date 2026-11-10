@@ -1,0 +1,18 @@
+{
+  "suite": "profile-prose-lint-evals",
+  "description": "Vale prose-lint profile installs a versioned gate, not a local-only hook",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "id": "EVAL-PROFILE-PROSE-LINT-001",
+      "name": "Vale setup uses a versioned hook",
+      "target_skill": "profile-prose-lint",
+      "prompt": "Add Vale prose linting, a pre-commit hook, and a GitHub Actions docs check.",
+      "assertions": {
+        "required_triggers": ["vale", "prose lint", "documentation quality gate"],
+        "required_patterns": ["profile-prose-lint", "vale sync", ".husky/pre-commit"],
+        "forbidden_patterns": [".git/hooks/pre-commit"]
+      }
+    }
+  ]
+}

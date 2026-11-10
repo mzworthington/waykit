@@ -38,6 +38,7 @@ Docs follow tests - not the other way around ([CODING_PHILOSOPHY.md](../../CODIN
 4. Link to suite paths / how-to-run from XFN handovers when documenting quality gates.
 5. Do not invent behavior absent from the catalog; flag doc/test drift.
 6. Keep secrets out of docs; document env var *names* only.
+7. For a Diátaxis restructure or a new tutorial, how-to, reference, or explanation, load [profile-docs](../profile-docs/SKILL.md). For Vale and the docs gate, load [profile-prose-lint](../profile-prose-lint/SKILL.md).
 
 ## When docs vs copy owns the pass
 

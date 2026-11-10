@@ -1,0 +1,18 @@
+{
+  "suite": "profile-docs-evals",
+  "description": "Diátaxis documentation profile routes structure work away from product copy",
+  "version": "1.0.0",
+  "test_cases": [
+    {
+      "id": "EVAL-PROFILE-DOCS-001",
+      "name": "Diátaxis rewrite loads this profile",
+      "target_skill": "profile-docs",
+      "prompt": "Restructure the docs into Diátaxis tutorials, how-to guides, reference, and explanation.",
+      "assertions": {
+        "required_triggers": ["diataxis", "tutorial", "reference docs", "explanation"],
+        "required_patterns": ["profile-docs", "Tutorial", "How-to", "Reference", "Explanation"],
+        "forbidden_patterns": ["ASCII art"]
+      }
+    }
+  ]
+}

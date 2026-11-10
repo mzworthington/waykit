@@ -783,6 +783,61 @@
           "@vN"
         ]
       }
+    },
+    {
+      "id": "EVAL-PROF-DOCS-001",
+      "name": "Diátaxis documentation structure",
+      "description": "Verifies user-facing docs stay in one Diátaxis quadrant and tone is calibrated in the project.",
+      "target_skill": "profile-docs",
+      "prompt": "Restructure the docs with Diátaxis and set the documentation tone.",
+      "context": {
+        "detected_stack": [
+          "Markdown"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "diataxis",
+          "tone",
+          "tutorial",
+          "reference docs"
+        ],
+        "required_patterns": [
+          "Tutorial",
+          "tone"
+        ],
+        "forbidden_patterns": [
+          "ASCII art"
+        ]
+      }
+    },
+    {
+      "id": "EVAL-PROF-PROSE-001",
+      "name": "Vale prose and tone lint",
+      "description": "Verifies Vale is installed with condescension, hyperbole, and directness rules and a versioned hook.",
+      "target_skill": "profile-prose-lint",
+      "prompt": "Add Vale prose linting for documentation tone, including a pre-commit hook.",
+      "context": {
+        "detected_stack": [
+          "Vale"
+        ]
+      },
+      "assertions": {
+        "required_triggers": [
+          "vale",
+          "prose lint",
+          "tone lint",
+          "condescension",
+          "hyperbole"
+        ],
+        "required_patterns": [
+          "vale sync",
+          "Condescending"
+        ],
+        "forbidden_patterns": [
+          ".git/hooks/pre-commit"
+        ]
+      }
     }
   ]
 }

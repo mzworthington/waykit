@@ -66,6 +66,8 @@ Related SOPs: [behavior catalog & XFN](../SOPs/behavior-catalog-and-xfn.md), [co
 | [profile-api](./profile-api/SKILL.md) | (cross-stack HTTP/event APIs) |
 | [profile-mcp](./profile-mcp/SKILL.md) | (MCP tools, stdio/SSE transports, LLM JSON schemas) |
 | [profile-observability](./profile-observability/SKILL.md) | feeds [agent-telemetry](./agent-telemetry/SKILL.md) |
+| [profile-docs](./profile-docs/SKILL.md) (Diátaxis tutorials, how-to, reference, explanation) | product terms stay in the app repo |
+| [profile-prose-lint](./profile-prose-lint/SKILL.md) (Vale, versioned hook, PR docs check) | templates in `references/` |
 | [lang-hcl](./lang-hcl/SKILL.md) | [framework-terraform](./framework-terraform/SKILL.md) |
 | HTML-first / vanilla JS | [framework-alpine](./framework-alpine/SKILL.md) |
 | [lang-typescript](./lang-typescript/SKILL.md) | [framework-next](./framework-next/SKILL.md), [framework-react](./framework-react/SKILL.md), [framework-astro](./framework-astro/SKILL.md), [framework-express](./framework-express/SKILL.md), [framework-nuxt](./framework-nuxt/SKILL.md), [framework-pulumi](./framework-pulumi/SKILL.md) |

@@ -1,0 +1,28 @@
+name: Lint Documentation
+
+on:
+  pull_request:
+    paths:
+      - '**.md'
+      - '.vale.ini'
+      - '.github/styles/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  vale:
+    name: Runner / Vale
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Vale Linter
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          styles: .github/styles
+          config: .vale.ini
+          reporter: github-pr-review
+          fail_on_error: true
