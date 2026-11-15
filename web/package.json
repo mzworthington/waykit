@@ -12,27 +12,27 @@
     "test:mermaid": "vitest run src/components/MermaidPreview.test.ts"
   },
   "dependencies": {
-    "@astrojs/react": "7.0.1",
-    "astro": "7.4.7",
-    "d3": "7.9.0",
-    "mermaid": "12.2.0",
-    "posthog-js": "1.438.10",
+    "@astrojs/react": "7.1.8",
+    "astro": "7.4.11",
+    "d3": "7.9.2",
+    "mermaid": "12.3.0",
+    "posthog-js": "1.447.15",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-markdown": "10.1.0",
     "remark-gfm": "4.0.1"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
+    "@astrojs/check": "0.9.12",
     "@testing-library/react": "16.3.3",
     "@types/d3": "7.4.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@vitejs/plugin-react": "6.1.2",
-    "@vitest/coverage-v8": "5.0.4",
+    "@vitejs/plugin-react": "6.3.0",
+    "@vitest/coverage-v8": "5.1.0",
     "jsdom": "31.0.0",
     "typescript": "7.0.2",
-    "vite": "8.3.4",
-    "vitest": "5.0.4"
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   }
 }
