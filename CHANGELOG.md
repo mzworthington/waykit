@@ -5,6 +5,7 @@
 ### 🧰 Maintenance & Dependencies
 
 - *(deps-dev)* Bump jsdom from 30.1.2 to 31.0.0
+- *(deps)* Bump astro
 
 ## 2026-11-10
 
