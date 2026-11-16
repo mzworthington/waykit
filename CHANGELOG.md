@@ -6,6 +6,7 @@
 
 - *(deps-dev)* Bump jsdom from 30.1.2 to 31.0.0
 - *(deps)* Bump astro
+- *(deps)* Bump the npm-minor-patch group across 1 directory with 11 updates
 
 ## 2026-11-10
 
