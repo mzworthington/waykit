@@ -6,6 +6,7 @@
 [![Pages](https://img.shields.io/badge/Docs-waykit.dev-blue?style=for-the-badge&logo=github)](https://waykit.dev/)
 [![License](https://img.shields.io/badge/License-Unlicense-success?style=for-the-badge)](./LICENSE)
 [![Version](https://img.shields.io/github/v/release/mzworthington/waykit?style=for-the-badge&logo=github&label=Version)](https://github.com/mzworthington/waykit/releases)
+[![Waykit on StartupScores](https://startupscores.com/badge/waykit.svg?style=shield&v=combo&theme=dark)](https://startupscores.com/open-source/waykit)
 
 
 Product lifecycle for coding agents- **Grill, spec, TDD, ship, learn**
