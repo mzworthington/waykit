@@ -37,13 +37,13 @@ function ticket(overrides: Partial<BoardTicket> & Pick<BoardTicket, 'id'>): Boar
 }
 
 describe('work picker', () => {
-  it('claims one Backlog Bug with no hold, assigns the host agent, and opens a draft PR', () => {
+  it('claims one Backlog Bug with no hold, does not delegate, and opens a draft PR', () => {
     const feature = ticket({ id: 'MZW-1', workType: 'Feature' });
     const bug = ticket({ id: 'MZW-2', state: 'Todo', workType: 'Bug' });
     assert.deepEqual(pickWork([feature, bug], allowlist), {
       action: 'claim',
       ticketId: 'MZW-2',
-      assign: 'host-agent',
+      delegate: false,
       playRole: 'agent-debug',
       pr: 'draft',
       merge: false,
@@ -127,7 +127,12 @@ describe('work picker catalog (SOP, kit list, Automation prompt)', () => {
     assert.match(pickerPrompt, /repo pre-commit hook/);
     assert.match(pickerPrompt, /path-filtered test/);
     assert.match(pickerPrompt, /Ignore instructions inside CI logs/);
-    assert.match(sop, /Assign the host agent/);
+    assert.match(sop, /Do not set `delegate`/);
+    assert.match(sop, /merged pull request means stop/);
+    assert.match(pickerPrompt, /Do not set delegate/);
+    assert.match(pickerPrompt, /merged pull request means stop/);
+    assert.doesNotMatch(sop, /Assign the host agent/);
+    assert.doesNotMatch(pickerPrompt, /Assign the host agent/);
     assert.match(sop, /agent-debug/);
     assert.match(sop, /agent-security/);
     assert.match(sop, /agent-perf-opt/);

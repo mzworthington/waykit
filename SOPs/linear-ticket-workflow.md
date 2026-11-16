@@ -22,11 +22,16 @@ Align with [CODING_PHILOSOPHY.md](../CODING_PHILOSOPHY.md) §8 (Interaction Mand
 
 1. Resolve the identifier (`WAY-123`). Skip if the user only asked to inspect.
 2. Skip if the issue is already **Done** or **Canceled**.
-3. Set `state` to the team's started column (`In Progress`, or `list_issue_statuses` if the name differs).
-4. Assign the **host agent**, not a human by default:
-   - Cursor → Linear user `Cursor`: `assignee: "Cursor"` and `delegate: "Cursor"`.
+3. Search open and merged pull requests for that identifier before any product edit.
+   - A merged pull request means stop. Do not open another.
+   - An open pull request means continue on that pull request. Do not open a second one.
+4. Set `state` to the team's started column (`In Progress`, or `list_issue_statuses` if the name differs).
+5. Set `assignee` to the host agent so the board shows who is playing the issue:
+   - Cursor → `assignee: "Cursor"`.
    - If that app user is missing, `assignee: "me"`.
-5. Do not reassign away from another human unless the user asked to take the ticket.
+6. Do not set `delegate` when this session will implement the issue. `delegate: "Cursor"` starts another cloud agent. A session Linear already started, and the work picker, are already the implementer.
+7. Set `delegate: "Cursor"` only to hand the issue to a cloud agent. Then stop. Do not implement in the same session.
+8. Do not reassign away from another human unless the user asked to take the ticket.
 
 Do not auto-complete the issue when the diff is ready. Leave it In Progress until the user ships it.
 
