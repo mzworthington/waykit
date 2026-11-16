@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-16
+
+### 🐛 Bug Fixes
+
+- *(sops)* Keep one implementer per Linear ticket (#161)
+
 ## 2026-11-15
 
 ### 🧰 Maintenance & Dependencies
