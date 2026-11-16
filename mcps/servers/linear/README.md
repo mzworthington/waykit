@@ -18,7 +18,7 @@ If your host cannot use remote HTTP MCP, bridge with:
 ## When to use
 
 - Pulling acceptance criteria from a Linear issue during spec/impl
-- Claiming a ticket: `save_issue` with `state: In Progress`, `assignee` + `delegate` set to the host agent (`Cursor`)
+- Claiming a ticket: `save_issue` with `state: In Progress` and `assignee: "Cursor"`. Do not set `delegate` when this session will implement. `delegate: "Cursor"` starts another cloud agent ([SOPs/linear-ticket-workflow.md](../../../SOPs/linear-ticket-workflow.md))
 - Creating follow-up tickets after a bugfix or audit finding
 - Checking board status while scoping work
 

@@ -48,7 +48,7 @@ disable-model-invocation: false
 
 You fix **broken behavior** with a short, evidence-first loop. Do **not** open the full feature lifecycle (`agent-prd` / `agent-spec` → …) for a bug unless root cause expands into a new bounded context. Product bets and flags are [SOPs/hypothesis-driven-development.md](../../SOPs/hypothesis-driven-development.md), not this skill.
 
-If this session plays a Linear issue, claim it before changing code ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)). Stay on main, uncommitted. Output a conventional commit subject with the issue id. Assign/delegate the host agent (**Cursor**). Do not branch or commit unless asked.
+If this session plays a Linear issue, claim it before changing code ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)). Stay on main, uncommitted. Output a conventional commit subject with the issue id. Set assignee to **Cursor**. Do not set delegate when this session implements. Do not branch or commit unless asked.
 
 Procedure: [SOPs/hypothesis-driven-debug.md](../../SOPs/hypothesis-driven-debug.md).
 Board template: [templates/debug-board.md](../../templates/debug-board.md).

@@ -82,7 +82,7 @@ Do not invent a customer for ops. Do not clone an open issue. Do not rewrite a t
 | Testable | No observable Then (copy, files, CLI, Linear state) |
 
 5. **Body** from the matching template. Never ASCII/box-drawing **diagrams** in the ticket ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §8).
-6. **Patch Linear.** Preserve ids. **Create children with no `id`** (only `parentId`); passing the parent identifier as `id` overwrites the parent. Labels: `Feature` / `Improvement`. Priority 1–4 (never leave 0 on a playable story). `relatedTo` / `blockedBy` for siblings. Do not bulk-move a review to In Progress. When **this session is executing one issue**, claim it ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)): In Progress + host agent (`Cursor`). Cancel vendor onboarding as before.
+6. **Patch Linear.** Preserve ids. **Create children with no `id`** (only `parentId`); passing the parent identifier as `id` overwrites the parent. Labels: `Feature` / `Improvement`. Priority 1–4 (never leave 0 on a playable story). `relatedTo` / `blockedBy` for siblings. Do not bulk-move a review to In Progress. When **this session is executing one issue**, claim it ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)): In Progress and assignee Cursor. Do not set delegate when this session implements. Cancel vendor onboarding as before.
 7. Return issue URLs. Do not implement in this role.
 
 ## Ticket template (Linear Markdown)

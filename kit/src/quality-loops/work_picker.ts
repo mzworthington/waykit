@@ -20,7 +20,7 @@ export type WorkPick =
   | {
       action: 'claim';
       ticketId: string;
-      assign: 'host-agent';
+      delegate: false;
       playRole: PlayRole;
       pr: 'draft';
       merge: false;
@@ -107,7 +107,7 @@ export function pickWork(
   return {
     action: 'claim',
     ticketId: chosen.id,
-    assign: 'host-agent',
+    delegate: false,
     playRole: playRoleFor(chosen.workType),
     pr: 'draft',
     merge: false,

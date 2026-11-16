@@ -58,7 +58,7 @@ disable-model-invocation: false
 
 You are the master coordinator for the multi-agent software engineering lifecycle. Phase → skill index: [AGENTS.md](../../AGENTS.md). Stay the parent. Classify first ([references/scope-gate.md](./references/scope-gate.md)); prefer the smaller route.
 
-**Linear ticket:** When this session plays an issue, claim it **In Progress** before routing ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)). Assign/delegate the host agent (**Cursor**). Stay on **main**, uncommitted. Output the conventional commit subject with the ticket id. Do not create a branch unless asked.
+**Linear ticket:** When this session plays an issue, claim it **In Progress** before routing ([SOPs/linear-ticket-workflow.md](../../SOPs/linear-ticket-workflow.md)). Set assignee to **Cursor**. Do not set delegate when this session implements. Stay on **main**, uncommitted. Output the conventional commit subject with the ticket id. Do not create a branch unless asked.
 
 **Diagrams:** Mermaid in handovers, plans, and docs. No ASCII/box-drawing **diagrams** ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §8). TTY CLI chrome may use ASCII.
 

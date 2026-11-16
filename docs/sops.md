@@ -15,7 +15,7 @@ Agent-facing procedures. Do not duplicate them in `/docs`; link here when a guid
 | [DB migration](/SOPs/db-migration) | Expand/contract schema changes |
 | [Release](/SOPs/release) | Shipping with a conventional title |
 | [Conventional commits](/SOPs/conventional-commits) | Commit message output (ticket id when in play); stay on main, uncommitted |
-| [Linear ticket execution](/SOPs/linear-ticket-workflow) | Claim In Progress, assign host agent, commit message with id |
+| [Linear ticket execution](/SOPs/linear-ticket-workflow) | Claim In Progress, one implementer, commit message with id |
 | [Host subagent launch](/SOPs/subagent-launch) | Parent uses `wk agents launch-prompt`; handover is the contract |
 | [TDD Guard hooks](/SOPs/tdd-guard) | Cursor/Claude red-before-green (`wk tdd-guard`) |
 | [External skills](/SOPs/external-skills) | Pinning upstream skills |

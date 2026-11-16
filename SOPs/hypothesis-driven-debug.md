@@ -57,7 +57,7 @@ Normalize vocabulary once (“packages” vs “plugins”). If live data contra
 | CI / media / sync | `wk debug-ci` class from the failing **step log** (`flake` vs `config-drift` vs tool/auth); diff vs a green suite |
 | Fetch / bulk load | One failing URL + status vs `TypeError`; then concurrency/SW; CORS last |
 | Naming mismatch | Search peer entities when the named one looks fine in artifacts |
-| Already on main? | Search merged PRs / `git log -S` for the feature before implementing |
+| Already on main? | Search merged and open pull requests for the issue id before implementing ([linear ticket workflow](./linear-ticket-workflow.md)) |
 
 ## 3. Hypothesis rules
 
