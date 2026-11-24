@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-22
+
+### 🧰 Maintenance & Dependencies
+
+- *(deps)* Bump the npm-minor-patch group with 8 updates
+
 ## 2026-11-16
 
 ### 🐛 Bug Fixes
