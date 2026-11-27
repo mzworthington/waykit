@@ -2,6 +2,10 @@
 
 ## 2026-11-27
 
+### 🚀 Features
+
+- *(boundaries)* Fail the check when a layer import is forbidden
+
 ### 🐛 Bug Fixes
 
 - *(install)* Refuse a pnpm that is not the pinned version
