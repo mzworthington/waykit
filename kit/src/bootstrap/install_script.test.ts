@@ -61,6 +61,18 @@ describe('install.sh', () => {
     assert.equal(pkg.packageManager, `pnpm@${pin}`);
   });
 
+  it('does not pin pnpm again in GitHub Actions', () => {
+    const workflows = path.join(root, '.github', 'workflows');
+    const extraPin = /uses: pnpm\/action-setup@v\d+\r?\n\s+with:\r?\n\s+version:/;
+    const offenders: string[] = [];
+    for (const name of readdirSync(workflows)) {
+      if (!name.endsWith('.yml') && !name.endsWith('.yaml')) continue;
+      const text = readFileSync(path.join(workflows, name), 'utf8');
+      if (extraPin.exec(text)) offenders.push(name);
+    }
+    assert.deepEqual(offenders, []);
+  });
+
   it('refuses a pnpm older than the pin before pnpm install', () => {
     const home = mkdtempSync(path.join(tmpdir(), 'waykit-install-'));
     const bin = mkdtempSync(path.join(tmpdir(), 'waykit-pnpm-'));

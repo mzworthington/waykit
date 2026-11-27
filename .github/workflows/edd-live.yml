@@ -66,8 +66,6 @@ jobs:
       - name: Install pnpm
         if: steps.creds.outputs.skip != 'true'
         uses: pnpm/action-setup@v6
-        with:
-          version: 11
 
       - name: Setup Node.js
         if: steps.creds.outputs.skip != 'true'
