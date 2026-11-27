@@ -39,6 +39,17 @@ function assertContinued(result: SpawnSyncReturns<string>): void {
   assert.match(result.stdout, /CONTINUED/);
 }
 
+function foreignAgentsSymlink(home: string, fixture: string): { agents: string; elsewhere: string; checkout: string } {
+  const elsewhere = path.join(fixture, 'elsewhere');
+  fs.mkdirSync(elsewhere);
+  fs.writeFileSync(path.join(elsewhere, 'marker'), 'mine\n');
+  const agents = path.join(home, '.agents');
+  fs.symlinkSync(elsewhere, agents);
+  const checkout = path.join(fixture, 'checkout');
+  fs.mkdirSync(checkout);
+  return { agents, elsewhere, checkout };
+}
+
 function writeExe(file: string, body: string): void {
   fs.writeFileSync(file, body);
   fs.chmodSync(file, 0o755);
@@ -183,13 +194,7 @@ describe('install.sh', () => {
 
   it('leaves a symlink to somewhere else in place, prints both paths, and continues', () => {
     withFixture(({ root: fixture, home }) => {
-      const elsewhere = path.join(fixture, 'elsewhere');
-      fs.mkdirSync(elsewhere);
-      fs.writeFileSync(path.join(elsewhere, 'marker'), 'mine\n');
-      const agents = path.join(home, '.agents');
-      fs.symlinkSync(elsewhere, agents);
-      const checkout = path.join(fixture, 'checkout');
-      fs.mkdirSync(checkout);
+      const { agents, elsewhere, checkout } = foreignAgentsSymlink(home, fixture);
       const result = linkAgents('sh', home, checkout);
       assertContinued(result);
       assert.equal(fs.readlinkSync(agents), elsewhere);
@@ -232,13 +237,7 @@ describe('install.sh', () => {
 
   it('moves a conflicting symlink aside with --force-link and keeps its target', () => {
     withFixture(({ root: fixture, home }) => {
-      const elsewhere = path.join(fixture, 'elsewhere');
-      fs.mkdirSync(elsewhere);
-      fs.writeFileSync(path.join(elsewhere, 'marker'), 'mine\n');
-      const agents = path.join(home, '.agents');
-      fs.symlinkSync(elsewhere, agents);
-      const checkout = path.join(fixture, 'checkout');
-      fs.mkdirSync(checkout);
+      const { agents, elsewhere, checkout } = foreignAgentsSymlink(home, fixture);
       const result = linkAgents('sh', home, checkout, ['--force-link']);
       assertContinued(result);
       assert.equal(fs.readlinkSync(agents), checkout);
