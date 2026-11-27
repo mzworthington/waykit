@@ -14,6 +14,7 @@
 - *(mcp)* Drop an unstamped kit server when composing a profile
 - *(mcp)* Record composed server keys on the project stamp
 - *(loops)* Stop a second implementer when the issue is already on main
+- Commit Cloudflare account and zone ids (MZW-195)
 
 ## 2026-11-22
 
