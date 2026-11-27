@@ -311,6 +311,26 @@ describe('composeMCP', () => {
     assert.equal(body.mcpServers.context7, undefined);
   });
 
+  it('records installed server keys on the project profile stamp', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-stamp-'));
+    const project = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-project-'));
+    writeProfile(root, 'demo', ['alpha']);
+    writeServer(root, 'alpha', { alpha: { command: 'npx' } });
+    composeMCP('demo', undefined, false, {
+      repoDir: root,
+      installProject: true,
+      projectDir: project,
+      hosts: ['claude'],
+      env: {}
+    });
+    const stamp = JSON.parse(fs.readFileSync(path.join(project, '.wk-mcp-profile.stamp'), 'utf8')) as {
+      current: string;
+      servers?: string[];
+    };
+    assert.equal(stamp.current, 'demo');
+    assert.deepEqual(stamp.servers, ['alpha']);
+  });
+
   it('restores the previous project profile after cloudflare-ops', () => {
     const project = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-restore-'));
     const cursorDir = path.join(project, 'cursor-config');

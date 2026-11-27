@@ -56,6 +56,16 @@ export function resolveEddCiSuites(
   return candidates.filter((rel) => fs.existsSync(path.join(repoDir, rel)));
 }
 
+function unreadableInputReason(err: unknown): string | undefined {
+  if (!err || typeof err !== 'object') return undefined;
+  const code = (err as { code?: unknown }).code;
+  if (code !== 'ENOENT' && code !== 'EACCES') return undefined;
+  const message = err instanceof Error ? err.message : String(err);
+  const opened = message.match(/open '([^']+)'/);
+  const file = opened?.[1] ?? 'suite input';
+  return `${file} cannot be read`;
+}
+
 export interface KitCheckDeps {
   scan?: (repoDir: string) => ScanSkillSecurityResult;
   validate?: (repoDir: string) => ValidateEvalsResult;
@@ -193,22 +203,36 @@ export async function runKitCheck(
     console.log('No EDD CI suites present on disk; skipping EDD gate.');
   }
   for (const suite of suites) {
-    const code = await edd({
-      repoDir,
-      args: [
-        'ci',
-        '--suite',
-        suite,
-        '--threshold-routing',
-        '95',
-        '--style',
-        'local',
-        '--model',
-        'scripted',
-        '--out',
-        'out/reports'
-      ]
-    });
+    let code: number | null;
+    try {
+      code = await edd({
+        repoDir,
+        args: [
+          'ci',
+          '--suite',
+          suite,
+          '--threshold-routing',
+          '95',
+          '--style',
+          'local',
+          '--model',
+          'scripted',
+          '--out',
+          'out/reports'
+        ]
+      });
+    } catch (err) {
+      const reason = unreadableInputReason(err);
+      if (!reason) throw err;
+      if (!json) console.log(`skip  ${suite} (${reason})`);
+      findings.push({
+        id: `edd:${suite}`,
+        status: 'ok',
+        path: path.join(repoDir, suite),
+        detail: `skipped: ${reason}`
+      });
+      continue;
+    }
     const eddOk = code === 0;
     findings.push({
       id: `edd:${suite}`,

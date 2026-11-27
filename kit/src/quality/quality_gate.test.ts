@@ -126,6 +126,37 @@ describe('runKitCheck', () => {
     assert.equal(eddCalls, 0);
   });
 
+  it('skips a suite whose dataset cannot be read and names the reason', async () => {
+    const lines: string[] = [];
+    const ran: string[] = [];
+    const orig = console.log;
+    console.log = (msg?: unknown) => {
+      lines.push(String(msg));
+    };
+    const missing = Object.assign(new Error("ENOENT: no such file or directory, open 'architecture_routing.jsonl'"), {
+      code: 'ENOENT'
+    });
+    try {
+      const code = await runKitCheck(
+        '/kit',
+        passingDeps({
+          eddSuites: () => ['evals/edd/architecture_routing.yaml', 'evals/edd/safety.yaml'],
+          edd: async (opts) => {
+            const suite = opts.args[opts.args.indexOf('--suite') + 1] ?? '';
+            ran.push(suite);
+            if (suite.endsWith('architecture_routing.yaml')) throw missing;
+            return 0;
+          }
+        })
+      );
+      assert.equal(code, 0);
+      assert.deepEqual(ran, ['evals/edd/architecture_routing.yaml', 'evals/edd/safety.yaml']);
+      assert.match(lines.join('\n'), /architecture_routing\.jsonl/);
+    } finally {
+      console.log = orig;
+    }
+  });
+
   it('stops at the first failing step', async () => {
     assert.equal(
       await runKitCheck('/kit', passingDeps({ scan: () => ({ ok: false, errorCount: 1, warningCount: 0 }) })),

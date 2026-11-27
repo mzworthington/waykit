@@ -8,6 +8,7 @@ export const MCP_PROFILE_STAMP_IGNORE = '.wk-mcp-profile.stamp';
 export interface McpProfileStamp {
   previous: string | undefined;
   current: string;
+  servers?: readonly string[];
 }
 
 export function mcpProfileStampPath(projectDir: string): string {
@@ -40,7 +41,8 @@ export function readMcpProfileStamp(projectDir: string): McpProfileStamp | undef
     const current = typeof rec.current === 'string' ? rec.current : undefined;
     if (!current) return undefined;
     const previous = typeof rec.previous === 'string' ? rec.previous : undefined;
-    return { current, previous };
+    const servers = serverNames(rec.servers);
+    return servers ? { current, previous, servers } : { current, previous };
   } catch {
     return undefined;
   }
@@ -49,19 +51,31 @@ export function readMcpProfileStamp(projectDir: string): McpProfileStamp | undef
 export function writeMcpProfileStamp(projectDir: string, stamp: McpProfileStamp): string {
   const filePath = mcpProfileStampPath(projectDir);
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(
-    filePath,
-    `${JSON.stringify({ previous: stamp.previous ?? null, current: stamp.current }, null, 2)}\n`
-  );
+  const body: { previous: string | null; current: string; servers?: readonly string[] } = {
+    previous: stamp.previous ?? null,
+    current: stamp.current
+  };
+  if (stamp.servers) body.servers = stamp.servers;
+  fs.writeFileSync(filePath, `${JSON.stringify(body, null, 2)}\n`);
   ensureStampGitignored(projectDir);
   return filePath;
 }
 
-export function recordComposedProfile(projectDir: string, profileName: string): McpProfileStamp {
+function serverNames(raw: unknown): string[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  return raw.filter((name): name is string => typeof name === 'string');
+}
+
+export function recordComposedProfile(
+  projectDir: string,
+  profileName: string,
+  servers?: readonly string[]
+): McpProfileStamp {
   const prior = readMcpProfileStamp(projectDir);
   const stamp: McpProfileStamp = {
     previous: prior?.current,
-    current: profileName
+    current: profileName,
+    ...(servers ? { servers: [...servers] } : {})
   };
   writeMcpProfileStamp(projectDir, stamp);
   return stamp;

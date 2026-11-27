@@ -31,6 +31,15 @@ describe('mcp profile stamp', () => {
     assert.doesNotMatch(ignore, /CLOUDFLARE|token|api[_-]?key/i);
   });
 
+  it('records the server keys Waykit wrote beside the profile names', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-stamp-servers-'));
+    const stamp = recordComposedProfile(dir, 'default', ['kit-knowledge', 'linear']);
+    assert.deepEqual(stamp.servers, ['kit-knowledge', 'linear']);
+    const again = readMcpProfileStamp(dir);
+    assert.deepEqual(again?.servers, ['kit-knowledge', 'linear']);
+    assert.equal(again?.current, 'default');
+  });
+
   it('restores kit default when nothing was composed', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-stamp-'));
     assert.equal(profileToRestore(dir), 'default');

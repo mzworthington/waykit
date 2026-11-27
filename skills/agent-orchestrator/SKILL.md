@@ -99,3 +99,9 @@ Read [references/scope-gate.md](./references/scope-gate.md) before routing. Keep
 | [SOPs/coding-agent-observability.md](../../SOPs/coding-agent-observability.md) | Coding-agent tokens / cost / OTel traces |
 | [SOPs/quality-loops.md](../../SOPs/quality-loops.md) | CI / RUM / Lighthouse / scout → Linear → draft PR |
 | [SOPs/eval-driven-development.md](../../SOPs/eval-driven-development.md) | Prompt, MCP tool, or routing change |
+
+## Close
+
+Pure logic: the catalog test is the proof. No command transcript is required.
+
+A change that crosses a port (CLI, UI, worker, or an MCP write): the Done line names the command that was run and what it printed. An XFN apply row with no such run stays blocked.

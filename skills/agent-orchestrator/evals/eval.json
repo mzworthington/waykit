@@ -219,6 +219,41 @@
           "quality-loops"
         ]
       }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-009",
+      "name": "Port change close names the command that proved it",
+      "description": "Pure logic closes on the catalog test. A port change names the command that was run and what it printed.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Close the lifecycle for a CLI change that crosses a port.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": ["lifecycle", "orchestrate"],
+        "required_patterns": [
+          "catalog test is the proof",
+          "Done line names the command that was run and what it printed"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
+    },
+    {
+      "id": "EVAL-ORCH-COLOCATED-010",
+      "name": "XFN apply row without a port run stays blocked",
+      "description": "An XFN apply row with no command and no output stays blocked at close.",
+      "target_skill": "agent-orchestrator",
+      "prompt": "Close the lifecycle. The XFN apply row has no command output.",
+      "context": {
+        "active_phase": "orchestration"
+      },
+      "assertions": {
+        "required_triggers": ["lifecycle", "orchestrate"],
+        "required_patterns": [
+          "XFN apply row with no such run stays blocked"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
     }
   ]
 }

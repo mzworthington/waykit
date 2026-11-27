@@ -150,7 +150,7 @@ export function composeMCP(
     for (const targetPath of written) {
       console.log(`Installed profile '${profileName}' to ${targetPath}`);
     }
-    recordComposedProfile(projectDir, profileName);
+    recordComposedProfile(projectDir, profileName, Object.keys(mcpServers));
     wrote = true;
   }
   if (!wrote) {

@@ -18,6 +18,41 @@
         "forbidden_patterns": ["ASCII art"],
         "required_output_sections": ["Must-fix", "Should-fix", "Nit"]
       }
+    },
+    {
+      "id": "EVAL-REVIEW-COLOCATED-002",
+      "name": "Drop a review finding that was not reproduced",
+      "description": "A finding stays only when the review names the command that was run and the output it printed.",
+      "target_skill": "agent-review",
+      "prompt": "Review this pull request and close the findings.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": ["pr review", "diff review"],
+        "required_patterns": [
+          "Keep a finding that names the command and the output",
+          "Drop a finding that has no command and no output"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
+    },
+    {
+      "id": "EVAL-REVIEW-COLOCATED-003",
+      "name": "Review names the command that proved a port change",
+      "description": "When the change crosses a port, review keeps the done line that names the command and what it printed.",
+      "target_skill": "agent-review",
+      "prompt": "Review this CLI change that crosses a port.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": ["pr review", "diff review"],
+        "required_patterns": [
+          "Done line names the command that was run and what it printed"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
     }
   ]
 }
