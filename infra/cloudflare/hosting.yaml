@@ -1,0 +1,4 @@
+# waykit.dev is GitHub Pages. DNS for the zone stays in edge-dns.
+# These ids are identifiers. The API token stays a GitHub secret.
+accountId: fe0bb0a89551958509fe4d65883026cc
+zoneId: 45dfea5a86a5b5834a913c13ae3a112d
