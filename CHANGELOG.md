@@ -15,6 +15,8 @@
 - *(mcp)* Record composed server keys on the project stamp
 - *(loops)* Stop a second implementer when the issue is already on main
 - Commit Cloudflare account and zone ids (MZW-195)
+- Pin pnpm for consumer align
+- *(ci)* Read consumer align pnpm from the kit packageManager
 
 ## 2026-11-22
 
