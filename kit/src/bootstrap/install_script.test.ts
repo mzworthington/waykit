@@ -55,7 +55,12 @@ function writeExe(file: string, body: string): void {
   fs.chmodSync(file, 0o755);
 }
 
-function runDetachedInstall(home: string, fixture: string, args: string[]): SpawnSyncReturns<string> {
+function runDetachedInstall(
+  home: string,
+  fixture: string,
+  args: string[],
+  cloneInstaller: string = installer
+): SpawnSyncReturns<string> {
   const bin = path.join(fixture, 'bin');
   fs.mkdirSync(bin);
   writeExe(
@@ -70,7 +75,7 @@ for arg in "$@"; do
   dest=$arg
 done
 mkdir -p "$dest/bin" "$dest/system"
-cp ${JSON.stringify(installer)} "$dest/install.sh"
+cp ${JSON.stringify(cloneInstaller)} "$dest/install.sh"
 : > "$dest/bin/kit.ts"
 : > "$dest/package.json"
 : > "$dest/AGENTS.md"
@@ -303,6 +308,39 @@ describe('install.sh', () => {
       assert.ok(result.stdout.includes(fs.realpathSync(agents)), result.stdout);
       assert.ok(result.stdout.includes(fs.realpathSync(checkout)), result.stdout);
       assert.equal(fs.lstatSync(path.join(home, '.local', 'bin', 'wk')).isSymbolicLink(), true);
+    });
+  });
+
+  it('refuses --force-link when the checkout is inside ~/.agents', () => {
+    withFixture(({ home }) => {
+      const agents = path.join(home, '.agents');
+      const checkout = path.join(agents, 'checkout');
+      fs.mkdirSync(checkout, { recursive: true });
+      fs.writeFileSync(path.join(agents, 'marker'), 'keep\n');
+      const result = linkAgents('sh', home, checkout, ['--force-link']);
+      assert.notEqual(result.status, 0);
+      assert.match(result.stderr, /inside/);
+      assert.equal(fs.lstatSync(agents).isSymbolicLink(), false);
+      assert.equal(fs.readFileSync(path.join(agents, 'marker'), 'utf8'), 'keep\n');
+      assert.equal(fs.existsSync(path.join(home, '.agents.bak')), false);
+    });
+  });
+
+  it('re-execs an older checkout without passing --force-link', () => {
+    withFixture(({ root: fixture, home }) => {
+      const oldInstaller = path.join(fixture, 'old-install.sh');
+      fs.writeFileSync(
+        oldInstaller,
+        '#!/bin/sh\nif [ "$1" = "--force-link" ]; then\n  echo "Unknown option: --force-link" >&2\n  exit 1\nfi\necho OLD_BOOTSTRAP\n'
+      );
+      const agents = path.join(home, '.agents');
+      fs.mkdirSync(agents);
+      fs.writeFileSync(path.join(agents, 'marker'), 'mine\n');
+      const result = runDetachedInstall(home, fixture, ['--force-link'], oldInstaller);
+      assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+      assert.match(result.stdout, /OLD_BOOTSTRAP/);
+      assert.doesNotMatch(result.stderr, /Unknown option/);
+      assert.equal(fs.readFileSync(path.join(agents, 'marker'), 'utf8'), 'mine\n');
     });
   });
 

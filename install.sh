@@ -9,7 +9,8 @@ KIT_DIR="${KIT_DIR:-}"
 GIT_REF="${KIT_REF:-main}"
 INSTALL_MCP="${INSTALL_MCP:-1}"
 INSTALL_EXTERNAL_SKILLS="${INSTALL_EXTERNAL_SKILLS:-0}"
-FORCE_LINK=0
+FORCE_LINK="${FORCE_LINK:-0}"
+export FORCE_LINK
 MIN_NODE_MAJOR=22
 
 usage() {
@@ -41,6 +42,7 @@ Environment:
   KIT_GITHUB_REPO            GitHub owner/repo (default: mzworthington/waykit)
   INSTALL_MCP                Set to 0 to skip MCP compose
   INSTALL_EXTERNAL_SKILLS    Set to 1 to sync Cloudflare/Vercel skills
+  FORCE_LINK                 Set to 1 for the same effect as --force-link
 EOF
 }
 
@@ -231,6 +233,15 @@ link_agents() {
     return 0
   fi
 
+  # mv of a real directory would relocate a checkout that lives inside it.
+  if [ ! -L "${_target}" ] && [ -n "${_existing_real}" ]; then
+    _inside=${_repo_real#"${_existing_real}/"}
+    if [ "${_inside}" != "${_repo_real}" ]; then
+      echo "error: ${_repo_dir} is inside ${_target}. Refusing to move ${_target} aside." >&2
+      return 1
+    fi
+  fi
+
   _aside=$(aside_path "${_target}")
   mv "${_target}" "${_aside}"
   if ! ln -s "${_repo_dir}" "${_target}"; then
@@ -396,8 +407,7 @@ if [ "${WAYKIT_INSTALL_LIB:-}" != "1" ]; then
     echo "error: ${DEST} is not a kit checkout after clone" >&2
     exit 1
   fi
-  if [ "${FORCE_LINK}" = "1" ]; then
-    exec sh "${DEST}/install.sh" --force-link
-  fi
+  # FORCE_LINK is already exported. An older checkout ignores that variable
+  # and would reject a --force-link argument it does not know.
   exec sh "${DEST}/install.sh"
 fi
