@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.25.0",
   "description": "Waykit: software lifecycle, skills, and learning loops for coding agents",
   "bin": {
     "wk": "./bin/kit"

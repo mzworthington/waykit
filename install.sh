@@ -10,6 +10,7 @@ GIT_REF="${KIT_REF:-main}"
 INSTALL_MCP="${INSTALL_MCP:-1}"
 INSTALL_EXTERNAL_SKILLS="${INSTALL_EXTERNAL_SKILLS:-0}"
 MIN_NODE_MAJOR=22
+REQUIRED_PNPM_VERSION=11.25.0
 
 usage() {
   cat <<'EOF'
@@ -118,14 +119,61 @@ ensure_node() {
   fi
 }
 
+version_part() {
+  _vp_ver=$1
+  _vp_idx=$2
+  _vp_i=1
+  while [ "${_vp_i}" -lt "${_vp_idx}" ]; do
+    case ${_vp_ver} in
+      *.*) _vp_ver=${_vp_ver#*.} ;;
+      *) _vp_ver=0 ;;
+    esac
+    _vp_i=$((_vp_i + 1))
+  done
+  _vp_ver=${_vp_ver%%.*}
+  _vp_ver=${_vp_ver%%-*}
+  _vp_ver=${_vp_ver%%+*}
+  _vp_digits=$(printf '%s' "${_vp_ver}" | tr -cd '0-9')
+  _vp_digits=${_vp_digits:-0}
+  while [ "${#_vp_digits}" -gt 1 ]; do
+    case ${_vp_digits} in
+      0*) _vp_digits=${_vp_digits#0} ;;
+      *) break ;;
+    esac
+  done
+  printf '%s' "${_vp_digits:-0}"
+}
+
+version_gte() {
+  _vg_i=1
+  while [ "${_vg_i}" -le 3 ]; do
+    _vg_found=$(version_part "$1" "${_vg_i}")
+    _vg_need=$(version_part "$2" "${_vg_i}")
+    if [ "${_vg_found}" -gt "${_vg_need}" ]; then
+      return 0
+    fi
+    if [ "${_vg_found}" -lt "${_vg_need}" ]; then
+      return 1
+    fi
+    _vg_i=$((_vg_i + 1))
+  done
+  return 0
+}
+
 ensure_pnpm() {
   if command -v pnpm >/dev/null 2>&1; then
+    # Outside the checkout, so packageManager cannot make an older pnpm report the pin.
+    _version=$(cd / && pnpm --version 2>/dev/null || true)
+    if ! version_gte "${_version}" "${REQUIRED_PNPM_VERSION}"; then
+      echo "error: pnpm ${REQUIRED_PNPM_VERSION} or newer is required (found ${_version:-unknown})" >&2
+      exit 1
+    fi
     return 0
   fi
   if command -v corepack >/dev/null 2>&1; then
     echo "Enabling pnpm via corepack"
     corepack enable >/dev/null 2>&1 || true
-    corepack prepare pnpm@latest --activate
+    corepack prepare "pnpm@${REQUIRED_PNPM_VERSION}" --activate
     return 0
   fi
   echo "error: pnpm is required. Install Node ${MIN_NODE_MAJOR}+ (includes corepack) or: npm install -g pnpm" >&2
