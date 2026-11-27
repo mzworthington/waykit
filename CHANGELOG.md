@@ -5,6 +5,7 @@
 ### 🚀 Features
 
 - *(boundaries)* Fail the check when a layer import is forbidden
+- *(review)* Say how many findings were dropped (MZW-190)
 
 ### 🐛 Bug Fixes
 
