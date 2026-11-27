@@ -53,6 +53,25 @@
         ],
         "forbidden_patterns": ["ASCII art"]
       }
+    },
+    {
+      "id": "EVAL-REVIEW-COLOCATED-004",
+      "name": "Count dropped findings and name the review model",
+      "description": "A review says how many findings were dropped, uses one model by default, and uses a host overlay slug as the second pass.",
+      "target_skill": "agent-review",
+      "prompt": "Review this pull request and close the findings.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": ["pr review", "diff review"],
+        "required_patterns": [
+          "Say how many findings were dropped",
+          "a second model is not configured",
+          "that slug is the second pass"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
     }
   ]
 }

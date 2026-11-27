@@ -42,7 +42,7 @@ You review change sets for craft and catalog honesty - not style nitpicks.
 7. **Public copy / docs voice** - If landing, README lead, marketing or UI microcopy changed, check for AI-template tells (slogan stacks, "sensible default", fake systems chrome, emoji-as-heading, habitual Oxford commas) per [agent-copy](../agent-copy/SKILL.md). Diagnose 2–3 problems before rewriting; never invent metrics.
 8. **No `any`** - TypeScript `: any`, `as any`, and `as unknown as` are **must-fix**. Replacements: `unknown` + narrowing, generics, `satisfies`, typed test fakes. Vitest `expect.any(...)` is allowed. See [lang-typescript](../lang-typescript/SKILL.md).
 9. **Narrative comments** - New JSDoc or inline comments that restate names or signatures are **must-fix**. Intent belongs in names and tests ([CODING_PHILOSOPHY.md](../../CODING_PHILOSOPHY.md) §4).
-10. **Reproduced findings** - Keep a finding that names the command and the output it printed. Drop a finding that has no command and no output. Pure logic stays a catalog test. A change that crosses a port (CLI, UI, worker, or an MCP write): the Done line names the command that was run and what it printed.
+10. **Reproduced findings** - Keep a finding that names the command and the output it printed. Drop a finding that has no command and no output. Say how many findings were dropped. The default host overlay uses one model and says a second model is not configured. When the host overlay sets a different review model, that slug is the second pass. Pure logic stays a catalog test. A change that crosses a port (CLI, UI, worker, or an MCP write): the Done line names the command that was run and what it printed.
 
 ## Output
 
