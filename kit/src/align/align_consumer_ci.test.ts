@@ -20,7 +20,11 @@ describe('reusable consumer align workflow', () => {
     assert.doesNotMatch(yml, /wk doctor/);
     assert.doesNotMatch(yml, /wk check/);
     assert.doesNotMatch(yml, /KIT_EVAL_API_KEY/);
-    assert.match(yml, /uses: pnpm\/action-setup@v6\n\s+with:\n\s+version:/);
+    assert.match(
+      yml,
+      /path: \.waykit-src[\s\S]*uses: pnpm\/action-setup@v6\n\s+with:\n\s+package_json_file: \.waykit-src\/package\.json/
+    );
+    assert.doesNotMatch(yml, /uses: pnpm\/action-setup@v\d+\r?\n\s+with:\r?\n\s+version:/);
   });
 
   it('installs the kit outside the caller workspace so wk survives checkout cleanup', () => {

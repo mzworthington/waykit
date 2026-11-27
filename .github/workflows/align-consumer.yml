@@ -32,16 +32,6 @@ jobs:
       - name: Checkout caller
         uses: actions/checkout@v7
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: '11.25.0'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: '24'
-
       - name: Checkout Waykit installer
         uses: actions/checkout@v7
         with:
@@ -49,6 +39,16 @@ jobs:
           ref: ${{ inputs.kit_ref }}
           path: .waykit-src
           persist-credentials: false
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          package_json_file: .waykit-src/package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
 
       - name: Install Waykit
         env:
