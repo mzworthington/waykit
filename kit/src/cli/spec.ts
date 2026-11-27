@@ -125,6 +125,7 @@ export const KIT_COMMAND_TREE: Readonly<Record<string, KitCommandNode>> = {
   'debug-board': {},
   'debug-ci': {},
   check: { flags: [{ name: '--json' }] },
+  boundaries: { subs: { check: {} } },
   ontology: { subs: { generate: {}, check: {} } },
   memory: { subs: { lint: {} } },
   model: {

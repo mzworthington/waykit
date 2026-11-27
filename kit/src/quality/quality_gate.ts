@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { checkBoundaries } from '../boundaries/check.js';
 import { exportIDERules } from '../bootstrap/export_ide_rules.js';
 import { runEvals } from '../edd/run_evals.js';
 import { handleEddEvalCli, type EddCliOptions } from '../edd/edd_cli.js';
@@ -132,6 +133,14 @@ export async function runKitCheck(
   }
 
   try {
+  const boundaries = checkBoundaries(repoDir);
+  if (!boundaries.ok) {
+    if (!json) console.error(boundaries.detail);
+    findings.push({ id: 'boundaries', status: 'fail', path: repoDir, detail: boundaries.detail });
+    return finish(false);
+  }
+  if (boundaries.detail && !json) console.log(boundaries.detail);
+
   const auditOk = scan(repoDir).ok;
   findings.push({ id: 'audit', status: auditOk ? 'ok' : 'fail', path: repoDir });
   if (!auditOk) return finish(false);

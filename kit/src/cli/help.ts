@@ -62,6 +62,7 @@ Commands:
   debug-board <proj>   Scaffold a hypothesis-driven debug board
   debug-ci             Fetch failed GitHub Actions logs
   check                Run the local quality gate (audit, ontology, evals, EDD CI, context budget; --json)
+  boundaries check     Fail when a TypeScript import crosses a forbidden layer edge
   ontology generate    Dump derived ontology index to gitignored sync/ and web/public/assets/
   ontology check       Validate live-derived index (skill mcp/depends-on/subagent refs)
   memory lint          List legacy memory entities outside the ontology allowlist

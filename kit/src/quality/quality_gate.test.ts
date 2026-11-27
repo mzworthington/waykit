@@ -126,6 +126,19 @@ describe('runKitCheck', () => {
     assert.equal(eddCalls, 0);
   });
 
+  it('fails the gate when a TypeScript import crosses a forbidden edge', async () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-check-boundaries-'));
+    fs.mkdirSync(path.join(root, 'src', 'domain'), { recursive: true });
+    fs.mkdirSync(path.join(root, 'src', 'adapter'), { recursive: true });
+    fs.writeFileSync(
+      path.join(root, 'boundaries.yaml'),
+      'layers:\n  - name: domain\n    paths: [src/domain]\n  - name: adapter\n    paths: [src/adapter]\nforbidden:\n  - from: domain\n    to: adapter\n',
+      'utf8'
+    );
+    fs.writeFileSync(path.join(root, 'src', 'domain', 'order.ts'), "import { save } from '../adapter/db.js';\n", 'utf8');
+    assert.equal(await runKitCheck(root, passingDeps()), 1);
+  });
+
   it('skips a suite whose dataset cannot be read and names the reason', async () => {
     const lines: string[] = [];
     const ran: string[] = [];

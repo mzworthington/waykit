@@ -54,6 +54,24 @@
           "save_issue"
         ]
       }
+    },
+    {
+      "id": "EVAL-ARCH-COLOCATED-003",
+      "name": "Cite the boundaries checker and keep judgment",
+      "description": "A forbidden import is cited from wk boundaries check. A green checker still leaves anemic models, domain language, and ADRs to the audit.",
+      "target_skill": "agent-arch-drift",
+      "prompt": "Audit this TypeScript repo for a domain file importing an adapter, and for an anemic model.",
+      "context": {
+        "active_phase": "audit"
+      },
+      "assertions": {
+        "required_triggers": ["architecture", "boundary"],
+        "required_patterns": [
+          "wk boundaries check",
+          "When the checker is green"
+        ],
+        "forbidden_patterns": ["ASCII art"]
+      }
     }
   ]
 }

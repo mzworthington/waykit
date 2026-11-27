@@ -57,6 +57,7 @@ export type KitCommand =
   | { kind: 'debug-board'; project: string; title: string }
   | { kind: 'debug-ci'; rest: string[] }
   | { kind: 'check'; json: boolean }
+  | { kind: 'boundaries'; sub: 'check'; dir: string }
   | {
       kind: 'align';
       targetDir: string;
@@ -281,6 +282,12 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
 
     case 'check':
       return { kind: 'check', json: hasFlag(rest, '--json') };
+
+    case 'boundaries': {
+      const sub = rest[0];
+      if (sub !== 'check') return { kind: 'usage', message: cliUsage('boundaries check') };
+      return { kind: 'boundaries', sub: 'check', dir: opts.cwd };
+    }
 
     case 'version':
       return { kind: 'version', check: hasFlag(rest, '--check') };

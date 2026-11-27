@@ -57,7 +57,7 @@ When a lasting design choice is **hard to reverse** or **deliberately differs fr
 
 ### Hexagonal
 
-1. **Dependency direction** - No `domain/` or `core/` imports from `infrastructure/`, `controllers/`, `adapters`, `frameworks`, or `web`.
+1. **Dependency direction** - No `domain/` or `core/` imports from `infrastructure/`, `controllers/`, `adapters`, `frameworks`, or `web`. Run `wk boundaries check` and cite that output when it names a forbidden edge. When the checker is green, still flag an anemic model, domain language, or whether an ADR was required.
 2. **Adapter thinness** - HTTP/UI/CLI layers only map DTOs and delegate to handlers; no business rules at the edge.
 
 ### Domain-driven design

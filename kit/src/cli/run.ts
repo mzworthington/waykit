@@ -20,6 +20,7 @@ import {
   lintMemoryGraph,
   regenerateOntologyIndex
 } from '../ontology/index.js';
+import { checkBoundaries } from '../boundaries/check.js';
 import { measureContextBudget, printContextBudget } from '../quality/measure_context_budget.js';
 import { runKitCheck } from '../quality/quality_gate.js';
 import { renderAnalyticsSummary } from '../quality/telemetry_analytics.js';
@@ -301,6 +302,17 @@ export async function runKitCommand(command: KitCommand, ctx: RunKitContext): Pr
 
     case 'check':
       return runKitCheck(repoDir, {}, { json: command.json });
+
+    case 'boundaries': {
+      const result = checkBoundaries(command.dir);
+      if (result.detail) console.error(result.detail);
+      printCliOutcome(
+        cliOutcomeFromOk(result.ok),
+        'boundaries check',
+        result.ok ? 'no forbidden imports' : 'forbidden import'
+      );
+      return status(result.ok);
+    }
 
     case 'align': {
       if (command.owned) {
