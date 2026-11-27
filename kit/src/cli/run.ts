@@ -21,6 +21,8 @@ import {
   regenerateOntologyIndex
 } from '../ontology/index.js';
 import { checkBoundaries } from '../boundaries/check.js';
+import { archiveSpec } from '../workspace/layout.js';
+import { generateCursorPlugin } from '../plugin/cursor.js';
 import { measureContextBudget, printContextBudget } from '../quality/measure_context_budget.js';
 import { runKitCheck } from '../quality/quality_gate.js';
 import { renderAnalyticsSummary } from '../quality/telemetry_analytics.js';
@@ -312,6 +314,18 @@ export async function runKitCommand(command: KitCommand, ctx: RunKitContext): Pr
         result.ok ? 'no forbidden imports' : 'forbidden import'
       );
       return status(result.ok);
+    }
+
+    case 'spec': {
+      archiveSpec(command.dir, command.file, command.living);
+      printCliOutcome('ok', 'spec archive', command.file);
+      return 0;
+    }
+
+    case 'plugin': {
+      generateCursorPlugin(repoDir, command.dir);
+      printCliOutcome('ok', 'plugin cursor', command.dir);
+      return 0;
     }
 
     case 'align': {

@@ -124,4 +124,41 @@ describe('initProject', () => {
     });
     assert.match(fs.readFileSync(path.join(target, 'AGENTS.md'), 'utf8'), /~\/\.agents/);
   });
+
+  it('seeds the repo rule table', () => {
+    const kit = kitRoot();
+    const target = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-app-'));
+    initProject({
+      targetDir: target,
+      mcpProfile: 'default',
+      installMCP: false,
+      installIDE: false,
+      installHook: false,
+      kitRepoDir: kit
+    });
+    const table = fs.readFileSync(path.join(target, 'rules.md'), 'utf8');
+    assert.match(table, /Rule/);
+    assert.match(table, /Enforces/);
+  });
+
+  it('creates .waykit and a one-line pointer whose config holds the default paths', () => {
+    const kit = kitRoot();
+    const target = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-app-'));
+    initProject({
+      targetDir: target,
+      mcpProfile: 'default',
+      installMCP: false,
+      installIDE: false,
+      installHook: false,
+      kitRepoDir: kit
+    });
+    const pointer = fs.readFileSync(path.join(target, '.waykit', 'POINTER'), 'utf8').trim();
+    const config = fs.readFileSync(path.join(target, '.waykit', 'config.yaml'), 'utf8');
+    assert.equal(pointer.split('\n').length, 1);
+    assert.match(pointer, /config\.yaml/);
+    assert.match(config, /handover: \.waykit\/handover/);
+    assert.match(config, /spec: docs\/spec/);
+    assert.match(config, /glossary: docs\/glossary\.md/);
+    assert.match(config, /specArchive: docs\/spec\/archive/);
+  });
 });

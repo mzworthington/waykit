@@ -86,7 +86,7 @@ export function renderLaunchPrompt(input: LaunchPromptInput): string {
   const paths =
     input.handoverPaths.length > 0
       ? input.handoverPaths.join(', ')
-      : `~/.agents/handover/${input.project}/`;
+      : `.waykit/handover/${input.project}/`;
   const dod = input.definitionOfDone?.trim() || 'Phase Definition of Done from the matching SKILL.md';
   const next = input.nextAgent?.trim() || 'agent-orchestrator';
   const modelClass = input.modelClass ?? 'inherit';

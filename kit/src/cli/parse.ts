@@ -58,6 +58,8 @@ export type KitCommand =
   | { kind: 'debug-ci'; rest: string[] }
   | { kind: 'check'; json: boolean }
   | { kind: 'boundaries'; sub: 'check'; dir: string }
+  | { kind: 'spec'; sub: 'archive'; dir: string; file: string; living: string }
+  | { kind: 'plugin'; sub: 'cursor'; dir: string }
   | {
       kind: 'align';
       targetDir: string;
@@ -287,6 +289,25 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
       const sub = rest[0];
       if (sub !== 'check') return { kind: 'usage', message: cliUsage('boundaries check') };
       return { kind: 'boundaries', sub: 'check', dir: opts.cwd };
+    }
+
+    case 'spec': {
+      const sub = rest[0];
+      const file = rest[1];
+      const living = flagValue(rest, '--living');
+      if (sub !== 'archive' || file === undefined || file.startsWith('--') || living === undefined) {
+        return { kind: 'usage', message: cliUsage('spec archive <file> --living <text>') };
+      }
+      return { kind: 'spec', sub: 'archive', dir: opts.cwd, file, living };
+    }
+
+    case 'plugin': {
+      const sub = rest[0];
+      const out = rest[1];
+      if (sub !== 'cursor' || out === undefined || out.startsWith('--')) {
+        return { kind: 'usage', message: cliUsage('plugin cursor <dir>') };
+      }
+      return { kind: 'plugin', sub: 'cursor', dir: path.resolve(opts.cwd, out) };
     }
 
     case 'version':

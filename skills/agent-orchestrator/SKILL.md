@@ -70,7 +70,9 @@ You are the master coordinator for the multi-agent software engineering lifecycl
 
 ## Handover protocol
 
-Each phase writes `~/.agents/handover/<project>/` using [templates/handover.md](../../templates/handover.md). Required: **Phase**, **Status** (`COMPLETE` only when that phase's DoD is met), **Output**, **Next agent**. Do not write handovers into the project repo.
+Each phase writes `<repo>/.waykit/handover/` using [templates/handover.md](../../templates/handover.md). Required: **Phase**, **Status** (`COMPLETE` only when that phase's DoD is met), **Output**, **Next agent**. That directory is gitignored. Do not read `~/.agents/handover`.
+
+A correction is fixed in the same session at the highest enforcer that works: structure, then a type, then a lint or `wk check` whose error names the fix, then a test. A lesson or an ADR is only for a judgment call. Read `rules.md` and pending lessons. Do not add a learning doc when nobody corrected a judgment call.
 
 ## Scope gate
 

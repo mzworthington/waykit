@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { composeMCP } from './compose_mcp.js';
 import { exportIDERules } from './export_ide_rules.js';
+import { seedProjectRuleTable } from '../rules/correct.js';
+import { seedWorkspace } from '../workspace/layout.js';
 import { gitHooksDir, resolveRepoDir } from '../shared/paths.js';
 import { parseMcpHosts, type McpHostId } from './mcp_hosts.js';
 
@@ -65,6 +67,9 @@ export function initProject(options: InitProjectOptions): void {
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir, { recursive: true });
   }
+
+  seedProjectRuleTable(targetDir);
+  seedWorkspace(targetDir);
 
   const agentsPath = path.join(targetDir, 'AGENTS.md');
   if (fs.existsSync(agentsPath)) {

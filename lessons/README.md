@@ -14,6 +14,8 @@ Use the project directory name, or the `project` field in `system/config.json` w
 
 ## When to write a lesson
 
+Record a correction in the same session at the highest enforcer that works: one owner in the structure, then a type, then a lint or `wk check` whose error names the fix, then a test. Append a lesson or an ADR only when the rule is a judgment call. A kit rule goes in the kit `rules.md`. A project quirk goes in that repo's `rules.md`.
+
 Append an entry when any of these happen:
 
 - The user corrects your approach or output

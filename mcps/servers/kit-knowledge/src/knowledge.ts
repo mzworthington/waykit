@@ -164,11 +164,11 @@ export function getSop(kitRoot: string, name: string): { id: string; path: strin
 export function getHandover(
   kitRoot: string,
   project: string,
-  phase?: string
+  phase?: string,
+  repoDir?: string
 ): { path: string; body: string } | null {
-  const base = path.join(os.homedir(), ".agents", "handover", project);
-  const alt = path.join(kitRoot, "handover", project);
-  const dir = fs.existsSync(base) ? base : alt;
+  const root = repoDir ?? kitRoot;
+  const dir = path.join(root, ".waykit", "handover", project);
   if (!fs.existsSync(dir)) return null;
 
   const files = fs

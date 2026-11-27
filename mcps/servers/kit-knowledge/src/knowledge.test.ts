@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import {
   getPhilosophySection,
   getSop,
+  getHandover,
   getKitEntity,
   getKitRelated,
   listKitIndex,
@@ -257,5 +258,21 @@ describe("kit-knowledge", () => {
     });
     child.kill("SIGKILL");
     assert.match(stdout, /"name":"kit-knowledge"/);
+  });
+
+  it("reads a repo handover and skips the home agents directory", () => {
+    const repo = fs.mkdtempSync(path.join(os.tmpdir(), "kit-handover-repo-"));
+    const home = path.join(os.tmpdir(), "kit-handover-home");
+    const project = "app";
+    fs.mkdirSync(path.join(home, ".agents", "handover", project), { recursive: true });
+    fs.writeFileSync(path.join(home, ".agents", "handover", project, "handover_spec.md"), "from-home\n");
+    fs.mkdirSync(path.join(repo, ".waykit", "handover", project), { recursive: true });
+    fs.writeFileSync(path.join(repo, ".waykit", "handover", project, "handover_spec.md"), "from-repo\n");
+
+    const found = getHandover(kitRoot, project, "spec", repo);
+
+    assert.ok(found);
+    assert.match(found.body, /from-repo/);
+    assert.equal(found.body.includes("from-home"), false);
   });
 });

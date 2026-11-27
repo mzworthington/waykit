@@ -22,9 +22,10 @@ Align with [CODING_PHILOSOPHY.md](../CODING_PHILOSOPHY.md) §8 (Interaction Mand
 
 1. Resolve the identifier (`WAY-123`). Skip if the user only asked to inspect.
 2. Skip if the issue is already **Done** or **Canceled**.
-3. Search open and merged pull requests for that identifier before any product edit.
+3. Search open and merged pull requests and the default branch for that identifier before any product edit.
    - A merged pull request means stop. Do not open another.
    - An open pull request means continue on that pull request. Do not open a second one.
+   - A commit on the default branch that contains the issue id means stop. Do not open a pull request.
 4. Set `state` to the team's started column (`In Progress`, or `list_issue_statuses` if the name differs).
 5. Set `assignee` to the host agent so the board shows who is playing the issue:
    - Cursor → `assignee: "Cursor"`.
@@ -43,7 +44,7 @@ Do not auto-complete the issue when the diff is ready. Leave it In Progress unti
 
 ## Commit message output
 
-Follow [conventional-commits.md](./conventional-commits.md). Include the Linear identifier.
+Follow [conventional-commits.md](./conventional-commits.md). Include the Linear identifier in the subject. The default-branch search keys on it.
 
 ```text
 feat(scope): short description (WAY-123)

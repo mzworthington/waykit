@@ -18,7 +18,9 @@ Run this checklist weekly (or after a major feature) to turn local session lesso
 - [ ] List entries with `Status: pending` (format: [templates/lesson.md](../templates/lesson.md))
 - [ ] Merge duplicates (same lesson, multiple dates → one promoted rule)
 
-## 2. Triage each pending lesson
+## 2. Audit each pending lesson
+
+A pending lesson with no enforcer stays pending, and the review names it. When every pending lesson already has a rule-table row, this pass is an audit. It is not the moment the lesson is written.
 
 For each entry, decide:
 

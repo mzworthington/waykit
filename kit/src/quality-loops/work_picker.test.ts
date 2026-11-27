@@ -137,4 +137,15 @@ describe('work picker catalog (SOP, kit list, Automation prompt)', () => {
     assert.match(sop, /agent-security/);
     assert.match(sop, /agent-perf-opt/);
   });
+
+  it('stops when the issue id is already committed on the default branch', () => {
+    const { sop, pickerPrompt } = catalog();
+    const workflow = fs.readFileSync(path.join(kitRoot, 'SOPs/linear-ticket-workflow.md'), 'utf8');
+    const stop = /commit on the default branch that contains the issue id means stop/;
+    assert.match(sop, stop);
+    assert.match(pickerPrompt, stop);
+    assert.match(workflow, stop);
+    assert.match(sop, /If the assignee is a human, stop/);
+    assert.match(pickerPrompt, /If the assignee is a human, stop/);
+  });
 });

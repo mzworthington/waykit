@@ -79,7 +79,7 @@ const TOOLS = [
   {
     name: "get_handover",
     description:
-      "Return a phase handover from ~/.agents/handover/<project>/ (latest, or named phase).",
+      "Return a phase handover from <repo>/.waykit/handover/<project>/ (latest, or named phase). Do not read ~/.agents/handover.",
     inputSchema: {
       type: "object",
       properties: {
@@ -87,6 +87,10 @@ const TOOLS = [
         phase: {
           type: "string",
           description: 'Optional phase, e.g. "spec" or "xfn"',
+        },
+        repo: {
+          type: "string",
+          description: "Repo whose .waykit/handover to read. Defaults to the kit root.",
         },
       },
       required: ["project"],
@@ -190,9 +194,9 @@ function callTool(
       }
       case "get_handover": {
         const project = String(args.project ?? "");
-        const phase =
-          typeof args.phase === "string" ? args.phase : undefined;
-        const found = getHandover(kitRoot, project, phase);
+        const phase = typeof args.phase === "string" ? args.phase : undefined;
+        const repo = typeof args.repo === "string" ? args.repo : undefined;
+        const found = getHandover(kitRoot, project, phase, repo);
         if (!found) {
           return {
             ...textContent(

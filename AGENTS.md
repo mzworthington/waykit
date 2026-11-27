@@ -58,7 +58,7 @@ Do not commit or push unless the user explicitly asks.
 | Prune / perf / debug / telemetry | [agent-prune](./skills/agent-prune/SKILL.md), [agent-perf-opt](./skills/agent-perf-opt/SKILL.md), [agent-debug](./skills/agent-debug/SKILL.md), [agent-telemetry](./skills/agent-telemetry/SKILL.md), [agent-cloudflare-ops](./skills/agent-cloudflare-ops/SKILL.md), [agent-posthog](./skills/agent-posthog/SKILL.md) |
 | Pre-commit | [agent-pre-commit](./skills/agent-pre-commit/SKILL.md) |
 
-Handovers: `~/.agents/handover/<project>/` ([templates/handover.md](./templates/handover.md)). Run pre-commit before **COMPLETE** when hooks exist.
+Handovers: `<repo>/.waykit/handover/` ([templates/handover.md](./templates/handover.md)). Specs: `docs/spec/`. Run pre-commit before **COMPLETE**.
 
 Public site: [waykit.dev](https://waykit.dev) (Astro in `web/`, Markdown in `docs/`; DNS in [edge-dns](https://github.com/mzworthington/edge-dns)).
 
