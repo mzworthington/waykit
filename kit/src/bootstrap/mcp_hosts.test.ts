@@ -79,17 +79,29 @@ describe('VS Code MCP shape', () => {
 });
 
 describe('writeHostMcpFile', () => {
-  it('merges mcpServers into an existing Claude user config', () => {
+  it('replaces only the servers Waykit wrote last time', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-host-'));
     const file = path.join(dir, '.claude.json');
-    fs.writeFileSync(file, JSON.stringify({ theme: 'dark', mcpServers: { old: { command: 'x' } } }), 'utf8');
+    fs.writeFileSync(
+      file,
+      JSON.stringify({
+        theme: 'dark',
+        waykitServers: ['old'],
+        mcpServers: { old: { command: 'x' }, mine: { command: 'mine' } }
+      }),
+      'utf8'
+    );
     writeHostMcpFile(file, 'claude', { kit: { command: 'node' } });
     const body = JSON.parse(fs.readFileSync(file, 'utf8')) as {
       theme: string;
-      mcpServers: Record<string, unknown>;
+      waykitServers: string[];
+      mcpServers: Record<string, { command?: string }>;
     };
     assert.equal(body.theme, 'dark');
-    assert.deepEqual(Object.keys(body.mcpServers), ['kit']);
+    assert.equal(body.mcpServers.mine?.command, 'mine');
+    assert.equal(body.mcpServers.old, undefined);
+    assert.equal(body.mcpServers.kit?.command, 'node');
+    assert.deepEqual(body.waykitServers, ['kit']);
   });
 
   it('treats an empty existing file as an empty object', () => {

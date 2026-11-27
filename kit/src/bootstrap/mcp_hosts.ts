@@ -117,6 +117,26 @@ function writeJson(filePath: string, body: unknown): void {
   fs.writeFileSync(filePath, `${JSON.stringify(body, null, 2)}\n`, 'utf8');
 }
 
+const WAYKIT_SERVERS = 'waykitServers';
+
+function serversWaykitWrote(existing: Record<string, unknown>): ReadonlySet<string> {
+  const raw = existing[WAYKIT_SERVERS];
+  if (!Array.isArray(raw)) return new Set();
+  return new Set(raw.filter((name): name is string => typeof name === 'string'));
+}
+
+function mergeMcpServers(existing: Record<string, unknown>, next: McpServers): McpServers {
+  const prior = existing.mcpServers;
+  const owned = serversWaykitWrote(existing);
+  const kept: McpServers = {};
+  if (prior && typeof prior === 'object' && !Array.isArray(prior)) {
+    for (const [key, value] of Object.entries(prior)) {
+      if (!owned.has(key)) kept[key] = value;
+    }
+  }
+  return { ...kept, ...next };
+}
+
 function documentForHost(host: McpHostId, mcpServers: McpServers, existing: Record<string, unknown>): unknown {
   if (host === 'copilot') {
     return { ...existing, ...toVsCodeMcpFile(mcpServers), mcpServers };
@@ -126,7 +146,12 @@ function documentForHost(host: McpHostId, mcpServers: McpServers, existing: Reco
 
 export function writeHostMcpFile(filePath: string, host: McpHostId, mcpServers: McpServers): void {
   const existing = readJsonObject(filePath);
-  writeJson(filePath, documentForHost(host, mcpServers, existing));
+  const merged = mergeMcpServers(existing, mcpServers);
+  const body = documentForHost(host, merged, existing);
+  if (body && typeof body === 'object' && !Array.isArray(body)) {
+    (body as Record<string, unknown>)[WAYKIT_SERVERS] = Object.keys(mcpServers);
+  }
+  writeJson(filePath, body);
 }
 
 export function installMcpOnHosts(

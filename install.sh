@@ -9,6 +9,7 @@ KIT_DIR="${KIT_DIR:-}"
 GIT_REF="${KIT_REF:-main}"
 INSTALL_MCP="${INSTALL_MCP:-1}"
 INSTALL_EXTERNAL_SKILLS="${INSTALL_EXTERNAL_SKILLS:-0}"
+FORCE_LINK=0
 MIN_NODE_MAJOR=22
 
 usage() {
@@ -29,6 +30,7 @@ Then, in an app repo:
 Options:
   --dir <path>     Clone destination (default: $HOME/.local/share/waykit)
   --ref <git-ref>  Branch or tag to clone (default: main)
+  --force-link     Move an existing ~/.agents aside and link this checkout
   -h, --help       Show this help
 
 Environment:
@@ -57,6 +59,10 @@ while [ $# -gt 0 ]; do
         exit 1
       fi
       shift 2
+      ;;
+    --force-link)
+      FORCE_LINK=1
+      shift
       ;;
     -h | --help)
       usage
@@ -118,24 +124,43 @@ ensure_node() {
   fi
 }
 
+required_pnpm_version() {
+  _pkg="$1/package.json"
+  _ver=$(sed -n 's/.*"packageManager"[[:space:]]*:[[:space:]]*"pnpm@\([^"]*\)".*/\1/p' "${_pkg}" | head -n 1)
+  if [ -z "${_ver}" ]; then
+    echo "error: ${_pkg} packageManager must name a pnpm version" >&2
+    exit 1
+  fi
+  printf '%s\n' "${_ver}"
+}
+
 ensure_pnpm() {
-  if command -v pnpm >/dev/null 2>&1; then
-    return 0
+  _need="$1"
+  if ! command -v pnpm >/dev/null 2>&1; then
+    if command -v corepack >/dev/null 2>&1; then
+      echo "Enabling pnpm ${_need} via corepack"
+      corepack enable >/dev/null 2>&1 || true
+      corepack prepare "pnpm@${_need}" --activate
+    else
+      echo "error: pnpm ${_need} is required. Install Node ${MIN_NODE_MAJOR}+ (includes corepack) or: npm install -g pnpm@${_need}" >&2
+      exit 1
+    fi
   fi
-  if command -v corepack >/dev/null 2>&1; then
-    echo "Enabling pnpm via corepack"
-    corepack enable >/dev/null 2>&1 || true
-    corepack prepare pnpm@latest --activate
-    return 0
+  _found=$(cd / && pnpm --version) || {
+    echo "error: pnpm ${_need} is required (could not read pnpm --version)" >&2
+    exit 1
+  }
+  _found=$(printf '%s' "${_found}" | tr -d '[:space:]')
+  if [ "${_found}" != "${_need}" ]; then
+    echo "error: pnpm ${_need} is required (found ${_found})" >&2
+    exit 1
   fi
-  echo "error: pnpm is required. Install Node ${MIN_NODE_MAJOR}+ (includes corepack) or: npm install -g pnpm" >&2
-  exit 1
 }
 
 ensure_deps() {
   _repo_dir="$1"
   ensure_node
-  ensure_pnpm
+  ensure_pnpm "$(required_pnpm_version "${_repo_dir}")"
   echo "Installing kit dependencies in ${_repo_dir}"
   (cd "${_repo_dir}" && pnpm install)
 }
@@ -170,20 +195,28 @@ clone_or_update() {
 link_agents() {
   _repo_dir="$1"
   _target="${HOME}/.agents"
-  if [ -L "${_target}" ]; then
-    _current=$(readlink "${_target}")
-    if [ "${_current}" = "${_repo_dir}" ]; then
-      echo "OK: ${_target} already points to this checkout"
+  _repo_real=$(realpath "${_repo_dir}")
+  if [ -e "${_target}" ] || [ -L "${_target}" ]; then
+    _target_real=$(realpath "${_target}")
+    if [ "${_target_real}" = "${_repo_real}" ]; then
+      echo "OK: ${_target} is this checkout"
       return 0
     fi
-    echo "WARN: ${_target} is a symlink to ${_current}"
-    echo "      Remove it first if you want to repoint to ${_repo_dir}"
-    return 1
-  fi
-
-  if [ -e "${_target}" ] && [ ! -L "${_target}" ]; then
-    echo "ERROR: ${_target} exists and is not a symlink. Move or rename it first."
-    return 1
+    if [ "${FORCE_LINK}" = "1" ]; then
+      _aside="${_target}.aside"
+      if [ -e "${_aside}" ] || [ -L "${_aside}" ]; then
+        echo "error: ${_aside} already exists; move it before --force-link" >&2
+        return 1
+      fi
+      mv "${_target}" "${_aside}"
+      ln -s "${_repo_dir}" "${_target}"
+      echo "Moved ${_target_real} aside to ${_aside}"
+      echo "Linked ${_target} -> ${_repo_dir}"
+      return 0
+    fi
+    echo "WARN: leaving ${_target} in place (${_target_real})"
+    echo "      checkout is ${_repo_dir} (${_repo_real})"
+    return 0
   fi
 
   ln -s "${_repo_dir}" "${_target}"
