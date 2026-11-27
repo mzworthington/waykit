@@ -104,6 +104,51 @@ describe('writeHostMcpFile', () => {
     assert.deepEqual(body.waykitServers, ['kit']);
   });
 
+  it('drops an unstamped kit server and keeps a server Waykit does not ship', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-host-legacy-'));
+    const file = path.join(dir, '.claude.json');
+    fs.writeFileSync(
+      file,
+      JSON.stringify({
+        mcpServers: {
+          cloudflare: { url: 'https://mcp.cloudflare.com/mcp' },
+          mine: { command: 'mine' }
+        }
+      }),
+      'utf8'
+    );
+    writeHostMcpFile(file, 'claude', { kit: { command: 'node' } });
+    const body = JSON.parse(fs.readFileSync(file, 'utf8')) as {
+      mcpServers: Record<string, { command?: string; url?: string }>;
+    };
+    assert.equal(body.mcpServers.cloudflare, undefined);
+    assert.equal(body.mcpServers.mine?.command, 'mine');
+    assert.equal(body.mcpServers.kit?.command, 'node');
+  });
+
+  it('replaces every server on reset and keeps the backup', () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-host-reset-'));
+    const file = path.join(dir, '.claude.json');
+    const original = JSON.stringify({
+      theme: 'dark',
+      waykitServers: ['old'],
+      mcpServers: { old: { command: 'x' }, mine: { command: 'mine' } }
+    });
+    fs.writeFileSync(file, original, 'utf8');
+    writeHostMcpFile(file, 'claude', { kit: { command: 'node' } }, { reset: true });
+    const body = JSON.parse(fs.readFileSync(file, 'utf8')) as {
+      theme: string;
+      waykitServers: string[];
+      mcpServers: Record<string, { command?: string }>;
+    };
+    assert.equal(body.theme, 'dark');
+    assert.deepEqual(Object.keys(body.mcpServers), ['kit']);
+    assert.deepEqual(body.waykitServers, ['kit']);
+    const backups = fs.readdirSync(dir).filter((name) => name.includes('.bak.'));
+    assert.equal(backups.length, 1);
+    assert.equal(fs.readFileSync(path.join(dir, backups[0] ?? ''), 'utf8'), original);
+  });
+
   it('treats an empty existing file as an empty object', () => {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-host-empty-'));
     const file = path.join(dir, 'mcp_config.json');

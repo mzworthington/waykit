@@ -47,6 +47,7 @@ describe('completeKitLine', () => {
       'collab',
       '--install',
       '--project',
+      '--reset',
       '--host',
       '-o'
     ]);

@@ -88,6 +88,7 @@ export function buildInteractiveMcpCommand(input: {
     profile: input.profile.trim() || 'default',
     install: input.install,
     project: input.project,
+    reset: false,
     outputFile: undefined,
     hosts: [...input.hosts]
   };

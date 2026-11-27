@@ -196,7 +196,8 @@ export async function runKitCommand(command: KitCommand, ctx: RunKitContext): Pr
       composeMCP(profile, command.outputFile, command.install, {
         hosts: command.hosts,
         installProject: command.project,
-        projectDir: command.project ? process.cwd() : undefined
+        projectDir: command.project ? process.cwd() : undefined,
+        reset: command.reset
       });
       return 0;
     }

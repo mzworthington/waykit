@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import { backupExistingFile } from '../shared/backup_file.js';
 
 export const MCP_HOSTS = ['cursor', 'claude', 'copilot', 'antigravity'] as const;
@@ -119,19 +120,38 @@ function writeJson(filePath: string, body: unknown): void {
 
 const WAYKIT_SERVERS = 'waykitServers';
 
-function serversWaykitWrote(existing: Record<string, unknown>): ReadonlySet<string> {
+function serversWaykitWrote(existing: Record<string, unknown>): ReadonlySet<string> | undefined {
   const raw = existing[WAYKIT_SERVERS];
-  if (!Array.isArray(raw)) return new Set();
+  if (!Array.isArray(raw)) return undefined;
   return new Set(raw.filter((name): name is string => typeof name === 'string'));
+}
+
+let catalogServerIds: ReadonlySet<string> | undefined;
+
+function kitCatalogServerIds(): ReadonlySet<string> {
+  if (catalogServerIds) return catalogServerIds;
+  const dir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../mcps/servers');
+  if (!fs.existsSync(dir)) {
+    catalogServerIds = new Set();
+    return catalogServerIds;
+  }
+  catalogServerIds = new Set(
+    fs
+      .readdirSync(dir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+  );
+  return catalogServerIds;
 }
 
 function mergeMcpServers(existing: Record<string, unknown>, next: McpServers): McpServers {
   const prior = existing.mcpServers;
-  const owned = serversWaykitWrote(existing);
+  const recorded = serversWaykitWrote(existing);
+  const drop = recorded ?? kitCatalogServerIds();
   const kept: McpServers = {};
   if (prior && typeof prior === 'object' && !Array.isArray(prior)) {
     for (const [key, value] of Object.entries(prior)) {
-      if (!owned.has(key)) kept[key] = value;
+      if (!drop.has(key)) kept[key] = value;
     }
   }
   return { ...kept, ...next };
@@ -144,9 +164,14 @@ function documentForHost(host: McpHostId, mcpServers: McpServers, existing: Reco
   return { ...existing, mcpServers };
 }
 
-export function writeHostMcpFile(filePath: string, host: McpHostId, mcpServers: McpServers): void {
+export function writeHostMcpFile(
+  filePath: string,
+  host: McpHostId,
+  mcpServers: McpServers,
+  options?: { reset?: boolean }
+): void {
   const existing = readJsonObject(filePath);
-  const merged = mergeMcpServers(existing, mcpServers);
+  const merged = options?.reset ? mcpServers : mergeMcpServers(existing, mcpServers);
   const body = documentForHost(host, merged, existing);
   if (body && typeof body === 'object' && !Array.isArray(body)) {
     (body as Record<string, unknown>)[WAYKIT_SERVERS] = Object.keys(mcpServers);
@@ -157,7 +182,7 @@ export function writeHostMcpFile(filePath: string, host: McpHostId, mcpServers: 
 export function installMcpOnHosts(
   mcpServers: McpServers,
   hosts: readonly McpHostId[],
-  options: McpHostPaths & { scope: 'user' | 'project' }
+  options: McpHostPaths & { scope: 'user' | 'project'; reset?: boolean }
 ): string[] {
   const written: string[] = [];
   for (const host of hosts) {
@@ -165,7 +190,7 @@ export function installMcpOnHosts(
       options.scope === 'user'
         ? userMcpPath(host, options)
         : projectMcpPath(host, options.projectDir ?? process.cwd(), options.cursorDir);
-    writeHostMcpFile(filePath, host, mcpServers);
+    writeHostMcpFile(filePath, host, mcpServers, { reset: options.reset });
     written.push(filePath);
   }
   return written;

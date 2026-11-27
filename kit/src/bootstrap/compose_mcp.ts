@@ -28,6 +28,7 @@ export interface ComposeMcpOptions {
   /** Write project-scoped host files under this directory (`wk init` / `wk mcp --project`). */
   projectDir?: string;
   installProject?: boolean;
+  reset?: boolean;
 }
 
 export function composeMCP(
@@ -129,7 +130,8 @@ export function composeMCP(
     const written = installMcpOnHosts(mcpServers, hosts, {
       scope: 'user',
       homedir,
-      cursorDir: options.cursorDir
+      cursorDir: options.cursorDir,
+      reset: options.reset
     });
     for (const targetPath of written) {
       console.log(`Installed profile '${profileName}' to ${targetPath}`);
@@ -142,7 +144,8 @@ export function composeMCP(
       scope: 'project',
       homedir,
       projectDir,
-      cursorDir: options.cursorDir
+      cursorDir: options.cursorDir,
+      reset: options.reset
     });
     for (const targetPath of written) {
       console.log(`Installed profile '${profileName}' to ${targetPath}`);

@@ -30,6 +30,7 @@ export type KitCommand =
       profile: string;
       install: boolean;
       project: boolean;
+      reset: boolean;
       outputFile: string | undefined;
       hosts: McpHostId[];
     }
@@ -188,6 +189,7 @@ export function parseKitArgv(argv: string[], opts: ParseKitArgvOptions): KitComm
           profile,
           install: hasFlag(rest, '--install'),
           project: hasFlag(rest, '--project'),
+          reset: hasFlag(rest, '--reset'),
           outputFile: flagValue(rest, '-o'),
           hosts: parseMcpHosts(flagValue(rest, '--host'))
         };

@@ -170,6 +170,7 @@ ${CLI_BIN} mcp [profile|restore]
 
   --install         Write user-scope host files
   --project         Write this checkout's host files
+  --reset           Replace the whole server list after the backup
   --host            cursor, claude, copilot, antigravity, or all
   -o <file>         Print composed JSON to a file
 

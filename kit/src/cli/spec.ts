@@ -67,10 +67,10 @@ export const KIT_COMMAND_TREE: Readonly<Record<string, KitCommandNode>> = {
   },
   mcp: {
     positional: 'mcp-profiles',
-    flags: [{ name: '--install' }, { name: '--project' }, HOST_FLAG, { name: '-o' }],
+    flags: [{ name: '--install' }, { name: '--project' }, { name: '--reset' }, HOST_FLAG, { name: '-o' }],
     subs: {
       restore: {
-        flags: [{ name: '--install' }, { name: '--project' }, HOST_FLAG, { name: '-o' }]
+        flags: [{ name: '--install' }, { name: '--project' }, { name: '--reset' }, HOST_FLAG, { name: '-o' }]
       }
     }
   },

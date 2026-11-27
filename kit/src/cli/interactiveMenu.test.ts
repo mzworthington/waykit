@@ -86,6 +86,7 @@ describe('interactiveMenu', () => {
         profile: 'restore',
         install: false,
         project: true,
+        reset: false,
         outputFile: undefined,
         hosts: ['claude']
       }

@@ -185,6 +185,7 @@ describe('parseKitArgv', () => {
       profile: 'ops',
       install: true,
       project: false,
+      reset: false,
       outputFile: 'out.json',
       hosts: ['cursor', 'claude', 'copilot', 'antigravity']
     });
@@ -193,6 +194,7 @@ describe('parseKitArgv', () => {
       profile: 'default',
       install: true,
       project: false,
+      reset: false,
       outputFile: undefined,
       hosts: ['claude']
     });
@@ -201,6 +203,7 @@ describe('parseKitArgv', () => {
       profile: 'default',
       install: false,
       project: true,
+      reset: false,
       outputFile: undefined,
       hosts: ['copilot', 'antigravity']
     });
@@ -209,9 +212,17 @@ describe('parseKitArgv', () => {
       profile: 'restore',
       install: false,
       project: true,
+      reset: false,
       outputFile: undefined,
       hosts: ['cursor', 'claude', 'copilot', 'antigravity']
     });
+  });
+
+  it('parses mcp --reset', () => {
+    const parsed = parseKitArgv(['mcp', 'default', '--reset'], opts);
+    assert.equal(parsed.kind, 'mcp');
+    if (parsed.kind !== 'mcp') return;
+    assert.equal(parsed.reset, true);
   });
 
   it('parses align directory, --write, and --owned --scan', () => {

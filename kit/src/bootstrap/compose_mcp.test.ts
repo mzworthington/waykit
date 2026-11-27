@@ -60,6 +60,37 @@ describe('composeMCP', () => {
     assert.equal(fs.readFileSync(path.join(root, backups[0]!), 'utf8'), '{"old":true}\n');
   });
 
+  it('replaces the host server list when reset is set', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-'));
+    const home = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-home-'));
+    writeProfile(root, 'demo', ['alpha']);
+    writeServer(root, 'alpha', { alpha: { command: 'npx' } });
+    const cursor = path.join(home, '.cursor', 'mcp.json');
+    fs.mkdirSync(path.dirname(cursor), { recursive: true });
+    fs.writeFileSync(
+      cursor,
+      JSON.stringify({
+        theme: 'dark',
+        waykitServers: ['old'],
+        mcpServers: { old: { command: 'x' }, mine: { command: 'mine' } }
+      }),
+      'utf8'
+    );
+    composeMCP('demo', undefined, true, {
+      repoDir: root,
+      homedir: home,
+      hosts: ['cursor'],
+      env: {},
+      reset: true
+    });
+    const body = JSON.parse(fs.readFileSync(cursor, 'utf8')) as {
+      theme: string;
+      mcpServers: Record<string, unknown>;
+    };
+    assert.equal(body.theme, 'dark');
+    assert.deepEqual(Object.keys(body.mcpServers), ['alpha']);
+  });
+
   it('installs into the Cursor config dir under homedir', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-mcp-'));
     const home = fs.mkdtempSync(path.join(os.tmpdir(), 'kit-home-'));
