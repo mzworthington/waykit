@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-27
+
+### 🐛 Bug Fixes
+
+- *(install)* Refuse a pnpm that is not the pinned version
+- *(ci)* Let packageManager be the only pnpm pin
+- *(mcp)* Drop an unstamped kit server when composing a profile
+
 ## 2026-11-22
 
 ### 🧰 Maintenance & Dependencies
