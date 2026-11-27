@@ -41,6 +41,13 @@ exit 42
   return { result, log };
 }
 
+function pathWithout(command: string): string {
+  return (process.env.PATH ?? '')
+    .split(':')
+    .filter((dir) => dir.length > 0 && !fs.existsSync(path.join(dir, command)))
+    .join(':');
+}
+
 function runInstallWithoutPnpm(): { result: SpawnSyncReturns<string>; log: string } {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'waykit-install-'));
   const bin = fs.mkdtempSync(path.join(os.tmpdir(), 'waykit-corepack-'));
@@ -56,7 +63,7 @@ exit 0
     env: {
       ...process.env,
       HOME: home,
-      PATH: bin,
+      PATH: `${bin}:${pathWithout('pnpm')}`,
     },
   });
   const log = fs.existsSync(logPath) ? fs.readFileSync(logPath, 'utf8') : '';
@@ -137,7 +144,8 @@ describe('install.sh', () => {
   });
 
   it('asks corepack for pnpm 11.25.0 when pnpm is not installed', () => {
-    const { log } = runInstallWithoutPnpm();
+    const { result, log } = runInstallWithoutPnpm();
+    assert.doesNotMatch(`${result.stderr}`, /dirname:/);
     assert.match(log, /prepare pnpm@11\.25\.0 --activate/);
     assert.doesNotMatch(log, /pnpm@latest/);
   });
