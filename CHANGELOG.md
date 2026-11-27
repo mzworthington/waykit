@@ -12,6 +12,7 @@
 - *(ci)* Let packageManager be the only pnpm pin
 - *(mcp)* Drop an unstamped kit server when composing a profile
 - *(mcp)* Record composed server keys on the project stamp
+- *(loops)* Stop a second implementer when the issue is already on main
 
 ## 2026-11-22
 
