@@ -9,6 +9,7 @@ KIT_DIR="${KIT_DIR:-}"
 GIT_REF="${KIT_REF:-main}"
 INSTALL_MCP="${INSTALL_MCP:-1}"
 INSTALL_EXTERNAL_SKILLS="${INSTALL_EXTERNAL_SKILLS:-0}"
+FORCE_LINK=0
 MIN_NODE_MAJOR=22
 
 usage() {
@@ -22,6 +23,8 @@ From a Waykit checkout:
   ./install.sh [options]
 
 Puts wk on PATH (~/.local/bin), links ~/.agents, and installs the default MCP profile.
+If ~/.agents is already this checkout, it is left as-is. A different directory or
+link is also left in place unless you pass --force-link.
 
 Then, in an app repo:
   wk init . --mcp default --hook
@@ -29,6 +32,7 @@ Then, in an app repo:
 Options:
   --dir <path>     Clone destination (default: $HOME/.local/share/waykit)
   --ref <git-ref>  Branch or tag to clone (default: main)
+  --force-link     Move a different ~/.agents aside and link this checkout
   -h, --help       Show this help
 
 Environment:
@@ -57,6 +61,10 @@ while [ $# -gt 0 ]; do
         exit 1
       fi
       shift 2
+      ;;
+    --force-link)
+      FORCE_LINK=1
+      shift
       ;;
     -h | --help)
       usage
@@ -167,26 +175,70 @@ clone_or_update() {
   git clone --depth 1 --branch "${GIT_REF}" "${_url}" "${_dest}"
 }
 
+# pwd -P is the POSIX realpath of a directory. readlink text is not a match key.
+physical_dir() {
+  _dir="$1"
+  if [ ! -d "${_dir}" ]; then
+    return 1
+  fi
+  _canon=$(CDPATH= cd -- "${_dir}" && pwd -P) || return 1
+  printf '%s\n' "${_canon}"
+}
+
+aside_path() {
+  _base="$1"
+  _candidate="${_base}.bak"
+  _n=0
+  while [ -e "${_candidate}" ] || [ -L "${_candidate}" ]; do
+    _n=$((_n + 1))
+    _candidate="${_base}.bak.${_n}"
+  done
+  printf '%s\n' "${_candidate}"
+}
+
 link_agents() {
   _repo_dir="$1"
   _target="${HOME}/.agents"
-  if [ -L "${_target}" ]; then
-    _current=$(readlink "${_target}")
-    if [ "${_current}" = "${_repo_dir}" ]; then
-      echo "OK: ${_target} already points to this checkout"
-      return 0
-    fi
-    echo "WARN: ${_target} is a symlink to ${_current}"
-    echo "      Remove it first if you want to repoint to ${_repo_dir}"
+  _repo_real=$(physical_dir "${_repo_dir}") || {
+    echo "error: cannot resolve kit checkout ${_repo_dir}" >&2
     return 1
+  }
+
+  if [ ! -e "${_target}" ] && [ ! -L "${_target}" ]; then
+    ln -s "${_repo_dir}" "${_target}"
+    echo "Linked ${_target} -> ${_repo_dir}"
+    return 0
   fi
 
-  if [ -e "${_target}" ] && [ ! -L "${_target}" ]; then
-    echo "ERROR: ${_target} exists and is not a symlink. Move or rename it first."
-    return 1
+  _existing_real=$(physical_dir "${_target}" || true)
+  if [ -n "${_existing_real}" ] && [ "${_existing_real}" = "${_repo_real}" ]; then
+    echo "OK: ${_target} is this checkout"
+    return 0
   fi
 
-  ln -s "${_repo_dir}" "${_target}"
+  _shown="${_existing_real}"
+  if [ -z "${_shown}" ] && [ -L "${_target}" ]; then
+    _shown=$(readlink "${_target}" || true)
+  fi
+  if [ -z "${_shown}" ]; then
+    _shown="${_target}"
+  fi
+
+  if [ "${FORCE_LINK}" != "1" ]; then
+    echo "WARN: ${_target} is ${_shown}"
+    echo "      This checkout is ${_repo_real}"
+    echo "      Leaving ${_target} in place. Pass --force-link to point it at this checkout."
+    return 0
+  fi
+
+  _aside=$(aside_path "${_target}")
+  mv "${_target}" "${_aside}"
+  if ! ln -s "${_repo_dir}" "${_target}"; then
+    mv "${_aside}" "${_target}"
+    echo "error: could not link ${_target} -> ${_repo_dir}" >&2
+    return 1
+  fi
+  echo "Moved ${_target} aside to ${_aside}"
   echo "Linked ${_target} -> ${_repo_dir}"
 }
 
@@ -315,31 +367,37 @@ bootstrap_checkout() {
   echo "External skills: INSTALL_EXTERNAL_SKILLS=1 ./install.sh  or  wk sync --install"
 }
 
-SELF_DIR=$(resolve_self_dir || true)
+# Tests source this file with WAYKIT_INSTALL_LIB=1 and call link_agents directly.
+if [ "${WAYKIT_INSTALL_LIB:-}" != "1" ]; then
+  SELF_DIR=$(resolve_self_dir || true)
 
-if [ -n "${SELF_DIR}" ] && is_kit_checkout "${SELF_DIR}"; then
-  bootstrap_checkout "${SELF_DIR}"
-  exit 0
-fi
-
-need_cmd git
-ensure_node
-
-DEST="${KIT_DIR}"
-if [ -z "${DEST}" ]; then
-  DEST=$(resolve_agents_checkout || true)
-fi
-if [ -z "${DEST}" ]; then
-  if [ -d "${HOME}/.local/share/agent-lifecycle-kit/.git" ] && [ ! -d "${HOME}/.local/share/waykit/.git" ]; then
-    DEST="${HOME}/.local/share/agent-lifecycle-kit"
-  else
-    DEST="${HOME}/.local/share/waykit"
+  if [ -n "${SELF_DIR}" ] && is_kit_checkout "${SELF_DIR}"; then
+    bootstrap_checkout "${SELF_DIR}"
+    exit 0
   fi
-fi
 
-clone_or_update "${DEST}"
-if ! is_kit_checkout "${DEST}"; then
-  echo "error: ${DEST} is not a kit checkout after clone" >&2
-  exit 1
+  need_cmd git
+  ensure_node
+
+  DEST="${KIT_DIR}"
+  if [ -z "${DEST}" ]; then
+    DEST=$(resolve_agents_checkout || true)
+  fi
+  if [ -z "${DEST}" ]; then
+    if [ -d "${HOME}/.local/share/agent-lifecycle-kit/.git" ] && [ ! -d "${HOME}/.local/share/waykit/.git" ]; then
+      DEST="${HOME}/.local/share/agent-lifecycle-kit"
+    else
+      DEST="${HOME}/.local/share/waykit"
+    fi
+  fi
+
+  clone_or_update "${DEST}"
+  if ! is_kit_checkout "${DEST}"; then
+    echo "error: ${DEST} is not a kit checkout after clone" >&2
+    exit 1
+  fi
+  if [ "${FORCE_LINK}" = "1" ]; then
+    exec sh "${DEST}/install.sh" --force-link
+  fi
+  exec sh "${DEST}/install.sh"
 fi
-exec sh "${DEST}/install.sh"
